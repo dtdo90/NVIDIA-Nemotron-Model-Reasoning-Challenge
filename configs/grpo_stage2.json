@@ -1,0 +1,23 @@
+{
+  "train_csv": "data/train.csv",
+  "split_csv": "data/splits_70_15_15.config.json",
+  "train_splits": ["grpo_train"],
+  "output_dir": "outputs/grpo_stage2",
+  "kaggle_model_handle": "metric/nemotron-3-nano-30b-a3b-bf16/transformers/default",
+  "seed": 42,
+  "num_epochs": 1.0,
+  "per_device_train_batch_size": 1,
+  "gradient_accumulation_steps": 4,
+  "learning_rate": 5e-06,
+  "num_generations": 4,
+  "max_completion_length": 1024,
+  "temperature": 1.0,
+  "top_p": 1.0,
+  "top_k": 0,
+  "beta": 0.0,
+  "num_iterations": 1,
+  "epsilon": 0.2,
+  "loss_type": "dr_grpo",
+  "scale_rewards": "none",
+  "logging_steps": 10
+}
