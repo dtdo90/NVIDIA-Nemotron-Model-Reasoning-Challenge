@@ -1,25 +1,40 @@
-# First Baseline
+# Nemotron Reasoning Challenge Training Pipeline
 
-This repository now includes a script-based version of the first baseline:
+This repository uses a deterministic, solver-written data pipeline for LoRA
+training. The current strategy is:
 
-- `train_sft.py` trains either answer-only or CoT-supervised LoRA adapters.
-- `infer_eval.py` runs local held-out evaluation with the same stratified split.
-- `--supervision-format auto` uses CoT when the CSV has a `generated_cot` column, otherwise answer-only.
+1. `Phase 1`: inject compact knowledge and reusable methodology cards.
+2. `Phase 2`: continue SFT on deterministic full task traces plus verified
+   synthetic rows for the hard families.
+3. `Optional Phase 3`: run GRPO from the Phase 2 adapter.
 
-## Training
+We no longer use external teacher-model or notebook-generated traces as part of
+the active training-data build. CoT rows used for training should come from the
+deterministic renderers and solver-backed CSV builders in `scripts/`.
 
-```bash
-python3 train_sft.py \
-  --config configs/baseline_answer_only.json \
-  --output-dir outputs/baseline_answer_only \
-  --save-tokenizer
-```
+## Core Files
 
-If you already have the Nemotron base model on disk, pass `--model-path /path/to/model`.
+Training and evaluation:
+
+1. `train_sft.py`: trains answer-only or CoT-supervised LoRA adapters.
+2. `infer_eval.py`: evaluates adapters on local held-out splits.
+3. `train_grpo.py`: optional GRPO update after SFT.
+
+Active trainable datasets:
+
+1. `data/trainable/phase1_train.csv`
+2. `data/trainable/train_sft_phase2_75_10_15.csv`
+
+Important method records:
+
+1. [docs/solver_method_record.md](/Users/taido/Desktop/Tai/NVIDIA%20Nemotron%20Model%20Reasoning/docs/solver_method_record.md)
+2. [docs/digit_transform_methodology.md](/Users/taido/Desktop/Tai/NVIDIA%20Nemotron%20Model%20Reasoning/docs/digit_transform_methodology.md)
+3. [docs/symbol_transform_methodology.md](/Users/taido/Desktop/Tai/NVIDIA%20Nemotron%20Model%20Reasoning/docs/symbol_transform_methodology.md)
+4. [docs/winner_solution_alignment.md](/Users/taido/Desktop/Tai/NVIDIA%20Nemotron%20Model%20Reasoning/docs/winner_solution_alignment.md)
 
 ## Persistent Splits
 
-To create a fixed `75/10/15` split for SFT, GRPO, and final evaluation:
+Create the fixed `75/10/15` split used by SFT, GRPO, and local eval:
 
 ```bash
 python3 scripts/make_splits.py \
@@ -27,262 +42,166 @@ python3 scripts/make_splits.py \
   --output-csv data/splits_75_10_15.csv
 ```
 
-This writes `id,category,subcategory,solve_source,stratum,split` rows with the split names:
+This writes both:
 
-- `sft_train`
-- `grpo_train`
-- `eval`
+1. `data/splits_75_10_15.csv`
+2. `data/splits_75_10_15.config.json`
 
-It also writes `data/splits_75_10_15.config.json`, which stores the exact ids for each split and can be used anywhere the scripts accept `--split-csv`.
+The split names are:
 
-The split is stratified by `category`, useful `subcategory` such as
-`numeric_equation` vs `symbol_transform`, and current deterministic
-`solve_source`, so solved and unsolved families are represented across SFT,
-GRPO, and evaluation.
+1. `sft_train`
+2. `grpo_train`
+3. `eval`
 
-## CoT Training
+The split is stratified by category, useful subcategory, and deterministic
+solve source. Synthetic rows are appended only after split selection and should
+not be counted when auditing the real train/GRPO/eval split.
 
-```bash
-python3 train_sft.py \
-  --config configs/cot_training.json \
-  --output-dir outputs/cot_training
-```
+## Phase 1 Dataset
 
-This uses `data/trainable/train_cot.csv` and trains on `<generated_cot> + \boxed{answer}` when the CSV contains a `generated_cot` column.
-
-Method notes:
-
-- [docs/digit_transform_methodology.md](/Users/taido/Desktop/Tai/NVIDIA%20Nemotron%20Model%20Reasoning/docs/digit_transform_methodology.md)
-- [docs/solver_method_record.md](/Users/taido/Desktop/Tai/NVIDIA%20Nemotron%20Model%20Reasoning/docs/solver_method_record.md)
-- [docs/winner_solution_alignment.md](/Users/taido/Desktop/Tai/NVIDIA%20Nemotron%20Model%20Reasoning/docs/winner_solution_alignment.md)
-
-To train on only the fixed `sft_train` split, use:
+Phase 1 combines stable facts and short methodology cards into one CSV:
 
 ```bash
-python3 train_sft.py \
-  --config configs/cot_training_75_10_15.json \
-  --train-csv data/trainable/train_cot_gpt_oss_clean.csv \
-  --output-dir outputs/cot_training_75_10_15
-```
-
-## Two-Stage Phase 1 + Phase 2 SFT
-
-The starter training loop uses two phases:
-
-- `Phase 1`: one combined knowledge/methodology dataset from the useful Phase 1A/1B components.
-- `Phase 2`: task SFT on deterministic full traces, initialized from the Phase 1 adapter.
-
-The separate Phase 1A/1B component files are kept in `data/trainable/phase1_components/` for later ablations. To refresh the text-vocabulary component:
-
-```bash
-python3 scripts/prepare_text_knowledge_phase1.py \
-  --input-csv data/knowledge_qa.csv \
-  --output-csv data/trainable/phase1_components/text_knowledge_phase1.csv
-```
-
-After refreshing any desired components, build the single Phase 1 training file:
-
-```bash
+python3 scripts/prepare_text_knowledge_phase1.py
+python3 scripts/prepare_phase1a_bit_manipulation_knowledge.py
+python3 scripts/prepare_phase1b_bit_manipulation_methodology.py
+python3 scripts/prepare_phase1a_numeric_equation_knowledge.py
+python3 scripts/prepare_phase1b_numeric_equation_methodology.py
+python3 scripts/prepare_phase1a_symbol_transform_knowledge.py
+python3 scripts/prepare_phase1b_symbol_transform_methodology.py
+python3 scripts/prepare_phase1_symbol_transform_direct_curriculum.py
 python3 scripts/prepare_phase1_training_dataset.py
 ```
 
-Then train the Phase 1 adapter:
+The current combined file is:
+
+```text
+data/trainable/phase1_train.csv
+```
+
+Current Phase 1 size:
+
+```text
+9244 rows
+```
+
+Phase 1 intentionally excludes unit conversion, gravity, and numeral-system
+knowledge cards from the default mixture because those problem types are simple
+enough to learn from deterministic Phase 2 traces.
+
+Train Phase 1:
 
 ```bash
 python3 train_sft.py \
   --config configs/phase1_training.json
 ```
 
-For the main task SFT stage, build a split-aware phase-2 dataset that:
+## Phase 2 Dataset
 
-- anchors on `data/train.csv`
-- overlays any cleaned competition CoT file if provided
-- replaces supported categories with deterministic solver traces for the selected split ids
+Phase 2 is the main task SFT dataset. It uses the `sft_train` split of
+`data/train.csv`, replaces supported rows with deterministic CoT traces, keeps
+unsupported rows answer-only, then appends verified synthetic data.
+
+Build deterministic source files:
 
 ```bash
-python3 scripts/prepare_text_cipher_compact_cot.py \
-  --train-csv data/train.csv \
-  --output-csv data/trainable/text_cipher_compact_cot.csv
+python3 scripts/prepare_text_cipher_compact_cot.py
+python3 scripts/prepare_bit_manipulation_phase2_cot.py
+python3 scripts/prepare_unit_conversion_phase2_cot.py
+python3 scripts/prepare_gravity_phase2_cot.py
+python3 scripts/prepare_numeral_phase2_cot.py
+python3 scripts/prepare_numeric_equation_phase2_cot.py
+python3 scripts/prepare_numeric_equation_synthetic_cot.py --variants-per-row 2
+python3 scripts/prepare_symbol_transform_synthetic_cot.py --target-rows 700 --direct-ratio 0.85 --output-csv data/trainable/symbol_transform_synthetic_cot_solver_verified_v2.csv --verify-with-solver
+python3 scripts/prepare_symbol_transform_phase2_export.py --output-csv data/trainable/symbol_transform_phase2_combined.csv
+```
 
+Build the split-aware Phase 2 training CSV:
+
+```bash
 python3 scripts/prepare_phase2_sft_dataset.py \
   --train-csv data/train.csv \
-  --base-cot-csv data/trainable/train_cot_gpt_oss_clean.csv \
-  --text-cot-csv data/trainable/text_cipher_compact_cot.csv \
   --split-csv data/splits_75_10_15.config.json \
   --train-splits sft_train \
   --output-csv data/trainable/train_sft_phase2_75_10_15.csv
 ```
 
-Then continue SFT from the phase-1 adapter:
+The current Phase 2 file has `8695` rows. Its largest source buckets are:
+
+1. gravity deterministic traces: `1197`
+2. unit-conversion deterministic traces: `1196`
+3. text-cipher compact traces: `1182`
+4. numeral greedy-Roman traces: `1182`
+5. bit-manipulation hybrid traces: `1132`
+6. numeric-equation synthetic traces: `870`
+7. symbol-transform synthetic traces: `700`
+8. answer-only fallback rows: `610`
+9. numeric-equation real deterministic/oracle rows: `522`
+10. symbol-transform real solver rows: `104`
+
+Train Phase 2 from the Phase 1 adapter:
 
 ```bash
 python3 train_sft.py \
   --config configs/cot_training_phase2_75_10_15.json
 ```
 
-`train_sft.py` now supports `--init-adapter-dir`, so phase 2 can keep training the LoRA weights learned in phase 1 instead of starting from a fresh adapter.
+`train_sft.py` supports `--init-adapter-dir`, and the Phase 2 config uses it
+to continue training the same LoRA adapter learned in Phase 1.
 
-## CoT Generation
+## Local Evaluation
 
-```bash
-export GEMINI_API_KEY=your_api_key_here
-
-python3 scripts/generate_gemini_cot.py \
-  --input-csv data/train.csv \
-  --output-csv data/trainable/train_cot_gemini.csv \
-  --model gemini-3-flash
-```
-
-The generator writes `id,prompt,answer,generated_cot,label` rows, supports resume-by-id, and only keeps generations whose extracted final answer matches the gold answer unless `--allow-unverified` is set.
-
-## Local GPT-OSS CoT Generation
-
-```bash
-python3 scripts/generate_gpt_oss_cot.py \
-  --input-csv data/train.csv \
-  --output-csv data/trainable/train_cot_gpt_oss.csv \
-  --model-path /kaggle/input/gpt-oss-120b/transformers/default/1
-```
-
-This follows the same `train_cot.csv` schema, but serves a local `gpt-oss-120b` model through vLLM and renders prompts with `openai_harmony`, based on the approach in [aimo-3-gpt-oss-120b-with-tools-and-revision.ipynb](/Users/taido/Desktop/Tai/NVIDIA%20Nemotron%20Model%20Reasoning/kaggle_notebooks/aimo-3-gpt-oss-120b-with-tools-and-revision.ipynb). By default it starts a local vLLM OpenAI-compatible server, verifies the boxed final answer against the gold label, and resumes by `id`.
-
-The generator now shows a progress bar by default. If you want to see tokens as they are produced, add `--stream-output`. With multiple attempts, only attempt 1 is shown live. If you prefer plain logging only, add `--no-progress`.
-
-By default the generator now uses `4` attempts per row with early stop at `2` agreeing answers.
-
-For notebook-style weighted selection with multiple attempts per row, use:
-
-```bash
-python3 scripts/generate_gpt_oss_cot.py \
-  --input-csv data/train.csv \
-  --output-csv data/trainable/train_cot_gpt_oss.csv \
-  --model-path /kaggle/input/gpt-oss-120b/transformers/default/1 \
-  --attempts 4 \
-  --attempt-workers 4 \
-  --early-stop-votes 2
-```
-
-This runs 4 generations for each row, aggregates extracted answers with notebook-style entropy-based scoring, and keeps the highest-scoring trace from the winning answer.
-
-## Cleaning And Approval
-
-```bash
-python3 clean_reasoning_trace.py \
-  --input-csv data/trainable/train_cot_gpt_oss.csv \
-  --output-csv data/trainable/train_cot_gpt_oss_clean.csv
-```
-
-This runs a second-pass cleaner plus a strict approver on each raw trace. The output CSV keeps:
-
-- `generated_cot_raw`: the original raw trace
-- `generated_cot_clean`: the cleaned trace before approval filtering
-- `generated_cot`: the approved training trace, or an empty string if the row failed approval
-
-Rows with empty `generated_cot` naturally fall back to answer-only supervision in `train_sft.py`.
-
-To reuse an already-running vLLM server:
-
-```bash
-python3 clean_reasoning_trace.py \
-  --no-start-server \
-  --port 8000 \
-  --input-csv data/trainable/train_cot_gpt_oss.csv \
-  --output-csv data/trainable/train_cot_gpt_oss_clean.csv
-```
-
-For a fast prompt sanity-check, use:
-
-```bash
-python3 scripts/generate_gpt_oss_cot.py \
-  --input-csv data/train.csv \
-  --output-csv data/trainable/train_cot_gpt_oss_debug.csv \
-  --model-path /kaggle/input/gpt-oss-120b/transformers/default/1 \
-  --debug \
-  --stream-output
-```
-
-`--debug` selects at most one unseen sample per category type.
-
-To debug a single category, add `--debug-type` with one of:
-`bit`, `gravity`, `conversion`, `cipher`, `transformation`, `numeral`
-
-## Deterministic Bit Renderer
-
-For Bit Manipulation rows that `gpt-oss` failed but the notebook solver can solve with high confidence, you can render cleaner deterministic CoT traces with:
-
-```bash
-python3 scripts/render_bit_solver_cot.py \
-  --input-csv data/trainable/train_cot_gpt_oss_failed.csv \
-  --output-csv data/trainable/train_cot_gpt_oss_failed_bit_solver_high_conf.csv
-```
-
-This reruns the bit solver from [bit-manipulation-solver-cot-generator.ipynb](/Users/taido/Desktop/Tai/NVIDIA%20Nemotron%20Model%20Reasoning/kaggle_notebooks/bit-manipulation-solver-cot-generator.ipynb), keeps only solver-correct high-confidence rows (`w_*` and `ctx` methods), and writes clean traces in the format:
-
-```text
-<think>
-...
-</think>
-\boxed{answer}
-```
-
-Rows that are solver-incorrect or solver-low-confidence are written to the skipped CSV instead.
-
-## Method Record
-
-For a consolidated record of the reusable solver methods we currently trust for later Doc2LoRA-style knowledge injection, see:
-
-- [docs/solver_method_record.md](/Users/taido/Desktop/Tai/NVIDIA%20Nemotron%20Model%20Reasoning/docs/solver_method_record.md)
-
-## Evaluation
+Evaluate the Phase 2 adapter on the fixed held-out `eval` split:
 
 ```bash
 python3 infer_eval.py \
-  --run-config outputs/baseline_answer_only/run_config.json \
-  --adapter-dir outputs/baseline_answer_only/adapter \
-  --max-eval-samples 256 \
-  --batch-size 1
-```
-
-This recreates the same validation split from `data/train.csv` using:
-
-- `seed=42`
-- `val_fraction=0.2`
-
-To evaluate on the fixed held-out `eval` split instead:
-
-```bash
-python3 infer_eval.py \
-  --run-config outputs/cot_training_75_10_15/run_config.json \
-  --adapter-dir outputs/cot_training_75_10_15/adapter \
+  --run-config outputs/cot_training_phase2_75_10_15/run_config.json \
+  --adapter-dir outputs/cot_training_phase2_75_10_15/adapter \
   --split-csv data/splits_75_10_15.csv \
   --eval-splits eval
 ```
 
-## GRPO Stage
+The evaluation prompt suffix is:
 
-After SFT, you can run a second-stage GRPO update starting from the SFT adapter:
+```text
+Please put your final answer inside `\boxed{}`. For example: `\boxed{your answer}`
+```
+
+Training traces should therefore end with:
+
+```text
+The final answer is \boxed{...}
+```
+
+## Optional GRPO Stage
+
+After Phase 2 SFT, run GRPO from the Phase 2 adapter:
 
 ```bash
 python3 train_grpo.py \
   --config configs/grpo_stage2.json \
-  --sft-adapter-dir outputs/cot_training_75_10_15/adapter \
+  --sft-adapter-dir outputs/cot_training_phase2_75_10_15/adapter \
   --output-dir outputs/grpo_stage2
 ```
 
-This:
+Then compare SFT-only and GRPO adapters on the same held-out `eval` split with
+`infer_eval.py`.
 
-- trains on the `grpo_train` split from `data/splits_75_10_15.csv`
-- starts from the SFT LoRA adapter
-- uses Nemotron's default chat-template thinking mode
-- rewards exact final-answer correctness with small bonuses for a single boxed final line
+## Current Method Principles
 
-Then compare the SFT-only adapter and the GRPO adapter on the same held-out `eval` split with `infer_eval.py`.
+The active pipeline follows these rules:
 
-Artifacts are written under the chosen output directory:
-
-- `adapter/`
-- `submission.zip`
-- `run_config.json`
-- `dataset_summary.json`
-- `val_summary.json`
-- `val_predictions.jsonl`
+1. Prefer deterministic solvers and rendered CoT templates over external model
+   generation.
+2. Keep Phase 1 compact and reusable: facts, rule names, route cards, and small
+   canonical worked examples.
+3. Keep Phase 2 task-like: full deterministic traces in the same prompt format
+   as competition evaluation.
+4. Use the 77-word Wonderland vocabulary for text cipher knowledge, but teach
+   the solving behavior through compact mapping/vocabulary-completion traces.
+5. Treat unit conversion, gravity, and numeral system as Phase 2-only simple
+   deterministic families.
+6. Give bit manipulation, numeric equation, and symbol transform explicit
+   Phase 1 methodology support.
+7. For symbol transform, emphasize direct template matching first, then
+   encrypted digit search with `BA_DC|rev` or `AB_CD|raw` only when needed.

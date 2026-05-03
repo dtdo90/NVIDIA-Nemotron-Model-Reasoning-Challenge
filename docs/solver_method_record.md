@@ -14,12 +14,13 @@ We currently have reusable method knowledge for:
 4. `Gravity`
 5. `Numeral System`
 6. `Transformation Rules / numeric_equation`
+7. `Transformation Rules / symbol_transform`
 
-We do **not** yet have a complete trusted solver-method record for:
-
-1. `Transformation Rules / symbol_transform`
-
-That category may already have useful traces, but it is not yet captured here as an explicit reusable procedure.
+`symbol_transform` remains the hardest and least complete solver family, but it
+now has a current reusable procedure: test direct templates first, then use
+encrypted digit search over `BA_DC|rev` or `AB_CD|raw`, with same-operator
+examples as the primary evidence and other examples used only to complete the
+symbol-digit map.
 
 ## How To Use This Record Later
 
@@ -67,10 +68,10 @@ Current decision:
    Phase 1B is probably unnecessary. Roman conversion is deterministic, and Phase 2 traces can teach full task behavior.
 
 3. `Unit Conversion`
-   Phase 1B is unnecessary for now. Phase 1A should teach scalar-factor inference and two-decimal formatting; Phase 2 traces can teach the full solution flow.
+   Phase 1A and Phase 1B are excluded from the default starter loop. The weighted scalar method is simple enough to teach through deterministic Phase 2 traces.
 
 4. `Gravity`
-   Phase 1B is unnecessary or tiny if it mirrors unit conversion. Reconsider only if the prompt family needs extra physics-specific constants or formulas.
+   Phase 1A and Phase 1B are excluded from the default starter loop. The method is a simple scalar law over examples, and deterministic Phase 2 traces are sufficient for now.
 
 5. `Bit Manipulation`
    Phase 1B is useful. The model benefits from short procedure cards for rule-family names, bitwise operations, and high-confidence solver templates before long traces.
@@ -79,7 +80,7 @@ Current decision:
    Phase 1B is useful. The search over pairings, operators, output formats, motif support, and ranking heuristics is too procedural for facts alone.
 
 7. `Transformation Rules / symbol_transform`
-   Phase 1B is likely important once the method is clearer. This family combines cipher decoding with numeric-equation-style rule search.
+   Phase 1A and Phase 1B are important. The active Phase 1 mixture includes direct-template curriculum rows, motif drills, operator-family drills, symbol-digit conversion drills, compact route cards, and methodology cards.
 
 ## Numeral System
 
@@ -491,10 +492,10 @@ Keep only rows where all bits are resolved before the notebook's brute-force amb
 
 Relevant files:
 
-1. [render_bit_solver_cot.py](/Users/taido/Desktop/Tai/NVIDIA%20Nemotron%20Model%20Reasoning/scripts/render_bit_solver_cot.py)
-2. [bit-manipulation-solver-cot-generator.ipynb](/Users/taido/Desktop/Tai/NVIDIA%20Nemotron%20Model%20Reasoning/reference/kaggle_notebooks/bit-manipulation-solver-cot-generator.ipynb)
-3. [bit_manipulation.py](/Users/taido/Desktop/Tai/NVIDIA%20Nemotron%20Model%20Reasoning/src/nemotron_baseline/bit_manipulation.py)
-4. [analyze_bit_manipulation_solver.py](/Users/taido/Desktop/Tai/NVIDIA%20Nemotron%20Model%20Reasoning/scripts/analyze_bit_manipulation_solver.py)
+1. [prepare_phase1a_bit_manipulation_knowledge.py](/Users/taido/Desktop/Tai/NVIDIA%20Nemotron%20Model%20Reasoning/scripts/prepare_phase1a_bit_manipulation_knowledge.py)
+2. [prepare_phase1b_bit_manipulation_methodology.py](/Users/taido/Desktop/Tai/NVIDIA%20Nemotron%20Model%20Reasoning/scripts/prepare_phase1b_bit_manipulation_methodology.py)
+3. [prepare_bit_manipulation_phase2_cot.py](/Users/taido/Desktop/Tai/NVIDIA%20Nemotron%20Model%20Reasoning/scripts/prepare_bit_manipulation_phase2_cot.py)
+4. [bit_manipulation_hybrid_cot.csv](/Users/taido/Desktop/Tai/NVIDIA%20Nemotron%20Model%20Reasoning/data/trainable/bit_manipulation_hybrid_cot.csv)
 
 ### Solver Sanity Check
 
@@ -737,7 +738,7 @@ Confidence logic:
 
 This selector works better than the notebook's original numeric trace logic.
 
-Older current-solver stats from [analyze_numeric_equation_solver.py](/Users/taido/Desktop/Tai/NVIDIA%20Nemotron%20Model%20Reasoning/scripts/analyze_numeric_equation_solver.py):
+Historical local-analysis stats from the older numeric-equation solver:
 
 1. total numeric-equation rows: `732`
 2. exact solved overall: `510`
@@ -886,12 +887,11 @@ This scan is useful because it captures the notebook-style `digit_transform` int
 Relevant files:
 
 1. [numeric_equation.py](/Users/taido/Desktop/Tai/NVIDIA%20Nemotron%20Model%20Reasoning/src/nemotron_baseline/numeric_equation.py)
-2. [analyze_numeric_equation_solver.py](/Users/taido/Desktop/Tai/NVIDIA%20Nemotron%20Model%20Reasoning/scripts/analyze_numeric_equation_solver.py)
-3. [render_numeric_equation_cot.py](/Users/taido/Desktop/Tai/NVIDIA%20Nemotron%20Model%20Reasoning/scripts/render_numeric_equation_cot.py)
-4. [prepare_numeric_equation_phase2_cot.py](/Users/taido/Desktop/Tai/NVIDIA%20Nemotron%20Model%20Reasoning/scripts/prepare_numeric_equation_phase2_cot.py)
-5. [prepare_numeric_equation_synthetic_cot.py](/Users/taido/Desktop/Tai/NVIDIA%20Nemotron%20Model%20Reasoning/scripts/prepare_numeric_equation_synthetic_cot.py)
-6. [numeric_equation_labelled_cot.csv](/Users/taido/Desktop/Tai/NVIDIA%20Nemotron%20Model%20Reasoning/data/trainable/numeric_equation_labelled_cot.csv)
-7. [numeric_equation_synthetic_cot.csv](/Users/taido/Desktop/Tai/NVIDIA%20Nemotron%20Model%20Reasoning/data/trainable/numeric_equation_synthetic_cot.csv)
+2. [numeric_equation_detailed_cot.py](/Users/taido/Desktop/Tai/NVIDIA%20Nemotron%20Model%20Reasoning/scripts/numeric_equation_detailed_cot.py)
+3. [prepare_numeric_equation_phase2_cot.py](/Users/taido/Desktop/Tai/NVIDIA%20Nemotron%20Model%20Reasoning/scripts/prepare_numeric_equation_phase2_cot.py)
+4. [prepare_numeric_equation_synthetic_cot.py](/Users/taido/Desktop/Tai/NVIDIA%20Nemotron%20Model%20Reasoning/scripts/prepare_numeric_equation_synthetic_cot.py)
+5. [numeric_equation_labelled_cot.csv](/Users/taido/Desktop/Tai/NVIDIA%20Nemotron%20Model%20Reasoning/data/trainable/numeric_equation_labelled_cot.csv)
+6. [numeric_equation_synthetic_cot.csv](/Users/taido/Desktop/Tai/NVIDIA%20Nemotron%20Model%20Reasoning/data/trainable/numeric_equation_synthetic_cot.csv)
 
 ### What We Should Teach
 
@@ -1037,7 +1037,11 @@ The implemented exploratory solver combines the cipher-numeric idea with our `di
 Current implementation:
 
 1. [symbol_transform.py](/Users/taido/Desktop/Tai/NVIDIA%20Nemotron%20Model%20Reasoning/src/nemotron_baseline/symbol_transform.py)
-2. [analyze_symbol_transform_solver.py](/Users/taido/Desktop/Tai/NVIDIA%20Nemotron%20Model%20Reasoning/scripts/analyze_symbol_transform_solver.py)
+2. [prepare_phase1a_symbol_transform_knowledge.py](/Users/taido/Desktop/Tai/NVIDIA%20Nemotron%20Model%20Reasoning/scripts/prepare_phase1a_symbol_transform_knowledge.py)
+3. [prepare_phase1b_symbol_transform_methodology.py](/Users/taido/Desktop/Tai/NVIDIA%20Nemotron%20Model%20Reasoning/scripts/prepare_phase1b_symbol_transform_methodology.py)
+4. [prepare_phase1_symbol_transform_direct_curriculum.py](/Users/taido/Desktop/Tai/NVIDIA%20Nemotron%20Model%20Reasoning/scripts/prepare_phase1_symbol_transform_direct_curriculum.py)
+5. [prepare_symbol_transform_synthetic_cot.py](/Users/taido/Desktop/Tai/NVIDIA%20Nemotron%20Model%20Reasoning/scripts/prepare_symbol_transform_synthetic_cot.py)
+6. [prepare_symbol_transform_phase2_export.py](/Users/taido/Desktop/Tai/NVIDIA%20Nemotron%20Model%20Reasoning/scripts/prepare_symbol_transform_phase2_export.py)
 
 Current full-train exploratory results on the `823` symbol-transform rows:
 
@@ -1215,6 +1219,10 @@ Everything else in the `*` group should currently remain in `star_other`.
 
 ## Commands To Regenerate Artifacts
 
+These are the active deterministic build commands. Older external-model
+generation steps, notebook teacher traces, and exploratory diagnostics are not
+part of the current training-data path.
+
 ### Text Encryption
 
 ```bash
@@ -1233,26 +1241,19 @@ python3 scripts/prepare_numeral_phase2_cot.py
 ### Bit Manipulation
 
 ```bash
-python3 scripts/render_bit_solver_cot.py
 python3 scripts/prepare_phase1a_bit_manipulation_knowledge.py
 python3 scripts/prepare_phase1b_bit_manipulation_methodology.py
 python3 scripts/prepare_bit_manipulation_phase2_cot.py
 ```
 
-The current Phase 2 builder also consumes `data/trainable/bit_manipulation_hybrid_cot.csv` automatically when present:
-
-```bash
-python3 scripts/prepare_phase2_sft_dataset.py
-```
+The Phase 2 builder consumes `data/trainable/bit_manipulation_hybrid_cot.csv`
+when constructing the combined SFT file.
 
 ### Numeric Equation
 
 ```bash
-python3 scripts/analyze_numeric_equation_solver.py
-python3 scripts/render_numeric_equation_cot.py
 python3 scripts/prepare_numeric_equation_phase2_cot.py
 python3 scripts/prepare_numeric_equation_synthetic_cot.py --variants-per-row 2
-python3 scripts/prepare_phase2_sft_dataset.py
 ```
 
 Optional heavier final-training ablation:
@@ -1270,11 +1271,8 @@ starter-loop components into one training CSV:
 python3 scripts/prepare_phase1_training_dataset.py
 ```
 
-### Unit Conversion Phase 1A
-
-```bash
-python3 scripts/prepare_phase1a_unit_conversion_knowledge.py
-```
+Unit conversion, gravity, and numeral knowledge-card component files may exist
+locally for ablation, but they are excluded from the default Phase 1 mixture.
 
 ### Gravity Phase 2
 
@@ -1284,38 +1282,27 @@ Gravity does not need Phase 1A. Regenerate only the deterministic Phase 2 traces
 python3 scripts/prepare_gravity_phase2_cot.py
 ```
 
-### Symbol Transform Grouping
+### Unit Conversion Phase 2
 
 ```bash
-python3 scripts/group_symbol_transform_by_operator.py
+python3 scripts/prepare_unit_conversion_phase2_cot.py
 ```
 
-### Symbol Transform Reference Router
+### Symbol Transform Phase 1
 
 ```bash
-python3 reference/cursor/transformation_rules/symbol_transform/harness/evaluate_router.py
-python3 reference/cursor/transformation_rules/symbol_transform/harness/evaluate_stage3.py
+python3 scripts/prepare_phase1a_symbol_transform_knowledge.py
+python3 scripts/prepare_phase1b_symbol_transform_methodology.py
+python3 scripts/prepare_phase1_symbol_transform_direct_curriculum.py
 ```
 
-### Symbol Transform Exploratory Solver
+The direct-template curriculum currently contains `2000` rows:
 
-```bash
-python3 scripts/analyze_symbol_transform_solver.py --rule-bank core --output-csv data/symbol_transform_solver_analysis_core.csv
-python3 scripts/analyze_symbol_transform_solver.py --rule-bank core --adaptive-retry --adaptive-retry-on no_rule --output-csv data/symbol_transform_solver_analysis_core_adaptive_safe.csv
-python3 scripts/analyze_symbol_transform_solver.py --rule-bank core --adaptive-retry --adaptive-retry-on no_rule --max-query-unknowns 1 --output-csv data/symbol_transform_solver_analysis_core_adaptive_query_unknown1.csv
-python3 scripts/analyze_symbol_transform_solver.py --rule-bank asymmetric --output-csv data/symbol_transform_solver_analysis_asymmetric.csv
-python3 scripts/analyze_symbol_transform_solver.py --rule-bank core --selection ranked --output-csv data/symbol_transform_solver_analysis_core_ranked.csv
-python3 scripts/analyze_symbol_transform_rescue.py --baseline-csv data/symbol_transform_solver_analysis_core.csv --retry-csv data/symbol_transform_solver_analysis_core_adaptive_safe.csv --output-csv data/symbol_transform_rescue_analysis_safe.csv
-```
-
-### Symbol Transform Oracle Diagnostics
-
-```bash
-python3 scripts/analyze_symbol_transform_oracle.py --target wrong --rule-bank extended --output-mode-bank all --output-csv data/symbol_transform_oracle_wrong.csv
-python3 scripts/analyze_symbol_transform_oracle.py --target no_rule --limit 100 --rule-bank extended --output-mode-bank all --output-csv data/symbol_transform_oracle_no_rule_sample100.csv
-python3 scripts/analyze_symbol_transform_oracle.py --target ambiguous --rule-bank extended --output-mode-bank all --output-csv data/symbol_transform_oracle_ambiguous.csv
-python3 scripts/prepare_symbol_transform_core_gap_diagnostics.py
-```
+1. `600` direct-template rows
+2. `400` motif drills
+3. `350` operator-family drills
+4. `350` symbol-digit encode/decode drills
+5. `300` compact route cards
 
 ### Symbol Transform Phase 2 CoT Export
 
@@ -1373,7 +1360,7 @@ The Phase 2 SFT builder now consumes this file directly:
 
 For the current `75/10/15` split, this contributes:
 
-1. `106` real solved `symbol_transform` rows
+1. `104` real solved `symbol_transform` rows
 2. `700` synthetic `symbol_transform` rows
 
 Synthetic data recommendation:
@@ -1383,6 +1370,25 @@ Synthetic data recommendation:
 3. avoid using unverified random cipher rows, because many constructed rows are not uniquely recovered by the current solver
 4. include more rows with distractor operators once the global-motif route is more stable
 5. keep direct-template rows, but do not let them dominate future additions
+
+### Combined Phase 2 Training Dataset
+
+After refreshing the deterministic source files above, rebuild the active
+Phase 2 SFT CSV:
+
+```bash
+python3 scripts/prepare_phase2_sft_dataset.py \
+  --train-csv data/train.csv \
+  --split-csv data/splits_75_10_15.config.json \
+  --train-splits sft_train \
+  --output-csv data/trainable/train_sft_phase2_75_10_15.csv
+```
+
+The active combined file is:
+
+```text
+data/trainable/train_sft_phase2_75_10_15.csv
+```
 
 ## Practical Next Step
 

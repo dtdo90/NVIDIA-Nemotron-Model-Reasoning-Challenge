@@ -147,13 +147,11 @@ Potential improvement:
 
 ## Cryptarithm / Symbol Transform Alignment
 
-This is the biggest strategic correction.
+This was the biggest strategic correction from the reference solution.
 
-We had been exploring whether `symbol_transform` should be treated as an encryption layer on top of full `digit_transform`.
-
-The winner solution did **not** do that.
-
-Their cryptarithm strategy is intentionally narrow:
+The winner solution did **not** attempt a full encrypted `digit_transform`
+solver for every cryptarithm row. Their cryptarithm strategy was intentionally
+narrow:
 
 1. check whether the query operator is concatenation
 2. check whether the query operator is reverse concatenation
@@ -173,13 +171,17 @@ The sample traces in `cryptarithm.csv` show exactly this style:
 - mark operator as known or unknown
 - solve query if its operator is known
 
-This means our next `symbol_transform` baseline should probably be:
+Current repo decision:
 
-1. implement the concat / reverse-concat solver first
-2. generate deterministic traces for those `~65` solvable rows
-3. only then decide whether to pursue the harder encrypted-digit-transform interpretation
+1. keep the direct-template idea as the first and most important phase-1 skill
+2. teach `0134` and `3401` with authentic and synthetic direct-template traces
+3. add compact drills for `AB_CD` and `BA_DC` motifs
+4. use encrypted digit search only after direct templates fail
+5. restrict the hard branch to the two currently useful motifs: `BA_DC|rev` and `AB_CD|raw`
 
-This is lower ambition than full cryptarithm solving, but it is aligned with a proven high-scoring solution.
+So we are now slightly more ambitious than the winner's public cryptarithm
+branch, but the curriculum still starts with the proven direct-template habit
+instead of throwing the model immediately into full cryptarithm search.
 
 ## Bit Manipulation Alignment
 
@@ -260,16 +262,20 @@ Near-term practical takeaway:
    - mark wrong/match/correct
    - verify explicitly
 
-### Phase 2: Symbol Transform Baseline
+### Phase 2: Symbol Transform Curriculum
 
-1. Implement the narrow cryptarithm solver:
-   - concatenation
-   - reverse concatenation
-   - absent operator -> concatenation guess
+1. Keep direct templates as the starter skill:
+   - `0134`: `ABOCD -> ABCD`
+   - `3401`: `ABOCD -> CDAB`
 
-2. Generate traces matching `cryptarithm.csv` style.
+2. Teach motif recognition before hard encrypted arithmetic:
+   - `AB_CD|raw`
+   - `BA_DC|rev`
 
-3. Do not overinvest in full encrypted digit-transform until this baseline is in.
+3. Use the encrypted digit-transform branch only after direct templates fail.
+
+4. Keep hard real traces solver-backed and detailed; use Phase 1 synthetic
+   curriculum to make the direct-template behavior easy for the model first.
 
 ### Phase 3: Bit Manipulation Upgrade
 
@@ -299,7 +305,6 @@ The biggest alignment changes for us are:
 
 1. prioritize deterministic code-generated traces over generated teacher CoT
 2. treat `digit_transform` as almost solved enough; focus on trace quality
-3. start `symbol_transform` with concat/reverse-concat only
+3. start `symbol_transform` with direct templates and compact motif drills
 4. invest heavily in bit-manipulation trace quality
 5. keep training simple until trace quality is aligned
-
