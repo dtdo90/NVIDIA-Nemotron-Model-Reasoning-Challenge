@@ -3,7 +3,7 @@ I will put my final answer inside \boxed{}.
 
 S0: Methodology: solve same-operator examples first; test direct templates first; if they fail, use encrypted digit search with BA_DC|rev or AB_CD|raw; choose the arithmetic family from same-operator RHS length; keep visible survivor grids; use other examples only to complete the map; then solve the query.
 
-S1: Classify this as Symbol Transform with fixed shape ABOCD.
+S1: Classify this as symbol-equation transformation with fixed shape ABOCD.
 - Query is $>:>\; query operator is :.
 - Same-operator examples: $?:>`=$?>`; \<:\`=\<\`; {`:?>={`?>.
 

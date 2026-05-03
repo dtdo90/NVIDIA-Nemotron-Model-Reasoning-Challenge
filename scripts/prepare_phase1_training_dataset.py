@@ -14,10 +14,7 @@ DEFAULT_COMPONENTS = [
     "data/trainable/phase1_components/text_knowledge_phase1.csv",
     "data/trainable/phase1_components/phase1a_bit_manipulation_knowledge.csv",
     "data/trainable/phase1_components/phase1b_bit_manipulation_methodology.csv",
-    "data/trainable/phase1_components/phase1a_numeric_equation_knowledge.csv",
-    "data/trainable/phase1_components/phase1b_numeric_equation_methodology.csv",
-    "data/trainable/phase1_components/phase1a_symbol_transform_knowledge.csv",
-    "data/trainable/phase1_components/phase1b_symbol_transform_methodology.csv",
+    "data/trainable/phase1_components/phase1_numeric_equation_curriculum.csv",
     "data/trainable/phase1_components/phase1_symbol_transform_direct_curriculum.csv",
 ]
 
@@ -38,7 +35,8 @@ def parse_args() -> argparse.Namespace:
         default=None,
         help=(
             "Component CSV to include. Repeat to override the default active component "
-            "set. Defaults to text knowledge plus difficult-case Phase 1A/1B files."
+            "set. Defaults to text knowledge, bit components, the merged numeric "
+            "curriculum, and the symbol-equation direct curriculum."
         ),
     )
     parser.add_argument(
@@ -138,6 +136,10 @@ def main() -> None:
             "phase1a_unit_conversion_knowledge.csv",
             "phase1a_gravity_knowledge.csv",
             "phase1a_numeral_knowledge.csv",
+            "phase1a_numeric_equation_knowledge.csv",
+            "phase1b_numeric_equation_methodology.csv",
+            "phase1a_symbol_transform_knowledge.csv",
+            "phase1b_symbol_transform_methodology.csv",
         ],
     }
     summary_path.write_text(json.dumps(summary, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")

@@ -24,14 +24,14 @@ def parse_args() -> argparse.Namespace:
             "notebook solver for high-confidence rows only."
         )
     )
-    parser.add_argument("--input-csv", default="data/train_cot_gpt_oss_failed.csv")
+    parser.add_argument("--input-csv", default="data/trainable/train_cot_gpt_oss_failed.csv")
     parser.add_argument(
         "--output-csv",
-        default="data/train_cot_gpt_oss_failed_bit_solver_high_conf.csv",
+        default="data/trainable/train_cot_gpt_oss_failed_bit_solver_high_conf.csv",
     )
     parser.add_argument(
         "--skipped-csv",
-        default="data/train_cot_gpt_oss_failed_bit_solver_high_conf_skipped.csv",
+        default="data/trainable/train_cot_gpt_oss_failed_bit_solver_high_conf_skipped.csv",
     )
     parser.add_argument(
         "--notebook-path",

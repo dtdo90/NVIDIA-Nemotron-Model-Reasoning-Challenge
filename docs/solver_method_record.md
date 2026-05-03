@@ -90,10 +90,10 @@ Current decision:
    Phase 1B is useful. The model benefits from short procedure cards for rule-family names, bitwise operations, and high-confidence solver templates before long traces.
 
 6. `Transformation Rules / numeric_equation`
-   Phase 1B is useful. The search over pairings, operators, output formats, motif support, and ranking heuristics is too procedural for facts alone.
+   The active starter-loop Phase 1 uses a single merged Numeric Equation Curriculum. It is built from the older Phase 1A facts and Phase 1B methodology cards, deduplicated, stripped of `<think>` wrappers, and normalized to boxed final-answer style. The archived 1A/1B files remain useful for ablation.
 
-7. `Transformation Rules / symbol_transform`
-   Phase 1A and Phase 1B are important. The active Phase 1 mixture includes direct-template curriculum rows, motif drills, operator-family drills, symbol-digit conversion drills, compact route cards, and methodology cards.
+7. `Transformation Rules / symbol-equation`
+   The active starter-loop Phase 1 uses only the Symbol-Equation Direct Curriculum. The older symbol-transform Phase 1A/1B files are retained for ablation, but they overlap heavily with the direct curriculum and are excluded from the default training CSV. The active direct curriculum includes direct-template rows, motif drills, operator-family drills, symbol-digit conversion drills, RHS-length family drills, and compact route cards.
 
 ## Numeral System
 
@@ -840,24 +840,27 @@ For final-submission training, we also keep a separate full synthetic file:
 4. this remains a heavier ablation/final-training option, not the active Phase 2 default
 4. intended use: final training run after local split-based evaluation is no longer needed
 
-Phase 1A accepted-rule curriculum:
+Phase 1 numeric-equation curriculum:
 
-1. [prepare_phase1a_numeric_equation_knowledge.py](/Users/taido/Desktop/Tai/NVIDIA%20Nemotron%20Model%20Reasoning/scripts/prepare_phase1a_numeric_equation_knowledge.py) now reads the accepted `696` numeric-equation rule labels.
-2. It generates exactly `2200` compact Phase 1A cards.
-3. It includes only the pairings, base rules, output modes, and combo priorities used by accepted rows.
-4. It excludes unused theoretical rules such as square rules, gcd/lcm, digit-sum rules, and unused division variants.
+1. [prepare_phase1a_numeric_equation_knowledge.py](/Users/taido/Desktop/Tai/NVIDIA%20Nemotron%20Model%20Reasoning/scripts/prepare_phase1a_numeric_equation_knowledge.py) reads the accepted numeric-equation rule labels.
+2. [prepare_phase1b_numeric_equation_methodology.py](/Users/taido/Desktop/Tai/NVIDIA%20Nemotron%20Model%20Reasoning/scripts/prepare_phase1b_numeric_equation_methodology.py) creates compact method cards.
+3. [prepare_phase1_numeric_equation_curriculum.py](/Users/taido/Desktop/Tai/NVIDIA%20Nemotron%20Model%20Reasoning/scripts/prepare_phase1_numeric_equation_curriculum.py) merges those two files into the active training component.
+4. The merged file deduplicates exact prompt+answer pairs, removes `<think>` wrappers, skips unsafe boxed-answer literals, and appends `The final answer is \boxed{...}`.
 
-Phase 1A numeric-equation card mix:
+Active merged numeric-equation card mix:
 
-1. total rows: `2350`
-2. base-rule semantics: `650`
-3. combo application: `600`
-4. output-mode semantics: `550`
-5. pairing transforms: `250`
-6. scan priority: `151`
-7. priority inventory: `81`
-8. DSL boundary cards: `65`
-9. accepted DSL inventory: `3`
+1. total rows: `1662`
+2. base-rule semantics: `100`
+3. combo application: `594`
+4. output-mode semantics: `418`
+5. pairing transforms: `124`
+6. scan priority: `114`
+7. priority inventory: `95`
+8. rule-boundary cards: `45`
+9. pairing-principle cards: `3`
+10. accepted rule inventory: `3`
+11. methodology cards: `166` across procedure, same-op decision, motif evidence, tie-break, absent-op, and sanity-check subtypes
+12. confidence-gating and ambiguity-handling cards are excluded from the active curriculum because they teach abstention or hesitation rather than a final competition answer
 
 ### Frequency-Ordered Digit-Transform Scan
 
@@ -1050,9 +1053,9 @@ The implemented exploratory solver combines the cipher-numeric idea with our `di
 Current implementation:
 
 1. [symbol_transform.py](/Users/taido/Desktop/Tai/NVIDIA%20Nemotron%20Model%20Reasoning/src/nemotron_baseline/symbol_transform.py)
-2. [prepare_phase1a_symbol_transform_knowledge.py](/Users/taido/Desktop/Tai/NVIDIA%20Nemotron%20Model%20Reasoning/scripts/prepare_phase1a_symbol_transform_knowledge.py)
-3. [prepare_phase1b_symbol_transform_methodology.py](/Users/taido/Desktop/Tai/NVIDIA%20Nemotron%20Model%20Reasoning/scripts/prepare_phase1b_symbol_transform_methodology.py)
-4. [prepare_phase1_symbol_transform_direct_curriculum.py](/Users/taido/Desktop/Tai/NVIDIA%20Nemotron%20Model%20Reasoning/scripts/prepare_phase1_symbol_transform_direct_curriculum.py)
+2. [prepare_phase1_symbol_transform_direct_curriculum.py](/Users/taido/Desktop/Tai/NVIDIA%20Nemotron%20Model%20Reasoning/scripts/prepare_phase1_symbol_transform_direct_curriculum.py)
+3. [prepare_phase1a_symbol_transform_knowledge.py](/Users/taido/Desktop/Tai/NVIDIA%20Nemotron%20Model%20Reasoning/scripts/prepare_phase1a_symbol_transform_knowledge.py) archived for ablation
+4. [prepare_phase1b_symbol_transform_methodology.py](/Users/taido/Desktop/Tai/NVIDIA%20Nemotron%20Model%20Reasoning/scripts/prepare_phase1b_symbol_transform_methodology.py) archived for ablation
 5. [prepare_symbol_transform_synthetic_cot.py](/Users/taido/Desktop/Tai/NVIDIA%20Nemotron%20Model%20Reasoning/scripts/prepare_symbol_transform_synthetic_cot.py)
 6. [prepare_symbol_transform_phase2_export.py](/Users/taido/Desktop/Tai/NVIDIA%20Nemotron%20Model%20Reasoning/scripts/prepare_symbol_transform_phase2_export.py)
 
@@ -1264,6 +1267,16 @@ when constructing the combined SFT file.
 
 ### Numeric Equation
 
+Phase 1:
+
+```bash
+python3 scripts/prepare_phase1a_numeric_equation_knowledge.py
+python3 scripts/prepare_phase1b_numeric_equation_methodology.py
+python3 scripts/prepare_phase1_numeric_equation_curriculum.py
+```
+
+Phase 2:
+
 ```bash
 python3 scripts/prepare_numeric_equation_phase2_cot.py
 python3 scripts/prepare_numeric_equation_synthetic_cot.py --variants-per-row 2
@@ -1301,23 +1314,28 @@ python3 scripts/prepare_gravity_phase2_cot.py
 python3 scripts/prepare_unit_conversion_phase2_cot.py
 ```
 
-### Symbol Transform Phase 1
+### Symbol-Equation Phase 1
 
 ```bash
-python3 scripts/prepare_phase1a_symbol_transform_knowledge.py
-python3 scripts/prepare_phase1b_symbol_transform_methodology.py
 python3 scripts/prepare_phase1_symbol_transform_direct_curriculum.py
 ```
 
-The direct-template curriculum currently contains `2000` rows:
+For the starter loop, do not include
+`phase1a_symbol_transform_knowledge.csv` or
+`phase1b_symbol_transform_methodology.csv` in
+`phase1_train.csv`. They remain useful as local ablation/reference pools, but
+the active symbol-equation Phase 1 component is the direct curriculum only.
+
+The direct-template curriculum currently contains `1910` rows:
 
 1. `600` direct-template rows
-2. `400` motif drills
+2. `100` motif drills
 3. `350` operator-family drills
-4. `350` symbol-digit encode/decode drills
-5. `300` compact route cards
+4. `400` symbol-digit encode/decode drills
+5. `160` RHS-length family drills
+6. `300` compact route cards
 
-### Symbol Transform Phase 2 CoT Export
+### Symbol-Equation Phase 2 CoT Export
 
 ```bash
 python3 scripts/prepare_symbol_transform_synthetic_cot.py --target-rows 700 --direct-ratio 0.85 --output-csv data/trainable/symbol_transform_synthetic_cot_solver_verified_v2.csv --verify-with-solver
@@ -1345,7 +1363,7 @@ phase-2 train symbol assistant extraction mismatches: 0
 
 The `generated_cot` template now teaches the solver procedure explicitly:
 
-1. classify the row as Symbol Transform with `ABOCD` structure
+1. classify the row as symbol-equation transformation with `ABOCD` structure
 2. isolate same-operator examples first
 3. try direct-position templates and reject the failed one
 4. if direct templates fail, switch to encrypted digit-transform

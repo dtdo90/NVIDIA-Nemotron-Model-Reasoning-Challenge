@@ -31,8 +31,8 @@ def parse_args() -> argparse.Namespace:
             "running the supervisor and approver pipeline."
         )
     )
-    parser.add_argument("--input-csv", default="data/train_cot_gpt_oss.csv")
-    parser.add_argument("--output-csv", default="data/train_cot_gpt_oss_salvaged.csv")
+    parser.add_argument("--input-csv", default="data/trainable/train_cot_gpt_oss.csv")
+    parser.add_argument("--output-csv", default="data/trainable/train_cot_gpt_oss_salvaged.csv")
     parser.add_argument(
         "--keep-original-column",
         action="store_true",

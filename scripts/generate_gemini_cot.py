@@ -66,7 +66,7 @@ def parse_args() -> argparse.Namespace:
         description="Generate CoT data with Gemini for Nemotron reasoning training."
     )
     parser.add_argument("--input-csv", default="data/train.csv")
-    parser.add_argument("--output-csv", default="data/train_cot_gemini.csv")
+    parser.add_argument("--output-csv", default="data/trainable/train_cot_gemini.csv")
     parser.add_argument(
         "--failed-csv",
         default=None,

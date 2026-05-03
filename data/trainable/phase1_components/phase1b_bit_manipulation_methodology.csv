@@ -1,6 +1,6 @@
 id,prompt,answer,generated_cot,label,category,source,source_category
 p1b_proc_full,"In Alice's Wonderland bit manipulation methodology, summarize the deterministic bit manipulation solver in 4 numbered steps.",1) per-bit single-pair Boolean search; 2) depth-4 atom-pair composition; 3) 3-input gate of three atoms (MAJ/CHO/PAR3); 4) mark unsolved.,"<think>
-Step 1 is the cheapest and covers the majority of rows. Steps 2 and 3 are escalations triggered when the previous step has no consistent fit on every output column. Step 4 is reserved for rules outside our trusted DSL.
+Step 1 is the cheapest and covers the majority of rows. Steps 2 and 3 are escalations triggered when the previous step has no consistent fit on every output column. Step 4 is reserved for rows outside the trusted rule set.
 </think>",Bit Manipulation Methodology,Phase1B Bit Manipulation Methodology,deterministic_bit_manipulation_methodology,procedure_summary
 p1b_proc_paragraph,"In Alice's Wonderland bit manipulation methodology, describe the deterministic bit manipulation solver in one short paragraph.","Try a per-bit single-pair Boolean search first. If every output column has a consistent fit on every example, apply that rule to the query. Otherwise escalate to a depth-4 atom-pair search; if that fits all examples, apply it. Otherwise escalate to a 3-input gate of three atoms (MAJ / CHO / PAR3); if that fits, apply it. Otherwise mark the row unsolved.","<think>
 The solver is a four-tier escalation: cheapest search first, only escalating when the previous tier has no consistent fit on every example.
@@ -18,7 +18,7 @@ p1b_proc_tier3,"In Alice's Wonderland bit manipulation methodology, what is Tier
 Search rules of the form R(v) = OP3(atom_a, atom_b, atom_c) where OP3 in {MAJ, CHO, PAR3}.
 </think>",Bit Manipulation Methodology,Phase1B Bit Manipulation Methodology,deterministic_bit_manipulation_methodology,procedure_summary
 p1b_proc_tier4,"In Alice's Wonderland bit manipulation methodology, what is Tier 4 in the bit manipulation solver?",mark the row unsolved,"<think>
-If none of Tiers 1-3 produces a rule that fits every training example, the row sits outside our trusted DSL and we do not emit a guess.
+If none of Tiers 1-3 produces a rule that fits every training example, the row sits outside the trusted rule set and we do not emit a guess.
 </think>",Bit Manipulation Methodology,Phase1B Bit Manipulation Methodology,deterministic_bit_manipulation_methodology,procedure_summary
 p1b_proc_tier1_goal,"In Alice's Wonderland bit manipulation methodology, what is the goal of the per-bit single-pair search?","find, for every output column, a Boolean function of 1-2 input columns that fits every example","<think>
 When this succeeds, the rule R is determined column-by-column and we can apply it directly to the query.
@@ -243,7 +243,7 @@ p1b_fmt_rule_statement_style,"In Alice's Wonderland bit manipulation methodology
 Naming the rule R(v) lets the verification block refer to it as R(input_n).
 </think>",Bit Manipulation Methodology,Phase1B Bit Manipulation Methodology,deterministic_bit_manipulation_methodology,format_anchors
 p1b_fmt_3input_call_style,"In Alice's Wonderland bit manipulation methodology, how should I write a 3-input gate evaluation step?","`OP3(a_bits, b_bits, c_bits) = result_bits`, e.g. `MAJ(11001100, 10101010, 11110000) = 11101000`","<think>
-Comma-separated bit strings inside the function call match the truth-table form taught in Phase 1A.
+Comma-separated bit strings inside the function call match the truth-table form taught by the vocabulary cards.
 </think>",Bit Manipulation Methodology,Phase1B Bit Manipulation Methodology,deterministic_bit_manipulation_methodology,format_anchors
 p1b_fmt_two_input_op_style,"In Alice's Wonderland bit manipulation methodology, how should I write a 2-input Boolean op step on bytes?","`a_bits OP b_bits = result_bits`, e.g. `10110010 XOR 11001100 = 01111110`","<think>
 Infix form keeps the column-by-column nature visible.
@@ -252,13 +252,13 @@ p1b_fmt_boxed_at_end,"In Alice's Wonderland bit manipulation methodology, where 
 Nothing should follow the boxed answer.
 </think>",Bit Manipulation Methodology,Phase1B Bit Manipulation Methodology,deterministic_bit_manipulation_methodology,format_anchors
 p1b_fmt_uppercase_atoms,"In Alice's Wonderland bit manipulation methodology, should atom and gate names be uppercase or lowercase?","uppercase: `ROT`, `SHL`, `SHR`, `NOT`, `REV`, `XOR`, `AND`, `OR`, `MAJ`, `CHO`, `PAR3`","<think>
-Uppercase names match Phase 1A vocabulary cards and the grader-facing prompt vocabulary.
+Uppercase names match the vocabulary cards and the grader-facing prompt vocabulary.
 </think>",Bit Manipulation Methodology,Phase1B Bit Manipulation Methodology,deterministic_bit_manipulation_methodology,format_anchors
 p1b_fmt_k_in_parens,"In Alice's Wonderland bit manipulation methodology, how should I write the rotate / shift parameter k?","as a positive integer in parentheses immediately after the operator name, e.g. `ROT(3)`, `SHL(2)`, `SHR(5)`","<think>
 No space between the operator name and the open parenthesis. k is always 1..7.
 </think>",Bit Manipulation Methodology,Phase1B Bit Manipulation Methodology,deterministic_bit_manipulation_methodology,format_anchors
 p1b_fmt_not_variant_spacing,"In Alice's Wonderland bit manipulation methodology, how should I write a NOT-variant atom name?","with a single space between NOT and the base, e.g. `NOT REV`, `NOT ROT(2)`, `NOT SHL(3)`, `NOT SHR(5)`","<think>
-The space form matches Phase 1A vocabulary cards and keeps the atom parser happy.
+The space form matches the vocabulary cards and keeps the atom parser happy.
 </think>",Bit Manipulation Methodology,Phase1B Bit Manipulation Methodology,deterministic_bit_manipulation_methodology,format_anchors
 p1b_search1_001,"In Alice's Wonderland bit manipulation methodology, across 8 examples, an input column took values [0, 1, 0, 1, 1, 1, 1, 0] and the same output column took values [0, 1, 0, 1, 1, 1, 1, 0]. Which 1-input gate fits (Identity, NOT, Constant 0, Constant 1)?",Identity,"<think>
 Compare per row: o equals x in every row, so the gate is Identity.

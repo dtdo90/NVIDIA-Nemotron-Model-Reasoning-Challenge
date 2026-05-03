@@ -27,7 +27,10 @@ from nemotron_baseline.symbol_transform import (  # noqa: E402
 
 
 SYMBOL_ALPHABET = tuple(r"""!@#$%^&*()-_=+[]{}|\:;"'<>,.?/`~""")
+SAFE_SYMBOL_ALPHABET = tuple(ch for ch in SYMBOL_ALPHABET if ch not in "\\{}")
 LABEL_ALPHABET = tuple(string.ascii_lowercase + string.ascii_uppercase)
+SYMBOL_EQUATION_NAME = "symbol-equation transformation rules"
+SYMBOL_EQUATION_PREFIX = f"In Alice's Wonderland {SYMBOL_EQUATION_NAME}"
 
 OPENER = "We need to deduce the hidden symbol transformation rule by matching the example outputs."
 BOXED_INTENT = "I will put my final answer inside \\boxed{}."
@@ -41,7 +44,15 @@ S0_DIRECT = (
 S0_MOTIF = "Parse ABOCD and apply the requested operand motif."
 S0_OPERATOR = "Form operands, apply the stated rule, then render the output."
 S0_ENCODE_DECODE = "Convert each character with the provided map, then join the results."
-S0_ROUTE = "State the requested Symbol Transform rule directly."
+S0_ROUTE = "State the requested symbol-equation transformation rule directly."
+S0_RHS_LENGTH = "Use same-operator RHS length after direct templates fail to choose candidate arithmetic rules."
+
+RHS_LENGTH_FAMILIES = {
+    4: ("multiplication family", ("x*y", "x*y+1", "x*y-1")),
+    1: ("subtraction family", ("x-y", "y-x", "|x-y|")),
+    2: ("addition or subtraction family", ("x+y", "x+y+1", "x+y-1", "x-y", "y-x", "|x-y|")),
+    3: ("addition or multiplication family", ("x+y", "x+y+1", "x+y-1", "x*y", "x*y+1", "x*y-1")),
+}
 
 
 @dataclass(frozen=True)
@@ -59,7 +70,7 @@ class Phase1Row:
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description=(
-            "Generate a Phase 1 Symbol Transform curriculum focused on direct templates, "
+            "Generate a Phase 1 symbol-equation transformation curriculum focused on direct templates, "
             "AB_CD/BA_DC motifs, operator vocabulary, and symbol prediction."
         )
     )
@@ -119,10 +130,16 @@ def parse_args() -> argparse.Namespace:
         help="Preferred number of fresh direct-template rows before filling the remainder as contrast rows.",
     )
     parser.add_argument("--contrast", type=int, default=124)
-    parser.add_argument("--motif-drills", type=int, default=400)
+    parser.add_argument("--motif-drills", type=int, default=100)
     parser.add_argument("--operator-drills", type=int, default=350)
-    parser.add_argument("--encode-decode-drills", type=int, default=350)
+    parser.add_argument("--encode-decode-drills", type=int, default=400)
     parser.add_argument("--route-cards", type=int, default=300)
+    parser.add_argument(
+        "--rhs-length-family-drills",
+        type=int,
+        default=160,
+        help="Compact RHS-length routing drills, balanced across output lengths 1/2/3/4.",
+    )
     parser.add_argument("--ambiguity-cards", type=int, default=0)
     return parser.parse_args()
 
@@ -182,7 +199,7 @@ def render_direct_trace(
         "",
         S0_DIRECT,
         "",
-        "S1: Classify this as Symbol Transform with fixed shape ABOCD.",
+        "S1: Classify this as symbol-equation transformation with fixed shape ABOCD.",
         f"- Query is {puzzle.query}; query operator is {puzzle.query_operator}.",
         f"- Same-operator examples: {same_text}.",
         "",
@@ -222,8 +239,7 @@ def render_direct_trace(
 def make_prompt(examples: list[tuple[str, str]], query: str) -> str:
     body = "\n".join(f"{lhs} = {rhs}" for lhs, rhs in examples)
     return (
-        "In Alice's Wonderland, a secret set of transformation rules is applied to equations. "
-        "Below are a few examples:\n"
+        f"{SYMBOL_EQUATION_PREFIX}, below are a few examples:\n"
         f"{body}\n"
         f"Now, determine the result for: {query}"
     )
@@ -305,8 +321,8 @@ def add_row(
     answer: str,
     cot: str,
     source_category: str,
-    label: str = "Symbol Transform Direct Curriculum",
-    category: str = "Phase1 Symbol Transform Direct Curriculum",
+    label: str = "Symbol-Equation Direct Curriculum",
+    category: str = "Phase1 Symbol-Equation Direct Curriculum",
     source: str = "deterministic_symbol_transform_direct_curriculum",
 ) -> None:
     rows.append(
@@ -349,12 +365,27 @@ def render_compact_card(task: str, reasoning: str, final_answer: str) -> str:
     )
 
 
+def render_simple_card(reasoning: str, final_answer: str) -> str:
+    return "\n".join(
+        [
+            reasoning.strip(),
+            "",
+            f"The final answer is \\boxed{{{final_answer}}}",
+        ]
+    )
+
+
 def render_route_card(reason: str, final_answer: str) -> str:
     return render_compact_card(
-        "We need to recall one reusable Symbol Transform rule.",
+        "We need to recall one reusable symbol-equation transformation rule.",
         "\n".join([S0_ROUTE, reason]),
         final_answer,
     )
+
+
+def family_answer(length: int) -> str:
+    _family_name, rules = RHS_LENGTH_FAMILIES[length]
+    return ", ".join(rules)
 
 
 def add_motif_drills(rows: list[Phase1Row], *, count: int, rng: random.Random) -> None:
@@ -362,7 +393,7 @@ def add_motif_drills(rows: list[Phase1Row], *, count: int, rng: random.Random) -
         symbolic = (idx // 2) % 2 == 1
         motif = "AB_CD" if idx % 2 == 0 else "BA_DC"
         if symbolic:
-            symbols = random_symbols(rng, 5)
+            symbols = random_symbols(rng, 5, alphabet=SAFE_SYMBOL_ALPHABET)
             a, b, op, c, d = symbols
             lhs = f"{a}{b}{op}{c}{d}"
         else:
@@ -377,8 +408,7 @@ def add_motif_drills(rows: list[Phase1Row], *, count: int, rng: random.Random) -
             desc = "reverse both operands"
         answer = f"x={x}, y={y}"
         prompt = (
-            "In Alice's Wonderland Symbol Transform motif knowledge, for input "
-            f"{lhs}, what operands are used by motif {motif}?"
+            f"{SYMBOL_EQUATION_PREFIX}, for input {lhs}, what operands are used by motif {motif}?"
         )
         cot = render_compact_card(
             "We need to apply motif rule.",
@@ -444,7 +474,6 @@ def add_operator_drills(rows: list[Phase1Row], *, count: int, rng: random.Random
         else:
             raise RuntimeError(f"Could not sample nonnegative output for {motif} {rule}")
         value = apply_rule(rule, x, y)
-        sign_note = "The raw value is nonnegative."
         output = str(value)
         if motif.endswith("|rev"):
             output = output[::-1]
@@ -452,8 +481,7 @@ def add_operator_drills(rows: list[Phase1Row], *, count: int, rng: random.Random
         else:
             render_text = "write the output directly"
         prompt = (
-            "In Alice's Wonderland Symbol Transform operator knowledge, solve "
-            f"{lhs} under motif {motif} and rule {rule}."
+            f"{SYMBOL_EQUATION_PREFIX}, solve {lhs} under motif {motif} and rule {rule}."
         )
         cot = render_compact_card(
             "We need to apply arithmetic rule.",
@@ -479,14 +507,14 @@ def add_operator_drills(rows: list[Phase1Row], *, count: int, rng: random.Random
 def add_encode_decode_drills(rows: list[Phase1Row], *, count: int, rng: random.Random) -> None:
     for idx in range(count):
         digits = list(range(10))
-        syms = random_symbols(rng, 10)
+        syms = random_symbols(rng, 10, alphabet=SAFE_SYMBOL_ALPHABET)
         digit_to_sym = dict(zip(digits, syms))
         sym_to_digit = {sym: digit for digit, sym in digit_to_sym.items()}
         if idx % 2 == 0:
             number = "".join(str(rng.randrange(10)) for _ in range(rng.choice((2, 3, 4))))
             answer = "".join(digit_to_sym[int(ch)] for ch in number)
             prompt = (
-                "In Alice's Wonderland Symbol Transform encoding knowledge, encode digits "
+                f"{SYMBOL_EQUATION_PREFIX}, encode digits "
                 f"{number} using map "
                 + ", ".join(f"{d}->{digit_to_sym[d]}" for d in digits)
                 + "."
@@ -497,7 +525,7 @@ def add_encode_decode_drills(rows: list[Phase1Row], *, count: int, rng: random.R
             encoded = "".join(rng.choice(syms) for _ in range(rng.choice((2, 3, 4))))
             answer = "".join(str(sym_to_digit[ch]) for ch in encoded)
             prompt = (
-                "In Alice's Wonderland Symbol Transform decoding knowledge, decode symbols "
+                f"{SYMBOL_EQUATION_PREFIX}, decode symbols "
                 f"{encoded} using map "
                 + ", ".join(f"{sym}->{sym_to_digit[sym]}" for sym in syms)
                 + "."
@@ -524,87 +552,203 @@ def add_encode_decode_drills(rows: list[Phase1Row], *, count: int, rng: random.R
         )
 
 
+def rhs_family_reason(length: int) -> str:
+    family_name, rules = RHS_LENGTH_FAMILIES[length]
+    return (
+        f"Length {length} points to the {family_name}, so the candidate rules are "
+        f"{', '.join(rules)}."
+    )
+
+
+def random_rhs_value(length: int, rng: random.Random) -> str:
+    return "".join(random_symbols(rng, length, alphabet=LABEL_ALPHABET))
+
+
+def add_rhs_length_family_drills(rows: list[Phase1Row], *, count: int, rng: random.Random) -> None:
+    lengths = (4, 1, 2, 3)
+    for idx in range(count):
+        length = lengths[idx % len(lengths)]
+        answer = family_answer(length)
+        rhs_values = [random_rhs_value(length, rng) for _ in range(2 + (idx % 3))]
+        prompt = (
+            f"{SYMBOL_EQUATION_PREFIX}, direct templates failed. "
+            f"The same-operator RHS values are {', '.join(rhs_values)}. "
+            "Which arithmetic candidate rules should be tried?"
+        )
+        cot = render_simple_card(
+            rhs_family_reason(length),
+            answer,
+        )
+        add_row(
+            rows,
+            row_id=f"st_phase1_rhs_length_family_{idx:04d}",
+            prompt=prompt,
+            answer=answer,
+            cot=cot,
+            source_category=f"rhs_length_family_drill_{length}",
+        )
+
+
 def add_route_cards(rows: list[Phase1Row], *, count: int) -> None:
     cards = [
         (
+            "route_same_operator_first",
             "same-op first",
             "Use examples with the same operator as the query before using other operators.",
             "same-operator examples first",
         ),
         (
+            "route_direct_before_arithmetic",
             "direct before arithmetic",
             "Test 0134 and 3401 before encrypted digit arithmetic.",
             "direct templates first",
         ),
         (
+            "route_direct_lock",
             "lock direct",
             "If one direct template matches every same-operator example, lock it and skip digit search.",
             "lock direct template and skip digit search",
         ),
         (
+            "route_change_variables_after_direct_fail",
             "change variables after direct failure",
             "Only assign symbol variables after both direct templates fail; then try BA_DC|rev or AB_CD|raw.",
             "change variables after direct templates fail",
         ),
         (
+            "route_skip_variables_after_direct_lock",
             "skip variables after direct lock",
             "If 0134 or 3401 locks, no symbol-to-variable map is needed.",
             "skip variable assignment after direct lock",
         ),
         (
+            "route_main_encrypted_motifs",
             "main encrypted motifs",
             "After direct templates fail, the two main encrypted digit motifs are BA_DC|rev or AB_CD|raw.",
             "BA_DC|rev or AB_CD|raw",
         ),
         (
+            "route_template_0134_meaning",
             "0134 meaning",
             "Template 0134 copies positions 0,1,3,4 from ABOCD.",
             "0134 means ABOCD -> ABCD",
         ),
         (
+            "route_template_3401_meaning",
             "3401 meaning",
             "Template 3401 copies positions 3,4,0,1 from ABOCD.",
             "3401 means ABOCD -> CDAB",
         ),
         (
+            "route_direct_priority",
             "direct priority",
             "Try 0134 before 3401 because it is the first direct-template priority.",
             "try 0134 before 3401",
         ),
         (
+            "route_other_operators_later",
             "other operators later",
             "Other-operator examples are secondary and should not override a locked same-operator direct template.",
             "use other operators only later",
         ),
         (
+            "route_rhs_length_4",
             "length 4",
-            "If same-operator RHS length is 4 after direct templates fail, multiplication family is the first clue.",
-            "multiplication family",
+            f"If same-operator RHS length is 4 after direct templates fail, try {family_answer(4)}.",
+            family_answer(4),
         ),
         (
+            "route_rhs_length_3",
+            "length 3",
+            f"If same-operator RHS length is 3 after direct templates fail, try {family_answer(3)}.",
+            family_answer(3),
+        ),
+        (
+            "route_rhs_length_2",
             "length 2",
-            "If same-operator RHS length is 2 after direct templates fail, addition or subtraction families are likely.",
-            "addition or subtraction family",
+            f"If same-operator RHS length is 2 after direct templates fail, try {family_answer(2)}.",
+            family_answer(2),
         ),
         (
+            "route_rhs_length_1",
             "length 1",
-            "If same-operator RHS length is 1 after direct templates fail, subtraction family is likely.",
-            "subtraction family",
+            f"If same-operator RHS length is 1 after direct templates fail, try {family_answer(1)}.",
+            family_answer(1),
         ),
         (
+            "route_visible_grids",
             "visible grids",
             "When encrypted search is needed, keep visible survivor grids instead of hiding the search.",
             "keep visible survivor grids",
         ),
         (
+            "route_final_box",
             "final box",
             "Always end by putting the final literal symbol output inside boxed braces.",
             "final answer inside boxed braces",
         ),
+        (
+            "route_candidate_agreement",
+            "candidate agreement",
+            "A cipher prediction is clean only when surviving candidates agree on the query output.",
+            "require candidate agreement",
+        ),
+        (
+            "route_ambiguity_policy",
+            "ambiguity policy",
+            "If valid candidates predict different outputs, do not invent a deterministic tie-break.",
+            "mark ambiguous instead of guessing",
+        ),
+        (
+            "route_query_application_order",
+            "query application order",
+            "After locking a cipher rule, apply decode, compute, render, then encode.",
+            "decode -> compute -> render -> encode",
+        ),
+        (
+            "route_global_variables",
+            "global variables",
+            "After direct templates fail, assign each symbol one global variable and keep using it.",
+            "one global variable per symbol",
+        ),
+        (
+            "route_bijective_digits",
+            "bijective digits",
+            "In encrypted digit search, different symbols must map to different digits.",
+            "enforce a bijective symbol-digit map",
+        ),
+        (
+            "route_operator_specific_rules",
+            "operator-specific rules",
+            "Different operator symbols can have different arithmetic rules in the same puzzle.",
+            "operators can have different rules",
+        ),
+        (
+            "route_concat_boundary",
+            "concat boundary",
+            "Direct templates handle concat-like outputs, so concat should not be reused as a later rescue by default.",
+            "direct templates cover concat-like cases",
+        ),
+        (
+            "route_reverse_output",
+            "reverse output",
+            "For BA_DC|rev, reverse the rendered digit text and preserve zeros before encoding symbols.",
+            "reverse digits and preserve zeros",
+        ),
+        (
+            "route_verify_same_operator",
+            "same-operator verification",
+            "Before applying a locked rule to the query, verify it on every same-operator example.",
+            "verify every same-operator example",
+        ),
     ]
     for idx in range(count):
-        name, reason, answer = cards[idx % len(cards)]
-        prompt = f"In Alice's Wonderland Symbol Transform methodology, what should the solver remember about {name}?"
+        source_category, name, reason, answer = cards[idx % len(cards)]
+        prompt = (
+            f"{SYMBOL_EQUATION_PREFIX}, "
+            f"scenario {idx:03d}: after parsing an ABOCD puzzle, what should the solver remember "
+            f"about {name}?"
+        )
         cot = render_route_card(reason, answer)
         add_row(
             rows,
@@ -612,7 +756,7 @@ def add_route_cards(rows: list[Phase1Row], *, count: int) -> None:
             prompt=prompt,
             answer=answer,
             cot=cot,
-            source_category="s0_s8_route_card",
+            source_category=source_category,
         )
 
 
@@ -636,7 +780,7 @@ def add_ambiguity_cards(rows: list[Phase1Row], *, count: int) -> None:
     ]
     for idx in range(count):
         question, answer, reason = cards[idx % len(cards)]
-        prompt = f"In Alice's Wonderland Symbol Transform ambiguity discipline, {question}"
+        prompt = f"{SYMBOL_EQUATION_PREFIX}, {question}"
         cot = render_card(
             "\n".join(
                 [
@@ -675,7 +819,7 @@ def audit_authentic_trace(row: Phase1Row, puzzle: SymbolTransformPuzzle, chosen_
         OPENER,
         BOXED_INTENT,
         S0_DIRECT,
-        "S1: Classify this as Symbol Transform with fixed shape ABOCD.",
+        "S1: Classify this as symbol-equation transformation with fixed shape ABOCD.",
         "S2: Test direct-position templates first.",
         "S3: Apply the locked template to the query.",
         BOXED_RETURN,
@@ -847,7 +991,7 @@ def main() -> None:
         add_row(
             rows,
             row_id=row_id,
-            prompt=source_row["prompt"],
+            prompt=make_prompt([(ex.lhs, ex.rhs) for ex in puzzle.examples], puzzle.query),
             answer=answer,
             cot=cot,
             source_category=f"authentic_direct_template_{template_name}",
@@ -929,6 +1073,7 @@ def main() -> None:
     add_motif_drills(rows, count=args.motif_drills, rng=rng)
     add_operator_drills(rows, count=args.operator_drills, rng=rng)
     add_encode_decode_drills(rows, count=args.encode_decode_drills, rng=rng)
+    add_rhs_length_family_drills(rows, count=args.rhs_length_family_drills, rng=rng)
     add_route_cards(rows, count=args.route_cards)
     add_ambiguity_cards(rows, count=args.ambiguity_cards)
 
@@ -1007,7 +1152,7 @@ def main() -> None:
     audit_md.write_text(
         "\n".join(
             [
-                "# Phase 1 Symbol Transform Direct Template Audit",
+                "# Phase 1 Symbol-Equation Direct Template Audit",
                 "",
                 f"Output CSV: `{args.output_csv}`",
                 f"Validation CSV: `{args.validation_csv}`",
@@ -1021,7 +1166,7 @@ def main() -> None:
                 "",
                 "## Audit Passes",
                 "",
-                "1. `pass1_structure`: required opener, S0-S6 sections, same-operator summary, and boxed ending.",
+                "1. `pass1_structure`: required opener, S0-S3 sections, same-operator summary, and boxed ending.",
                 "2. `pass2_logic`: direct template computations, priority order, LOCK/SKIP, and answer match.",
                 "3. `pass3_training_readiness`: no placeholders, no false digit claim, no AGREE wording, manageable lines.",
                 "",

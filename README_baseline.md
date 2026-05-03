@@ -84,8 +84,7 @@ python3 scripts/prepare_phase1a_bit_manipulation_knowledge.py
 python3 scripts/prepare_phase1b_bit_manipulation_methodology.py
 python3 scripts/prepare_phase1a_numeric_equation_knowledge.py
 python3 scripts/prepare_phase1b_numeric_equation_methodology.py
-python3 scripts/prepare_phase1a_symbol_transform_knowledge.py
-python3 scripts/prepare_phase1b_symbol_transform_methodology.py
+python3 scripts/prepare_phase1_numeric_equation_curriculum.py
 python3 scripts/prepare_phase1_symbol_transform_direct_curriculum.py
 python3 scripts/prepare_phase1_training_dataset.py
 ```
@@ -99,12 +98,23 @@ data/trainable/phase1_train.csv
 Current Phase 1 size:
 
 ```text
-9244 rows
+6370 rows
 ```
 
 Phase 1 intentionally excludes unit conversion, gravity, and numeral-system
 knowledge cards from the default mixture because those problem types are simple
 enough to learn from deterministic Phase 2 traces.
+
+For symbol-equation transformation rules, the default Phase 1 mixture uses only
+`phase1_symbol_transform_direct_curriculum.csv`. The older
+`phase1a_symbol_transform_knowledge.csv` and
+`phase1b_symbol_transform_methodology.csv` files are retained for ablation and
+later study, but they are excluded from the starter training CSV.
+
+For numeric-equation Transformation Rules, the default Phase 1 mixture uses
+only `phase1_numeric_equation_curriculum.csv`. It is built from the older
+Phase 1A/1B numeric files, deduplicated, normalized out of `<think>` tags, and
+ended with boxed final-answer lines.
 
 Train Phase 1:
 
