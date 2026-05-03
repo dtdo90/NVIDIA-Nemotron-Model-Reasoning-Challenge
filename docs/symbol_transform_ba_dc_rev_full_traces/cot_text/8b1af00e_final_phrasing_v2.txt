@@ -1,0 +1,189 @@
+Problem 8b1af00e
+
+Question:
+\@`"{ = \/&[
+@\+?{ = [&"
+?{`\@ = ![\[
+/[`@" = !%@
+\[+{! = [/
+Now, determine the result for: %@`{\
+
+Gold answer:
+%%%&
+
+Solution:
+
+We need to deduce the hidden symbol transformation rule by matching the example outputs.
+I will put my final answer inside \boxed{}.
+
+S0: Methodology: solve same-operator examples first; test direct templates first; if they fail, use encrypted digit search with BA_DC|rev or AB_CD|raw; choose the arithmetic family from same-operator RHS length; keep visible survivor grids; use other examples only to complete the map; then solve the query.
+
+S1: Classify this as Symbol Transform with fixed shape ABOCD.
+- Query is %@`{\; query operator is `.
+- Same-operator examples: \@`"{=\/&[; ?{`\@=![\[; /[`@"=!%@.
+
+S2: Test direct-position templates first.
+- Template 0134: \@`"{ -> \@"{ vs \/&[; ?{`\@ -> ?{\@ vs ![\[; /[`@" -> /[@" vs !%@; FAIL.
+- Template 3401: \@`"{ -> "{\@ vs \/&[; ?{`\@ -> \@?{ vs ![\[; /[`@" -> @"/[ vs !%@; FAIL.
+
+
+S2.1: Direct templates failed, so assign global variables once.
+Let:
+\=a
+@=b
+"=c
+{=d
+/=e
+&=f
+[=g
+?=h
+!=i
+%=j
+
+All variables are distinct digits from 0 to 9.
+
+S3: With the change-of-variables step in place, try the BA_DC|rev arithmetic family from the same-operator RHS length.
+- The same-operator RHS values are \/&[, ![\[, !%@. At least one RHS has length 4, so use the multiplication family for two-digit by two-digit arithmetic.
+- Therefore try the length-4 multiplication family: x*y, x*y+1, x*y-1.
+S3.1: Try rule x*y. Test it against the same-operator equations first.
+
+S4: Test the trial rule x*y and derive the symbol map without assuming the final map.
+
+Collect same-operator equations first.
+
+Row 1: \@`"{=\/&[.
+\@ -> @\ = 10b+a
+"{ -> {" = 10d+c
+encoded RHS \/&[ has digit shape aefg; before reverse it is gfea = 1000g+100f+10e+a
+(10b+a)(10d+c)=1000g+100f+10e+a
+unit condition: a*c≡a mod10
+
+Row 2: ?{`\@=![\[.
+?{ -> {? = 10d+h
+\@ -> @\ = 10b+a
+encoded RHS ![\[ has digit shape igag; before reverse it is gagi = 1010g+100a+i
+(10d+h)(10b+a)=1010g+100a+i
+unit condition: h*a≡i mod10
+
+Row 3: /[`@"=!%@.
+/[ -> [/ = 10g+e
+@" -> "@ = 10c+b
+encoded RHS !%@ has digit shape ijb; before reverse it is bji = 100b+10j+i
+(10g+e)(10c+b)=100b+10j+i
+unit condition: e*b≡i mod10
+
+Combine the three multiplication equations.
+Use Row 1 as the base equation. For a,b,c,d, compute:
+P1=(10b+a)(10d+c)
+g=floor(P1/1000)
+f=floor((P1-1000g)/100)
+e=(P1-1000g-100f-a)/10
+Reject if e,f,g are not digits, if P1 != 1000g+100f+10e+a, or if any digit repeats.
+
+Then test Row 2:
+P2=(10d+h)(10b+a)
+i=P2-1010g-100a
+Reject if i is not a digit or P2 != 1010g+100a+i.
+
+Then test Row 3:
+P3=(10g+e)(10c+b)
+j=(P3-100b-i)/10
+Reject if j is not a digit or P3 != 100b+10j+i.
+
+Each entry is [a,b,c,d,e,f,g,h,i,j,status].
+x means reject because at least one computed value is not an integer digit, one full equation fails, or a digit repeats.
+
+The combined scan has one survivor:
+[7,4,1,5,9,3,2,8,6,0,C1]
+
+Candidate:
+C1: a=7,b=4,c=1,d=5,e=9,f=3,g=2,h=8,i=6,j=0
+
+The trial rule x*y has a consistent survivor after the same-operator constraints, so LOCK ` -> x*y.
+
+S5: Use other-operator examples only to complete or verify the same digit map.
+
+Use @\+?{=[&" with rule x+y.
+@\ -> \@ = 10a+b = 74
+?{ -> {? = 10d+h = 58
+74+58=132
+rev=231
+enc=[&"
+PASS
+
+Use \[+{!=[/ with rule x+y.
+\[ -> [\ = 10g+a = 27
+{! -> !{ = 10i+d = 65
+27+65=92
+rev=29
+enc=[/
+PASS
+
+Final derived map:
+!->6
+"->1
+%->0
+&->3
+/->9
+?->8
+@->4
+[->2
+\->7
+{->5
+
+Operator rules:
+` -> x*y
++ -> x+y
+
+S7: Verify all examples with the derived map and locked operator rules.
+
+- \@`"{=\/&[:
+\@ -> @\ = 47
+"{ -> {" = 51
+47*51=2397
+rev=7932
+enc=\/&[
+PASS
+
+- @\+?{=[&":
+@\ -> \@ = 74
+?{ -> {? = 58
+74+58=132
+rev=231
+enc=[&"
+PASS
+
+- ?{`\@=![\[:
+?{ -> {? = 58
+\@ -> @\ = 47
+58*47=2726
+rev=6272
+enc=![\[
+PASS
+
+- /[`@"=!%@:
+/[ -> [/ = 29
+@" -> "@ = 14
+29*14=406
+rev=604
+enc=!%@
+PASS
+
+- \[+{!=[/:
+\[ -> [\ = 27
+{! -> !{ = 65
+27+65=92
+rev=29
+enc=[/
+PASS
+
+S8: Solve query %@`{\ with BA_DC|rev and rule x*y.
+
+%@ -> @% = 40
+{\ -> \{ = 75
+40*75=3000
+rev=0003
+encode 0003 = %%%&
+
+I will now return the answer in \boxed{}.
+The final answer is \boxed{%%%&}

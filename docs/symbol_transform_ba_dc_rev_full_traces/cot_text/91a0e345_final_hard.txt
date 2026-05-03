@@ -1,0 +1,137 @@
+Problem 91a0e345
+
+Solution:
+
+We need to deduce the hidden symbol transformation rule by matching the example outputs.
+I will put my final answer inside \boxed{}.
+
+S0: Methodology: solve same-operator examples first; test direct templates first; if they fail, use encrypted digit search with BA_DC|rev or AB_CD|raw; choose the arithmetic family from same-operator RHS length; keep visible survivor grids; use other examples only to complete the map; then solve the query.
+
+S1: Classify this as Symbol Transform with fixed shape ABOCD.
+- Query is !]*$]; query operator is *.
+- Same-operator examples: "?*!'=!`(#.
+
+S2: Test direct-position templates first.
+- Template 0134: "?*!'->"?!' vs !`(#; FAIL.
+- Template 3401: "?*!'->!'"? vs !`(#; FAIL.
+
+
+S2.1: Direct templates failed, so assign global variables once.
+Let:
+! = a
+" = b
+# = c
+$ = d
+' = e
+( = f
+? = g
+\ = h
+] = i
+` = j
+
+All variables are distinct digits from 0 to 9.
+The symbols are used to define conversions at the start of each row and to encode the final answer. All intermediate reasoning uses the global variables above.
+
+S3: With the change-of-variables step in place, try the BA_DC|rev arithmetic family from the same-operator RHS length.
+- At least one same-operator RHS has length 4, so try the multiplication family for two-digit by two-digit arithmetic.
+S3.1: Try rule x * y. Test it against the same-operator equations first.
+
+S4: Collect the same-operator equations for this trial rule.
+
+Row 1: "?*!'=!`(#
+"? -> ?" = 10g+b
+!' -> '! = 10e+a
+encoded RHS !`(# has digit shape ajfc; before reverse it is #(`! = 1000c+100f+10j+a
+Equation: (10g+b) x * y (10e+a) = 1000c+100f+10j+a
+unit condition: b*a≡a mod10
+
+Now scan distinct digit assignments for the variables appearing in the same-operator rows.
+Each candidate row below is a surviving assignment after all same-operator equations are checked.
+Each row-check entry is [computed raw value, target raw value, status].
+PASS means the computed raw value equals the target raw value and all listed variables are distinct.
+C1: b=1, g=7, a=5, e=8, j=3, f=0, c=6; checks=[6035,6035,PASS]
+The same-operator rows have a consistent distinct-digit survivor, so LOCK: * -> x * y.
+
+S5: Use other-operator examples only to complete or verify the same digit map.
+
+Use $$+#?=(\". Trial rule for operator +: x + y.
+$$ -> $$ = 44
+#? -> ?# = 76
+computed: 44+76=120
+target before reverse from RHS (\": 120
+PASS
+
+Use "'+?#='$". Trial rule for operator +: x + y.
+"' -> '" = 81
+?# -> #? = 67
+computed: 81+67=148
+target before reverse from RHS '$": 148
+PASS
+
+Use ?'+\`=]"". Trial rule for operator +: x + y.
+?' -> '? = 87
+\` -> `\ = 32
+computed: 87+32=119
+target before reverse from RHS ]"": 119
+PASS
+
+S6: Complete any query-only symbols by bijection.
+- The final map below assigns all query symbols.
+
+Final derived map:
+!->5
+"->1
+#->6
+$->4
+'->8
+(->0
+?->7
+\->2
+]->9
+`->3
+
+Operator rules:
+* -> x * y
++ -> x + y
+
+S7: Verify all examples with the derived map and locked operator rules.
+- $$+#?=(\":
+$$ -> $$ = 44
+#? -> ?# = 76
+44+76=120
+rev=021
+enc=(\"
+PASS
+- "'+?#='$":
+"' -> '" = 81
+?# -> #? = 67
+81+67=148
+rev=841
+enc='$"
+PASS
+- "?*!'=!`(#:
+"? -> ?" = 71
+!' -> '! = 85
+71*85=6035
+rev=5306
+enc=!`(#
+PASS
+- ?'+\`=]"":
+?' -> '? = 87
+\` -> `\ = 32
+87+32=119
+rev=911
+enc=]""
+PASS
+
+S8: Solve query !]*$] with BA_DC|rev and rule x * y.
+!] -> ]! = 95
+$] -> ]$ = 94
+95*94=8930
+rev=0398
+encode 0398 = (`]'
+
+answer=(`]'.
+
+I will now return the answer in \boxed{}.
+The final answer is \boxed{(`]'}

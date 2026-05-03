@@ -25,7 +25,12 @@ from nemotron_baseline.data import (
     summarize_categories,
     summarize_split_assignments,
 )
-from nemotron_baseline.prompts import build_training_text, normalize_generated_cot
+from nemotron_baseline.prompts import (
+    apply_chat_template,
+    build_training_text,
+    build_user_message,
+    normalize_generated_cot,
+)
 
 
 @dataclass(frozen=True)
@@ -36,6 +41,7 @@ class TrainingExample:
     category: str
     generated_cot: str | None = None
     label: str | None = None
+    assistant_content: str | None = None
 
 
 def load_config_defaults(config_path: str | None) -> dict[str, object]:
@@ -274,8 +280,14 @@ def load_training_examples(csv_path: str, *, cot_column: str) -> list[TrainingEx
         has_cot_column = cot_column in fieldnames
         has_label_column = "label" in fieldnames
         has_category_column = "category" in fieldnames
+        has_assistant_content_column = "assistant_content" in fieldnames
         for row in reader:
             generated_cot = row.get(cot_column) if has_cot_column else None
+            assistant_content = (
+                row.get("assistant_content", "").strip()
+                if has_assistant_content_column
+                else ""
+            )
             if has_category_column and row.get("category"):
                 category = row["category"]
             elif has_label_column and row.get("label"):
@@ -290,6 +302,7 @@ def load_training_examples(csv_path: str, *, cot_column: str) -> list[TrainingEx
                     category=category,
                     generated_cot=normalize_generated_cot(generated_cot),
                     label=row.get("label") if has_label_column else None,
+                    assistant_content=assistant_content or None,
                 )
             )
     return examples
@@ -307,20 +320,32 @@ def resolve_supervision_format(
 
 
 def build_dataset(dataset_cls, tokenizer, examples, supervision_format: str):
-    rows = [
-        {
-            "id": example.id,
-            "category": example.category,
-            "label": example.label,
-            "text": build_training_text(
+    rows = []
+    for example in examples:
+        if example.assistant_content:
+            text = apply_chat_template(
+                tokenizer,
+                [
+                    {"role": "user", "content": build_user_message(example.prompt)},
+                    {"role": "assistant", "content": example.assistant_content},
+                ],
+                add_generation_prompt=False,
+            )
+        else:
+            text = build_training_text(
                 tokenizer,
                 example.prompt,
                 example.answer or "",
                 generated_cot=example.generated_cot if supervision_format == "cot" else None,
-            ),
-        }
-        for example in examples
-    ]
+            )
+        rows.append(
+            {
+                "id": example.id,
+                "category": example.category,
+                "label": example.label,
+                "text": text,
+            }
+        )
     return dataset_cls.from_list(rows)
 
 

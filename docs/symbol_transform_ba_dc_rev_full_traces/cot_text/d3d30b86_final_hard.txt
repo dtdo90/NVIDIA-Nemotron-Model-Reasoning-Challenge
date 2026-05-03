@@ -1,0 +1,119 @@
+Problem d3d30b86
+
+Solution:
+
+We need to deduce the hidden symbol transformation rule by matching the example outputs.
+I will put my final answer inside \boxed{}.
+
+S0: Methodology: solve same-operator examples first; test direct templates first; if they fail, use encrypted digit search with BA_DC|rev or AB_CD|raw; choose the arithmetic family from same-operator RHS length; keep visible survivor grids; use other examples only to complete the map; then solve the query.
+
+S1: Classify this as Symbol Transform with fixed shape ABOCD.
+- Query is !?+!$; query operator is +.
+- Same-operator examples: $)+<%=}%!}.
+
+S2: Test direct-position templates first.
+- Template 0134: $)+<%->$)<% vs }%!}; FAIL.
+- Template 3401: $)+<%-><%$) vs }%!}; FAIL.
+
+
+S2.1: Direct templates failed, so assign global variables once.
+Let:
+! = a
+" = b
+$ = c
+% = d
+) = e
+< = f
+? = g
+} = h
+
+All variables are distinct digits from 0 to 9.
+The symbols are used to define conversions at the start of each row and to encode the final answer. All intermediate reasoning uses the global variables above.
+
+S3: With the change-of-variables step in place, try the BA_DC|rev arithmetic family from the same-operator RHS length.
+- At least one same-operator RHS has length 4, so try the multiplication family for two-digit by two-digit arithmetic.
+S3.1: Try rule x * y. Test it against the same-operator equations first.
+
+S4: Collect the same-operator equations for this trial rule.
+
+Row 1: $)+<%=}%!}
+$) -> )$ = 10e+c
+<% -> %< = 10d+f
+encoded RHS }%!} has digit shape hdah; before reverse it is }!%} = 1000h+100a+10d+h
+Equation: (10e+c) x * y (10d+f) = 1000h+100a+10d+h
+unit condition: c*f≡h mod10
+
+Now scan distinct digit assignments for the variables appearing in the same-operator rows.
+Each candidate row below is a surviving assignment after all same-operator equations are checked.
+Each row-check entry is [computed raw value, target raw value, status].
+PASS means the computed raw value equals the target raw value and all listed variables are distinct.
+C1: c=8, e=3, f=4, d=5, h=2, a=0; checks=[2052,2052,PASS]
+The same-operator rows have a consistent distinct-digit survivor, so LOCK: + -> x * y.
+
+S5: Use other-operator examples only to complete or verify the same digit map.
+
+Use %?*$"=)$. Trial rule for operator *: x + y.
+%? -> ?% = 15
+$" -> "$ = 68
+computed: 15+68=83
+target before reverse from RHS )$: 83
+PASS
+
+Use ?)*?)=}". Trial rule for operator *: x + y.
+?) -> )? = 31
+?) -> )? = 31
+computed: 31+31=62
+target before reverse from RHS }": 62
+PASS
+
+S6: Complete any query-only symbols by bijection.
+- The final map below assigns all query symbols.
+
+Final derived map:
+!->0
+"->6
+$->8
+%->5
+)->3
+<->4
+?->1
+}->2
+
+Operator rules:
+* -> x + y
++ -> x * y
+
+S7: Verify all examples with the derived map and locked operator rules.
+- %?*$"=)$:
+%? -> ?% = 15
+$" -> "$ = 68
+15+68=83
+rev=38
+enc=)$
+PASS
+- ?)*?)=}":
+?) -> )? = 31
+?) -> )? = 31
+31+31=62
+rev=26
+enc=}"
+PASS
+- $)+<%=}%!}:
+$) -> )$ = 38
+<% -> %< = 54
+38*54=2052
+rev=2502
+enc=}%!}
+PASS
+
+S8: Solve query !?+!$ with BA_DC|rev and rule x * y.
+!? -> ?! = 10
+!$ -> $! = 80
+10*80=800
+rev=008
+encode 008 = !!$
+
+answer=!!$.
+
+I will now return the answer in \boxed{}.
+The final answer is \boxed{!!$}

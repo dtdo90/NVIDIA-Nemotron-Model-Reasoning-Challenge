@@ -1,0 +1,135 @@
+Problem 6848a4e8
+
+Solution:
+
+We need to deduce the hidden symbol transformation rule by matching the example outputs.
+I will put my final answer inside \boxed{}.
+
+S0: Methodology: solve same-operator examples first; test direct templates first; if they fail, use encrypted digit search with BA_DC|rev or AB_CD|raw; choose the arithmetic family from same-operator RHS length; keep visible survivor grids; use other examples only to complete the map; then solve the query.
+
+S1: Classify this as Symbol Transform with fixed shape ABOCD.
+- Query is %|+<<; query operator is +.
+- Same-operator examples: |\+<$=$['.
+
+S2: Test direct-position templates first.
+- Template 0134: |\+<$->|\<$ vs $['; FAIL.
+- Template 3401: |\+<$-><$|\ vs $['; FAIL.
+
+
+S2.1: Direct templates failed, so assign global variables once.
+Let:
+" = a
+$ = b
+% = c
+' = d
+< = e
+[ = f
+\ = g
+^ = h
+| = i
+
+All variables are distinct digits from 0 to 9.
+The symbols are used to define conversions at the start of each row and to encode the final answer. All intermediate reasoning uses the global variables above.
+
+S3: With the change-of-variables step in place, try the BA_DC|rev arithmetic family from the same-operator RHS length.
+- The longest same-operator RHS has length 3, so try the capped additive/multiplicative family in priority order.
+S3.1: Try rule x + y. Test it against the same-operator equations first.
+
+S4: Collect the same-operator equations for this trial rule.
+
+Row 1: |\+<$=$['
+|\ -> \| = 10g+i
+<$ -> $< = 10b+e
+encoded RHS $[' has digit shape bfd; before reverse it is '[$ = 100d+10f+b
+Equation: (10g+i) x + y (10b+e) = 100d+10f+b
+unit condition: i+e≡b mod10
+
+Now scan distinct digit assignments for the variables appearing in the same-operator rows.
+Each candidate row below is a surviving assignment after all same-operator equations are checked.
+Each row-check entry is [computed raw value, target raw value, status].
+PASS means the computed raw value equals the target raw value and all listed variables are distinct.
+C1: i=3, g=9, e=5, b=8, f=7, d=1; checks=[178,178,PASS]
+The same-operator rows have a consistent distinct-digit survivor, so LOCK: + -> x + y.
+
+S5: Use other-operator examples only to complete or verify the same digit map.
+
+Use \^*\[='<%<. Trial rule for operator *: x * y.
+\^ -> ^\ = 69
+\[ -> [\ = 79
+computed: 69*79=5451
+target before reverse from RHS '<%<: 5451
+PASS
+
+Use <%*%%="$\'. Trial rule for operator *: x * y.
+<% -> %< = 45
+%% -> %% = 44
+computed: 45*44=1980
+target before reverse from RHS "$\': 1980
+PASS
+
+Use "%*"\=""^|. Trial rule for operator *: x * y.
+"% -> %" = 40
+"\ -> \" = 90
+computed: 40*90=3600
+target before reverse from RHS ""^|: 3600
+PASS
+
+S6: Complete any query-only symbols by bijection.
+- The final map below assigns all query symbols.
+
+Final derived map:
+"->0
+$->8
+%->4
+'->1
+<->5
+[->7
+\->9
+^->6
+|->3
+
+Operator rules:
+* -> x * y
++ -> x + y
+
+S7: Verify all examples with the derived map and locked operator rules.
+- \^*\[='<%<:
+\^ -> ^\ = 69
+\[ -> [\ = 79
+69*79=5451
+rev=1545
+enc='<%<
+PASS
+- <%*%%="$\':
+<% -> %< = 45
+%% -> %% = 44
+45*44=1980
+rev=0891
+enc="$\'
+PASS
+- "%*"\=""^|:
+"% -> %" = 40
+"\ -> \" = 90
+40*90=3600
+rev=0063
+enc=""^|
+PASS
+- |\+<$=$[':
+|\ -> \| = 93
+<$ -> $< = 85
+93+85=178
+rev=871
+enc=$['
+PASS
+
+S8: Solve query %|+<< with BA_DC|rev and rule x + y.
+%| -> |% = 34
+<< -> << = 55
+34+55=89
+rev=98
+encode 98 = \$
+
+answer=\$.
+
+I will now return the answer in \boxed{}.
+The final answer is \boxed{\$}

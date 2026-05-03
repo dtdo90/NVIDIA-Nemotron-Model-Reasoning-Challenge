@@ -1,5 +1,5 @@
 {
-  "train_csv": "data/text_knowledge_phase1.csv",
+  "train_csv": "data/trainable/phase1_components/text_knowledge_phase1.csv",
   "output_dir": "outputs/text_knowledge_phase1",
   "kaggle_model_handle": "metric/nemotron-3-nano-30b-a3b-bf16/transformers/default",
   "seed": 42,

@@ -1,6 +1,6 @@
 {
   "train_csv": "data/train.csv",
-  "split_csv": "data/splits_70_15_15.config.json",
+  "split_csv": "data/splits_75_10_15.config.json",
   "train_splits": ["grpo_train"],
   "output_dir": "outputs/grpo_stage2",
   "kaggle_model_handle": "metric/nemotron-3-nano-30b-a3b-bf16/transformers/default",

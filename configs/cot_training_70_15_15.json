@@ -1,5 +1,5 @@
 {
-  "train_csv": "data/train_cot.csv",
+  "train_csv": "data/trainable/train_cot.csv",
   "split_csv": "data/splits_70_15_15.config.json",
   "train_splits": ["sft_train"],
   "output_dir": "outputs/cot_training_70_15_15",

@@ -2,7 +2,10 @@ from __future__ import annotations
 
 import re
 
-BOXED_ANSWER_INSTRUCTION = "Put your final answer inside \\boxed{}."
+BOXED_ANSWER_INSTRUCTION = (
+    "Please put your final answer inside `\\boxed{}`. "
+    "For example: `\\boxed{your answer}`"
+)
 WONDERLAND_PREFIX_RE = re.compile(r"^\s*In Alice['’]s Wonderland,\s*", re.IGNORECASE)
 THINK_BLOCK_RE = re.compile(r"(?is)<think>\s*(.*?)\s*</think>")
 
@@ -12,7 +15,7 @@ def strip_wonderland_prefix(prompt: str) -> str:
 
 
 def build_user_message(prompt: str) -> str:
-    cleaned_prompt = strip_wonderland_prefix(prompt)
+    cleaned_prompt = prompt.strip()
     return f"{cleaned_prompt}\n{BOXED_ANSWER_INSTRUCTION}"
 
 
@@ -35,19 +38,29 @@ def normalize_generated_cot(generated_cot: str | None) -> str:
             return f"<think>\n{think_content}\n</think>"
         return "<think>\n\n</think>"
 
-    paragraphs = [part.strip() for part in re.split(r"\n\s*\n", text) if part.strip()]
-    while paragraphs:
-        tail = paragraphs[-1]
+    lines = text.splitlines()
+    while lines and not lines[-1].strip():
+        lines.pop()
+    while lines:
+        tail = lines[-1].strip()
         has_boxed_answer = "\\boxed{" in tail or "$\\boxed{" in tail
-        has_final_answer_prefix = bool(re.search(r"(?i)^\s*(final answer|answer)\s*:", tail))
-        has_final_answer_phrase = bool(re.search(r"(?i)\b(final answer|answer)\b", tail))
+        has_final_answer_prefix = bool(
+            re.search(r"(?i)^\s*(final answer|answer)\s*:", tail)
+        )
+        has_final_answer_phrase = bool(
+            re.search(r"(?i)\b(final answer|answer)\b", tail)
+        )
         if has_boxed_answer or has_final_answer_prefix or has_final_answer_phrase:
-            paragraphs.pop()
+            lines.pop()
+            while lines and not lines[-1].strip():
+                lines.pop()
             continue
         break
 
-    cleaned = "\n\n".join(paragraphs).strip()
-    return cleaned
+    text = "\n".join(lines).strip()
+    if not text:
+        return ""
+    return text
 
 
 def build_messages(prompt: str, answer: str | None = None) -> list[dict[str, str]]:

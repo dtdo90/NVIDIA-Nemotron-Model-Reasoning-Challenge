@@ -20,7 +20,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--output-csv",
-        default="data/text_knowledge_phase1.csv",
+        default="data/trainable/phase1_components/text_knowledge_phase1.csv",
         help="Destination CSV in SFT schema.",
     )
     parser.add_argument(

@@ -1,5 +1,5 @@
 {
-  "train_csv": "data/train_cot.csv",
+  "train_csv": "data/trainable/train_cot.csv",
   "output_dir": "outputs/cot_training",
   "kaggle_model_handle": "metric/nemotron-3-nano-30b-a3b-bf16/transformers/default",
   "seed": 42,

@@ -41,8 +41,35 @@ def _extract_balanced(text: str, start_index: int) -> str | None:
     return None
 
 
+def _extract_literal_boxed_from_line(line: str) -> str | None:
+    """Extract the last boxed payload on one line as literal text.
+
+    Symbol-transform answers can contain literal braces, backslashes, or dollar
+    signs. For local audits we therefore treat the final boxed line as a
+    delimiter convention: content starts after the last ``\boxed{`` on the line
+    and ends at the line's final ``}``.
+    """
+
+    marker = r"\boxed{"
+    marker_index = line.rfind(marker)
+    if marker_index < 0:
+        return None
+    stripped = line.strip().rstrip(" .,;")
+    if not stripped.endswith("}"):
+        return stripped[marker_index + len(marker):].strip()
+    return stripped[marker_index + len(marker):-1].strip()
+
+
 def extract_boxed_answer(text: str) -> str | None:
     marker = r"\boxed{"
+
+    # Prefer final-line literal extraction. This preserves challenge symbols
+    # such as $, {, }, and \ that are valid answer characters.
+    for line in reversed(text.splitlines()):
+        content = _extract_literal_boxed_from_line(line)
+        if content is not None:
+            return content
+
     found: list[str] = []
     search_start = 0
     while True:
@@ -70,8 +97,8 @@ def _strip_wrappers(text: str) -> str:
 
 def extract_answer(text: str) -> str:
     boxed = extract_boxed_answer(text)
-    if boxed:
-        return _strip_wrappers(boxed)
+    if boxed is not None:
+        return boxed.strip()
 
     for pattern in PHRASE_PATTERNS:
         match = pattern.search(text)
@@ -92,11 +119,11 @@ def extract_answer(text: str) -> str:
 
 
 def _canonical_text(answer: str) -> str:
-    return re.sub(r"\s+", " ", _strip_wrappers(answer))
+    return re.sub(r"\s+", " ", answer.strip())
 
 
 def _parse_decimal(answer: str) -> Decimal | None:
-    normalized = _canonical_text(answer)
+    normalized = _strip_wrappers(answer)
     if not re.fullmatch(NUMERIC_PATTERN, normalized):
         return None
     try:

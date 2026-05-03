@@ -1,0 +1,226 @@
+Problem 0e009c6d
+
+Question:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+>@'>> = )?>
+\%*\` = #!
+\>'@\ = \!?>
+`\*)> = @/
+Now, determine the result for: @?'`?
+
+Gold answer:
+`?\!
+
+Solution:
+
+We need to deduce the hidden symbol transformation rule by matching the example outputs.
+I will put my final answer inside \boxed{}.
+
+S0: Methodology: solve same-operator examples first; test direct templates first; if they fail, use encrypted digit search with BA_DC|rev or AB_CD|raw; choose the arithmetic family from same-operator RHS length; keep visible survivor grids; use other examples only to complete the map; then solve the query.
+
+S1: Classify this as Symbol Transform with fixed shape ABOCD.
+- Query is @?'`?; query operator is '.
+- Same-operator examples: >@'>>=)?>; \>'@\=\!?>.
+
+S2: Test direct-position templates first.
+- Template 0134: >@'>> -> >@>> vs )?>; \>'@\ -> \>@\ vs \!?>; FAIL.
+- Template 3401: >@'>> -> >>>@ vs )?>; \>'@\ -> @\\> vs \!?>; FAIL.
+
+S3: Direct templates fail, so move to the change-of-variables branch and try the BA_DC|rev arithmetic family from the same-operator RHS length.
+- The same-operator RHS values are )?>, \!?>. At least one RHS has length 4, so use the multiplication family for two-digit by two-digit arithmetic.
+- Therefore try the length-4 multiplication family: x * y, x * y + 1, x * y - 1.
+S3.1: Try rule x * y. Test it against the same-operator equations first.
+
+S4: Derive the symbol map for the locked rule without assuming the final map.
+
+Use >@'>>=)?>. Let >=a, @=b, )=c, ?=d.
+
+Under BA_DC|rev:
+>@ -> @> = 10b+a
+>> -> >> = 11a
+encoded RHS )?> has digit shape cda; before reverse it is adc = 100a+10d+c
+
+(10b+a)(11a)=100a+10d+c
+unit condition: aa≡c mod10
+
+The unit condition gives:
+c = a*a mod10
+
+First compute c:
+a:    0,1,2,3,4,5,6,7,8,9
+c:    0,1,4,9,6,5,6,9,4,1
+keep: x,x,scan,scan,scan,x,x,scan,scan,scan
+
+For scanned rows, compute:
+(10b+a)(11a)=100a+10d+c 
+110ab+11a^2=100a+10d+c
+10d=110ab+11a^2-100a-c
+d=(110ab+11a^2-100a-c)/10
+
+Each table entry is [d,status] 
+- x means reject because d is not an integer digit or d repeats one of a,b,c.
+- Ck means keep as survivor candidate k.
+
+b: 0,1,2,3,4,5,6,7,8,9
+a=2,c=4:[-16,x],[6,C1],[28,x],[50,x],[72,x],[94,x],[116,x],[138,x],[160,x],[182,x]
+a=3,c=9:[-21,x],[12,x],[45,x],[78,x],[111,x],[144,x],[177,x],[210,x],[243,x],[276,x]
+a=4,c=6:[-23,x],[21,x],[65,x],[109,x],[153,x],[197,x],[241,x],[285,x],[329,x],[373,x]
+a=7,c=9:[-17,x],[60,x],[137,x],[214,x],[291,x],[368,x],[445,x],[522,x],[599,x],[676,x]
+a=8,c=4:[-10,x],[78,x],[166,x],[254,x],[342,x],[430,x],[518,x],[606,x],[694,x],[782,x]
+a=9,c=1:[-1,x],[98,x],[197,x],[296,x],[395,x],[494,x],[593,x],[692,x],[791,x],[890,x]
+
+First-example survivors:
+C1: a=2,b=1,c=4,d=6
+C1: >=2, @=1, )=4, ?=6.
+
+S4.2: filter with \>'@\->\!?> using rule x * y.
+
+Use \>'@\=\!?>. Let \=a, >=b, @=c, !=d, ?=e.
+
+Under BA_DC|rev:
+\> -> >\ = 10b+a
+@\ -> \@ = 10a+c
+encoded RHS \!?> has digit shape adeb; before reverse it is beda = 1000b+100e+10d+a
+
+(10b+a)(10a+c)=1000b+100e+10d+a
+unit condition: ac≡a mod10
+
+For C1 from S4, the known values in this local notation are:
+b=2,c=1,e=6
+
+The equation becomes:
+(20+a)(10a+1)=2600+10d+a
+
+Scan a and compute:
+d=((20+a)(10a+1)-2600-a)/10
+
+Each table entry is [d,status] 
+- x means reject because d is not an integer digit or d repeats one of a,b,c,e.
+- Ck means keep as survivor candidate k.
+
+a: 0,1,2,3,4,5,6,7,8,9
+d: [-258,x],[-237,x],[-214,x],[-188,x],[-161,x],[-133,x],[-103,x],[-72,x],[-40,x],[3,C1]
+
+So after the second same-operator example:
+C1: a=9,b=2,c=1,d=3,e=6 in the local row notation.
+C1 update: >=2, @=1, )=4, ?=6, \=9, !=3
+
+S5: Use other-operator examples only to complete or verify the same digit map.
+
+S5.1: filter with \%*\`->#! using rule x - y.
+
+Use \%*\`=#!. Let \=a, %=b, `=c, #=d, !=e.
+
+Under BA_DC|rev:
+\% -> %\ = 10b+a
+\` -> `\ = 10c+a
+encoded RHS #! has digit shape de; before reverse it is ed = 10e+d
+
+(10b+a)-(10c+a)=10e+d
+unit condition: a-a≡d mod10
+d=0
+
+Since e=3 from the locked map so far, the full equation becomes:
+10b-10c=30
+b-c=3
+
+Scan b,c.
+c values allowed: 5,7,8
+
+c: 5,7,8
+b: [8,C1],[0,x],[1,x]
+
+The only survivor is c=5, b=8
+C1: b=8,c=5,d=0,e=3 in this local row notation.
+C1 update: >=2, @=1, )=4, ?=6, \=9, !=3, #=0, `=5, %=8
+
+S5.2: filter with `\*)>->@/ using rule x - y.
+
+Use `\*)>=@/. Let `=a, \=b, )=c, >=d, @=e, /=f.
+
+Under BA_DC|rev:
+`\ -> \` = 10b+a
+)> -> >) = 10d+c
+encoded RHS @/ has digit shape ef; before reverse it is fe = 10f+e
+
+(10b+a)-(10d+c)=10f+e
+unit condition: a-c≡e mod10
+
+For the surviving candidate, the known local values are:
+a=5,b=9,c=4,d=2,e=1
+
+The full equation is:
+(10b+a)-(10d+c)=10f+e
+95-24=10f+1
+71=10f+1
+f=7
+
+So this row keeps the candidate and determines:
+f=7
+
+C1: a=5,b=9,c=4,d=2,e=1,f=7 in this local row notation.
+C1 update: >=2, @=1, )=4, ?=6, \=9, !=3, #=0, `=5, %=8, /=7
+
+Final derived map:
+!->3
+#->0
+%->8
+)->4
+/->7
+>->2
+?->6
+@->1
+\->9
+`->5
+
+Operator rules:
+' -> x * y
+* -> x - y
+
+S7: Verify all examples with the derived map and locked operator rules.
+
+- >@'>>=)?>:
+>@ -> @> = 12
+>> -> >> = 22
+12*22=264
+rev=462
+enc=)?>
+PASS
+
+- \%*\`=#!:
+\% -> %\ = 89
+\` -> `\ = 59
+89-59=30
+rev=03
+enc=#!
+PASS
+
+- \>'@\=\!?>:
+\> -> >\ = 29
+@\ -> \@ = 91
+29*91=2639
+rev=9362
+enc=\!?>
+PASS
+
+- `\*)>=@/:
+`\ -> \` = 95
+)> -> >) = 24
+95-24=71
+rev=17
+enc=@/
+PASS
+
+S8: Solve query @?'`? with BA_DC|rev and rule x * y.
+
+@? -> ?@ = 61
+`? -> ?` = 65
+
+61*65=3965
+rev=5693
+encode 5693 = `?\!
+
+answer=`?\!.
+
+I will now return the answer in \boxed{}.
+The final answer is \boxed{`?\!}

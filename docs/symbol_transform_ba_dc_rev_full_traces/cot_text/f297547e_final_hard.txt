@@ -1,0 +1,252 @@
+Problem f297547e
+
+Question:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+{^*)^ = @'<<
+}'-') = ^^
+^^+)^ = \#
+}\*'{ = \<@{
+}{-<{ = <
+Now, determine the result for: ))-)^
+
+Solution:
+
+We need to deduce the hidden symbol transformation rule by matching the example outputs.
+I will put my final answer inside \boxed{}.
+
+S0: Methodology: solve same-operator examples first; test direct templates first; if they fail, use encrypted digit search with BA_DC|rev or AB_CD|raw; choose the arithmetic family from same-operator RHS length; keep visible survivor grids; use other examples only to complete the map; then solve the query.
+
+S1: Classify this as Symbol Transform with fixed shape ABOCD.
+- Query is ))-)^; query operator is -.
+- Same-operator examples: }'-')=^^; }{-<{=<.
+
+S2: Test direct-position templates first.
+- Template 0134: }'-') -> }'') vs ^^; }{-<{ -> }{<{ vs <; FAIL.
+- Template 3401: }'-') -> ')}' vs ^^; }{-<{ -> <{}{ vs <; FAIL.
+
+
+S2.1: Direct templates failed, so assign global variables once.
+Let:
+} = a
+' = b
+) = c
+^ = d
+{ = e
+< = f
+@ = g
+\ = h
+# = i
+
+All variables are distinct digits from 0 to 9.
+The symbols are used to define conversions at the start of each row and to encode the final answer. All intermediate reasoning uses a,b,c,d,e,f,g,h,i.
+
+S3: With the change-of-variables step in place, try the BA_DC|rev arithmetic family from the same-operator RHS length.
+- One same-operator RHS has length 1: }{-<{=<.
+- A one-symbol RHS indicates a one-digit raw result after reverse.
+- Therefore use the subtraction family in priority order: x - y, y - x, |x - y|.
+
+S3.1: Try rule x - y. Test it against the same-operator equations first.
+
+S4: Test rule x - y on the same-operator rows.
+
+First use }{-<{=< because it is the shorter same-operator row.
+
+Under BA_DC|rev:
+}{ -> {} = 10e+a
+<{ -> {< = 10e+f
+encoded RHS < has digit shape f; before reverse it is f = f
+
+(10e+a)-(10e+f)=f
+a-f=f
+
+Therefore:
+a=2f
+
+Since a and f are distinct digits, possible values are:
+f=1 gives a=2
+f=2 gives a=4
+f=3 gives a=6
+f=4 gives a=8
+
+Now combine with }'-')=^^.
+
+Under BA_DC|rev:
+}' -> '} = 10b+a
+') -> )' = 10c+b
+encoded RHS ^^ has digit shape dd; before reverse it is dd = 11d
+
+(10b+a)-(10c+b)=11d
+9b+a-10c=11d
+unit condition: a-b≡d mod10
+
+For each allowed a,f pair, compute:
+d=(a-b) mod10
+c=(9b+a-11d)/10
+
+Each table entry is [c,d,status].
+x means reject because c is not an integer digit, c is outside 0..9, or one of a,b,c,d,f repeats.
+Ck means keep as same-operator candidate k.
+
+b: 0,1,2,3,4,5,6,7,8,9
+a=2,f=1:[-2,2,x],[0,1,x],[2,0,x],[-7,9,x],[-5,8,x],[-3,7,x],[-1,6,x],[1,5,x],[3,4,C1],[5,3,C2]
+a=4,f=2:[-4,4,x],[-2,3,x],[0,2,x],[2,1,x],[4,0,x],[-5,9,x],[-3,8,x],[-1,7,x],[1,6,C3],[3,5,C4]
+a=6,f=3:[-6,6,x],[-4,5,x],[-2,4,x],[0,3,x],[2,2,x],[4,1,C5],[6,0,x],[-3,9,x],[-1,8,x],[1,7,C6]
+a=8,f=4:[-8,8,x],[-6,7,x],[-4,6,x],[-2,5,x],[0,4,x],[2,3,C7],[4,2,x],[6,1,C8],[8,0,x],[-1,9,x]
+
+Same-operator candidates after both '-' rows:
+C1: a=2,b=8,c=3,d=4,f=1
+C2: a=2,b=9,c=5,d=3,f=1
+C3: a=4,b=8,c=1,d=6,f=2
+C4: a=4,b=9,c=3,d=5,f=2
+C5: a=6,b=5,c=4,d=1,f=3
+C6: a=6,b=9,c=1,d=7,f=3
+C7: a=8,b=5,c=2,d=3,f=4
+C8: a=8,b=7,c=6,d=1,f=4
+
+The same-operator rows have consistent distinct-digit candidates, so LOCK:
+- -> x - y
+
+S5: Use other-operator examples only to complete or verify the same digit map.
+
+S5.1: filter with {^*)^=@'<< using rule x * y.
+
+Under BA_DC|rev:
+{^ -> ^{ = 10d+e
+)^ -> ^) = 10d+c
+encoded RHS @'<< has digit shape gbff; before reverse it is ffbg = 1100f+10b+g
+
+(10d+e)(10d+c)=1100f+10b+g
+unit condition: e*c≡g mod10
+
+For each same-operator candidate, scan e and compute:
+g=(10d+e)(10d+c)-1100f-10b
+
+Each table entry is [g,status].
+x means reject because g is not an integer digit, or one of a,b,c,d,e,f,g repeats.
+Ck means keep as candidate k.
+
+e: 0,1,2,3,4,5,6,7,8,9
+C1:[540,x],[583,x],[626,x],[669,x],[712,x],[755,x],[798,x],[841,x],[884,x],[927,x]
+C2:[-140,x],[-105,x],[-70,x],[-35,x],[0,C1],[35,x],[70,x],[105,x],[140,x],[175,x]
+C3:[1380,x],[1441,x],[1502,x],[1563,x],[1624,x],[1685,x],[1746,x],[1807,x],[1868,x],[1929,x]
+C4:[360,x],[413,x],[466,x],[519,x],[572,x],[625,x],[678,x],[731,x],[784,x],[837,x]
+C5:[-3210,x],[-3196,x],[-3182,x],[-3168,x],[-3154,x],[-3140,x],[-3126,x],[-3112,x],[-3098,x],[-3084,x]
+C6:[1580,x],[1651,x],[1722,x],[1793,x],[1864,x],[1935,x],[2006,x],[2077,x],[2148,x],[2219,x]
+C7:[-3490,x],[-3458,x],[-3426,x],[-3394,x],[-3362,x],[-3330,x],[-3298,x],[-3266,x],[-3234,x],[-3202,x]
+C8:[-4310,x],[-4294,x],[-4278,x],[-4262,x],[-4246,x],[-4230,x],[-4214,x],[-4198,x],[-4182,x],[-4166,x]
+
+Only one candidate survives:
+C1: a=2,b=9,c=5,d=3,e=4,f=1,g=0
+
+S5.2: filter with ^^+)^=\# using rule x + y.
+
+Under BA_DC|rev:
+^^ -> ^^ = 11d
+)^ -> ^) = 10d+c
+encoded RHS \# has digit shape hi; before reverse it is ih = 10i+h
+
+(11d)+(10d+c)=10i+h
+
+Using C1:
+11d+10d+c = 33+35 = 68
+
+So:
+i=6,h=8
+
+Update:
+C1: a=2,b=9,c=5,d=3,e=4,f=1,g=0,h=8,i=6
+
+S5.3: filter with }\*'{=\<@{ using rule x * y.
+
+Under BA_DC|rev:
+}\ -> \} = 10h+a
+'{ -> {' = 10e+b
+encoded RHS \<@{ has digit shape hfge; before reverse it is egfh = 1000e+100g+10f+h
+
+(10h+a)(10e+b)=1000e+100g+10f+h
+
+Using C1:
+10h+a=82
+10e+b=49
+82*49=4018
+1000e+100g+10f+h=4000+0+10+8=4018
+
+The candidate passes.
+
+Final variable assignment:
+a=2,b=9,c=5,d=3,e=4,f=1,g=0,h=8,i=6
+
+S6: Complete any query-only symbols by bijection.
+- No query digit variable remains unknown.
+
+Final derived map:
+#->6
+'->9
+)->5
+<->1
+@->0
+\->8
+^->3
+{->4
+}->2
+
+Operator rules:
+- -> x - y
++ -> x + y
+* -> x * y
+
+S7: Verify all examples with the derived map and locked operator rules.
+
+- {^*)^=@'<<:
+{^ -> ^{ = 34
+)^ -> ^) = 35
+34*35=1190
+rev=0911
+enc=@'<<
+PASS
+
+- }'-')=^^:
+}' -> '} = 92
+') -> )' = 59
+92-59=33
+rev=33
+enc=^^
+PASS
+
+- ^^+)^=\#:
+^^ -> ^^ = 33
+)^ -> ^) = 35
+33+35=68
+rev=86
+enc=\#
+PASS
+
+- }\*'{=\<@{:
+}\ -> \} = 82
+'{ -> {' = 49
+82*49=4018
+rev=8104
+enc=\<@{
+PASS
+
+- }{-<{=<:
+}{ -> {} = 42
+<{ -> {< = 41
+42-41=1
+rev=1
+enc=<
+PASS
+
+S8: Solve query ))-)^ with BA_DC|rev and rule x - y.
+
+)) -> )) = 55
+)^ -> ^) = 35
+
+55-35=20
+rev=02
+encode 02 = @}
+
+answer=@}.
+
+I will now return the answer in \boxed{}.
+The final answer is \boxed{@}}
