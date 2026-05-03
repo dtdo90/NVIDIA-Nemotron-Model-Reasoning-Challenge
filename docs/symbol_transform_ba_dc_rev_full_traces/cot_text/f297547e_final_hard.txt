@@ -9,6 +9,9 @@ In Alice's Wonderland, a secret set of transformation rules is applied to equati
 }{-<{ = <
 Now, determine the result for: ))-)^
 
+Gold answer:
+@}
+
 Solution:
 
 We need to deduce the hidden symbol transformation rule by matching the example outputs.
@@ -41,10 +44,8 @@ All variables are distinct digits from 0 to 9.
 The symbols are used to define conversions at the start of each row and to encode the final answer. All intermediate reasoning uses a,b,c,d,e,f,g,h,i.
 
 S3: With the change-of-variables step in place, try the BA_DC|rev arithmetic family from the same-operator RHS length.
-- One same-operator RHS has length 1: }{-<{=<.
-- A one-symbol RHS indicates a one-digit raw result after reverse.
+- The same-operator RHS values are ^^, <. A one-symbol RHS indicates a one-digit raw result after reverse.
 - Therefore use the subtraction family in priority order: x - y, y - x, |x - y|.
-
 S3.1: Try rule x - y. Test it against the same-operator equations first.
 
 S4: Test rule x - y on the same-operator rows.

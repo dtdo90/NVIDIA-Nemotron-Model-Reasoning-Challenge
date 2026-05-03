@@ -1,6 +1,7 @@
 Problem 8b1af00e
 
 Question:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
 \@`"{ = \/&[
 @\+?{ = [&"
 ?{`\@ = ![\[
@@ -29,25 +30,26 @@ S2: Test direct-position templates first.
 
 S2.1: Direct templates failed, so assign global variables once.
 Let:
-\=a
-@=b
-"=c
-{=d
-/=e
-&=f
-[=g
-?=h
-!=i
-%=j
+\ = a
+@ = b
+" = c
+{ = d
+/ = e
+& = f
+[ = g
+? = h
+! = i
+% = j
 
 All variables are distinct digits from 0 to 9.
+The symbols are used to define conversions at the start of each row and to encode the final answer. All intermediate reasoning uses a,b,c,d,e,f,g,h,i,j.
 
 S3: With the change-of-variables step in place, try the BA_DC|rev arithmetic family from the same-operator RHS length.
 - The same-operator RHS values are \/&[, ![\[, !%@. At least one RHS has length 4, so use the multiplication family for two-digit by two-digit arithmetic.
-- Therefore try the length-4 multiplication family: x*y, x*y+1, x*y-1.
-S3.1: Try rule x*y. Test it against the same-operator equations first.
+- Therefore try the length-4 multiplication family: x * y, x * y + 1, x * y - 1.
+S3.1: Try rule x * y. Test it against the same-operator equations first.
 
-S4: Test the trial rule x*y and derive the symbol map without assuming the final map.
+S4: Test the trial rule x * y and derive the symbol map without assuming the final map.
 
 Collect same-operator equations first.
 
@@ -99,11 +101,11 @@ The combined scan has one survivor:
 Candidate:
 C1: a=7,b=4,c=1,d=5,e=9,f=3,g=2,h=8,i=6,j=0
 
-The trial rule x*y has a consistent survivor after the same-operator constraints, so LOCK ` -> x*y.
+The trial rule x * y has a consistent survivor after the same-operator constraints, so LOCK ` -> x * y.
 
 S5: Use other-operator examples only to complete or verify the same digit map.
 
-Use @\+?{=[&" with rule x+y.
+Use @\+?{=[&" with rule x + y.
 @\ -> \@ = 10a+b = 74
 ?{ -> {? = 10d+h = 58
 74+58=132
@@ -111,7 +113,7 @@ rev=231
 enc=[&"
 PASS
 
-Use \[+{!=[/ with rule x+y.
+Use \[+{!=[/ with rule x + y.
 \[ -> [\ = 10g+a = 27
 {! -> !{ = 10i+d = 65
 27+65=92
@@ -177,7 +179,7 @@ rev=29
 enc=[/
 PASS
 
-S8: Solve query %@`{\ with BA_DC|rev and rule x*y.
+S8: Solve query %@`{\ with BA_DC|rev and rule x * y.
 
 %@ -> @% = 40
 {\ -> \{ = 75

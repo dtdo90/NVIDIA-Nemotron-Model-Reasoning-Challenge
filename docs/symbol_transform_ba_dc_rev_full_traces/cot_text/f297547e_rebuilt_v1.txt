@@ -9,6 +9,9 @@ In Alice's Wonderland, a secret set of transformation rules is applied to equati
 }{-<{ = <
 Now, determine the result for: ))-)^
 
+Gold answer:
+@}
+
 Solution:
 
 We need to deduce the hidden symbol transformation rule by matching the example outputs.

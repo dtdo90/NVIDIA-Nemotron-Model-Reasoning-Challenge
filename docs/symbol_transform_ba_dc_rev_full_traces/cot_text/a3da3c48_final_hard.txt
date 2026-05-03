@@ -1,5 +1,15 @@
 Problem a3da3c48
 
+Question:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+&:)@: = &|@}
+|>(|$ = ''}
+|$(}} = \@
+Now, determine the result for: :](>>
+
+Gold answer:
+\$
+
 Solution:
 
 We need to deduce the hidden symbol transformation rule by matching the example outputs.
@@ -30,10 +40,11 @@ $ = a
 } = j
 
 All variables are distinct digits from 0 to 9.
-The symbols are used to define conversions at the start of each row and to encode the final answer. All intermediate reasoning uses the global variables above.
+The symbols are used to define conversions at the start of each row and to encode the final answer. All intermediate reasoning uses a,b,c,d,e,f,g,h,i,j.
 
 S3: With the change-of-variables step in place, try the BA_DC|rev arithmetic family from the same-operator RHS length.
-- The longest same-operator RHS has length 3, so try the capped additive/multiplicative family in priority order.
+- The same-operator RHS values are ''}, \@. The longest RHS length is 3, so try the capped numeric-symbol BA_DC|rev order: x + y, then x * y, then x + y + 1.
+- Therefore try the length-3 popularity order: x + y, x * y, x + y + 1.
 S3.1: Try rule x + y. Test it against the same-operator equations first.
 
 S4: Collect the same-operator equations for this trial rule.

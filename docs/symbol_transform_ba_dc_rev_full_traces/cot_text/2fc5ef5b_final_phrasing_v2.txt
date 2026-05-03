@@ -1,6 +1,7 @@
 Problem 2fc5ef5b
 
 Question:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
 /:+{: = }^
 :%*'% = &^}&
 \%*{: = \/{}
@@ -28,25 +29,26 @@ S2: Test direct-position templates first.
 
 S2.1: Direct templates failed, so assign global variables once.
 Let:
-:=a
-%=b
-'=c
-&=d
-^=e
-}=f
-\=g
-{=h
-/=i
-$=j
+: = a
+% = b
+' = c
+& = d
+^ = e
+} = f
+\ = g
+{ = h
+/ = i
+$ = j
 
 All variables are distinct digits from 0 to 9.
+The symbols are used to define conversions at the start of each row and to encode the final answer. All intermediate reasoning uses a,b,c,d,e,f,g,h,i,j.
 
 S3: With the change-of-variables step in place, try the BA_DC|rev arithmetic family from the same-operator RHS length.
-- The same-operator RHS values are &^}& and \/{}. At least one RHS has length 4, so use the multiplication family for two-digit by two-digit arithmetic.
-- Therefore try the length-4 multiplication family: x*y, x*y+1, x*y-1.
-S3.1: Try rule x*y. Test it against the same-operator equations first.
+- The same-operator RHS values are &^}&, \/{}. At least one RHS has length 4, so use the multiplication family for two-digit by two-digit arithmetic.
+- Therefore try the length-4 multiplication family: x * y, x * y + 1, x * y - 1.
+S3.1: Try rule x * y. Test it against the same-operator equations first.
 
-S4: Test the trial rule x*y and derive the symbol map without assuming the final map.
+S4: Test the trial rule x * y and derive the symbol map without assuming the final map.
 
 Use :%*'%=&^}&.
 Under BA_DC|rev:
@@ -110,11 +112,11 @@ C6: [0,3,8,C1]
 Second-stage survivor:
 C1: a=2,b=6,c=7,d=4,e=5,f=1,g=0,h=3,i=8
 
-The trial rule x*y has a consistent survivor after the same-operator constraints, so LOCK * -> x*y.
+The trial rule x * y has a consistent survivor after the same-operator constraints, so LOCK * -> x * y.
 
 S5: Use other-operator examples only to complete or verify the same digit map.
 
-S5.1: Use /:+{:=}^ with rule x+y.
+S5.1: Use /:+{:=}^ with rule x + y.
 Under BA_DC|rev:
 /: -> :/ = 10a+i
 {: -> :{ = 10a+h
@@ -126,7 +128,7 @@ Substitute a=2,i=8,h=3,e=5,f=1:
 28+23=51
 PASS.
 
-S5.2: Use $&+%&=^$ with rule x+y.
+S5.2: Use $&+%&=^$ with rule x + y.
 Under BA_DC|rev:
 $& -> &$ = 10d+j
 %& -> &% = 10d+b
@@ -189,7 +191,7 @@ rev=59
 enc=^$
 PASS
 
-S8: Solve query &/*:' with BA_DC|rev and rule x*y.
+S8: Solve query &/*:' with BA_DC|rev and rule x * y.
 
 &/ -> /& = 84
 :' -> ': = 72

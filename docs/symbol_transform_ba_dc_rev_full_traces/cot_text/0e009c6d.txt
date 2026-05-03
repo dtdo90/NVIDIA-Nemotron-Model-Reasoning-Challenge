@@ -26,14 +26,31 @@ S2: Test direct-position templates first.
 - Template 0134: >@'>> -> >@>> vs )?>; \>'@\ -> \>@\ vs \!?>; FAIL.
 - Template 3401: >@'>> -> >>>@ vs )?>; \>'@\ -> @\\> vs \!?>; FAIL.
 
-S3: Direct templates fail, so move to the change-of-variables branch and try the BA_DC|rev arithmetic family from the same-operator RHS length.
+
+S2.1: Direct templates failed, so assign global variables once.
+Let:
+> = a
+@ = b
+) = c
+? = d
+\ = e
+! = f
+% = g
+` = h
+# = i
+/ = j
+
+All variables are distinct digits from 0 to 9.
+The symbols are used to define conversions at the start of each row and to encode the final answer. All intermediate reasoning uses a,b,c,d,e,f,g,h,i,j.
+
+S3: With the change-of-variables step in place, try the BA_DC|rev arithmetic family from the same-operator RHS length.
 - The same-operator RHS values are )?>, \!?>. At least one RHS has length 4, so use the multiplication family for two-digit by two-digit arithmetic.
 - Therefore try the length-4 multiplication family: x * y, x * y + 1, x * y - 1.
 S3.1: Try rule x * y. Test it against the same-operator equations first.
 
 S4: Derive the symbol map for the locked rule without assuming the final map.
 
-Use >@'>>=)?>. Let >=a, @=b, )=c, ?=d.
+Use >@'>>=)?>. From the global variable list: > = a, @ = b, ) = c, ? = d.
 
 Under BA_DC|rev:
 >@ -> @> = 10b+a
@@ -57,7 +74,7 @@ For scanned rows, compute:
 10d=110ab+11a^2-100a-c
 d=(110ab+11a^2-100a-c)/10
 
-Each table entry is [d,status] 
+Each table entry is [f,status]
 - x means reject because d is not an integer digit or d repeats one of a,b,c.
 - Ck means keep as survivor candidate k.
 
@@ -75,90 +92,87 @@ C1: >=2, @=1, )=4, ?=6.
 
 S4.2: filter with \>'@\->\!?> using rule x * y.
 
-Use \>'@\=\!?>. Let \=a, >=b, @=c, !=d, ?=e.
+Use \>'@\=\!?>. From the global variable list: \ = e, > = a, @ = b, ! = f, ? = d.
 
 Under BA_DC|rev:
-\> -> >\ = 10b+a
-@\ -> \@ = 10a+c
-encoded RHS \!?> has digit shape adeb; before reverse it is beda = 1000b+100e+10d+a
+\> -> >\ = 10a+e
+@\ -> \@ = 10e+b
+encoded RHS \!?> has digit shape efda; before reverse it is adfe = 1000a+100d+10f+e
 
-(10b+a)(10a+c)=1000b+100e+10d+a
-unit condition: ac≡a mod10
+(10a+e)(10e+b)=1000a+100d+10f+e
+unit condition: e*b≡e mod10
 
-For C1 from S4, the known values in this local notation are:
-b=2,c=1,e=6
+For C1 from S4, the known global values are:
+a=2,b=1,d=6
 
 The equation becomes:
-(20+a)(10a+1)=2600+10d+a
+(20+e)(10e+1)=2600+10f+e
 
-Scan a and compute:
-d=((20+a)(10a+1)-2600-a)/10
+Scan e and compute:
+f=((20+e)(10e+1)-2600-e)/10
 
 Each table entry is [d,status] 
-- x means reject because d is not an integer digit or d repeats one of a,b,c,e.
+- x means reject because f is not an integer digit or repeats a known digit.
 - Ck means keep as survivor candidate k.
 
-a: 0,1,2,3,4,5,6,7,8,9
-d: [-258,x],[-237,x],[-214,x],[-188,x],[-161,x],[-133,x],[-103,x],[-72,x],[-40,x],[3,C1]
+e: 0,1,2,3,4,5,6,7,8,9
+f: [-258,x],[-237,x],[-214,x],[-188,x],[-161,x],[-133,x],[-103,x],[-72,x],[-40,x],[3,C1]
 
 So after the second same-operator example:
-C1: a=9,b=2,c=1,d=3,e=6 in the local row notation.
 C1 update: >=2, @=1, )=4, ?=6, \=9, !=3
 
 S5: Use other-operator examples only to complete or verify the same digit map.
 
 S5.1: filter with \%*\`->#! using rule x - y.
 
-Use \%*\`=#!. Let \=a, %=b, `=c, #=d, !=e.
+Use \%*\`=#!. From the global variable list: \ = e, % = g, ` = h, # = i, ! = f.
 
 Under BA_DC|rev:
-\% -> %\ = 10b+a
-\` -> `\ = 10c+a
-encoded RHS #! has digit shape de; before reverse it is ed = 10e+d
+\% -> %\ = 10g+e
+\` -> `\ = 10h+e
+encoded RHS #! has digit shape if; before reverse it is fi = 10f+i
 
-(10b+a)-(10c+a)=10e+d
-unit condition: a-a≡d mod10
-d=0
+(10g+e)-(10h+e)=10f+i
+unit condition: e-e≡i mod10
+i=0
 
-Since e=3 from the locked map so far, the full equation becomes:
-10b-10c=30
-b-c=3
+Since f=3 from the locked map so far, the full equation becomes:
+10g-10h=30
+g-h=3
 
-Scan b,c.
-c values allowed: 5,7,8
+Scan g,h.
+h values allowed: 5,7,8
 
-c: 5,7,8
-b: [8,C1],[0,x],[1,x]
+h: 5,7,8
+g: [8,C1],[0,x],[1,x]
 
-The only survivor is c=5, b=8
-C1: b=8,c=5,d=0,e=3 in this local row notation.
+The only survivor is h=5, g=8.
 C1 update: >=2, @=1, )=4, ?=6, \=9, !=3, #=0, `=5, %=8
 
 S5.2: filter with `\*)>->@/ using rule x - y.
 
-Use `\*)>=@/. Let `=a, \=b, )=c, >=d, @=e, /=f.
+Use `\*)>=@/. From the global variable list: ` = h, \ = e, ) = c, > = a, @ = b, / = j.
 
 Under BA_DC|rev:
-`\ -> \` = 10b+a
-)> -> >) = 10d+c
-encoded RHS @/ has digit shape ef; before reverse it is fe = 10f+e
+`\ -> \` = 10e+h
+)> -> >) = 10a+c
+encoded RHS @/ has digit shape bj; before reverse it is jb = 10j+b
 
-(10b+a)-(10d+c)=10f+e
-unit condition: a-c≡e mod10
+(10e+h)-(10a+c)=10j+b
+unit condition: h-c≡b mod10
 
-For the surviving candidate, the known local values are:
-a=5,b=9,c=4,d=2,e=1
+For the surviving candidate, the known global values are:
+h=5,e=9,c=4,a=2,b=1
 
 The full equation is:
-(10b+a)-(10d+c)=10f+e
-95-24=10f+1
-71=10f+1
-f=7
+(10e+h)-(10a+c)=10j+b
+95-24=10j+1
+71=10j+1
+j=7
 
 So this row keeps the candidate and determines:
-f=7
+j=7
 
-C1: a=5,b=9,c=4,d=2,e=1,f=7 in this local row notation.
 C1 update: >=2, @=1, )=4, ?=6, \=9, !=3, #=0, `=5, %=8, /=7
 
 Final derived map:

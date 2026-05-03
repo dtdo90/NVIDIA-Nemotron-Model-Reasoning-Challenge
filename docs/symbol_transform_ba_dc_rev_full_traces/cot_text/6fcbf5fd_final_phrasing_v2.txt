@@ -1,6 +1,7 @@
 Problem 6fcbf5fd
 
 Question:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
 <\+}\ = !`}`
 }\|!} = ^)
 (?+?? = ?>^(
@@ -28,25 +29,26 @@ S2: Test direct-position templates first.
 
 S2.1: Direct templates failed, so assign global variables once.
 Let:
-}=a
-\=b
-!=c
-^=d
-)=e
-<=f
-`=g
-?=h
-(=i
->=j
+} = a
+\ = b
+! = c
+^ = d
+) = e
+< = f
+` = g
+? = h
+( = i
+> = j
 
 All variables are distinct digits from 0 to 9.
+The symbols are used to define conversions at the start of each row and to encode the final answer. All intermediate reasoning uses a,b,c,d,e,f,g,h,i,j.
 
 S3: With the change-of-variables step in place, try the BA_DC|rev arithmetic family from the same-operator RHS length.
-- The same-operator RHS value is ^). Length 2 indicates the addition/subtraction family.
-- Therefore try the length-2 addition/subtraction family: x+y, x+y+1, x+y-1, x-y, y-x, |x-y|.
-S3.1: Try rule x+y. Test it against the same-operator equations first.
+- The same-operator RHS values are ^). Length 2 indicates the addition/subtraction family.
+- Therefore try the length-2 addition/subtraction family: x + y, x + y + 1, x + y - 1, x - y, y - x, |x - y|.
+S3.1: Try rule x + y. Test it against the same-operator equations first.
 
-S4: Test the trial rule x+y and derive the symbol map without assuming the final map.
+S4: Test the trial rule x + y and derive the symbol map without assuming the final map.
 
 Use }\|!}=^).
 Under BA_DC|rev:
@@ -58,21 +60,21 @@ unit condition: a+c≡d mod10
 
 This one row gives many candidates, so collect the other examples before making the final table.
 
-Use <\+}\=!`}` with rule x*y.
+Use <\+}\=!`}` with rule x * y.
 <\ -> \< = 10b+f
 }\ -> \} = 10b+a
 encoded RHS !`}` has digit shape cgag; before reverse it is gagc = 1010g+100a+c
 (10b+f)(10b+a)=1010g+100a+c
 unit condition: f*a≡c mod10
 
-Use (?+??=?>^( with rule x*y.
+Use (?+??=?>^( with rule x * y.
 (? -> ?( = 10h+i
 ?? -> ?? = 11h
 encoded RHS ?>^( has digit shape hjdi; before reverse it is idjh = 1000i+100d+10j+h
 (10h+i)(11h)=1000i+100d+10j+h
 unit condition: i*h≡h mod10
 
-Use ?)+<\=}!^! with rule x*y.
+Use ?)+<\=}!^! with rule x * y.
 ?) -> )? = 10e+h
 <\ -> \< = 10b+f
 encoded RHS }!^! has digit shape acdc; before reverse it is cdca = 1010c+100d+a
@@ -109,7 +111,7 @@ The combined scan has one survivor:
 Candidate:
 C1: a=2,b=7,c=6,d=8,e=9,f=3,g=5,h=4,i=1,j=0
 
-The trial rule x+y has a consistent survivor after the same-operator constraints, so LOCK | -> x+y.
+The trial rule x + y has a consistent survivor after the same-operator constraints, so LOCK | -> x + y.
 
 Final derived map:
 }->2
@@ -161,7 +163,7 @@ rev=2686
 enc=}!^!
 PASS
 
-S8: Solve query <)|`! with BA_DC|rev and rule x+y.
+S8: Solve query <)|`! with BA_DC|rev and rule x + y.
 
 <) -> )< = 93
 `! -> !` = 65
