@@ -59,6 +59,19 @@ The separate component files remain in:
 This lets us train with only two active stages, `Phase 1 -> Phase 2`, while
 preserving the old `1A` vs `1B` split for later ablation.
 
+Active SFT schedule:
+
+1. `Phase 1`: train `configs/phase1_training.json` for `1` LoRA epoch at learning rate `1e-4`.
+2. `Phase 2`: train `configs/cot_training_phase2_75_10_15.json` for `1` LoRA epoch at learning rate `5e-5`.
+3. Phase 2 starts from `outputs/phase1_training/adapter`, so it continues the LoRA weights learned in Phase 1.
+
+After regenerating data, run the train-script preflight checks before launching
+GPU training:
+
+1. `python3 train_sft.py --config configs/phase1_training.json --validate-only`
+2. `python3 train_sft.py --config configs/cot_training_phase2_75_10_15.json --validate-only`
+3. `python3 train_grpo.py --config configs/grpo_stage2.json --validate-only`
+
 Current decision:
 
 1. `Text Encryption`

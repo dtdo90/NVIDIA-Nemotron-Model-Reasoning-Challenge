@@ -163,6 +163,12 @@ def parse_args() -> argparse.Namespace:
         "--cot-column",
         default=defaults.get("cot_column", "generated_cot"),
     )
+    parser.add_argument(
+        "--validate-only",
+        action="store_true",
+        default=bool(defaults.get("validate_only", False)),
+        help="Validate the configured CSV/split wiring and exit before loading model dependencies.",
+    )
     parser.add_argument("--disable-kaggle-triton-fixes", action="store_true")
     return parser.parse_args(remaining)
 
@@ -277,11 +283,26 @@ def load_training_examples(csv_path: str, *, cot_column: str) -> list[TrainingEx
     with Path(csv_path).open(newline="", encoding="utf-8") as handle:
         reader = csv.DictReader(handle)
         fieldnames = reader.fieldnames or []
+        required_columns = {"id", "prompt", "answer"}
+        missing_columns = required_columns - set(fieldnames)
+        if missing_columns:
+            raise SystemExit(
+                f"{csv_path!r} is missing required columns: {sorted(missing_columns)}"
+            )
         has_cot_column = cot_column in fieldnames
         has_label_column = "label" in fieldnames
         has_category_column = "category" in fieldnames
         has_assistant_content_column = "assistant_content" in fieldnames
-        for row in reader:
+        for row_index, row in enumerate(reader, start=2):
+            row_id = (row.get("id") or "").strip()
+            prompt = row.get("prompt") or ""
+            answer = row.get("answer") or ""
+            if not row_id:
+                raise SystemExit(f"{csv_path!r} has an empty id at CSV line {row_index}.")
+            if not prompt.strip():
+                raise SystemExit(f"{csv_path!r} has an empty prompt for id={row_id!r}.")
+            if not answer.strip():
+                raise SystemExit(f"{csv_path!r} has an empty answer for id={row_id!r}.")
             generated_cot = row.get(cot_column) if has_cot_column else None
             assistant_content = (
                 row.get("assistant_content", "").strip()
@@ -296,15 +317,17 @@ def load_training_examples(csv_path: str, *, cot_column: str) -> list[TrainingEx
                 category = infer_category(row["prompt"])
             examples.append(
                 TrainingExample(
-                    id=row["id"],
-                    prompt=row["prompt"],
-                    answer=row["answer"],
+                    id=row_id,
+                    prompt=prompt,
+                    answer=answer,
                     category=category,
                     generated_cot=normalize_generated_cot(generated_cot),
                     label=row.get("label") if has_label_column else None,
                     assistant_content=assistant_content or None,
                 )
             )
+    if not examples:
+        raise SystemExit(f"{csv_path!r} contains no training rows.")
     return examples
 
 
@@ -360,6 +383,74 @@ def write_json(path: Path, payload: dict) -> None:
     path.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
 
+def count_duplicate_ids(examples: list[TrainingExample]) -> int:
+    seen: set[str] = set()
+    duplicates = 0
+    for example in examples:
+        if example.id in seen:
+            duplicates += 1
+        else:
+            seen.add(example.id)
+    return duplicates
+
+
+def build_preflight_summary(
+    args: argparse.Namespace,
+    *,
+    examples: list[TrainingExample],
+    train_examples: list[TrainingExample],
+    val_examples: list[TrainingExample],
+    supervision_format: str,
+    split_assignments: dict[str, str] | None,
+    selected_ids: set[str] | None,
+) -> dict[str, object]:
+    example_ids = {example.id for example in examples}
+    selected_missing_ids = sorted((selected_ids or set()) - example_ids)
+    generated_cot_count = sum(1 for example in examples if example.generated_cot)
+    assistant_content_count = sum(1 for example in examples if example.assistant_content)
+    generated_cot_target_count = sum(
+        1 for example in examples if example.generated_cot and not example.assistant_content
+    )
+    answer_only_count = sum(
+        1 for example in examples if not example.generated_cot and not example.assistant_content
+    )
+    warnings: list[str] = []
+    duplicate_count = count_duplicate_ids(examples)
+    if duplicate_count:
+        warnings.append(
+            f"Found {duplicate_count} duplicate row ids. This is allowed for weighting, "
+            "but it can make split accounting harder to audit."
+        )
+    if args.supervision_format == "cot" and not (generated_cot_count or assistant_content_count):
+        warnings.append(
+            "supervision_format is 'cot', but no generated_cot or assistant_content rows were found."
+        )
+    if selected_missing_ids:
+        warnings.append(
+            f"{len(selected_missing_ids)} ids selected by the split file are absent from the training CSV."
+        )
+    return {
+        "train_csv": str(Path(args.train_csv).resolve()),
+        "split_csv": str(Path(args.split_csv).resolve()) if args.split_csv else None,
+        "train_splits": args.train_splits or (["sft_train"] if args.split_csv else None),
+        "supervision_format": supervision_format,
+        "cot_column": args.cot_column,
+        "total_rows": len(examples),
+        "train_rows": len(train_examples),
+        "val_rows": len(val_examples),
+        "generated_cot_rows": generated_cot_count,
+        "assistant_content_rows": assistant_content_count,
+        "generated_cot_target_rows": generated_cot_target_count,
+        "answer_only_rows": answer_only_count,
+        "duplicate_id_rows": duplicate_count,
+        "train_category_counts": summarize_categories(train_examples),
+        "val_category_counts": summarize_categories(val_examples),
+        "split_counts": summarize_split_assignments(split_assignments) if split_assignments else None,
+        "selected_split_ids_missing_from_csv": len(selected_missing_ids),
+        "warnings": warnings,
+    }
+
+
 def ensure_trainable_adapter(model) -> None:
     for name, parameter in model.named_parameters():
         if "lora_" in name or "adapter" in name:
@@ -369,24 +460,10 @@ def ensure_trainable_adapter(model) -> None:
 
 def main() -> None:
     args = parse_args()
-    deps = require_training_dependencies()
-    try:
-        import kagglehub  # type: ignore
-    except ImportError:
-        kagglehub = None
-
-    if not args.disable_kaggle_triton_fixes:
-        apply_kaggle_triton_fixes(deps["torch"], deps["torch_f"])
-
-    model_path = resolve_model_path(args, kagglehub)
-    output_dir = Path(args.output_dir)
-    adapter_dir = output_dir / "adapter"
-    output_dir.mkdir(parents=True, exist_ok=True)
-    adapter_dir.mkdir(parents=True, exist_ok=True)
-
     examples = load_training_examples(args.train_csv, cot_column=args.cot_column)
     supervision_format = resolve_supervision_format(args, examples)
     split_assignments = None
+    selected_ids = None
     if args.split_csv:
         split_assignments = load_split_assignments(args.split_csv)
         train_split_names = args.train_splits or ["sft_train"]
@@ -406,6 +483,34 @@ def main() -> None:
 
     if args.max_train_samples is not None:
         train_examples = train_examples[: args.max_train_samples]
+
+    if args.validate_only:
+        summary = build_preflight_summary(
+            args,
+            examples=examples,
+            train_examples=train_examples,
+            val_examples=val_examples,
+            supervision_format=supervision_format,
+            split_assignments=split_assignments,
+            selected_ids=selected_ids,
+        )
+        print(json.dumps(summary, indent=2, ensure_ascii=False))
+        return
+
+    deps = require_training_dependencies()
+    try:
+        import kagglehub  # type: ignore
+    except ImportError:
+        kagglehub = None
+
+    if not args.disable_kaggle_triton_fixes:
+        apply_kaggle_triton_fixes(deps["torch"], deps["torch_f"])
+
+    model_path = resolve_model_path(args, kagglehub)
+    output_dir = Path(args.output_dir)
+    adapter_dir = output_dir / "adapter"
+    output_dir.mkdir(parents=True, exist_ok=True)
+    adapter_dir.mkdir(parents=True, exist_ok=True)
 
     tokenizer = deps["AutoTokenizer"].from_pretrained(model_path, trust_remote_code=True)
     if tokenizer.pad_token is None:

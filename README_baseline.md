@@ -32,6 +32,23 @@ Important method records:
 3. [docs/symbol_transform_methodology.md](/Users/taido/Desktop/Tai/NVIDIA%20Nemotron%20Model%20Reasoning/docs/symbol_transform_methodology.md)
 4. [docs/winner_solution_alignment.md](/Users/taido/Desktop/Tai/NVIDIA%20Nemotron%20Model%20Reasoning/docs/winner_solution_alignment.md)
 
+## Active Training Schedule
+
+The starter training loop is intentionally two SFT stages:
+
+1. `Phase 1`: `configs/phase1_training.json`
+2. `Phase 2`: `configs/cot_training_phase2_75_10_15.json`
+
+Exact schedule:
+
+1. Phase 1 trains a LoRA adapter for `1` epoch with learning rate `1e-4`.
+2. Phase 1 writes the adapter to `outputs/phase1_training/adapter`.
+3. Phase 2 initializes from `outputs/phase1_training/adapter`.
+4. Phase 2 continues LoRA training for `1` epoch with learning rate `5e-5`.
+
+Both active configs use LoRA rank `32`, LoRA alpha `32`, and gradient
+accumulation `4`.
+
 ## Persistent Splits
 
 Create the fixed `75/10/15` split used by SFT, GRPO, and local eval:
@@ -96,6 +113,20 @@ python3 train_sft.py \
   --config configs/phase1_training.json
 ```
 
+Preflight regenerated Phase 1 data without loading the model:
+
+```bash
+python3 train_sft.py \
+  --config configs/phase1_training.json \
+  --validate-only
+```
+
+Config check:
+
+1. `num_epochs`: `1.0`
+2. `learning_rate`: `0.0001`
+3. `output_dir`: `outputs/phase1_training`
+
 ## Phase 2 Dataset
 
 Phase 2 is the main task SFT dataset. It uses the `sft_train` split of
@@ -146,8 +177,23 @@ python3 train_sft.py \
   --config configs/cot_training_phase2_75_10_15.json
 ```
 
+Preflight regenerated Phase 2 data without loading the model:
+
+```bash
+python3 train_sft.py \
+  --config configs/cot_training_phase2_75_10_15.json \
+  --validate-only
+```
+
 `train_sft.py` supports `--init-adapter-dir`, and the Phase 2 config uses it
 to continue training the same LoRA adapter learned in Phase 1.
+
+Config check:
+
+1. `init_adapter_dir`: `outputs/phase1_training/adapter`
+2. `num_epochs`: `1.0`
+3. `learning_rate`: `0.00005`
+4. `output_dir`: `outputs/cot_training_phase2_75_10_15`
 
 ## Local Evaluation
 
@@ -179,9 +225,15 @@ After Phase 2 SFT, run GRPO from the Phase 2 adapter:
 
 ```bash
 python3 train_grpo.py \
+  --config configs/grpo_stage2.json
+```
+
+Preflight GRPO split wiring and batch divisibility without loading the model:
+
+```bash
+python3 train_grpo.py \
   --config configs/grpo_stage2.json \
-  --sft-adapter-dir outputs/cot_training_phase2_75_10_15/adapter \
-  --output-dir outputs/grpo_stage2
+  --validate-only
 ```
 
 Then compare SFT-only and GRPO adapters on the same held-out `eval` split with

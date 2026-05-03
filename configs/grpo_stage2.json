@@ -3,6 +3,7 @@
   "split_csv": "data/splits_75_10_15.config.json",
   "train_splits": ["grpo_train"],
   "output_dir": "outputs/grpo_stage2",
+  "sft_adapter_dir": "outputs/cot_training_phase2_75_10_15/adapter",
   "kaggle_model_handle": "metric/nemotron-3-nano-30b-a3b-bf16/transformers/default",
   "seed": 42,
   "num_epochs": 1.0,

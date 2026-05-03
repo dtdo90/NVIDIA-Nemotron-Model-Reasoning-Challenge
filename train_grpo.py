@@ -110,6 +110,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--scale-rewards", default=defaults.get("scale_rewards", "none"))
     parser.add_argument("--logging-steps", type=int, default=defaults.get("logging_steps", 10))
     parser.add_argument("--save-tokenizer", action="store_true", default=bool(defaults.get("save_tokenizer", False)))
+    parser.add_argument(
+        "--validate-only",
+        action="store_true",
+        default=bool(defaults.get("validate_only", False)),
+        help="Validate the configured CSV/split wiring and exit before loading model dependencies.",
+    )
     parser.add_argument("--disable-kaggle-triton-fixes", action="store_true")
     return parser.parse_args(remaining)
 
@@ -219,16 +225,36 @@ def load_training_examples(csv_path: str) -> list[RLExample]:
     examples: list[RLExample] = []
     with Path(csv_path).open(newline="", encoding="utf-8") as handle:
         reader = csv.DictReader(handle)
-        for row in reader:
+        fieldnames = reader.fieldnames or []
+        required_columns = {"id", "prompt", "answer"}
+        missing_columns = required_columns - set(fieldnames)
+        if missing_columns:
+            raise SystemExit(
+                f"{csv_path!r} is missing required columns: {sorted(missing_columns)}"
+            )
+        has_category_column = "category" in fieldnames
+        for row_index, row in enumerate(reader, start=2):
+            row_id = (row.get("id") or "").strip()
+            prompt = row.get("prompt") or ""
+            answer = row.get("answer") or ""
+            if not row_id:
+                raise SystemExit(f"{csv_path!r} has an empty id at CSV line {row_index}.")
+            if not prompt.strip():
+                raise SystemExit(f"{csv_path!r} has an empty prompt for id={row_id!r}.")
+            if not answer.strip():
+                raise SystemExit(f"{csv_path!r} has an empty answer for id={row_id!r}.")
+            category = row["category"] if has_category_column and row.get("category") else infer_category(prompt)
             examples.append(
                 RLExample(
-                    id=row["id"],
-                    prompt=row["prompt"],
-                    answer=row["answer"],
-                    category=infer_category(row["prompt"]),
+                    id=row_id,
+                    prompt=prompt,
+                    answer=answer,
+                    category=category,
                     label=row.get("label"),
                 )
             )
+    if not examples:
+        raise SystemExit(f"{csv_path!r} contains no training rows.")
     return examples
 
 
@@ -248,6 +274,57 @@ def build_dataset(dataset_cls, examples: list[RLExample]):
 
 def write_json(path: Path, payload: dict) -> None:
     path.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+
+
+def count_duplicate_ids(examples: list[RLExample]) -> int:
+    seen: set[str] = set()
+    duplicates = 0
+    for example in examples:
+        if example.id in seen:
+            duplicates += 1
+        else:
+            seen.add(example.id)
+    return duplicates
+
+
+def build_preflight_summary(
+    args: argparse.Namespace,
+    *,
+    examples: list[RLExample],
+    train_examples: list[RLExample],
+    split_assignments: dict[str, str],
+    selected_ids: set[str],
+    effective_batch: int,
+) -> dict[str, object]:
+    example_ids = {example.id for example in examples}
+    selected_missing_ids = sorted(selected_ids - example_ids)
+    duplicate_count = count_duplicate_ids(examples)
+    warnings: list[str] = []
+    if duplicate_count:
+        warnings.append(
+            f"Found {duplicate_count} duplicate row ids. This is allowed for weighting, "
+            "but it can make split accounting harder to audit."
+        )
+    if selected_missing_ids:
+        warnings.append(
+            f"{len(selected_missing_ids)} ids selected by the split file are absent from the training CSV."
+        )
+    return {
+        "train_csv": str(Path(args.train_csv).resolve()),
+        "split_csv": str(Path(args.split_csv).resolve()),
+        "train_splits": args.train_splits,
+        "sft_adapter_dir": str(Path(args.sft_adapter_dir).resolve()) if args.sft_adapter_dir else None,
+        "total_rows": len(examples),
+        "train_rows": len(train_examples),
+        "duplicate_id_rows": duplicate_count,
+        "train_category_counts": summarize_categories(train_examples),
+        "split_counts": summarize_split_assignments(split_assignments),
+        "selected_split_ids_missing_from_csv": len(selected_missing_ids),
+        "effective_batch": effective_batch,
+        "num_generations": args.num_generations,
+        "effective_batch_divisible_by_num_generations": effective_batch % args.num_generations == 0,
+        "warnings": warnings,
+    }
 
 
 def ensure_trainable_adapter(model) -> None:
@@ -279,6 +356,29 @@ def main() -> None:
             f"({args.num_generations})."
         )
 
+    split_assignments = load_split_assignments(args.split_csv)
+    selected_ids = select_ids_for_splits(split_assignments, args.train_splits)
+    examples = load_training_examples(args.train_csv)
+    train_examples = [example for example in examples if example.id in selected_ids]
+    if not train_examples:
+        raise SystemExit(
+            f"No GRPO training examples matched splits {args.train_splits!r} in {args.split_csv!r}."
+        )
+    if args.max_train_samples is not None:
+        train_examples = train_examples[: args.max_train_samples]
+
+    if args.validate_only:
+        summary = build_preflight_summary(
+            args,
+            examples=examples,
+            train_examples=train_examples,
+            split_assignments=split_assignments,
+            selected_ids=selected_ids,
+            effective_batch=effective_batch,
+        )
+        print(json.dumps(summary, indent=2, ensure_ascii=False))
+        return
+
     deps = require_training_dependencies()
     try:
         import kagglehub  # type: ignore
@@ -293,17 +393,6 @@ def main() -> None:
     adapter_dir = output_dir / "adapter"
     output_dir.mkdir(parents=True, exist_ok=True)
     adapter_dir.mkdir(parents=True, exist_ok=True)
-
-    split_assignments = load_split_assignments(args.split_csv)
-    selected_ids = select_ids_for_splits(split_assignments, args.train_splits)
-    examples = load_training_examples(args.train_csv)
-    train_examples = [example for example in examples if example.id in selected_ids]
-    if not train_examples:
-        raise SystemExit(
-            f"No GRPO training examples matched splits {args.train_splits!r} in {args.split_csv!r}."
-        )
-    if args.max_train_samples is not None:
-        train_examples = train_examples[: args.max_train_samples]
 
     tokenizer = deps["AutoTokenizer"].from_pretrained(model_path, trust_remote_code=True)
     if tokenizer.pad_token is None:
