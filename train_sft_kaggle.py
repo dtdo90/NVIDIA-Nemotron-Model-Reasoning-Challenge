@@ -24,6 +24,9 @@ if str(SRC) not in sys.path:
 
 COMPETITION_MAX_LORA_RANK = 32
 COMPETITION_MAX_MODEL_LEN = 8192
+DEFAULT_MODEL_PATH = "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16"
+MODEL_PATH = os.environ.get("MODEL_PATH") or os.environ.get("BASE_MODEL_PATH") or DEFAULT_MODEL_PATH
+os.environ.setdefault("PYTORCH_CUDA_ALLOC_CONF", "expandable_segments:True")
 
 from nemotron_baseline.data import (
     infer_category,
@@ -38,6 +41,10 @@ from nemotron_baseline.prompts import (
     build_training_text,
     build_user_message,
     normalize_generated_cot,
+)
+from nemotron_baseline.runtime import (
+    check_nemotron_runtime_dependencies,
+    disable_transformers_vision_imports,
 )
 
 
@@ -89,7 +96,7 @@ def parse_args() -> argparse.Namespace:
         default=defaults.get("init_adapter_dir"),
         help="Optional LoRA adapter directory to continue training from.",
     )
-    parser.add_argument("--model-path", default=defaults.get("model_path"))
+    parser.add_argument("--model-path", default=defaults.get("model_path") or MODEL_PATH)
     parser.add_argument(
         "--kaggle-model-handle",
         default=defaults.get(
@@ -121,7 +128,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--per-device-train-batch-size",
         type=int,
-        default=defaults.get("per_device_train_batch_size", 1),
+        default=defaults.get("per_device_train_batch_size", 2),
     )
     parser.add_argument(
         "--gradient-accumulation-steps",
@@ -479,6 +486,12 @@ def build_preflight_summary(
         "cot_column": args.cot_column,
         "append_answer_instruction": args.append_answer_instruction,
         "answer_style": args.answer_style,
+        "max_seq_len": args.max_seq_len,
+        "per_device_train_batch_size": args.per_device_train_batch_size,
+        "gradient_accumulation_steps": args.gradient_accumulation_steps,
+        "effective_batch_size": args.per_device_train_batch_size * args.gradient_accumulation_steps,
+        "learning_rate": args.learning_rate,
+        "lora_rank": args.lora_rank,
         "total_rows": len(examples),
         "train_rows": len(train_examples),
         "val_rows": len(val_examples),
@@ -551,6 +564,8 @@ def main() -> None:
         print(json.dumps(summary, indent=2, ensure_ascii=False))
         return
 
+    disable_transformers_vision_imports()
+    check_nemotron_runtime_dependencies()
     deps = require_training_dependencies()
     try:
         import kagglehub  # type: ignore

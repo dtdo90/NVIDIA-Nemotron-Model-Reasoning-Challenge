@@ -18,6 +18,9 @@ if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
 COMPETITION_MAX_TOKENS = 7680
+DEFAULT_MODEL_PATH = "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16"
+MODEL_PATH = os.environ.get("MODEL_PATH") or os.environ.get("BASE_MODEL_PATH") or DEFAULT_MODEL_PATH
+os.environ.setdefault("PYTORCH_CUDA_ALLOC_CONF", "expandable_segments:True")
 
 from nemotron_baseline.data import (
     infer_category,
@@ -31,6 +34,10 @@ from nemotron_baseline.rewards import (
     accuracy_reward,
     final_line_reward,
     single_box_reward,
+)
+from nemotron_baseline.runtime import (
+    check_nemotron_runtime_dependencies,
+    disable_transformers_vision_imports,
 )
 
 
@@ -82,7 +89,10 @@ def parse_args() -> argparse.Namespace:
         default=defaults.get("output_dir", "outputs/grpo_stage2"),
     )
     parser.add_argument("--sft-adapter-dir", default=defaults.get("sft_adapter_dir"))
-    parser.add_argument("--model-path", default=defaults.get("model_path"))
+    parser.add_argument(
+        "--model-path",
+        default=defaults.get("model_path") or MODEL_PATH,
+    )
     parser.add_argument(
         "--kaggle-model-handle",
         default=defaults.get(
@@ -396,6 +406,8 @@ def main() -> None:
         print(json.dumps(summary, indent=2, ensure_ascii=False))
         return
 
+    disable_transformers_vision_imports()
+    check_nemotron_runtime_dependencies()
     deps = require_training_dependencies()
     try:
         import kagglehub  # type: ignore

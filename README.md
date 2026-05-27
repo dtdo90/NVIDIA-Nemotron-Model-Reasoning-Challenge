@@ -35,20 +35,42 @@ Use an H100 or L40S machine with a recent CUDA PyTorch environment.
 pip install -r requirements.txt
 ```
 
+If `mamba-ssm` needs to build against the active PyTorch/CUDA environment, run:
+
+```bash
+pip install --no-build-isolation --no-deps -r requirements-nemotron.txt
+```
+
+If `torchvision` is installed but mismatched with the active PyTorch version, remove it for
+this text-only project:
+
+```bash
+pip uninstall -y torchvision
+```
+
 ## Train SFT
 
-Set `MODEL_PATH` to the local Nemotron base model path or a Hugging Face model id.
+By default, the portable scripts use the Hugging Face model
+`nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16`. Override it with
+`--model-path`, `MODEL_PATH`, or `BASE_MODEL_PATH` when using a local checkpoint.
 
 Default combined Phase 1 + Phase 2 SFT:
 
 ```bash
-MODEL_PATH=/path/to/Nemotron-3-Nano-30B python3 train_sft.py
+python3 train_sft.py
 ```
 
 Phase 1 only:
 
 ```bash
-MODEL_PATH=/path/to/Nemotron-3-Nano-30B python3 train_sft.py --phase1-only
+python3 train_sft.py --phase1-only
+```
+
+The default assumes an H100 and uses micro-batch `2` with gradient accumulation `4`.
+For a tighter GPU such as L40S, use the safer micro-batch setting:
+
+```bash
+python3 train_sft.py --per-device-train-batch-size 1 --gradient-accumulation-steps 4
 ```
 
 Validate data wiring without loading the model:
@@ -63,9 +85,8 @@ The minimal trainer uses:
 1. LoRA rank `32`
 2. sequence length `8192`
 3. bf16 + TF32
-4. batch size `1`, gradient accumulation `4`
+4. default H100 batch size `2`, gradient accumulation `4`
 5. no gradient checkpointing
-6. no QLoRA
 
 Outputs are written to `outputs/sft_combined_h100/` by default.
 
@@ -83,7 +104,6 @@ python3 train_grpo.py --config configs/grpo_stage2.json
 
 ```bash
 python3 infer_eval.py \
-  --model-path /path/to/Nemotron-3-Nano-30B \
   --train-csv data/training_ready_clean/phase2_sft.csv \
   --adapter-dir outputs/sft_combined_h100/adapter \
   --split-csv data/training_ready_clean/phase2_splits_80_10_10.csv \

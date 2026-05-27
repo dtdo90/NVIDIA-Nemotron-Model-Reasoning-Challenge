@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -20,6 +21,14 @@ from nemotron_baseline.data import (
 )
 from nemotron_baseline.metric import result_to_json, score_prediction, summarize_results
 from nemotron_baseline.prompts import build_generation_prompt
+from nemotron_baseline.runtime import (
+    check_nemotron_runtime_dependencies,
+    disable_transformers_vision_imports,
+)
+
+DEFAULT_MODEL_PATH = "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16"
+MODEL_PATH = os.environ.get("MODEL_PATH") or os.environ.get("BASE_MODEL_PATH") or DEFAULT_MODEL_PATH
+os.environ.setdefault("PYTORCH_CUDA_ALLOC_CONF", "expandable_segments:True")
 
 
 def load_config_defaults(config_path: str | None) -> dict[str, object]:
@@ -51,7 +60,10 @@ def parse_args() -> argparse.Namespace:
         help="Named splits from --split-csv to evaluate on.",
     )
     parser.add_argument("--adapter-dir", required=True)
-    parser.add_argument("--model-path", default=defaults.get("model_path"))
+    parser.add_argument(
+        "--model-path",
+        default=defaults.get("model_path") or MODEL_PATH,
+    )
     parser.add_argument(
         "--kaggle-model-handle",
         default=defaults.get(
@@ -164,6 +176,8 @@ def write_json(path: Path, payload: dict) -> None:
 
 def main() -> None:
     args = parse_args()
+    disable_transformers_vision_imports()
+    check_nemotron_runtime_dependencies()
     deps = require_inference_dependencies()
     try:
         import kagglehub  # type: ignore

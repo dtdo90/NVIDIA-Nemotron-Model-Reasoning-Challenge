@@ -19,6 +19,9 @@ if str(SRC) not in sys.path:
 PHASE1_CSV = ROOT / "data/training_ready_clean/phase1_train.csv"
 PHASE2_CSV = ROOT / "data/training_ready_clean/phase2_sft.csv"
 PHASE2_SPLIT_CSV = ROOT / "data/training_ready_clean/phase2_splits_80_10_10.csv"
+DEFAULT_MODEL_PATH = "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16"
+MODEL_PATH = os.environ.get("MODEL_PATH") or os.environ.get("BASE_MODEL_PATH") or DEFAULT_MODEL_PATH
+os.environ.setdefault("PYTORCH_CUDA_ALLOC_CONF", "expandable_segments:True")
 MAX_LORA_RANK = 32
 MAX_SEQ_LEN = 8192
 
@@ -34,6 +37,10 @@ from nemotron_baseline.prompts import (
     build_training_text,
     build_user_message,
     normalize_generated_cot,
+)
+from nemotron_baseline.runtime import (
+    check_nemotron_runtime_dependencies,
+    disable_transformers_vision_imports,
 )
 
 
@@ -53,8 +60,8 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Train the clean Nemotron LoRA SFT dataset.")
     parser.add_argument(
         "--model-path",
-        default=os.environ.get("MODEL_PATH") or os.environ.get("BASE_MODEL_PATH"),
-        help="Local model path or HF model id. Can also be set with MODEL_PATH.",
+        default=MODEL_PATH,
+        help=f"Local model path or HF model id. Defaults to {DEFAULT_MODEL_PATH}.",
     )
     parser.add_argument(
         "--output-dir",
@@ -63,6 +70,8 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--phase1-only", action="store_true")
     parser.add_argument("--validate-only", action="store_true")
+    parser.add_argument("--per-device-train-batch-size", type=int, default=1)
+    parser.add_argument("--gradient-accumulation-steps", type=int, default=8)
     return parser.parse_args()
 
 
@@ -182,6 +191,8 @@ def print_summary(
     train_examples: list[Example],
     holdout_examples: list[Example],
     split_assignments: dict[str, str] | None,
+    per_device_train_batch_size: int,
+    gradient_accumulation_steps: int,
 ) -> None:
     summary = {
         "mode": mode,
@@ -200,6 +211,9 @@ def print_summary(
         "lora_rank": MAX_LORA_RANK,
         "learning_rate": 5e-5 if mode == "phase1_only" else 2e-5,
         "gradient_checkpointing": False,
+        "per_device_train_batch_size": per_device_train_batch_size,
+        "gradient_accumulation_steps": gradient_accumulation_steps,
+        "effective_batch_size": per_device_train_batch_size * gradient_accumulation_steps,
     }
     print(json.dumps(summary, indent=2, ensure_ascii=False))
 
@@ -228,11 +242,13 @@ def main() -> None:
             train_examples=train_examples,
             holdout_examples=holdout_examples,
             split_assignments=split_assignments,
+            per_device_train_batch_size=args.per_device_train_batch_size,
+            gradient_accumulation_steps=args.gradient_accumulation_steps,
         )
         return
 
-    if not args.model_path:
-        raise SystemExit("Pass --model-path or set MODEL_PATH=/path/to/model")
+    disable_transformers_vision_imports()
+    check_nemotron_runtime_dependencies()
 
     from datasets import Dataset  # type: ignore
     from peft import LoraConfig, TaskType, get_peft_model  # type: ignore
@@ -258,7 +274,7 @@ def main() -> None:
         args.model_path,
         device_map="auto",
         trust_remote_code=True,
-        torch_dtype=torch.bfloat16,
+        dtype=torch.bfloat16,
     )
     if hasattr(model.config, "use_cache"):
         model.config.use_cache = False
@@ -277,8 +293,8 @@ def main() -> None:
     learning_rate = 5e-5 if args.phase1_only else 2e-5
     trainer_args = SFTConfig(
         output_dir=str(output_dir / "trainer_state"),
-        per_device_train_batch_size=1,
-        gradient_accumulation_steps=4,
+        per_device_train_batch_size=args.per_device_train_batch_size,
+        gradient_accumulation_steps=args.gradient_accumulation_steps,
         num_train_epochs=1.0,
         learning_rate=learning_rate,
         logging_steps=10,
@@ -322,6 +338,9 @@ def main() -> None:
             "learning_rate": learning_rate,
             "lora_rank": MAX_LORA_RANK,
             "gradient_checkpointing": False,
+            "per_device_train_batch_size": args.per_device_train_batch_size,
+            "gradient_accumulation_steps": args.gradient_accumulation_steps,
+            "effective_batch_size": args.per_device_train_batch_size * args.gradient_accumulation_steps,
         },
     )
     write_json(

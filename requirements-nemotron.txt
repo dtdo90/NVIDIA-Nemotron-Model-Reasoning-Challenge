@@ -1,0 +1,4 @@
+# Install after PyTorch is already installed.
+# Use: pip install --no-build-isolation --no-deps -r requirements-nemotron.txt
+causal-conv1d
+mamba-ssm
