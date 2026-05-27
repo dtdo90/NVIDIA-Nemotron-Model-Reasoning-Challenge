@@ -66,8 +66,8 @@ Phase 1 only:
 python3 train_sft.py --phase1-only
 ```
 
-The default assumes an H100 and uses micro-batch `2` with gradient accumulation `4`.
-For a tighter GPU such as L40S, use the safer micro-batch setting:
+The default assumes an H100 and uses micro-batch `1` with gradient accumulation `8`.
+If you need a smaller effective batch, use:
 
 ```bash
 python3 train_sft.py --per-device-train-batch-size 1 --gradient-accumulation-steps 4
@@ -85,8 +85,8 @@ The minimal trainer uses:
 1. LoRA rank `32`
 2. sequence length `8192`
 3. bf16 + TF32
-4. default H100 batch size `2`, gradient accumulation `4`
-5. no gradient checkpointing
+4. default H100 batch size `1`, gradient accumulation `8`
+5. gradient checkpointing enabled
 
 Outputs are written to `outputs/sft_combined_h100/` by default.
 

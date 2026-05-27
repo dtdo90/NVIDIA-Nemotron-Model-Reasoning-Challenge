@@ -24,6 +24,7 @@ MODEL_PATH = os.environ.get("MODEL_PATH") or os.environ.get("BASE_MODEL_PATH") o
 os.environ.setdefault("PYTORCH_CUDA_ALLOC_CONF", "expandable_segments:True")
 MAX_LORA_RANK = 32
 MAX_SEQ_LEN = 8192
+GRADIENT_CHECKPOINTING = True
 
 from nemotron_baseline.data import (
     infer_category,
@@ -210,7 +211,7 @@ def print_summary(
         "max_seq_len": MAX_SEQ_LEN,
         "lora_rank": MAX_LORA_RANK,
         "learning_rate": 5e-5 if mode == "phase1_only" else 2e-5,
-        "gradient_checkpointing": False,
+        "gradient_checkpointing": GRADIENT_CHECKPOINTING,
         "per_device_train_batch_size": per_device_train_batch_size,
         "gradient_accumulation_steps": gradient_accumulation_steps,
         "effective_batch_size": per_device_train_batch_size * gradient_accumulation_steps,
@@ -288,6 +289,13 @@ def main() -> None:
         task_type=TaskType.CAUSAL_LM,
     )
     model = get_peft_model(model, lora_config)
+    if GRADIENT_CHECKPOINTING:
+        try:
+            model.gradient_checkpointing_enable(gradient_checkpointing_kwargs={"use_reentrant": False})
+        except TypeError:
+            model.gradient_checkpointing_enable()
+        if hasattr(model, "enable_input_require_grads"):
+            model.enable_input_require_grads()
     model.train()
 
     learning_rate = 5e-5 if args.phase1_only else 2e-5
@@ -309,7 +317,8 @@ def main() -> None:
         dataset_text_field="text",
         max_length=MAX_SEQ_LEN,
         packing=False,
-        gradient_checkpointing=False,
+        gradient_checkpointing=GRADIENT_CHECKPOINTING,
+        gradient_checkpointing_kwargs={"use_reentrant": False},
         seed=42,
     )
 
@@ -337,7 +346,7 @@ def main() -> None:
             "max_seq_len": MAX_SEQ_LEN,
             "learning_rate": learning_rate,
             "lora_rank": MAX_LORA_RANK,
-            "gradient_checkpointing": False,
+            "gradient_checkpointing": GRADIENT_CHECKPOINTING,
             "per_device_train_batch_size": args.per_device_train_batch_size,
             "gradient_accumulation_steps": args.gradient_accumulation_steps,
             "effective_batch_size": args.per_device_train_batch_size * args.gradient_accumulation_steps,

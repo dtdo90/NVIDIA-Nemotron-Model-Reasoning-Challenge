@@ -128,12 +128,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--per-device-train-batch-size",
         type=int,
-        default=defaults.get("per_device_train_batch_size", 2),
+        default=defaults.get("per_device_train_batch_size", 1),
     )
     parser.add_argument(
         "--gradient-accumulation-steps",
         type=int,
-        default=defaults.get("gradient_accumulation_steps", 4),
+        default=defaults.get("gradient_accumulation_steps", 8),
     )
     parser.add_argument(
         "--learning-rate",
