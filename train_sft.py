@@ -71,8 +71,8 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--phase1-only", action="store_true")
     parser.add_argument("--validate-only", action="store_true")
-    parser.add_argument("--per-device-train-batch-size", type=int, default=4)
-    parser.add_argument("--gradient-accumulation-steps", type=int, default=4)
+    parser.add_argument("--per-device-train-batch-size", type=int, default=8)
+    parser.add_argument("--gradient-accumulation-steps", type=int, default=2)
     return parser.parse_args()
 
 
@@ -275,6 +275,7 @@ def train_stage(
         dataset_text_field="text",
         max_length=MAX_SEQ_LEN,
         packing=False,
+        group_by_length=True,
         dataloader_num_workers=4,
         dataloader_pin_memory=True,
         gradient_checkpointing=GRADIENT_CHECKPOINTING,

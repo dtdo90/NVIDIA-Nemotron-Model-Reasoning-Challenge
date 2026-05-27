@@ -661,6 +661,7 @@ def main() -> None:
         dataset_text_field="text",
         max_length=args.max_seq_len,
         packing=False,
+        group_by_length=True,
         gradient_checkpointing=True,
         gradient_checkpointing_kwargs={"use_reentrant": False},
         seed=args.seed,

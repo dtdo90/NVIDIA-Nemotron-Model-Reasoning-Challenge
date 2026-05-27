@@ -58,7 +58,7 @@ Phase 1 only:
 python3 train_sft.py --phase1-only
 ```
 
-The default assumes an H200 and uses micro-batch `4` with gradient accumulation `4`.
+The default assumes an H200 and uses micro-batch `8` with gradient accumulation `2`.
 If memory is tight, use:
 
 ```bash
@@ -77,7 +77,7 @@ The minimal trainer uses:
 1. LoRA rank `32`
 2. sequence length `8192`
 3. bf16 + TF32
-4. default H200 batch size `4`, gradient accumulation `4`
+4. default H200 batch size `8`, gradient accumulation `2`
 5. gradient checkpointing disabled
 6. dataloader workers `4`
 
