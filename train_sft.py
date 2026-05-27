@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import inspect
 import json
 import os
 import sys
@@ -200,6 +201,22 @@ def print_trainable_parameters(model) -> None:
     )
 
 
+def make_sft_config(sft_config_cls, **kwargs):
+    signature = inspect.signature(sft_config_cls.__init__)
+    accepts_extra_kwargs = any(
+        parameter.kind == inspect.Parameter.VAR_KEYWORD
+        for parameter in signature.parameters.values()
+    )
+    if accepts_extra_kwargs:
+        return sft_config_cls(**kwargs)
+
+    supported = set(signature.parameters) - {"self"}
+    skipped = sorted(set(kwargs) - supported)
+    if skipped:
+        print(f"SFTConfig does not support {skipped}; skipping them")
+    return sft_config_cls(**{key: value for key, value in kwargs.items() if key in supported})
+
+
 def print_summary(
     *,
     mode: str,
@@ -257,7 +274,8 @@ def train_stage(
 ):
     stage_output_dir.mkdir(parents=True, exist_ok=True)
     dataset = build_dataset(dataset_cls, tokenizer, examples)
-    trainer_args = sft_config_cls(
+    trainer_args = make_sft_config(
+        sft_config_cls,
         output_dir=str(stage_output_dir / "trainer_state"),
         per_device_train_batch_size=per_device_train_batch_size,
         gradient_accumulation_steps=gradient_accumulation_steps,

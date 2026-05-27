@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import inspect
 import json
 import os
 import shutil
@@ -530,6 +531,22 @@ def print_trainable_parameters(model) -> None:
     )
 
 
+def make_sft_config(sft_config_cls, **kwargs):
+    signature = inspect.signature(sft_config_cls.__init__)
+    accepts_extra_kwargs = any(
+        parameter.kind == inspect.Parameter.VAR_KEYWORD
+        for parameter in signature.parameters.values()
+    )
+    if accepts_extra_kwargs:
+        return sft_config_cls(**kwargs)
+
+    supported = set(signature.parameters) - {"self"}
+    skipped = sorted(set(kwargs) - supported)
+    if skipped:
+        print(f"SFTConfig does not support {skipped}; skipping them")
+    return sft_config_cls(**{key: value for key, value in kwargs.items() if key in supported})
+
+
 def main() -> None:
     args = parse_args()
     if args.lora_rank > COMPETITION_MAX_LORA_RANK:
@@ -644,7 +661,8 @@ def main() -> None:
     print_trainable_parameters(model)
     model.train()
 
-    trainer_config = deps["SFTConfig"](
+    trainer_config = make_sft_config(
+        deps["SFTConfig"],
         output_dir=str(output_dir / "trainer_state"),
         per_device_train_batch_size=args.per_device_train_batch_size,
         gradient_accumulation_steps=args.gradient_accumulation_steps,
