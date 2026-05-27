@@ -600,7 +600,10 @@ def main() -> None:
         trust_remote_code=True,
         dtype=deps["torch"].bfloat16,
     )
-    model.gradient_checkpointing_enable()
+    try:
+        model.gradient_checkpointing_enable(gradient_checkpointing_kwargs={"use_reentrant": False})
+    except TypeError:
+        model.gradient_checkpointing_enable()
     disable_nemotron_fast_path()
 
     if args.init_adapter_dir:
