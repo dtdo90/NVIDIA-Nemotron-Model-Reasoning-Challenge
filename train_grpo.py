@@ -17,6 +17,8 @@ SRC = ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
+COMPETITION_MAX_TOKENS = 7680
+
 from nemotron_baseline.data import (
     infer_category,
     load_split_assignments,
@@ -61,12 +63,18 @@ def parse_args() -> argparse.Namespace:
         description="Run GRPO starting from an SFT Nemotron LoRA adapter."
     )
     parser.add_argument("--config", default=bootstrap_args.config)
-    parser.add_argument("--train-csv", default=defaults.get("train_csv", "data/train.csv"))
-    parser.add_argument("--split-csv", default=defaults.get("split_csv", "data/splits_70_15_15.csv"))
+    parser.add_argument(
+        "--train-csv",
+        default=defaults.get("train_csv", "data/training_ready_clean/phase2_sft.csv"),
+    )
+    parser.add_argument(
+        "--split-csv",
+        default=defaults.get("split_csv", "data/training_ready_clean/phase2_splits_80_10_10.csv"),
+    )
     parser.add_argument(
         "--train-splits",
         nargs="+",
-        default=defaults.get("train_splits", ["grpo_train"]),
+        default=defaults.get("train_splits", ["eval_holdout"]),
         help="Named splits from --split-csv to use for GRPO training.",
     )
     parser.add_argument(
@@ -84,7 +92,11 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--seed", type=int, default=defaults.get("seed", 42))
     parser.add_argument("--max-train-samples", type=int, default=defaults.get("max_train_samples"))
-    parser.add_argument("--max-completion-length", type=int, default=defaults.get("max_completion_length", 1024))
+    parser.add_argument(
+        "--max-completion-length",
+        type=int,
+        default=defaults.get("max_completion_length", COMPETITION_MAX_TOKENS),
+    )
     parser.add_argument("--num-epochs", type=float, default=defaults.get("num_epochs", 1.0))
     parser.add_argument(
         "--per-device-train-batch-size",
@@ -336,6 +348,11 @@ def ensure_trainable_adapter(model) -> None:
 
 def main() -> None:
     args = parse_args()
+    if args.max_completion_length > COMPETITION_MAX_TOKENS:
+        raise SystemExit(
+            f"max_completion_length {args.max_completion_length} exceeds competition "
+            f"max_tokens {COMPETITION_MAX_TOKENS}."
+        )
     if not args.sft_adapter_dir:
         raise SystemExit("--sft-adapter-dir is required.")
     if args.num_generations < 1:

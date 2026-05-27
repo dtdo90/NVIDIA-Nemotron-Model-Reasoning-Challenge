@@ -14,13 +14,19 @@ def strip_wonderland_prefix(prompt: str) -> str:
     return WONDERLAND_PREFIX_RE.sub("", prompt, count=1).strip()
 
 
-def build_user_message(prompt: str) -> str:
+def build_user_message(prompt: str, *, append_answer_instruction: bool = True) -> str:
     cleaned_prompt = prompt.strip()
+    if not append_answer_instruction:
+        return cleaned_prompt
     return f"{cleaned_prompt}\n{BOXED_ANSWER_INSTRUCTION}"
 
 
-def build_assistant_message(answer: str) -> str:
-    return f"\\boxed{{{answer}}}"
+def build_assistant_message(answer: str, *, answer_style: str = "boxed") -> str:
+    if answer_style == "plain":
+        return f"Answer: {answer}"
+    if answer_style != "boxed":
+        raise ValueError(f"Unsupported answer_style: {answer_style!r}")
+    return f"Answer: \\boxed{{{answer}}}"
 
 
 def normalize_generated_cot(generated_cot: str | None) -> str:
@@ -63,11 +69,28 @@ def normalize_generated_cot(generated_cot: str | None) -> str:
     return text
 
 
-def build_messages(prompt: str, answer: str | None = None) -> list[dict[str, str]]:
-    messages = [{"role": "user", "content": build_user_message(prompt)}]
+def build_messages(
+    prompt: str,
+    answer: str | None = None,
+    *,
+    append_answer_instruction: bool = True,
+    answer_style: str = "boxed",
+) -> list[dict[str, str]]:
+    messages = [
+        {
+            "role": "user",
+            "content": build_user_message(
+                prompt,
+                append_answer_instruction=append_answer_instruction,
+            ),
+        }
+    ]
     if answer is not None:
         messages.append(
-            {"role": "assistant", "content": build_assistant_message(answer)}
+            {
+                "role": "assistant",
+                "content": build_assistant_message(answer, answer_style=answer_style),
+            }
         )
     return messages
 
@@ -95,13 +118,22 @@ def apply_chat_template(
         return "\n".join(rendered)
 
 
-def build_assistant_content(answer: str, generated_cot: str | None = None) -> str:
+def build_assistant_content(
+    answer: str,
+    generated_cot: str | None = None,
+    *,
+    answer_style: str = "boxed",
+) -> str:
     cot = normalize_generated_cot(generated_cot)
     if cot:
+        if answer_style == "plain":
+            return f"{cot}\n\nAnswer: {answer}"
+        if answer_style != "boxed":
+            raise ValueError(f"Unsupported answer_style: {answer_style!r}")
         if cot.lstrip().startswith("<think>") and "</think>" in cot:
-            return f"{cot}\n\\boxed{{{answer}}}"
-        return f"{cot}\n\n\\boxed{{{answer}}}"
-    return build_assistant_message(answer)
+            return f"{cot}\nAnswer: \\boxed{{{answer}}}"
+        return f"{cot}\n\nAnswer: \\boxed{{{answer}}}"
+    return build_assistant_message(answer, answer_style=answer_style)
 
 
 def build_training_text(
@@ -109,11 +141,27 @@ def build_training_text(
     prompt: str,
     answer: str,
     generated_cot: str | None = None,
+    *,
+    append_answer_instruction: bool = True,
+    answer_style: str = "boxed",
 ) -> str:
-    assistant_content = build_assistant_content(answer, generated_cot)
+    assistant_content = build_assistant_content(
+        answer,
+        generated_cot,
+        answer_style=answer_style,
+    )
     return apply_chat_template(
         tokenizer,
-        [{"role": "user", "content": build_user_message(prompt)}, {"role": "assistant", "content": assistant_content}],
+        [
+            {
+                "role": "user",
+                "content": build_user_message(
+                    prompt,
+                    append_answer_instruction=append_answer_instruction,
+                ),
+            },
+            {"role": "assistant", "content": assistant_content},
+        ],
         add_generation_prompt=False,
     )
 

@@ -229,6 +229,16 @@ LENGTH1_RESCUE_LEN3_RULE_NAMES = (
     "x * y + 1",
     "x * y - 1",
 )
+SIGNED_MARKER_RESCUE_MOTIFS = (
+    Motif("AB_CD", "op_prefix_if_neg"),
+)
+SIGNED_MARKER_RESCUE_MAX_STATES = 80
+LAST_DIGIT_RESCUE_MOTIFS = (
+    Motif("AB_CD", "last"),
+)
+LAST_DIGIT_RESCUE_MAX_STATES = 80
+BA_DC_REV_RESCUE_MOTIF = Motif("BA_DC", "rev")
+BA_DC_REV_RESCUE_MAX_STATES = 80
 
 def parse_symbol_transform_puzzle(prompt: str) -> SymbolTransformPuzzle | None:
     examples: list[SymbolExample] = []
@@ -1933,6 +1943,238 @@ def _length1_subtraction_rescue_result(
     )
 
 
+def _signed_operator_marker_rescue_result(
+    puzzle: SymbolTransformPuzzle,
+    *,
+    max_query_unknowns: int,
+) -> SymbolTransformSolveResult | None:
+    """Conservative rescue for rows that visibly use the operator as a sign.
+
+    Some symbol-equation rows render a negative value by prefixing the operator
+    character instead of using a minus sign. The full `formats` motif bank is
+    too broad and creates many spurious matches, so this branch only tests the
+    stable observed submotif:
+
+    - operands use AB_CD
+    - negative outputs use operator-prefix rendering
+    - at least one example visibly prefixes its RHS with its own operator
+    - concat helper rules are forbidden because direct templates already cover
+      concat-like behavior
+    - pure add-family rows are rejected; they were the observed false-positive
+      shape in public-train diagnostics
+    """
+
+    if not any(example.rhs.startswith(example.operator) for example in puzzle.examples):
+        return None
+
+    candidates = _search_encrypted_digit_transform(
+        puzzle,
+        rule_bank="core",
+        include_abs_output=True,
+        output_mode_bank="formats",
+        max_states_per_rule=SIGNED_MARKER_RESCUE_MAX_STATES,
+        max_combined_states=SIGNED_MARKER_RESCUE_MAX_STATES,
+        allow_absent_query_operator=False,
+        min_query_examples=1,
+        max_query_unknowns=max_query_unknowns,
+        motif_filter=frozenset(SIGNED_MARKER_RESCUE_MOTIFS),
+    )
+
+    trusted: list[SymbolTransformCandidate] = []
+    for candidate in candidates:
+        chosen_rule_names = tuple(rule_name for _, rule_name in candidate.chosen_rules)
+        if any(rule_name.startswith("concat(") for rule_name in chosen_rule_names):
+            continue
+        if {
+            BASE_RULE_BY_NAME[rule_name].family
+            for rule_name in chosen_rule_names
+        } == {"add"}:
+            continue
+        if candidate.mapped_symbol_count < 9:
+            continue
+        if candidate.query_rule.name == "x * y - 1" and candidate.mapped_symbol_count < 10:
+            continue
+        trusted.append(candidate)
+
+    trusted = list(_dedupe_candidates(trusted))
+    variants = tuple(sorted({candidate.prediction for candidate in trusted}))
+    if len(variants) != 1:
+        return None
+
+    chosen = trusted[0]
+    return SymbolTransformSolveResult(
+        prediction=variants[0],
+        confidence="high" if chosen.mapped_symbol_count == 10 else "medium",
+        method="signed_operator_marker_global_unique",
+        candidate_count=len(trusted),
+        prediction_variants=variants,
+        chosen_candidate=chosen,
+        notes=(
+            "Signed-marker rescue: examples use the operator as a negative-prefix marker, "
+            "and a guarded AB_CD|op_prefix_if_neg global fit gives a unique output.",
+        ),
+    )
+
+
+def _last_digit_rescue_result(
+    puzzle: SymbolTransformPuzzle,
+    *,
+    max_query_unknowns: int,
+) -> SymbolTransformSolveResult | None:
+    """Late fallback for rows that use the last digits of a raw result.
+
+    This is intentionally narrower than the full `last/last_rev` format bank.
+    Public-train diagnostics showed `last_rev` and subtraction variants were
+    noisy, while `AB_CD|last` with cross-family evidence recovered a small set
+    of otherwise no-rule rows without disturbing existing exact solves.
+    """
+
+    same = same_operator_examples(puzzle)
+    if len(same) != 1:
+        return None
+    helper_examples = tuple(
+        example for example in puzzle.examples if example.operator != puzzle.query_operator
+    )
+    if not helper_examples or max(len(example.rhs) for example in helper_examples) < 3:
+        return None
+
+    candidates = _search_encrypted_digit_transform(
+        puzzle,
+        rule_bank="core",
+        include_abs_output=True,
+        output_mode_bank="formats",
+        max_states_per_rule=LAST_DIGIT_RESCUE_MAX_STATES,
+        max_combined_states=LAST_DIGIT_RESCUE_MAX_STATES,
+        allow_absent_query_operator=False,
+        min_query_examples=1,
+        max_query_unknowns=max_query_unknowns,
+        motif_filter=frozenset(LAST_DIGIT_RESCUE_MOTIFS),
+    )
+
+    trusted: list[SymbolTransformCandidate] = []
+    for candidate in candidates:
+        if candidate.query_rule.family not in {"add", "mul"}:
+            continue
+        chosen_rule_names = tuple(rule_name for _, rule_name in candidate.chosen_rules)
+        if any(rule_name.startswith("concat(") for rule_name in chosen_rule_names):
+            continue
+        if candidate.mapped_symbol_count < 9:
+            continue
+        if {
+            BASE_RULE_BY_NAME[rule_name].family
+            for rule_name in chosen_rule_names
+        } in ({"add"}, {"mul"}):
+            continue
+        trusted.append(candidate)
+
+    trusted = list(_dedupe_candidates(trusted))
+    variants = tuple(sorted({candidate.prediction for candidate in trusted}))
+    if len(variants) != 1:
+        return None
+
+    chosen = trusted[0]
+    return SymbolTransformSolveResult(
+        prediction=variants[0],
+        confidence="medium",
+        method="last_digit_global_unique",
+        candidate_count=len(trusted),
+        prediction_variants=variants,
+        chosen_candidate=chosen,
+        notes=(
+            "Late last-digit rescue: AB_CD|last with add/mul query rule and cross-family helper evidence "
+            "gives a unique output after the standard solver found no deterministic rule.",
+        ),
+    )
+
+
+def _ba_dc_rev_guarded_rescue_result(
+    puzzle: SymbolTransformPuzzle,
+    *,
+    max_query_unknowns: int,
+) -> SymbolTransformSolveResult | None:
+    """Late rescue for tightly guarded BA_DC|rev rows.
+
+    This keeps the original dominant motif but avoids broad BA_DC guessing. Two
+    public-train-safe shapes are allowed:
+
+    - length-3 same-operator evidence with query rule x+y and a unique global
+      BA_DC|rev fit
+    - exactly one same-operator row, where length 4 requires a complete-map
+      multiplication-family fit and length 3 requires x+y with at least 9
+      mapped symbols
+    """
+
+    same = same_operator_examples(puzzle)
+    if not same:
+        return None
+    same_rhs_lengths = tuple(sorted(len(example.rhs) for example in same))
+    max_same_len = max(same_rhs_lengths)
+    if max_same_len not in {3, 4}:
+        return None
+
+    candidates = _search_encrypted_digit_transform(
+        puzzle,
+        rule_bank="core",
+        include_abs_output=True,
+        output_mode_bank="current",
+        max_states_per_rule=BA_DC_REV_RESCUE_MAX_STATES,
+        max_combined_states=BA_DC_REV_RESCUE_MAX_STATES,
+        allow_absent_query_operator=False,
+        min_query_examples=1,
+        max_query_unknowns=max_query_unknowns,
+        motif_filter=frozenset((BA_DC_REV_RESCUE_MOTIF,)),
+    )
+
+    trusted: list[SymbolTransformCandidate] = []
+    for candidate in candidates:
+        if candidate.motif != BA_DC_REV_RESCUE_MOTIF:
+            continue
+
+        chosen_rule_names = tuple(rule_name for _, rule_name in candidate.chosen_rules)
+
+        if len(same) == 1:
+            if any(rule_name.startswith("concat(") for rule_name in chosen_rule_names):
+                continue
+            if max_same_len == 4:
+                if candidate.query_rule.family != "mul":
+                    continue
+                if candidate.mapped_symbol_count < 10:
+                    continue
+            elif max_same_len == 3:
+                if candidate.query_rule.name != "x + y":
+                    continue
+                if candidate.mapped_symbol_count < 9:
+                    continue
+            trusted.append(candidate)
+            continue
+
+        if max_same_len == 3:
+            if candidate.query_rule.name != "x + y":
+                continue
+            if candidate.mapped_symbol_count < 9:
+                continue
+            trusted.append(candidate)
+
+    trusted = list(_dedupe_candidates(trusted))
+    variants = tuple(sorted({candidate.prediction for candidate in trusted}))
+    if len(variants) != 1:
+        return None
+
+    chosen = trusted[0]
+    confidence = "high" if chosen.mapped_symbol_count == 10 else "medium"
+    return SymbolTransformSolveResult(
+        prediction=variants[0],
+        confidence=confidence,
+        method="ba_dc_rev_guarded_global_unique",
+        candidate_count=len(trusted),
+        prediction_variants=variants,
+        chosen_candidate=chosen,
+        notes=(
+            "Late BA_DC|rev rescue: a guarded dominant-motif global fit gives a unique output.",
+        ),
+    )
+
+
 def _solve_encrypted_digit_transform_pipeline(
     puzzle: SymbolTransformPuzzle,
     *,
@@ -2232,6 +2474,9 @@ def solve_symbol_transform(
     family_rescue_selection: str = "unique",
     enable_map_completion_rescue: bool = True,
     enable_guarded_min1_rescue: bool = True,
+    enable_signed_marker_rescue: bool = True,
+    enable_last_digit_rescue: bool = True,
+    enable_ba_dc_rev_rescue: bool = True,
 ) -> SymbolTransformSolveResult:
     puzzle = parse_symbol_transform_puzzle(prompt)
     if puzzle is None:
@@ -2248,6 +2493,14 @@ def solve_symbol_transform(
     direct = _try_direct_templates(puzzle)
     if direct is not None:
         return direct
+
+    if enable_signed_marker_rescue:
+        signed_marker = _signed_operator_marker_rescue_result(
+            puzzle,
+            max_query_unknowns=max_query_unknowns,
+        )
+        if signed_marker is not None:
+            return signed_marker
 
     result = _solve_encrypted_digit_transform_pipeline(
         puzzle,
@@ -2269,6 +2522,20 @@ def solve_symbol_transform(
         adaptive_retry_on == "no_rule_or_ambiguous" and result.confidence == "ambiguous"
     )
     if not adaptive_retry or not retry_allowed or retry_max_states_per_rule <= max_states_per_rule:
+        if enable_ba_dc_rev_rescue and result.prediction is None:
+            ba_dc_rev = _ba_dc_rev_guarded_rescue_result(
+                puzzle,
+                max_query_unknowns=max_query_unknowns,
+            )
+            if ba_dc_rev is not None:
+                return ba_dc_rev
+        if enable_last_digit_rescue and result.method == "no_rule":
+            last_digit = _last_digit_rescue_result(
+                puzzle,
+                max_query_unknowns=max_query_unknowns,
+            )
+            if last_digit is not None:
+                return last_digit
         return result
 
     retry_result = _solve_encrypted_digit_transform_pipeline(
@@ -2288,6 +2555,20 @@ def solve_symbol_transform(
         enable_guarded_min1_rescue=enable_guarded_min1_rescue,
     )
     if retry_result.prediction is None:
+        if enable_ba_dc_rev_rescue:
+            ba_dc_rev = _ba_dc_rev_guarded_rescue_result(
+                puzzle,
+                max_query_unknowns=max_query_unknowns,
+            )
+            if ba_dc_rev is not None:
+                return ba_dc_rev
+        if enable_last_digit_rescue and retry_result.method == "no_rule":
+            last_digit = _last_digit_rescue_result(
+                puzzle,
+                max_query_unknowns=max_query_unknowns,
+            )
+            if last_digit is not None:
+                return last_digit
         return result
 
     return SymbolTransformSolveResult(

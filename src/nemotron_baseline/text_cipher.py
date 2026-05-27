@@ -316,7 +316,6 @@ def render_text_cipher_compact_cot(
     solution = solve_text_cipher(prompt, vocabulary=vocabulary)
     lines = [
         "We need to deduce the hidden text cipher by matching the example plaintext outputs.",
-        "I will put my final answer inside \\boxed{}.",
         expand_text_encryption_mapping_line(prompt),
         "S1: This is a bijective letter-substitution cipher over the 77-word Wonderland vocabulary.",
         "S2: Decode with the example mapping first; use vocabulary matching only for unresolved target words.",
@@ -337,8 +336,7 @@ def render_text_cipher_compact_cot(
         )
 
     lines.append(f"S5: Decoded phrase = {solution.decoded_phrase}")
-    lines.append("I will now return the answer in \\boxed{}")
-    lines.append(f"The final answer is \\boxed{{{solution.decoded_phrase}}}")
+    lines.append(f"Answer: \\boxed{{{solution.decoded_phrase}}}")
     return "\n".join(lines)
 
 

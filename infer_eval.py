@@ -68,7 +68,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--split", choices=["val", "train"], default="val")
     parser.add_argument("--max-eval-samples", type=int, default=None)
     parser.add_argument("--batch-size", type=int, default=1)
-    parser.add_argument("--max-new-tokens", type=int, default=256)
+    parser.add_argument(
+        "--max-new-tokens",
+        type=int,
+        default=7680,
+        help="Match the competition metric max_tokens setting.",
+    )
     parser.add_argument("--disable-kaggle-triton-fixes", action="store_true")
     parser.add_argument(
         "--predictions-jsonl",

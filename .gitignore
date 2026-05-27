@@ -1,57 +1,39 @@
-/reference/
 .DS_Store
 __pycache__/
+*.py[cod]
+
+.venv/
 .venv-local/
 outputs/
 sandbox.ipynb
+reference/
 
-# Local scratch / analysis data. Curated training CSVs live under data/trainable/.
-data/_*
-data/*.csv
-data/*analysis*.csv
-data/*diagnostic*.csv
-data/*diagnostics*.csv
-data/*rescue*.csv
-data/*oracle*.csv
-data/*solver*.csv
-data/*operator*.csv
-data/*validation*.csv
-data/*mismatch*.csv
-data/*ambiguous*.csv
-data/*wrong*.csv
-data/*sample*.csv
-data/*cases*.csv
-data/*.summary.json
-data/*.config.json
-data/*.json
-data/trainable/**/*.md
-data/trainable/**/*.csv
-!data/trainable/phase1_train.csv
-!data/trainable/train_sft_phase2_75_10_15.csv
-!data/trainable/bit_manipulation_hybrid_cot.csv
-!data/trainable/gravity_cot_method_resolved.csv
-!data/trainable/numeral_cot_method_resolved.csv
-!data/trainable/numeric_equation_labelled_cot.csv
-!data/trainable/numeric_equation_synthetic_cot.csv
-!data/trainable/symbol_transform_phase2_combined.csv
-!data/trainable/text_cipher_compact_cot.csv
-!data/trainable/unit_conversion_cot_method_resolved.csv
-!data/trainable/phase1_components/text_knowledge_phase1.csv
-!data/trainable/phase1_components/phase1a_bit_manipulation_knowledge.csv
-!data/trainable/phase1_components/phase1b_bit_manipulation_methodology.csv
-!data/trainable/phase1_components/phase1a_numeric_equation_knowledge.csv
-!data/trainable/phase1_components/phase1b_numeric_equation_methodology.csv
-!data/trainable/phase1_components/phase1a_symbol_transform_knowledge.csv
-!data/trainable/phase1_components/phase1b_symbol_transform_methodology.csv
-!data/trainable/phase1_components/phase1_symbol_transform_direct_curriculum.csv
-data/trainable/**/*.json
+configs/*.json
+!configs/grpo_stage2.json
+!configs/phase1_training_ready_clean_kaggle.json
+!configs/phase2_training_ready_clean_kaggle.json
 
-# Local trace drafts. Keep only curated text CoT traces and phase-1 direct traces.
+# Keep only the curated training-ready data in git.
+data/artifacts/
+data/trainable/
+data/training_ready_clean/phase2_traces/
+data/training_ready_clean/phase1_components/
+data/training_ready_clean/phase3_grpo_real_splits_80_10_10.csv
+data/training_ready_clean/trace_manifest.csv
+
+# Local scratch and old trace workspaces.
 docs/0e375364.md
 docs/*audit*.csv
+docs/train_ready/
+docs/bit_manipulation_non_op3_cot_traces/
+docs/bit_manipulation_op3_cot_traces/
+docs/bit_manipulation_shorten/
+docs/numeric_equation_transformation/
+docs/symbol_transform/
+docs/symbol_transform_ba_dc_rev_full_traces/
 docs/symbol_transform_ba_dc_rev_traces/
-docs/symbol_transform_ba_dc_rev_full_traces/**
-!docs/symbol_transform_ba_dc_rev_full_traces/
-!docs/symbol_transform_ba_dc_rev_full_traces/cot_text/
-!docs/symbol_transform_ba_dc_rev_full_traces/cot_text/**
-docs/symbol_transform_phase1_direct_template_traces/AUDIT.md
+docs/symbol_transform_phase1_direct_template_traces/
+
+# Experimental generation and analysis scripts are intentionally not tracked.
+scripts/
+!scripts/.gitkeep

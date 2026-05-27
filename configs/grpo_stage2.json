@@ -1,9 +1,11 @@
 {
-  "train_csv": "data/train.csv",
-  "split_csv": "data/splits_75_10_15.config.json",
-  "train_splits": ["grpo_train"],
+  "train_csv": "data/training_ready_clean/phase2_sft.csv",
+  "split_csv": "data/training_ready_clean/phase2_splits_80_10_10.csv",
+  "train_splits": [
+    "eval_holdout"
+  ],
   "output_dir": "outputs/grpo_stage2",
-  "sft_adapter_dir": "outputs/cot_training_phase2_75_10_15/adapter",
+  "sft_adapter_dir": "outputs/sft_combined_h100/adapter",
   "kaggle_model_handle": "metric/nemotron-3-nano-30b-a3b-bf16/transformers/default",
   "seed": 42,
   "num_epochs": 1.0,
@@ -11,7 +13,7 @@
   "gradient_accumulation_steps": 4,
   "learning_rate": 5e-06,
   "num_generations": 4,
-  "max_completion_length": 1024,
+  "max_completion_length": 7680,
   "temperature": 1.0,
   "top_p": 1.0,
   "top_k": 0,

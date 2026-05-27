@@ -1,100 +1,103 @@
 # NVIDIA Nemotron Model Reasoning Challenge
 
-This repository contains a deterministic LoRA fine-tuning pipeline for the
-Nemotron reasoning challenge.
+Clean LoRA fine-tuning project for the NVIDIA Nemotron reasoning challenge.
 
-The current method uses two active training stages:
+The repository keeps only the training-ready data, active training/evaluation
+scripts, local helper package, and concise methodology notes. Experimental
+solver drafts and intermediate trace folders are intentionally excluded.
 
-1. `Phase 1`: one LoRA epoch for compact knowledge injection and reusable
-   methodology cards.
-2. `Phase 2`: one LoRA epoch for SFT on deterministic solver-written CoT traces plus verified
-   synthetic rows for the hard categories.
+## Data
 
-We do not use external teacher-model CoT generation in the active training
-pipeline. Training traces should come from the deterministic scripts in
-`scripts/` and the curated CSVs in `data/trainable/`.
+Core files:
 
-## Active Training Schedule
+1. `data/train.csv`: original competition train set
+2. `data/test.csv`: original competition test set
+3. `data/training_ready_clean/phase1_train.csv`: compact methodology and rule curriculum
+4. `data/training_ready_clean/phase2_sft.csv`: competition-style SFT data with `generated_cot`
+5. `data/training_ready_clean/phase2_splits_80_10_10.csv`: `sft_train`, `eval_holdout`, and `grpo_holdout`
 
-The intended starter schedule is exactly:
+Default SFT uses all Phase 1 rows plus Phase 2 `sft_train`.
 
-1. Phase 1 uses `configs/phase1_training.json`: `1` epoch, LoRA training,
-   learning rate `1e-4`, output adapter `outputs/phase1_training/adapter`.
-2. Phase 2 uses `configs/cot_training_phase2_75_10_15.json`: `1` epoch, LoRA
-   training, learning rate `5e-5`, initialized from
-   `outputs/phase1_training/adapter`.
+Current validated counts:
 
-Both stages use LoRA rank `32` and LoRA alpha `32`.
+1. Phase 1: `5077` rows
+2. Phase 2 `sft_train`: `7348` rows
+3. Combined default SFT: `12425` rows
+4. Phase 2 holdout: `1836` rows
+5. GRPO train bucket: `919` rows
+6. Final local eval bucket: `917` rows
 
-## Active Training Data
+## Install
 
-Main trainable files:
-
-1. `data/trainable/phase1_train.csv`
-2. `data/trainable/train_sft_phase2_75_10_15.csv`
-
-Persistent split files:
-
-1. `data/splits_75_10_15.csv`
-2. `data/splits_75_10_15.config.json`
-
-Synthetic rows are appended after split selection, so they should not be used
-when auditing the real train/GRPO/eval split.
-
-## Build Datasets
-
-Regenerate the current deterministic data path:
+Use an H100 or L40S machine with a recent CUDA PyTorch environment.
 
 ```bash
-python3 scripts/make_splits.py --input-csv data/train.csv --output-csv data/splits_75_10_15.csv
-python3 scripts/prepare_phase1_training_dataset.py
-python3 scripts/prepare_phase2_sft_dataset.py --train-csv data/train.csv --split-csv data/splits_75_10_15.config.json --train-splits sft_train --output-csv data/trainable/train_sft_phase2_75_10_15.csv
+pip install -r requirements.txt
 ```
 
-When source components need refreshing, use the deterministic builders listed
-in [README_baseline.md](README_baseline.md).
+## Train SFT
 
-Validate regenerated datasets before launching model training:
+Set `MODEL_PATH` to the local Nemotron base model path or a Hugging Face model id.
+
+Default combined Phase 1 + Phase 2 SFT:
 
 ```bash
-python3 train_sft.py --config configs/phase1_training.json --validate-only
-python3 train_sft.py --config configs/cot_training_phase2_75_10_15.json --validate-only
+MODEL_PATH=/path/to/Nemotron-3-Nano-30B python3 train_sft.py
+```
+
+Phase 1 only:
+
+```bash
+MODEL_PATH=/path/to/Nemotron-3-Nano-30B python3 train_sft.py --phase1-only
+```
+
+Validate data wiring without loading the model:
+
+```bash
+python3 train_sft.py --validate-only
+python3 train_sft.py --phase1-only --validate-only
+```
+
+The minimal trainer uses:
+
+1. LoRA rank `32`
+2. sequence length `8192`
+3. bf16 + TF32
+4. batch size `1`, gradient accumulation `4`
+5. no gradient checkpointing
+6. no QLoRA
+
+Outputs are written to `outputs/sft_combined_h100/` by default.
+
+## Optional GRPO
+
+After SFT, GRPO can train on the 919-row `eval_holdout` bucket while reserving
+`grpo_holdout` for final local evaluation.
+
+```bash
 python3 train_grpo.py --config configs/grpo_stage2.json --validate-only
-```
-
-These checks do not load the base model. They verify required CSV columns,
-row counts, split wiring, duplicate ids, CoT/answer-only coverage, and GRPO
-batch divisibility.
-
-## Train
-
-Train Phase 1:
-
-```bash
-python3 train_sft.py --config configs/phase1_training.json
-```
-
-Train Phase 2 from the Phase 1 adapter:
-
-```bash
-python3 train_sft.py --config configs/cot_training_phase2_75_10_15.json
-```
-
-Optional GRPO:
-
-```bash
 python3 train_grpo.py --config configs/grpo_stage2.json
 ```
 
-## Method Notes
+## Local Evaluation
 
-Current method records:
+```bash
+python3 infer_eval.py \
+  --model-path /path/to/Nemotron-3-Nano-30B \
+  --train-csv data/training_ready_clean/phase2_sft.csv \
+  --adapter-dir outputs/sft_combined_h100/adapter \
+  --split-csv data/training_ready_clean/phase2_splits_80_10_10.csv \
+  --eval-splits grpo_holdout
+```
 
-1. [docs/solver_method_record.md](docs/solver_method_record.md)
-2. [docs/digit_transform_methodology.md](docs/digit_transform_methodology.md)
-3. [docs/symbol_transform_methodology.md](docs/symbol_transform_methodology.md)
-4. [docs/winner_solution_alignment.md](docs/winner_solution_alignment.md)
+The competition metric expects the final answer in `\boxed{...}`.
 
-The important high-level rule is simple: teach stable reusable knowledge in
-Phase 1, then teach exact competition-style task behavior with deterministic
-Phase 2 traces.
+## Methodology
+
+Core method notes live in:
+
+1. `docs/solver_method_record.md`
+2. `docs/digit_transform_methodology.md`
+3. `docs/numeric_equation_methodology.md`
+4. `docs/symbol_transform_methodology.md`
+5. `docs/winner_solution_alignment.md`
