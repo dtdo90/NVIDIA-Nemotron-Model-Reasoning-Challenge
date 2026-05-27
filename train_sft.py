@@ -185,6 +185,21 @@ def zip_adapter(adapter_dir: Path, zip_path: Path) -> None:
                 zip_handle.write(file_path, file_path.name)
 
 
+def print_trainable_parameters(model) -> None:
+    trainable_params = 0
+    total_params = 0
+    for parameter in model.parameters():
+        count = parameter.numel()
+        total_params += count
+        if parameter.requires_grad:
+            trainable_params += count
+    percent = 100 * trainable_params / total_params if total_params else 0
+    print(
+        "Trainable parameters: "
+        f"{trainable_params:,} / {total_params:,} ({percent:.4f}%)"
+    )
+
+
 def print_summary(
     *,
     mode: str,
@@ -347,6 +362,7 @@ def main() -> None:
         task_type=TaskType.CAUSAL_LM,
     )
     model = get_peft_model(model, lora_config)
+    print_trainable_parameters(model)
     if GRADIENT_CHECKPOINTING:
         try:
             model.gradient_checkpointing_enable(gradient_checkpointing_kwargs={"use_reentrant": False})
