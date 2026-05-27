@@ -48,14 +48,20 @@ python3 train_sft.py
 ```
 
 This first trains Phase 1 for one epoch at learning rate `5e-5`, saves
-`outputs/sft_two_stage_h100/phase1/adapter`, then continues on Phase 2
+`outputs/sft_two_stage_h200/phase1/adapter`, then continues on Phase 2
 `sft_train` for one epoch at learning rate `2e-5` and saves the final adapter to
-`outputs/sft_two_stage_h100/adapter`.
+`outputs/sft_two_stage_h200/adapter`.
 
 Phase 1 only:
 
 ```bash
 python3 train_sft.py --phase1-only
+```
+
+Phase 2 only, continuing from a saved Phase 1 adapter:
+
+```bash
+python3 train_sft.py --phase2
 ```
 
 The default assumes an H200 and uses micro-batch `8` with gradient accumulation `2`.
@@ -70,6 +76,7 @@ Validate data wiring without loading the model:
 ```bash
 python3 train_sft.py --validate-only
 python3 train_sft.py --phase1-only --validate-only
+python3 train_sft.py --phase2 --validate-only
 ```
 
 The minimal trainer uses:

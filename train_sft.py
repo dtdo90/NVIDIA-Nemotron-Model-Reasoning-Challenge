@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import gc
 import inspect
 import json
 import os
@@ -71,6 +72,12 @@ def parse_args() -> argparse.Namespace:
         help="Default: outputs/sft_two_stage_h200 or outputs/sft_phase1_h200.",
     )
     parser.add_argument("--phase1-only", action="store_true")
+    parser.add_argument("--phase2", action="store_true", help="Train only Phase 2 from a saved Phase 1 adapter.")
+    parser.add_argument(
+        "--phase1-adapter-dir",
+        default=None,
+        help="Phase 1 adapter to load for --phase2. Default: <output-dir>/phase1/adapter.",
+    )
     parser.add_argument("--validate-only", action="store_true")
     parser.add_argument("--per-device-train-batch-size", type=int, default=8)
     parser.add_argument("--gradient-accumulation-steps", type=int, default=2)
@@ -186,6 +193,18 @@ def zip_adapter(adapter_dir: Path, zip_path: Path) -> None:
                 zip_handle.write(file_path, file_path.name)
 
 
+def clear_memory() -> None:
+    gc.collect()
+    try:
+        import torch  # type: ignore
+
+        if torch.cuda.is_available():
+            torch.cuda.empty_cache()
+            torch.cuda.ipc_collect()
+    except Exception as exc:
+        print(f"Skipping CUDA cache cleanup: {exc}")
+
+
 def print_trainable_parameters(model) -> None:
     trainable_params = 0
     total_params = 0
@@ -247,7 +266,7 @@ def print_summary(
         "max_seq_len": MAX_SEQ_LEN,
         "lora_rank": MAX_LORA_RANK,
         "stage_learning_rates": {
-            "phase1": 5e-5,
+            "phase1": None if mode == "phase2_only" else 5e-5,
             "phase2": None if mode == "phase1_only" else 2e-5,
         },
         "gradient_checkpointing": GRADIENT_CHECKPOINTING,
@@ -311,19 +330,29 @@ def train_stage(
     stage_adapter_dir = stage_output_dir / "adapter"
     trainer.model.save_pretrained(stage_adapter_dir)
     print(f"{stage_name} adapter saved to: {stage_adapter_dir}")
-    return trainer.model, stage_adapter_dir
+    trained_model = trainer.model
+    trainer.model = None
+    del trainer
+    del dataset
+    clear_memory()
+    return trained_model, stage_adapter_dir
 
 
 def main() -> None:
     args = parse_args()
-    mode = "phase1_only" if args.phase1_only else "phase1_then_phase2"
-    output_dir = Path(args.output_dir or ("outputs/sft_phase1_h200" if args.phase1_only else "outputs/sft_two_stage_h200"))
+    if args.phase1_only and args.phase2:
+        raise SystemExit("Use either --phase1-only or --phase2, not both")
+    mode = "phase2_only" if args.phase2 else ("phase1_only" if args.phase1_only else "phase1_then_phase2")
+    output_dir = Path(
+        args.output_dir
+        or ("outputs/sft_phase1_h200" if args.phase1_only else "outputs/sft_two_stage_h200")
+    )
 
     phase2_train_examples: list[Example] = []
     holdout_examples: list[Example] = []
     split_assignments = None
 
-    phase1_examples = load_examples(PHASE1_CSV, source="phase1", append_answer_instruction=False)
+    phase1_examples = [] if args.phase2 else load_examples(PHASE1_CSV, source="phase1", append_answer_instruction=False)
 
     if not args.phase1_only:
         phase2_train, phase2_holdout, split_assignments = phase2_sft_train_examples()
@@ -347,7 +376,7 @@ def main() -> None:
     check_nemotron_runtime_dependencies()
 
     from datasets import Dataset  # type: ignore
-    from peft import LoraConfig, TaskType, get_peft_model  # type: ignore
+    from peft import LoraConfig, PeftModel, TaskType, get_peft_model  # type: ignore
     from transformers import AutoModelForCausalLM, AutoTokenizer  # type: ignore
     from trl import SFTConfig, SFTTrainer  # type: ignore
     import torch  # type: ignore
@@ -380,7 +409,18 @@ def main() -> None:
         bias="none",
         task_type=TaskType.CAUSAL_LM,
     )
-    model = get_peft_model(model, lora_config)
+    phase1_adapter_dir = Path(args.phase1_adapter_dir or (output_dir / "phase1" / "adapter"))
+    if args.phase2:
+        adapter_config = phase1_adapter_dir / "adapter_config.json"
+        if not adapter_config.exists():
+            raise SystemExit(
+                f"--phase2 requires a saved Phase 1 adapter at {phase1_adapter_dir}. "
+                "Pass --phase1-adapter-dir if it is somewhere else."
+            )
+        print(f"Loading trainable Phase 1 adapter from: {phase1_adapter_dir}")
+        model = PeftModel.from_pretrained(model, str(phase1_adapter_dir), is_trainable=True)
+    else:
+        model = get_peft_model(model, lora_config)
     print_trainable_parameters(model)
     if GRADIENT_CHECKPOINTING:
         try:
@@ -391,23 +431,27 @@ def main() -> None:
             model.enable_input_require_grads()
     model.train()
 
-    phase1_stage_dir = output_dir if args.phase1_only else output_dir / "phase1"
-    model, phase1_adapter_dir = train_stage(
-        stage_name="phase1",
-        model=model,
-        tokenizer=tokenizer,
-        examples=phase1_examples,
-        learning_rate=5e-5,
-        stage_output_dir=phase1_stage_dir,
-        dataset_cls=Dataset,
-        sft_config_cls=SFTConfig,
-        sft_trainer_cls=SFTTrainer,
-        per_device_train_batch_size=args.per_device_train_batch_size,
-        gradient_accumulation_steps=args.gradient_accumulation_steps,
-    )
+    if args.phase2:
+        final_adapter_dir = phase1_adapter_dir
+    else:
+        phase1_stage_dir = output_dir if args.phase1_only else output_dir / "phase1"
+        model, phase1_adapter_dir = train_stage(
+            stage_name="phase1",
+            model=model,
+            tokenizer=tokenizer,
+            examples=phase1_examples,
+            learning_rate=5e-5,
+            stage_output_dir=phase1_stage_dir,
+            dataset_cls=Dataset,
+            sft_config_cls=SFTConfig,
+            sft_trainer_cls=SFTTrainer,
+            per_device_train_batch_size=args.per_device_train_batch_size,
+            gradient_accumulation_steps=args.gradient_accumulation_steps,
+        )
+        final_adapter_dir = phase1_adapter_dir
 
-    final_adapter_dir = phase1_adapter_dir
     if not args.phase1_only:
+        clear_memory()
         model, final_adapter_dir = train_stage(
             stage_name="phase2",
             model=model,
@@ -440,7 +484,7 @@ def main() -> None:
             "holdout_rows": len(holdout_examples),
             "max_seq_len": MAX_SEQ_LEN,
             "stage_learning_rates": {
-                "phase1": 5e-5,
+                "phase1": None if args.phase2 else 5e-5,
                 "phase2": None if args.phase1_only else 2e-5,
             },
             "lora_rank": MAX_LORA_RANK,
