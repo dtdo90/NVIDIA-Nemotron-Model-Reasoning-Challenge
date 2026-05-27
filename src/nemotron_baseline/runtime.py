@@ -28,6 +28,8 @@ def check_nemotron_runtime_dependencies() -> None:
         import mamba_ssm  # noqa: F401
     except ImportError as exc:
         raise SystemExit(
-            "The Nemotron HF model requires mamba-ssm. Install it after PyTorch is installed:\n"
-            "  pip install --no-build-isolation --no-deps causal-conv1d mamba-ssm"
+            "The Nemotron HF model requires mamba-ssm and its runtime helpers.\n"
+            f"Import error: {exc}\n"
+            "Install them after PyTorch is installed:\n"
+            "  pip install --no-build-isolation --no-deps -r requirements-nemotron.txt"
         ) from exc

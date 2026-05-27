@@ -32,20 +32,7 @@ Current validated counts:
 Use an H100 or L40S machine with a recent CUDA PyTorch environment.
 
 ```bash
-pip install -r requirements.txt
-```
-
-If `mamba-ssm` needs to build against the active PyTorch/CUDA environment, run:
-
-```bash
-pip install --no-build-isolation --no-deps -r requirements-nemotron.txt
-```
-
-If `torchvision` is installed but mismatched with the active PyTorch version, remove it for
-this text-only project:
-
-```bash
-pip uninstall -y torchvision
+pip install -r requirements.txt && pip uninstall -y torchvision && pip install --no-build-isolation --no-deps -r requirements-nemotron.txt
 ```
 
 ## Train SFT
@@ -71,11 +58,11 @@ Phase 1 only:
 python3 train_sft.py --phase1-only
 ```
 
-The default assumes an H100 and uses micro-batch `1` with gradient accumulation `8`.
-If you need a smaller effective batch, use:
+The default assumes an H200 and uses micro-batch `4` with gradient accumulation `4`.
+If memory is tight, use:
 
 ```bash
-python3 train_sft.py --per-device-train-batch-size 1 --gradient-accumulation-steps 4
+python3 train_sft.py --per-device-train-batch-size 1 --gradient-accumulation-steps 8
 ```
 
 Validate data wiring without loading the model:
@@ -90,10 +77,11 @@ The minimal trainer uses:
 1. LoRA rank `32`
 2. sequence length `8192`
 3. bf16 + TF32
-4. default H100 batch size `1`, gradient accumulation `8`
-5. gradient checkpointing enabled
+4. default H200 batch size `4`, gradient accumulation `4`
+5. gradient checkpointing disabled
+6. dataloader workers `4`
 
-Outputs are written to `outputs/sft_two_stage_h100/` by default.
+Outputs are written to `outputs/sft_two_stage_h200/` by default.
 
 ## Optional GRPO
 

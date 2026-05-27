@@ -24,7 +24,7 @@ MODEL_PATH = os.environ.get("MODEL_PATH") or os.environ.get("BASE_MODEL_PATH") o
 os.environ.setdefault("PYTORCH_CUDA_ALLOC_CONF", "expandable_segments:True")
 MAX_LORA_RANK = 32
 MAX_SEQ_LEN = 8192
-GRADIENT_CHECKPOINTING = True
+GRADIENT_CHECKPOINTING = False
 
 from nemotron_baseline.data import (
     infer_category,
@@ -67,12 +67,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--output-dir",
         default=None,
-        help="Default: outputs/sft_two_stage_h100 or outputs/sft_phase1_h100.",
+        help="Default: outputs/sft_two_stage_h200 or outputs/sft_phase1_h200.",
     )
     parser.add_argument("--phase1-only", action="store_true")
     parser.add_argument("--validate-only", action="store_true")
-    parser.add_argument("--per-device-train-batch-size", type=int, default=1)
-    parser.add_argument("--gradient-accumulation-steps", type=int, default=8)
+    parser.add_argument("--per-device-train-batch-size", type=int, default=4)
+    parser.add_argument("--gradient-accumulation-steps", type=int, default=4)
     return parser.parse_args()
 
 
@@ -260,6 +260,8 @@ def train_stage(
         dataset_text_field="text",
         max_length=MAX_SEQ_LEN,
         packing=False,
+        dataloader_num_workers=4,
+        dataloader_pin_memory=True,
         gradient_checkpointing=GRADIENT_CHECKPOINTING,
         gradient_checkpointing_kwargs={"use_reentrant": False},
         seed=42,
@@ -281,7 +283,7 @@ def train_stage(
 def main() -> None:
     args = parse_args()
     mode = "phase1_only" if args.phase1_only else "phase1_then_phase2"
-    output_dir = Path(args.output_dir or ("outputs/sft_phase1_h100" if args.phase1_only else "outputs/sft_two_stage_h100"))
+    output_dir = Path(args.output_dir or ("outputs/sft_phase1_h200" if args.phase1_only else "outputs/sft_two_stage_h200"))
 
     phase2_train_examples: list[Example] = []
     holdout_examples: list[Example] = []
@@ -332,6 +334,7 @@ def main() -> None:
         trust_remote_code=True,
         dtype=torch.bfloat16,
     )
+    print(f"Model device map: {getattr(model, 'hf_device_map', None)}")
     if hasattr(model.config, "use_cache"):
         model.config.use_cache = False
 

@@ -515,6 +515,21 @@ def ensure_trainable_adapter(model) -> None:
     model.train()
 
 
+def print_trainable_parameters(model) -> None:
+    trainable_params = 0
+    total_params = 0
+    for parameter in model.parameters():
+        count = parameter.numel()
+        total_params += count
+        if parameter.requires_grad:
+            trainable_params += count
+    percent = 100 * trainable_params / total_params if total_params else 0
+    print(
+        "Trainable parameters: "
+        f"{trainable_params:,} / {total_params:,} ({percent:.4f}%)"
+    )
+
+
 def main() -> None:
     args = parse_args()
     if args.lora_rank > COMPETITION_MAX_LORA_RANK:
@@ -626,6 +641,7 @@ def main() -> None:
             task_type=deps["TaskType"].CAUSAL_LM,
         )
         model = deps["get_peft_model"](model, lora_config)
+    print_trainable_parameters(model)
     model.train()
 
     trainer_config = deps["SFTConfig"](
