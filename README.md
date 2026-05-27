@@ -54,11 +54,16 @@ By default, the portable scripts use the Hugging Face model
 `nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16`. Override it with
 `--model-path`, `MODEL_PATH`, or `BASE_MODEL_PATH` when using a local checkpoint.
 
-Default combined Phase 1 + Phase 2 SFT:
+Default two-stage SFT:
 
 ```bash
 python3 train_sft.py
 ```
+
+This first trains Phase 1 for one epoch at learning rate `5e-5`, saves
+`outputs/sft_two_stage_h100/phase1/adapter`, then continues on Phase 2
+`sft_train` for one epoch at learning rate `2e-5` and saves the final adapter to
+`outputs/sft_two_stage_h100/adapter`.
 
 Phase 1 only:
 
@@ -88,7 +93,7 @@ The minimal trainer uses:
 4. default H100 batch size `1`, gradient accumulation `8`
 5. gradient checkpointing enabled
 
-Outputs are written to `outputs/sft_combined_h100/` by default.
+Outputs are written to `outputs/sft_two_stage_h100/` by default.
 
 ## Optional GRPO
 
@@ -105,7 +110,7 @@ python3 train_grpo.py --config configs/grpo_stage2.json
 ```bash
 python3 infer_eval.py \
   --train-csv data/training_ready_clean/phase2_sft.csv \
-  --adapter-dir outputs/sft_combined_h100/adapter \
+  --adapter-dir outputs/sft_two_stage_h100/adapter \
   --split-csv data/training_ready_clean/phase2_splits_80_10_10.csv \
   --eval-splits grpo_holdout
 ```

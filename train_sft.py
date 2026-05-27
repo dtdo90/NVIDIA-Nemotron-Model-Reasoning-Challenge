@@ -67,7 +67,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--output-dir",
         default=None,
-        help="Default: outputs/sft_combined_h100 or outputs/sft_phase1_h100.",
+        help="Default: outputs/sft_two_stage_h100 or outputs/sft_phase1_h100.",
     )
     parser.add_argument("--phase1-only", action="store_true")
     parser.add_argument("--validate-only", action="store_true")
@@ -189,19 +189,23 @@ def print_summary(
     *,
     mode: str,
     output_dir: Path,
-    train_examples: list[Example],
+    phase1_examples: list[Example],
+    phase2_train_examples: list[Example],
     holdout_examples: list[Example],
     split_assignments: dict[str, str] | None,
     per_device_train_batch_size: int,
     gradient_accumulation_steps: int,
 ) -> None:
+    train_examples = phase1_examples + phase2_train_examples
     summary = {
         "mode": mode,
         "output_dir": str(output_dir.resolve()),
         "phase1_csv": str(PHASE1_CSV),
         "phase2_csv": str(PHASE2_CSV),
         "phase2_split_csv": str(PHASE2_SPLIT_CSV),
-        "train_rows": len(train_examples),
+        "phase1_train_rows": len(phase1_examples),
+        "phase2_train_rows": len(phase2_train_examples),
+        "total_train_rows": len(train_examples),
         "holdout_rows": len(holdout_examples),
         "train_source_counts": source_counts(train_examples),
         "holdout_source_counts": source_counts(holdout_examples),
@@ -210,7 +214,10 @@ def print_summary(
         "split_counts": summarize_split_assignments(split_assignments) if split_assignments else None,
         "max_seq_len": MAX_SEQ_LEN,
         "lora_rank": MAX_LORA_RANK,
-        "learning_rate": 5e-5 if mode == "phase1_only" else 2e-5,
+        "stage_learning_rates": {
+            "phase1": 5e-5,
+            "phase2": None if mode == "phase1_only" else 2e-5,
+        },
         "gradient_checkpointing": GRADIENT_CHECKPOINTING,
         "per_device_train_batch_size": per_device_train_batch_size,
         "gradient_accumulation_steps": gradient_accumulation_steps,
@@ -219,28 +226,80 @@ def print_summary(
     print(json.dumps(summary, indent=2, ensure_ascii=False))
 
 
+def train_stage(
+    *,
+    stage_name: str,
+    model,
+    tokenizer,
+    examples: list[Example],
+    learning_rate: float,
+    stage_output_dir: Path,
+    dataset_cls,
+    sft_config_cls,
+    sft_trainer_cls,
+    per_device_train_batch_size: int,
+    gradient_accumulation_steps: int,
+):
+    stage_output_dir.mkdir(parents=True, exist_ok=True)
+    dataset = build_dataset(dataset_cls, tokenizer, examples)
+    trainer_args = sft_config_cls(
+        output_dir=str(stage_output_dir / "trainer_state"),
+        per_device_train_batch_size=per_device_train_batch_size,
+        gradient_accumulation_steps=gradient_accumulation_steps,
+        num_train_epochs=1.0,
+        learning_rate=learning_rate,
+        logging_steps=10,
+        bf16=True,
+        tf32=True,
+        max_grad_norm=1.0,
+        optim="adamw_torch",
+        lr_scheduler_type="cosine",
+        warmup_ratio=0.1,
+        save_strategy="no",
+        report_to="none",
+        dataset_text_field="text",
+        max_length=MAX_SEQ_LEN,
+        packing=False,
+        gradient_checkpointing=GRADIENT_CHECKPOINTING,
+        gradient_checkpointing_kwargs={"use_reentrant": False},
+        seed=42,
+    )
+    trainer = sft_trainer_cls(
+        model=model,
+        train_dataset=dataset,
+        processing_class=tokenizer,
+        args=trainer_args,
+    )
+    print(f"Starting {stage_name}: rows={len(examples)}, learning_rate={learning_rate}")
+    trainer.train()
+    stage_adapter_dir = stage_output_dir / "adapter"
+    trainer.model.save_pretrained(stage_adapter_dir)
+    print(f"{stage_name} adapter saved to: {stage_adapter_dir}")
+    return trainer.model, stage_adapter_dir
+
+
 def main() -> None:
     args = parse_args()
-    mode = "phase1_only" if args.phase1_only else "combined"
-    output_dir = Path(args.output_dir or ("outputs/sft_phase1_h100" if args.phase1_only else "outputs/sft_combined_h100"))
+    mode = "phase1_only" if args.phase1_only else "phase1_then_phase2"
+    output_dir = Path(args.output_dir or ("outputs/sft_phase1_h100" if args.phase1_only else "outputs/sft_two_stage_h100"))
 
-    train_examples: list[Example] = []
+    phase2_train_examples: list[Example] = []
     holdout_examples: list[Example] = []
     split_assignments = None
 
     phase1_examples = load_examples(PHASE1_CSV, source="phase1", append_answer_instruction=False)
-    train_examples.extend(phase1_examples)
 
     if not args.phase1_only:
         phase2_train, phase2_holdout, split_assignments = phase2_sft_train_examples()
-        train_examples.extend(phase2_train)
+        phase2_train_examples.extend(phase2_train)
         holdout_examples.extend(phase2_holdout)
 
     if args.validate_only:
         print_summary(
             mode=mode,
             output_dir=output_dir,
-            train_examples=train_examples,
+            phase1_examples=phase1_examples,
+            phase2_train_examples=phase2_train_examples,
             holdout_examples=holdout_examples,
             split_assignments=split_assignments,
             per_device_train_batch_size=args.per_device_train_batch_size,
@@ -260,16 +319,12 @@ def main() -> None:
     torch.backends.cuda.matmul.allow_tf32 = True
     torch.backends.cudnn.allow_tf32 = True
 
-    adapter_dir = output_dir / "adapter"
     output_dir.mkdir(parents=True, exist_ok=True)
-    adapter_dir.mkdir(parents=True, exist_ok=True)
 
     tokenizer = AutoTokenizer.from_pretrained(args.model_path, trust_remote_code=True)
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
     tokenizer.padding_side = "right"
-
-    dataset = build_dataset(Dataset, tokenizer, train_examples)
 
     model = AutoModelForCausalLM.from_pretrained(
         args.model_path,
@@ -298,53 +353,58 @@ def main() -> None:
             model.enable_input_require_grads()
     model.train()
 
-    learning_rate = 5e-5 if args.phase1_only else 2e-5
-    trainer_args = SFTConfig(
-        output_dir=str(output_dir / "trainer_state"),
+    phase1_stage_dir = output_dir if args.phase1_only else output_dir / "phase1"
+    model, phase1_adapter_dir = train_stage(
+        stage_name="phase1",
+        model=model,
+        tokenizer=tokenizer,
+        examples=phase1_examples,
+        learning_rate=5e-5,
+        stage_output_dir=phase1_stage_dir,
+        dataset_cls=Dataset,
+        sft_config_cls=SFTConfig,
+        sft_trainer_cls=SFTTrainer,
         per_device_train_batch_size=args.per_device_train_batch_size,
         gradient_accumulation_steps=args.gradient_accumulation_steps,
-        num_train_epochs=1.0,
-        learning_rate=learning_rate,
-        logging_steps=10,
-        bf16=True,
-        tf32=True,
-        max_grad_norm=1.0,
-        optim="adamw_torch",
-        lr_scheduler_type="cosine",
-        warmup_ratio=0.1,
-        save_strategy="no",
-        report_to="none",
-        dataset_text_field="text",
-        max_length=MAX_SEQ_LEN,
-        packing=False,
-        gradient_checkpointing=GRADIENT_CHECKPOINTING,
-        gradient_checkpointing_kwargs={"use_reentrant": False},
-        seed=42,
     )
 
-    trainer = SFTTrainer(
-        model=model,
-        train_dataset=dataset,
-        processing_class=tokenizer,
-        args=trainer_args,
-    )
-    trainer.train()
+    final_adapter_dir = phase1_adapter_dir
+    if not args.phase1_only:
+        model, final_adapter_dir = train_stage(
+            stage_name="phase2",
+            model=model,
+            tokenizer=tokenizer,
+            examples=phase2_train_examples,
+            learning_rate=2e-5,
+            stage_output_dir=output_dir,
+            dataset_cls=Dataset,
+            sft_config_cls=SFTConfig,
+            sft_trainer_cls=SFTTrainer,
+            per_device_train_batch_size=args.per_device_train_batch_size,
+            gradient_accumulation_steps=args.gradient_accumulation_steps,
+        )
 
-    trainer.model.save_pretrained(adapter_dir)
     submission_path = output_dir / "submission.zip"
-    zip_adapter(adapter_dir, submission_path)
+    zip_adapter(final_adapter_dir, submission_path)
 
+    train_examples = phase1_examples + phase2_train_examples
     write_json(
         output_dir / "run_config.json",
         {
             "mode": mode,
             "model_path": args.model_path,
-            "adapter_dir": str(adapter_dir.resolve()),
+            "phase1_adapter_dir": str(phase1_adapter_dir.resolve()),
+            "adapter_dir": str(final_adapter_dir.resolve()),
             "submission_zip": str(submission_path.resolve()),
-            "train_rows": len(train_examples),
+            "phase1_train_rows": len(phase1_examples),
+            "phase2_train_rows": len(phase2_train_examples),
+            "total_train_rows": len(train_examples),
             "holdout_rows": len(holdout_examples),
             "max_seq_len": MAX_SEQ_LEN,
-            "learning_rate": learning_rate,
+            "stage_learning_rates": {
+                "phase1": 5e-5,
+                "phase2": None if args.phase1_only else 2e-5,
+            },
             "lora_rank": MAX_LORA_RANK,
             "gradient_checkpointing": GRADIENT_CHECKPOINTING,
             "per_device_train_batch_size": args.per_device_train_batch_size,
@@ -363,8 +423,9 @@ def main() -> None:
         },
     )
 
-    print(f"Training rows: {len(train_examples)}")
-    print(f"Adapter saved to: {adapter_dir}")
+    print(f"Phase 1 rows: {len(phase1_examples)}")
+    print(f"Phase 2 rows: {len(phase2_train_examples)}")
+    print(f"Final adapter saved to: {final_adapter_dir}")
     print(f"Submission zip: {submission_path}")
 
 
