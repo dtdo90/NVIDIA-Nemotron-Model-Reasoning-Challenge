@@ -110,8 +110,10 @@ The minimal trainer uses:
 2. sequence length `8192`
 3. bf16 + TF32
 4. default H200 batch size `8`, gradient accumulation `2`
-5. gradient checkpointing disabled
-6. dataloader workers `4`
+5. cosine LR schedule with warmup ratio `0.05`
+6. minimum learning rate floor `2e-6`
+7. gradient checkpointing disabled
+8. dataloader workers `4`
 
 Outputs are written to `outputs/sft_two_stage_h200/` by default.
 

@@ -79,6 +79,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--per-device-train-batch-size", type=int, default=1)
     parser.add_argument("--gradient-accumulation-steps", type=int, default=8)
     parser.add_argument("--learning-rate", type=float, default=2e-4)
+    parser.add_argument("--min-learning-rate", type=float, default=2e-6)
     parser.add_argument("--max-seq-len", type=int, default=DEFAULT_MAX_SEQ_LEN)
     parser.add_argument("--gradient-checkpointing", action="store_true")
     parser.add_argument("--lora-dropout", type=float, default=0.05)
@@ -189,6 +190,26 @@ def make_sft_config(sft_config_cls, **kwargs):
     return sft_config_cls(**{key: value for key, value in kwargs.items() if key in supported})
 
 
+def make_min_lr_callback(trainer_callback_cls, min_learning_rate: float):
+    class MinLearningRateCallback(trainer_callback_cls):
+        def _clamp(self, optimizer) -> None:
+            if optimizer is None or min_learning_rate <= 0:
+                return
+            for group in optimizer.param_groups:
+                if group.get("lr", 0.0) < min_learning_rate:
+                    group["lr"] = min_learning_rate
+
+        def on_step_begin(self, args, state, control, optimizer=None, **kwargs):
+            self._clamp(optimizer)
+            return control
+
+        def on_step_end(self, args, state, control, optimizer=None, **kwargs):
+            self._clamp(optimizer)
+            return control
+
+    return MinLearningRateCallback()
+
+
 def source_counts(examples: list[Example]) -> dict[str, int]:
     return {"phase2": len(examples)} if examples else {}
 
@@ -249,6 +270,9 @@ def print_summary(args: argparse.Namespace, train_examples: list[Example], holdo
         "max_seq_len": args.max_seq_len,
         "lora_rank": MAX_LORA_RANK,
         "learning_rate": args.learning_rate,
+        "lr_scheduler_type": "cosine",
+        "warmup_ratio": 0.05,
+        "min_learning_rate": args.min_learning_rate,
         "gradient_checkpointing": args.gradient_checkpointing,
         "per_device_train_batch_size": args.per_device_train_batch_size,
         "gradient_accumulation_steps": args.gradient_accumulation_steps,
@@ -270,7 +294,7 @@ def main() -> None:
 
     from datasets import Dataset  # type: ignore
     from peft import LoraConfig, TaskType, get_peft_model  # type: ignore
-    from transformers import AutoModelForCausalLM, AutoTokenizer  # type: ignore
+    from transformers import AutoModelForCausalLM, AutoTokenizer, TrainerCallback  # type: ignore
     from trl import SFTConfig, SFTTrainer  # type: ignore
     import torch  # type: ignore
 
@@ -328,7 +352,7 @@ def main() -> None:
         max_grad_norm=1.0,
         optim=args.optim,
         lr_scheduler_type="cosine",
-        warmup_ratio=0.1,
+        warmup_ratio=0.05,
         save_strategy="no",
         report_to="none",
         dataset_text_field="text",
@@ -341,7 +365,13 @@ def main() -> None:
         gradient_checkpointing_kwargs={"use_reentrant": False},
         seed=42,
     )
-    trainer = SFTTrainer(model=model, train_dataset=dataset, processing_class=tokenizer, args=trainer_args)
+    trainer = SFTTrainer(
+        model=model,
+        train_dataset=dataset,
+        processing_class=tokenizer,
+        args=trainer_args,
+        callbacks=[make_min_lr_callback(TrainerCallback, args.min_learning_rate)],
+    )
     print(f"Starting single_phase: rows={len(train_examples)}, learning_rate={args.learning_rate}")
     trainer.train()
 
@@ -368,6 +398,9 @@ def main() -> None:
             "holdout_rows": len(holdout_examples),
             "max_seq_len": args.max_seq_len,
             "learning_rate": args.learning_rate,
+            "lr_scheduler_type": "cosine",
+            "warmup_ratio": 0.05,
+            "min_learning_rate": args.min_learning_rate,
             "lora_rank": MAX_LORA_RANK,
             "gradient_checkpointing": args.gradient_checkpointing,
             "lora_dropout": args.lora_dropout,

@@ -99,6 +99,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--gradient-accumulation-steps", type=int, default=2)
     parser.add_argument("--phase1-learning-rate", type=float, default=1e-4)
     parser.add_argument("--phase2-learning-rate", type=float, default=5e-5)
+    parser.add_argument("--min-learning-rate", type=float, default=2e-6)
     parser.add_argument("--max-seq-len", type=int, default=DEFAULT_MAX_SEQ_LEN)
     parser.add_argument("--gradient-checkpointing", action="store_true")
     parser.add_argument("--lora-dropout", type=float, default=0.05)
@@ -332,6 +333,26 @@ def make_sft_config(sft_config_cls, **kwargs):
     return sft_config_cls(**{key: value for key, value in kwargs.items() if key in supported})
 
 
+def make_min_lr_callback(trainer_callback_cls, min_learning_rate: float):
+    class MinLearningRateCallback(trainer_callback_cls):
+        def _clamp(self, optimizer) -> None:
+            if optimizer is None or min_learning_rate <= 0:
+                return
+            for group in optimizer.param_groups:
+                if group.get("lr", 0.0) < min_learning_rate:
+                    group["lr"] = min_learning_rate
+
+        def on_step_begin(self, args, state, control, optimizer=None, **kwargs):
+            self._clamp(optimizer)
+            return control
+
+        def on_step_end(self, args, state, control, optimizer=None, **kwargs):
+            self._clamp(optimizer)
+            return control
+
+    return MinLearningRateCallback()
+
+
 def print_summary(
     *,
     mode: str,
@@ -347,6 +368,7 @@ def print_summary(
     optim: str,
     phase1_learning_rate: float,
     phase2_learning_rate: float,
+    min_learning_rate: float,
 ) -> None:
     train_examples = phase1_examples + phase2_train_examples
     summary = {
@@ -370,6 +392,9 @@ def print_summary(
             "phase1": None if mode == "phase2_only" else phase1_learning_rate,
             "phase2": None if mode == "phase1_only" else phase2_learning_rate,
         },
+        "lr_scheduler_type": "cosine",
+        "warmup_ratio": 0.05,
+        "min_learning_rate": min_learning_rate,
         "gradient_checkpointing": gradient_checkpointing,
         "per_device_train_batch_size": per_device_train_batch_size,
         "gradient_accumulation_steps": gradient_accumulation_steps,
@@ -390,11 +415,13 @@ def train_stage(
     dataset_cls,
     sft_config_cls,
     sft_trainer_cls,
+    trainer_callback_cls,
     per_device_train_batch_size: int,
     gradient_accumulation_steps: int,
     max_seq_len: int,
     gradient_checkpointing: bool,
     optim: str,
+    min_learning_rate: float,
 ):
     stage_output_dir.mkdir(parents=True, exist_ok=True)
     dataset = build_dataset(dataset_cls, tokenizer, examples)
@@ -411,7 +438,7 @@ def train_stage(
         max_grad_norm=1.0,
         optim=optim,
         lr_scheduler_type="cosine",
-        warmup_ratio=0.1,
+        warmup_ratio=0.05,
         save_strategy="no",
         report_to="none",
         dataset_text_field="text",
@@ -429,6 +456,7 @@ def train_stage(
         train_dataset=dataset,
         processing_class=tokenizer,
         args=trainer_args,
+        callbacks=[make_min_lr_callback(trainer_callback_cls, min_learning_rate)],
     )
     print(f"Starting {stage_name}: rows={len(examples)}, learning_rate={learning_rate}")
     trainer.train()
@@ -479,6 +507,7 @@ def main() -> None:
             optim=args.optim,
             phase1_learning_rate=args.phase1_learning_rate,
             phase2_learning_rate=args.phase2_learning_rate,
+            min_learning_rate=args.min_learning_rate,
         )
         return
 
@@ -487,7 +516,7 @@ def main() -> None:
 
     from datasets import Dataset  # type: ignore
     from peft import LoraConfig, TaskType, get_peft_model  # type: ignore
-    from transformers import AutoModelForCausalLM, AutoTokenizer  # type: ignore
+    from transformers import AutoModelForCausalLM, AutoTokenizer, TrainerCallback  # type: ignore
     from trl import SFTConfig, SFTTrainer  # type: ignore
     import torch  # type: ignore
 
@@ -556,11 +585,13 @@ def main() -> None:
             dataset_cls=Dataset,
             sft_config_cls=SFTConfig,
             sft_trainer_cls=SFTTrainer,
+            trainer_callback_cls=TrainerCallback,
             per_device_train_batch_size=args.per_device_train_batch_size,
             gradient_accumulation_steps=args.gradient_accumulation_steps,
             max_seq_len=args.max_seq_len,
             gradient_checkpointing=args.gradient_checkpointing,
             optim=args.optim,
+            min_learning_rate=args.min_learning_rate,
         )
         final_adapter_dir = phase1_adapter_dir
 
@@ -576,11 +607,13 @@ def main() -> None:
             dataset_cls=Dataset,
             sft_config_cls=SFTConfig,
             sft_trainer_cls=SFTTrainer,
+            trainer_callback_cls=TrainerCallback,
             per_device_train_batch_size=args.per_device_train_batch_size,
             gradient_accumulation_steps=args.gradient_accumulation_steps,
             max_seq_len=args.max_seq_len,
             gradient_checkpointing=args.gradient_checkpointing,
             optim=args.optim,
+            min_learning_rate=args.min_learning_rate,
         )
 
     submission_path = None
@@ -606,6 +639,9 @@ def main() -> None:
                 "phase1": None if args.phase2 else args.phase1_learning_rate,
                 "phase2": None if args.phase1_only else args.phase2_learning_rate,
             },
+            "lr_scheduler_type": "cosine",
+            "warmup_ratio": 0.05,
+            "min_learning_rate": args.min_learning_rate,
             "lora_rank": MAX_LORA_RANK,
             "gradient_checkpointing": args.gradient_checkpointing,
             "lora_dropout": args.lora_dropout,

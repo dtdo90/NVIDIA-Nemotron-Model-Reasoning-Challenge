@@ -161,6 +161,11 @@ def parse_args() -> argparse.Namespace:
         default=defaults.get("learning_rate", 2e-4),
     )
     parser.add_argument(
+        "--min-learning-rate",
+        type=float,
+        default=defaults.get("min_learning_rate", 2e-6),
+    )
+    parser.add_argument(
         "--lora-rank",
         type=int,
         default=defaults.get("lora_rank", 32),
@@ -237,7 +242,7 @@ def require_training_dependencies():
         import torch.nn.functional as torch_f  # type: ignore
         from datasets import Dataset  # type: ignore
         from peft import LoraConfig, PeftModel, TaskType, get_peft_model  # type: ignore
-        from transformers import AutoModelForCausalLM, AutoTokenizer  # type: ignore
+        from transformers import AutoModelForCausalLM, AutoTokenizer, TrainerCallback  # type: ignore
         from trl import SFTConfig, SFTTrainer  # type: ignore
     except ImportError as exc:
         raise SystemExit(
@@ -255,6 +260,7 @@ def require_training_dependencies():
         "get_peft_model": get_peft_model,
         "AutoModelForCausalLM": AutoModelForCausalLM,
         "AutoTokenizer": AutoTokenizer,
+        "TrainerCallback": TrainerCallback,
         "SFTConfig": SFTConfig,
         "SFTTrainer": SFTTrainer,
     }
@@ -516,6 +522,9 @@ def build_preflight_summary(
         "gradient_accumulation_steps": args.gradient_accumulation_steps,
         "effective_batch_size": args.per_device_train_batch_size * args.gradient_accumulation_steps,
         "learning_rate": args.learning_rate,
+        "lr_scheduler_type": "cosine",
+        "warmup_ratio": 0.05,
+        "min_learning_rate": args.min_learning_rate,
         "optim": args.optim,
         "lora_rank": args.lora_rank,
         "total_rows": len(examples),
@@ -570,6 +579,26 @@ def make_sft_config(sft_config_cls, **kwargs):
     if skipped:
         print(f"SFTConfig does not support {skipped}; skipping them")
     return sft_config_cls(**{key: value for key, value in kwargs.items() if key in supported})
+
+
+def make_min_lr_callback(trainer_callback_cls, min_learning_rate: float):
+    class MinLearningRateCallback(trainer_callback_cls):
+        def _clamp(self, optimizer) -> None:
+            if optimizer is None or min_learning_rate <= 0:
+                return
+            for group in optimizer.param_groups:
+                if group.get("lr", 0.0) < min_learning_rate:
+                    group["lr"] = min_learning_rate
+
+        def on_step_begin(self, args, state, control, optimizer=None, **kwargs):
+            self._clamp(optimizer)
+            return control
+
+        def on_step_end(self, args, state, control, optimizer=None, **kwargs):
+            self._clamp(optimizer)
+            return control
+
+    return MinLearningRateCallback()
 
 
 def main() -> None:
@@ -698,7 +727,7 @@ def main() -> None:
         max_grad_norm=1.0,
         optim=args.optim,
         lr_scheduler_type="cosine",
-        warmup_ratio=0.1,
+        warmup_ratio=0.05,
         save_strategy="no",
         report_to="none",
         dataset_text_field="text",
@@ -715,6 +744,7 @@ def main() -> None:
         train_dataset=train_dataset,
         processing_class=tokenizer,
         args=trainer_config,
+        callbacks=[make_min_lr_callback(deps["TrainerCallback"], args.min_learning_rate)],
     )
     trainer.train()
 
@@ -744,6 +774,9 @@ def main() -> None:
         "per_device_train_batch_size": args.per_device_train_batch_size,
         "gradient_accumulation_steps": args.gradient_accumulation_steps,
         "learning_rate": args.learning_rate,
+        "lr_scheduler_type": "cosine",
+        "warmup_ratio": 0.05,
+        "min_learning_rate": args.min_learning_rate,
         "optim": args.optim,
         "lora_rank": args.lora_rank,
         "lora_alpha": args.lora_alpha,
