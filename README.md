@@ -32,7 +32,9 @@ Current validated counts:
 Use an H100 or L40S machine with a recent CUDA PyTorch environment.
 
 ```bash
-pip install -r requirements.txt && pip uninstall -y torchvision && pip install --no-build-isolation --no-deps -r requirements-nemotron.txt
+pip install -r requirements.txt
+pip uninstall -y torchvision
+pip install --no-build-isolation --no-deps -r requirements-nemotron.txt
 ```
 
 ## Train SFT
@@ -54,23 +56,33 @@ This first trains Phase 1 for one epoch at learning rate `5e-5`, saves
 `sft_train` for one epoch at learning rate `2e-5` and saves the final adapter to
 `outputs/sft_two_stage_h200/adapter`.
 
-Phase 1 only:
+Recommended explicit two-step SFT:
 
 ```bash
-python3 train_sft.py --phase1-only
+python3 train_sft.py --phase1-only \
+  --phase1-learning-rate 1e-4 \
+  --per-device-train-batch-size 8 \
+  --gradient-accumulation-steps 2
 ```
 
-Phase 2 only, continuing from a saved Phase 1 adapter:
+Then continue Phase 2 from the saved Phase 1 adapter:
 
 ```bash
-python3 train_sft.py --phase2
+python3 train_sft.py --phase2 \
+  --phase1-adapter-dir outputs/sft_phase1_h200/adapter \
+  --phase2-learning-rate 5e-5 \
+  --per-device-train-batch-size 1 \
+  --gradient-accumulation-steps 8
 ```
 
-The default assumes an H200 and uses micro-batch `8` with gradient accumulation `2`.
-If memory is tight, use:
+The first command assumes an H200-class GPU. On a 96GB RTX6000, use the same
+safer micro-batch setting for Phase 1:
 
 ```bash
-python3 train_sft.py --per-device-train-batch-size 1 --gradient-accumulation-steps 8
+python3 train_sft.py --phase1-only \
+  --phase1-learning-rate 1e-4 \
+  --per-device-train-batch-size 1 \
+  --gradient-accumulation-steps 8
 ```
 
 Validate data wiring without loading the model:

@@ -26,9 +26,7 @@ if str(SRC) not in sys.path:
 COMPETITION_MAX_LORA_RANK = 32
 COMPETITION_MAX_MODEL_LEN = 8192
 HF_MODEL_PATH = "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16"
-KAGGLE_MODEL_PATH = Path(
-    "/kaggle/input/models/metric/nemotron-3-nano-30b-a3b-bf16/transformers/default/1"
-)
+KAGGLE_MODEL_PATH = Path("/kaggle/input/models/metric/nemotron-3-nano-30b-a3b-bf16/transformers/default/1")
 os.environ.setdefault("PYTORCH_CUDA_ALLOC_CONF", "expandable_segments:True")
 
 
@@ -176,6 +174,11 @@ def parse_args() -> argparse.Namespace:
         "--lora-dropout",
         type=float,
         default=defaults.get("lora_dropout", 0.05),
+    )
+    parser.add_argument(
+        "--optim",
+        default=defaults.get("optim", "adamw_torch_fused"),
+        help="Trainer optimizer. Use adamw_torch if fused AdamW is unavailable.",
     )
     parser.add_argument(
         "--logging-steps",
@@ -513,6 +516,7 @@ def build_preflight_summary(
         "gradient_accumulation_steps": args.gradient_accumulation_steps,
         "effective_batch_size": args.per_device_train_batch_size * args.gradient_accumulation_steps,
         "learning_rate": args.learning_rate,
+        "optim": args.optim,
         "lora_rank": args.lora_rank,
         "total_rows": len(examples),
         "train_rows": len(train_examples),
@@ -692,7 +696,7 @@ def main() -> None:
         logging_steps=args.logging_steps,
         bf16=True,
         max_grad_norm=1.0,
-        optim="adamw_torch",
+        optim=args.optim,
         lr_scheduler_type="cosine",
         warmup_ratio=0.1,
         save_strategy="no",
@@ -740,6 +744,7 @@ def main() -> None:
         "per_device_train_batch_size": args.per_device_train_batch_size,
         "gradient_accumulation_steps": args.gradient_accumulation_steps,
         "learning_rate": args.learning_rate,
+        "optim": args.optim,
         "lora_rank": args.lora_rank,
         "lora_alpha": args.lora_alpha,
         "lora_dropout": args.lora_dropout,

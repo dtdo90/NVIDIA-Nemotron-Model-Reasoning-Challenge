@@ -97,9 +97,16 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--validate-only", action="store_true")
     parser.add_argument("--per-device-train-batch-size", type=int, default=8)
     parser.add_argument("--gradient-accumulation-steps", type=int, default=2)
+    parser.add_argument("--phase1-learning-rate", type=float, default=5e-5)
+    parser.add_argument("--phase2-learning-rate", type=float, default=2e-5)
     parser.add_argument("--max-seq-len", type=int, default=DEFAULT_MAX_SEQ_LEN)
     parser.add_argument("--gradient-checkpointing", action="store_true")
     parser.add_argument("--lora-dropout", type=float, default=0.05)
+    parser.add_argument(
+        "--optim",
+        default="adamw_torch_fused",
+        help="Trainer optimizer. Use adamw_torch if fused AdamW is unavailable.",
+    )
     return parser.parse_args()
 
 
@@ -337,6 +344,9 @@ def print_summary(
     gradient_accumulation_steps: int,
     max_seq_len: int,
     gradient_checkpointing: bool,
+    optim: str,
+    phase1_learning_rate: float,
+    phase2_learning_rate: float,
 ) -> None:
     train_examples = phase1_examples + phase2_train_examples
     summary = {
@@ -357,13 +367,14 @@ def print_summary(
         "max_seq_len": max_seq_len,
         "lora_rank": MAX_LORA_RANK,
         "stage_learning_rates": {
-            "phase1": None if mode == "phase2_only" else 5e-5,
-            "phase2": None if mode == "phase1_only" else 2e-5,
+            "phase1": None if mode == "phase2_only" else phase1_learning_rate,
+            "phase2": None if mode == "phase1_only" else phase2_learning_rate,
         },
         "gradient_checkpointing": gradient_checkpointing,
         "per_device_train_batch_size": per_device_train_batch_size,
         "gradient_accumulation_steps": gradient_accumulation_steps,
         "effective_batch_size": per_device_train_batch_size * gradient_accumulation_steps,
+        "optim": optim,
     }
     print(json.dumps(summary, indent=2, ensure_ascii=False))
 
@@ -383,6 +394,7 @@ def train_stage(
     gradient_accumulation_steps: int,
     max_seq_len: int,
     gradient_checkpointing: bool,
+    optim: str,
 ):
     stage_output_dir.mkdir(parents=True, exist_ok=True)
     dataset = build_dataset(dataset_cls, tokenizer, examples)
@@ -397,7 +409,7 @@ def train_stage(
         bf16=True,
         tf32=True,
         max_grad_norm=1.0,
-        optim="adamw_torch",
+        optim=optim,
         lr_scheduler_type="cosine",
         warmup_ratio=0.1,
         save_strategy="no",
@@ -464,6 +476,9 @@ def main() -> None:
             gradient_accumulation_steps=args.gradient_accumulation_steps,
             max_seq_len=args.max_seq_len,
             gradient_checkpointing=args.gradient_checkpointing,
+            optim=args.optim,
+            phase1_learning_rate=args.phase1_learning_rate,
+            phase2_learning_rate=args.phase2_learning_rate,
         )
         return
 
@@ -536,7 +551,7 @@ def main() -> None:
             model=model,
             tokenizer=tokenizer,
             examples=phase1_examples,
-            learning_rate=5e-5,
+            learning_rate=args.phase1_learning_rate,
             stage_output_dir=phase1_stage_dir,
             dataset_cls=Dataset,
             sft_config_cls=SFTConfig,
@@ -545,6 +560,7 @@ def main() -> None:
             gradient_accumulation_steps=args.gradient_accumulation_steps,
             max_seq_len=args.max_seq_len,
             gradient_checkpointing=args.gradient_checkpointing,
+            optim=args.optim,
         )
         final_adapter_dir = phase1_adapter_dir
 
@@ -555,7 +571,7 @@ def main() -> None:
             model=model,
             tokenizer=tokenizer,
             examples=phase2_train_examples,
-            learning_rate=2e-5,
+            learning_rate=args.phase2_learning_rate,
             stage_output_dir=output_dir,
             dataset_cls=Dataset,
             sft_config_cls=SFTConfig,
@@ -564,6 +580,7 @@ def main() -> None:
             gradient_accumulation_steps=args.gradient_accumulation_steps,
             max_seq_len=args.max_seq_len,
             gradient_checkpointing=args.gradient_checkpointing,
+            optim=args.optim,
         )
 
     submission_path = output_dir / "submission.zip"
@@ -584,12 +601,13 @@ def main() -> None:
             "holdout_rows": len(holdout_examples),
             "max_seq_len": args.max_seq_len,
             "stage_learning_rates": {
-                "phase1": None if args.phase2 else 5e-5,
-                "phase2": None if args.phase1_only else 2e-5,
+                "phase1": None if args.phase2 else args.phase1_learning_rate,
+                "phase2": None if args.phase1_only else args.phase2_learning_rate,
             },
             "lora_rank": MAX_LORA_RANK,
             "gradient_checkpointing": args.gradient_checkpointing,
             "lora_dropout": args.lora_dropout,
+            "optim": args.optim,
             "per_device_train_batch_size": args.per_device_train_batch_size,
             "gradient_accumulation_steps": args.gradient_accumulation_steps,
             "effective_batch_size": args.per_device_train_batch_size * args.gradient_accumulation_steps,
