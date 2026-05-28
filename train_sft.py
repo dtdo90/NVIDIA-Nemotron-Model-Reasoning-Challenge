@@ -583,8 +583,10 @@ def main() -> None:
             optim=args.optim,
         )
 
-    submission_path = output_dir / "submission.zip"
-    zip_adapter(final_adapter_dir, submission_path)
+    submission_path = None
+    if not args.phase1_only:
+        submission_path = output_dir / "submission.zip"
+        zip_adapter(final_adapter_dir, submission_path)
 
     train_examples = phase1_examples + phase2_train_examples
     write_json(
@@ -594,7 +596,7 @@ def main() -> None:
             "model_path": args.model_path,
             "phase1_adapter_dir": str(phase1_adapter_dir.resolve()),
             "adapter_dir": str(final_adapter_dir.resolve()),
-            "submission_zip": str(submission_path.resolve()),
+            "submission_zip": None if submission_path is None else str(submission_path.resolve()),
             "phase1_train_rows": len(phase1_examples),
             "phase2_train_rows": len(phase2_train_examples),
             "total_train_rows": len(train_examples),
@@ -627,7 +629,10 @@ def main() -> None:
     print(f"Phase 1 rows: {len(phase1_examples)}")
     print(f"Phase 2 rows: {len(phase2_train_examples)}")
     print(f"Final adapter saved to: {final_adapter_dir}")
-    print(f"Submission zip: {submission_path}")
+    if submission_path is None:
+        print("Submission zip: skipped for phase1-only")
+    else:
+        print(f"Submission zip: {submission_path}")
 
 
 if __name__ == "__main__":
