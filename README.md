@@ -37,9 +37,11 @@ pip install -r requirements.txt && pip uninstall -y torchvision && pip install -
 
 ## Train SFT
 
-By default, the portable scripts use the Hugging Face model
-`nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16`. Override it with
-`--model-path`, `MODEL_PATH`, or `BASE_MODEL_PATH` when using a local checkpoint.
+By default, the portable scripts use Kaggle's mounted model at
+`/kaggle/input/models/metric/nemotron-3-nano-30b-a3b-bf16/transformers/default/1`
+when that path exists, otherwise they use the Hugging Face model
+`nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16`. Override with `--model-path`,
+`MODEL_PATH`, or `BASE_MODEL_PATH`.
 
 Default two-stage SFT:
 

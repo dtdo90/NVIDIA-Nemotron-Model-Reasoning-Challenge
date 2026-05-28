@@ -21,12 +21,25 @@ if str(SRC) not in sys.path:
 PHASE1_CSV = ROOT / "data/training_ready_clean/phase1_train.csv"
 PHASE2_CSV = ROOT / "data/training_ready_clean/phase2_sft.csv"
 PHASE2_SPLIT_CSV = ROOT / "data/training_ready_clean/phase2_splits_80_10_10.csv"
-DEFAULT_MODEL_PATH = "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16"
-MODEL_PATH = os.environ.get("MODEL_PATH") or os.environ.get("BASE_MODEL_PATH") or DEFAULT_MODEL_PATH
+HF_MODEL_PATH = "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16"
+KAGGLE_MODEL_PATH = Path(
+    "/kaggle/input/models/metric/nemotron-3-nano-30b-a3b-bf16/transformers/default/1"
+)
 os.environ.setdefault("PYTORCH_CUDA_ALLOC_CONF", "expandable_segments:True")
 MAX_LORA_RANK = 32
-MAX_SEQ_LEN = 8192
-GRADIENT_CHECKPOINTING = False
+DEFAULT_MAX_SEQ_LEN = 8192
+
+
+def default_model_path() -> str:
+    explicit_model_path = os.environ.get("MODEL_PATH") or os.environ.get("BASE_MODEL_PATH")
+    if explicit_model_path:
+        return explicit_model_path
+    if KAGGLE_MODEL_PATH.exists():
+        return str(KAGGLE_MODEL_PATH)
+    return HF_MODEL_PATH
+
+
+MODEL_PATH = default_model_path()
 
 from nemotron_baseline.data import (
     infer_category,
@@ -64,7 +77,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--model-path",
         default=MODEL_PATH,
-        help=f"Local model path or HF model id. Defaults to {DEFAULT_MODEL_PATH}.",
+        help=(
+            "Local model path or HF model id. Defaults to the Kaggle mounted model "
+            f"when present, otherwise {HF_MODEL_PATH}."
+        ),
     )
     parser.add_argument(
         "--output-dir",
@@ -81,6 +97,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--validate-only", action="store_true")
     parser.add_argument("--per-device-train-batch-size", type=int, default=8)
     parser.add_argument("--gradient-accumulation-steps", type=int, default=2)
+    parser.add_argument("--max-seq-len", type=int, default=DEFAULT_MAX_SEQ_LEN)
+    parser.add_argument("--gradient-checkpointing", action="store_true")
+    parser.add_argument("--lora-dropout", type=float, default=0.05)
     return parser.parse_args()
 
 
@@ -220,6 +239,76 @@ def print_trainable_parameters(model) -> None:
     )
 
 
+def load_adapter_tensors(model, adapter_dir: Path, torch) -> None:
+    safetensors_path = adapter_dir / "adapter_model.safetensors"
+    bin_path = adapter_dir / "adapter_model.bin"
+    if safetensors_path.exists():
+        from safetensors.torch import load_file  # type: ignore
+
+        raw_state = load_file(str(safetensors_path), device="cpu")
+        source_path = safetensors_path
+    elif bin_path.exists():
+        try:
+            raw_state = torch.load(bin_path, map_location="cpu", weights_only=True)
+        except TypeError:
+            raw_state = torch.load(bin_path, map_location="cpu")
+        source_path = bin_path
+    else:
+        raise SystemExit(f"No adapter weights found in {adapter_dir}")
+
+    model_state = model.state_dict()
+
+    def with_default_adapter(key: str) -> str:
+        for marker in (
+            ".lora_A.",
+            ".lora_B.",
+            ".lora_embedding_A.",
+            ".lora_embedding_B.",
+            ".lora_magnitude_vector.",
+        ):
+            if marker in key:
+                prefix, suffix = key.split(marker, 1)
+                if not suffix.startswith("default."):
+                    return f"{prefix}{marker}default.{suffix}"
+        return key
+
+    remapped = {}
+    unmatched = []
+    for key, value in raw_state.items():
+        candidates = [
+            key,
+            with_default_adapter(key),
+            f"base_model.model.{key}",
+            with_default_adapter(f"base_model.model.{key}"),
+        ]
+        for candidate in candidates:
+            if candidate in model_state and model_state[candidate].shape == value.shape:
+                remapped[candidate] = value
+                break
+        else:
+            unmatched.append(key)
+
+    if not remapped:
+        sample_raw = next(iter(raw_state), "<empty>")
+        sample_model = next((key for key in model_state if "lora_" in key), "<no lora keys>")
+        raise SystemExit(
+            "Loaded zero adapter tensors. "
+            f"Sample saved key: {sample_raw}. Sample model LoRA key: {sample_model}."
+        )
+    if unmatched:
+        sample_model = next((key for key in model_state if "lora_" in key), "<no lora keys>")
+        raise SystemExit(
+            f"Only matched {len(remapped)}/{len(raw_state)} adapter tensors from {source_path}. "
+            f"Unmatched saved keys: {unmatched[:5]}. Sample model LoRA key: {sample_model}."
+        )
+
+    result = model.load_state_dict(remapped, strict=False)
+    print(
+        f"Loaded {len(remapped)}/{len(raw_state)} adapter tensors from {source_path}. "
+        f"Missing keys: {len(result.missing_keys)}, unexpected keys: {len(result.unexpected_keys)}"
+    )
+
+
 def make_sft_config(sft_config_cls, **kwargs):
     signature = inspect.signature(sft_config_cls.__init__)
     accepts_extra_kwargs = any(
@@ -246,6 +335,8 @@ def print_summary(
     split_assignments: dict[str, str] | None,
     per_device_train_batch_size: int,
     gradient_accumulation_steps: int,
+    max_seq_len: int,
+    gradient_checkpointing: bool,
 ) -> None:
     train_examples = phase1_examples + phase2_train_examples
     summary = {
@@ -263,13 +354,13 @@ def print_summary(
         "train_category_counts": summarize_categories(train_examples),
         "holdout_category_counts": summarize_categories(holdout_examples),
         "split_counts": summarize_split_assignments(split_assignments) if split_assignments else None,
-        "max_seq_len": MAX_SEQ_LEN,
+        "max_seq_len": max_seq_len,
         "lora_rank": MAX_LORA_RANK,
         "stage_learning_rates": {
             "phase1": None if mode == "phase2_only" else 5e-5,
             "phase2": None if mode == "phase1_only" else 2e-5,
         },
-        "gradient_checkpointing": GRADIENT_CHECKPOINTING,
+        "gradient_checkpointing": gradient_checkpointing,
         "per_device_train_batch_size": per_device_train_batch_size,
         "gradient_accumulation_steps": gradient_accumulation_steps,
         "effective_batch_size": per_device_train_batch_size * gradient_accumulation_steps,
@@ -290,6 +381,8 @@ def train_stage(
     sft_trainer_cls,
     per_device_train_batch_size: int,
     gradient_accumulation_steps: int,
+    max_seq_len: int,
+    gradient_checkpointing: bool,
 ):
     stage_output_dir.mkdir(parents=True, exist_ok=True)
     dataset = build_dataset(dataset_cls, tokenizer, examples)
@@ -310,12 +403,12 @@ def train_stage(
         save_strategy="no",
         report_to="none",
         dataset_text_field="text",
-        max_length=MAX_SEQ_LEN,
+        max_length=max_seq_len,
         packing=False,
         group_by_length=True,
         dataloader_num_workers=4,
         dataloader_pin_memory=True,
-        gradient_checkpointing=GRADIENT_CHECKPOINTING,
+        gradient_checkpointing=gradient_checkpointing,
         gradient_checkpointing_kwargs={"use_reentrant": False},
         seed=42,
     )
@@ -369,6 +462,8 @@ def main() -> None:
             split_assignments=split_assignments,
             per_device_train_batch_size=args.per_device_train_batch_size,
             gradient_accumulation_steps=args.gradient_accumulation_steps,
+            max_seq_len=args.max_seq_len,
+            gradient_checkpointing=args.gradient_checkpointing,
         )
         return
 
@@ -376,7 +471,7 @@ def main() -> None:
     check_nemotron_runtime_dependencies()
 
     from datasets import Dataset  # type: ignore
-    from peft import LoraConfig, PeftModel, TaskType, get_peft_model  # type: ignore
+    from peft import LoraConfig, TaskType, get_peft_model  # type: ignore
     from transformers import AutoModelForCausalLM, AutoTokenizer  # type: ignore
     from trl import SFTConfig, SFTTrainer  # type: ignore
     import torch  # type: ignore
@@ -405,7 +500,7 @@ def main() -> None:
         r=MAX_LORA_RANK,
         lora_alpha=32,
         target_modules="all-linear",
-        lora_dropout=0.05,
+        lora_dropout=args.lora_dropout,
         bias="none",
         task_type=TaskType.CAUSAL_LM,
     )
@@ -418,11 +513,12 @@ def main() -> None:
                 "Pass --phase1-adapter-dir if it is somewhere else."
             )
         print(f"Loading trainable Phase 1 adapter from: {phase1_adapter_dir}")
-        model = PeftModel.from_pretrained(model, str(phase1_adapter_dir), is_trainable=True)
+        model = get_peft_model(model, lora_config)
+        load_adapter_tensors(model, phase1_adapter_dir, torch)
     else:
         model = get_peft_model(model, lora_config)
     print_trainable_parameters(model)
-    if GRADIENT_CHECKPOINTING:
+    if args.gradient_checkpointing:
         try:
             model.gradient_checkpointing_enable(gradient_checkpointing_kwargs={"use_reentrant": False})
         except TypeError:
@@ -447,6 +543,8 @@ def main() -> None:
             sft_trainer_cls=SFTTrainer,
             per_device_train_batch_size=args.per_device_train_batch_size,
             gradient_accumulation_steps=args.gradient_accumulation_steps,
+            max_seq_len=args.max_seq_len,
+            gradient_checkpointing=args.gradient_checkpointing,
         )
         final_adapter_dir = phase1_adapter_dir
 
@@ -464,6 +562,8 @@ def main() -> None:
             sft_trainer_cls=SFTTrainer,
             per_device_train_batch_size=args.per_device_train_batch_size,
             gradient_accumulation_steps=args.gradient_accumulation_steps,
+            max_seq_len=args.max_seq_len,
+            gradient_checkpointing=args.gradient_checkpointing,
         )
 
     submission_path = output_dir / "submission.zip"
@@ -482,13 +582,14 @@ def main() -> None:
             "phase2_train_rows": len(phase2_train_examples),
             "total_train_rows": len(train_examples),
             "holdout_rows": len(holdout_examples),
-            "max_seq_len": MAX_SEQ_LEN,
+            "max_seq_len": args.max_seq_len,
             "stage_learning_rates": {
                 "phase1": None if args.phase2 else 5e-5,
                 "phase2": None if args.phase1_only else 2e-5,
             },
             "lora_rank": MAX_LORA_RANK,
-            "gradient_checkpointing": GRADIENT_CHECKPOINTING,
+            "gradient_checkpointing": args.gradient_checkpointing,
+            "lora_dropout": args.lora_dropout,
             "per_device_train_batch_size": args.per_device_train_batch_size,
             "gradient_accumulation_steps": args.gradient_accumulation_steps,
             "effective_batch_size": args.per_device_train_batch_size * args.gradient_accumulation_steps,

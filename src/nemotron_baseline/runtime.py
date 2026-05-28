@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+import importlib
 
 
 def disable_transformers_vision_imports() -> None:
@@ -24,12 +25,32 @@ def disable_transformers_vision_imports() -> None:
 
 
 def check_nemotron_runtime_dependencies() -> None:
-    try:
-        import mamba_ssm  # noqa: F401
-    except ImportError as exc:
-        raise SystemExit(
-            "The Nemotron HF model requires mamba-ssm and its runtime helpers.\n"
-            f"Import error: {exc}\n"
-            "Install them after PyTorch is installed:\n"
-            "  pip install --no-build-isolation --no-deps -r requirements-nemotron.txt"
-        ) from exc
+    required_modules = [
+        ("einops", "einops"),
+        ("cutlass", "nvidia-cutlass-dsl"),
+        ("causal_conv1d", "causal-conv1d"),
+        ("mamba_ssm", "mamba-ssm"),
+    ]
+    for module_name, package_name in required_modules:
+        try:
+            importlib.import_module(module_name)
+        except ImportError as exc:
+            raise SystemExit(
+                "The Nemotron HF model requires mamba-ssm and its runtime helpers.\n"
+                f"Missing import: {module_name}\n"
+                f"Install package: {package_name}\n"
+                f"Import error: {exc}\n"
+                "Install them after PyTorch is installed:\n"
+                "  pip install --no-build-isolation --no-deps -r requirements-nemotron.txt"
+            ) from exc
+        except Exception as exc:
+            # Compiled extensions can be present but ABI-incompatible with the
+            # active PyTorch/CUDA runtime. Surface that as a setup issue too.
+            raise SystemExit(
+                "The Nemotron HF model requires mamba-ssm and its runtime helpers.\n"
+                f"Failed import: {module_name}\n"
+                f"Package: {package_name}\n"
+                f"Import error: {exc}\n"
+                "Reinstall these packages after PyTorch is installed:\n"
+                "  pip install --force-reinstall --no-build-isolation --no-deps -r requirements-nemotron.txt"
+            ) from exc

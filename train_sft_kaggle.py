@@ -25,9 +25,23 @@ if str(SRC) not in sys.path:
 
 COMPETITION_MAX_LORA_RANK = 32
 COMPETITION_MAX_MODEL_LEN = 8192
-DEFAULT_MODEL_PATH = "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16"
-MODEL_PATH = os.environ.get("MODEL_PATH") or os.environ.get("BASE_MODEL_PATH") or DEFAULT_MODEL_PATH
+HF_MODEL_PATH = "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16"
+KAGGLE_MODEL_PATH = Path(
+    "/kaggle/input/models/metric/nemotron-3-nano-30b-a3b-bf16/transformers/default/1"
+)
 os.environ.setdefault("PYTORCH_CUDA_ALLOC_CONF", "expandable_segments:True")
+
+
+def default_model_path() -> str:
+    explicit_model_path = os.environ.get("MODEL_PATH") or os.environ.get("BASE_MODEL_PATH")
+    if explicit_model_path:
+        return explicit_model_path
+    if KAGGLE_MODEL_PATH.exists():
+        return str(KAGGLE_MODEL_PATH)
+    return HF_MODEL_PATH
+
+
+MODEL_PATH = default_model_path()
 
 from nemotron_baseline.data import (
     infer_category,
@@ -97,7 +111,14 @@ def parse_args() -> argparse.Namespace:
         default=defaults.get("init_adapter_dir"),
         help="Optional LoRA adapter directory to continue training from.",
     )
-    parser.add_argument("--model-path", default=defaults.get("model_path") or MODEL_PATH)
+    parser.add_argument(
+        "--model-path",
+        default=defaults.get("model_path") or MODEL_PATH,
+        help=(
+            "Local model path or HF model id. Defaults to the Kaggle mounted model "
+            f"when present, otherwise {HF_MODEL_PATH}."
+        ),
+    )
     parser.add_argument(
         "--kaggle-model-handle",
         default=defaults.get(
