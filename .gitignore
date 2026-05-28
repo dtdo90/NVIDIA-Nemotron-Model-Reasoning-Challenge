@@ -23,6 +23,7 @@ data/training_ready_clean/trace_manifest.csv
 
 # Local scratch and old trace workspaces.
 docs/0e375364.md
+docs/eval_results.md
 docs/*audit*.csv
 docs/train_ready/
 docs/bit_manipulation_non_op3_cot_traces/

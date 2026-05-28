@@ -1,0 +1,38 @@
+{
+  "output_csv": "data/single_phase_training_clean/single_phase_sft.csv",
+  "total_rows": 9425,
+  "phase2_rows": 9184,
+  "added_phase1_symbol_direct_synthetic_rows": 241,
+  "symbol_direct_template_total": {
+    "phase2_real": 59,
+    "phase1_synthetic_added": 241,
+    "total": 300
+  },
+  "added_phase1_source_category_counts": {
+    "direct_template_contrast_0134": 16,
+    "direct_template_contrast_3401": 39,
+    "fresh_balanced_direct_template_0134": 32,
+    "fresh_balanced_direct_template_3401": 75,
+    "real_anchored_synthetic_direct_template_0134": 64,
+    "real_anchored_synthetic_direct_template_3401": 15
+  },
+  "source_mode_counts": {
+    "phase1_synthetic_direct_template": 241,
+    "real": 8434,
+    "synthetic": 750
+  },
+  "category_counts": {
+    "Bit Manipulation": 1364,
+    "Gravity": 1597,
+    "Numeral System": 1576,
+    "Numeric Equation Transformation Rules": 1355,
+    "Symbol Transform": 363,
+    "Text Cipher": 1576,
+    "Unit Conversion": 1594
+  },
+  "prompt_rewrite": {
+    "from": "In Alice's Wonderland symbol-equation transformation rules, below are a few examples:",
+    "to": "In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:"
+  },
+  "cot_opening": "We use encrypted digit search with BA_DC|rev or AB_CD|plain. We choose the arithmetic family from same-operator RHS length, keep visible survivor grids, use other examples only to complete the map, then solve the query."
+}

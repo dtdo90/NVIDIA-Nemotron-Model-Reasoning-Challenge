@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Standalone single-phase LoRA SFT trainer on Phase 2 data."""
+"""Standalone single-phase LoRA SFT trainer on the clean single-phase data mix."""
 from __future__ import annotations
 
 import argparse
@@ -18,8 +18,7 @@ SRC = ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-PHASE2_CSV = ROOT / "data/training_ready_clean/phase2_sft.csv"
-PHASE2_SPLIT_CSV = ROOT / "data/training_ready_clean/phase2_splits_80_10_10.csv"
+SINGLE_PHASE_CSV = ROOT / "data/single_phase_training_clean/single_phase_sft.csv"
 HF_MODEL_PATH = "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16"
 KAGGLE_MODEL_PATH = Path("/kaggle/input/models/metric/nemotron-3-nano-30b-a3b-bf16/transformers/default/1")
 MAX_LORA_RANK = 32
@@ -28,10 +27,7 @@ os.environ.setdefault("PYTORCH_CUDA_ALLOC_CONF", "expandable_segments:True")
 
 from nemotron_baseline.data import (
     infer_category,
-    load_split_assignments,
-    select_ids_for_splits,
     summarize_categories,
-    summarize_split_assignments,
 )
 from nemotron_baseline.prompts import (
     apply_chat_template,
@@ -53,6 +49,7 @@ class Example:
     category: str
     generated_cot: str = ""
     assistant_content: str = ""
+    source_mode: str = "unknown"
 
 
 def default_model_path() -> str:
@@ -65,7 +62,7 @@ def default_model_path() -> str:
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Train fresh LoRA weights on Phase 2 SFT data only.")
+    parser = argparse.ArgumentParser(description="Train fresh LoRA weights on clean single-phase SFT data.")
     parser.add_argument(
         "--model-path",
         default=default_model_path(),
@@ -75,6 +72,7 @@ def parse_args() -> argparse.Namespace:
         ),
     )
     parser.add_argument("--output-dir", default="outputs/sft_single_phase_h200")
+    parser.add_argument("--train-csv", default=str(SINGLE_PHASE_CSV))
     parser.add_argument("--validate-only", action="store_true")
     parser.add_argument("--per-device-train-batch-size", type=int, default=1)
     parser.add_argument("--gradient-accumulation-steps", type=int, default=8)
@@ -131,6 +129,7 @@ def load_examples(path: Path) -> list[Example]:
                     category=category,
                     generated_cot=normalize_generated_cot(row.get("generated_cot") if has_cot else None),
                     assistant_content=(row.get("assistant_content", "").strip() if has_assistant else ""),
+                    source_mode=(row.get("source_mode") or "unknown").strip() or "unknown",
                 )
             )
     if not examples:
@@ -138,15 +137,11 @@ def load_examples(path: Path) -> list[Example]:
     return examples
 
 
-def phase2_sft_train_examples() -> tuple[list[Example], list[Example], dict[str, str]]:
-    examples = load_examples(PHASE2_CSV)
-    split_assignments = load_split_assignments(str(PHASE2_SPLIT_CSV))
-    train_ids = select_ids_for_splits(split_assignments, ["sft_train"])
-    train = [example for example in examples if example.id in train_ids]
-    holdout = [example for example in examples if example.id not in train_ids]
-    if not train:
-        raise SystemExit("No Phase 2 rows matched split sft_train")
-    return train, holdout, split_assignments
+def single_phase_train_examples(train_csv: str | Path) -> list[Example]:
+    examples = load_examples(Path(train_csv))
+    if not examples:
+        raise SystemExit("No single-phase rows were loaded")
+    return examples
 
 
 def build_dataset(dataset_cls, tokenizer, examples: list[Example]):
@@ -211,7 +206,10 @@ def make_min_lr_callback(trainer_callback_cls, min_learning_rate: float):
 
 
 def source_counts(examples: list[Example]) -> dict[str, int]:
-    return {"phase2": len(examples)} if examples else {}
+    counts: dict[str, int] = {}
+    for example in examples:
+        counts[example.source_mode] = counts.get(example.source_mode, 0) + 1
+    return dict(sorted(counts.items()))
 
 
 def write_json(path: Path, payload: dict) -> None:
@@ -252,21 +250,19 @@ def print_trainable_parameters(model) -> None:
     )
 
 
-def print_summary(args: argparse.Namespace, train_examples: list[Example], holdout_examples: list[Example], split_assignments: dict[str, str]) -> None:
+def print_summary(args: argparse.Namespace, train_examples: list[Example]) -> None:
+    train_source_counts = source_counts(train_examples)
     summary = {
         "mode": "single_phase",
         "output_dir": str(Path(args.output_dir).resolve()),
-        "phase2_csv": str(PHASE2_CSV),
-        "phase2_split_csv": str(PHASE2_SPLIT_CSV),
-        "phase1_train_rows": 0,
-        "phase2_train_rows": len(train_examples),
+        "train_csv": str(Path(args.train_csv).resolve()),
         "total_train_rows": len(train_examples),
-        "holdout_rows": len(holdout_examples),
-        "train_source_counts": source_counts(train_examples),
-        "holdout_source_counts": source_counts(holdout_examples),
+        "phase1_synthetic_direct_template_rows": train_source_counts.get(
+            "phase1_synthetic_direct_template",
+            0,
+        ),
+        "train_source_counts": train_source_counts,
         "train_category_counts": summarize_categories(train_examples),
-        "holdout_category_counts": summarize_categories(holdout_examples),
-        "split_counts": summarize_split_assignments(split_assignments),
         "max_seq_len": args.max_seq_len,
         "lora_rank": MAX_LORA_RANK,
         "learning_rate": args.learning_rate,
@@ -284,9 +280,9 @@ def print_summary(args: argparse.Namespace, train_examples: list[Example], holdo
 
 def main() -> None:
     args = parse_args()
-    train_examples, holdout_examples, split_assignments = phase2_sft_train_examples()
+    train_examples = single_phase_train_examples(args.train_csv)
     if args.validate_only:
-        print_summary(args, train_examples, holdout_examples, split_assignments)
+        print_summary(args, train_examples)
         return
 
     disable_transformers_vision_imports()
@@ -392,10 +388,12 @@ def main() -> None:
             "model_path": args.model_path,
             "adapter_dir": str(adapter_dir.resolve()),
             "submission_zip": str(submission_path.resolve()),
-            "phase1_train_rows": 0,
-            "phase2_train_rows": len(train_examples),
+            "train_csv": str(Path(args.train_csv).resolve()),
             "total_train_rows": len(train_examples),
-            "holdout_rows": len(holdout_examples),
+            "phase1_synthetic_direct_template_rows": source_counts(train_examples).get(
+                "phase1_synthetic_direct_template",
+                0,
+            ),
             "max_seq_len": args.max_seq_len,
             "learning_rate": args.learning_rate,
             "lr_scheduler_type": "cosine",
@@ -414,13 +412,10 @@ def main() -> None:
         output_dir / "dataset_summary.json",
         {
             "train_source_counts": source_counts(train_examples),
-            "holdout_source_counts": source_counts(holdout_examples),
             "train_category_counts": summarize_categories(train_examples),
-            "holdout_category_counts": summarize_categories(holdout_examples),
-            "split_counts": summarize_split_assignments(split_assignments),
         },
     )
-    print(f"Phase 2 rows: {len(train_examples)}")
+    print(f"Single-phase rows: {len(train_examples)}")
     print(f"Final adapter saved to: {adapter_dir}")
     print(f"Submission zip: {submission_path}")
 

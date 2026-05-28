@@ -15,6 +15,7 @@ Core files:
 3. `data/training_ready_clean/phase1_train.csv`: compact methodology and rule curriculum
 4. `data/training_ready_clean/phase2_sft.csv`: competition-style SFT data with `generated_cot`
 5. `data/training_ready_clean/phase2_splits_80_10_10.csv`: `sft_train`, `eval_holdout`, and `grpo_holdout`
+6. `data/single_phase_training_clean/single_phase_sft.csv`: single-phase SFT mix with Phase 2 plus selected synthetic direct-template rows
 
 Default SFT uses all Phase 1 rows plus Phase 2 `sft_train`.
 
@@ -26,6 +27,7 @@ Current validated counts:
 4. Phase 2 holdout: `1836` rows
 5. GRPO train bucket: `919` rows
 6. Final local eval bucket: `917` rows
+7. Single-phase SFT: `9425` rows
 
 ## Install
 
@@ -93,7 +95,8 @@ safer micro-batch setting for Phase 1:
 python3 train_sft.py --phase1-only \
   --phase1-learning-rate 1e-4 \
   --per-device-train-batch-size 1 \
-  --gradient-accumulation-steps 8
+  --gradient-accumulation-steps 8 \
+  --gradient-checkpointing
 ```
 
 Validate data wiring without loading the model:
@@ -129,13 +132,30 @@ python3 train_grpo.py --config configs/grpo_stage2.json
 
 ## Local Evaluation
 
+The default evaluator uses the vLLM backend for faster batched generation with
+the LoRA adapter. Install vLLM in the same environment after the base training
+dependencies are installed:
+
+```bash
+pip install vllm
+```
+
+If vLLM is unavailable on the machine, pass `--backend transformers` to use the
+slower Transformers fallback.
+
 ```bash
 python3 infer_eval.py \
   --train-csv data/training_ready_clean/phase2_sft.csv \
-  --adapter-dir outputs/sft_two_stage_h100/adapter \
+  --adapter-dir outputs/sft_two_stage_h200/adapter \
   --split-csv data/training_ready_clean/phase2_splits_80_10_10.csv \
-  --eval-splits grpo_holdout
+  --eval-splits grpo_holdout \
+  --backend vllm \
+  --max-model-len 8192 \
+  --max-new-tokens 7680
 ```
+
+For a quick smoke test, add `--max-eval-samples 20`. The script writes summary
+and prediction files next to the adapter directory.
 
 The competition metric expects the final answer in `\boxed{...}`.
 
