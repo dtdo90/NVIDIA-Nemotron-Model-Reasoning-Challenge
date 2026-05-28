@@ -27,7 +27,6 @@ def disable_transformers_vision_imports() -> None:
 def check_nemotron_runtime_dependencies() -> None:
     required_modules = [
         ("einops", "einops"),
-        ("cutlass", "nvidia-cutlass-dsl"),
         ("causal_conv1d", "causal-conv1d"),
         ("mamba_ssm", "mamba-ssm"),
     ]

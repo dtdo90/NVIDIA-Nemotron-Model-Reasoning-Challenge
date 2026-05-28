@@ -1,7 +1,5 @@
 # Install after PyTorch is already installed.
 # Use: pip install --no-build-isolation --no-deps -r requirements-nemotron.txt
 einops
-nvidia-cutlass-dsl-libs-base
-nvidia-cutlass-dsl
 causal-conv1d
 mamba-ssm
