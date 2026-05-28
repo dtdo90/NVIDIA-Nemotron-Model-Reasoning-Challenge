@@ -51,9 +51,9 @@ Default two-stage SFT:
 python3 train_sft.py
 ```
 
-This first trains Phase 1 for one epoch at learning rate `5e-5`, saves
+This first trains Phase 1 for one epoch at learning rate `1e-4`, saves
 `outputs/sft_two_stage_h200/phase1/adapter`, then continues on Phase 2
-`sft_train` for one epoch at learning rate `2e-5` and saves the final adapter to
+`sft_train` for one epoch at learning rate `5e-5` and saves the final adapter to
 `outputs/sft_two_stage_h200/adapter`.
 
 Recommended explicit two-step SFT:
@@ -74,6 +74,17 @@ python3 train_sft.py --phase2 \
   --per-device-train-batch-size 1 \
   --gradient-accumulation-steps 8
 ```
+
+Single-phase Phase 2 training from fresh LoRA weights at learning rate `2e-4`:
+
+```bash
+python3 train_sft_single_phase.py \
+  --per-device-train-batch-size 1 \
+  --gradient-accumulation-steps 8
+```
+
+This skips Phase 1 entirely and writes the final adapter to
+`outputs/sft_single_phase_h200/adapter`.
 
 The first command assumes an H200-class GPU. On a 96GB RTX6000, use the same
 safer micro-batch setting for Phase 1:
