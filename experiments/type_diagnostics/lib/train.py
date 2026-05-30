@@ -57,13 +57,6 @@ def parse_args(default_question_type: str | None = None) -> argparse.Namespace:
     parser.add_argument("--validate-only", action="store_true")
     parser.add_argument("--per-device-train-batch-size", type=int, default=1)
     parser.add_argument("--gradient-accumulation-steps", type=int, default=8)
-    parser.add_argument("--num-train-epochs", type=float, default=1.0)
-    parser.add_argument(
-        "--max-steps",
-        type=int,
-        default=-1,
-        help="Override epoch-based training with an exact optimizer-step count.",
-    )
     parser.add_argument("--learning-rate", type=float, default=2e-4)
     parser.add_argument("--min-learning-rate", type=float, default=2e-6)
     parser.add_argument("--max-seq-len", type=int, default=DEFAULT_MAX_SEQ_LEN)
@@ -115,8 +108,7 @@ def print_summary(args: argparse.Namespace, paths, train_examples, rows, assignm
         "lora_rank": MAX_LORA_RANK,
         "lora_target_modules": LORA_TARGET_MODULES,
         "learning_rate": args.learning_rate,
-        "num_train_epochs": args.num_train_epochs,
-        "max_steps": args.max_steps,
+        "num_train_epochs": 1.0,
         "lr_scheduler_type": "cosine",
         "warmup_ratio": 0.05,
         "min_learning_rate": args.min_learning_rate,
@@ -195,8 +187,7 @@ def main(default_question_type: str | None = None) -> None:
         output_dir=str(output_dir / "trainer_state"),
         per_device_train_batch_size=args.per_device_train_batch_size,
         gradient_accumulation_steps=args.gradient_accumulation_steps,
-        num_train_epochs=args.num_train_epochs,
-        max_steps=args.max_steps,
+        num_train_epochs=1.0,
         learning_rate=args.learning_rate,
         logging_steps=10,
         bf16=True,
@@ -224,8 +215,7 @@ def main(default_question_type: str | None = None) -> None:
     )
     print(
         f"Starting {args.question_type}: rows={len(train_examples)}, "
-        f"learning_rate={args.learning_rate}, "
-        f"num_train_epochs={args.num_train_epochs}, max_steps={args.max_steps}"
+        f"learning_rate={args.learning_rate}, num_train_epochs=1.0"
     )
     trainer.train()
 
@@ -250,8 +240,7 @@ def main(default_question_type: str | None = None) -> None:
             "all_rows": len(rows),
             "max_seq_len": args.max_seq_len,
             "learning_rate": args.learning_rate,
-            "num_train_epochs": args.num_train_epochs,
-            "max_steps": args.max_steps,
+            "num_train_epochs": 1.0,
             "lr_scheduler_type": "cosine",
             "warmup_ratio": 0.05,
             "min_learning_rate": args.min_learning_rate,
