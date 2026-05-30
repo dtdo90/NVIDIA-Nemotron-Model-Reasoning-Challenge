@@ -45,6 +45,8 @@ docs/symbol_transform_phase1_direct_template_traces/
 # Experimental generation and analysis scripts are intentionally not tracked.
 scripts/
 !scripts/.gitkeep
+!experiments/type_diagnostics/scripts/
+!experiments/type_diagnostics/scripts/*.py
 
 # Local notebook runner; keep the script as source of truth.
 train_sft_kaggle.ipynb
