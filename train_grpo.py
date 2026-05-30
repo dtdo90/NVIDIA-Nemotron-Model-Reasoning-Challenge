@@ -17,6 +17,9 @@ SRC = ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
+DEFAULT_TRAIN_CSV = ROOT / "data/single_phase_training_clean/single_phase_sft.csv"
+DEFAULT_SPLIT_CSV = ROOT / "data/single_phase_training_clean/single_phase_splits_80_10_10.csv"
+DEFAULT_SFT_ADAPTER_DIR = ROOT / "outputs/sft_single_phase_h200/adapter"
 COMPETITION_MAX_TOKENS = 7680
 DEFAULT_MODEL_PATH = "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16"
 MODEL_PATH = os.environ.get("MODEL_PATH") or os.environ.get("BASE_MODEL_PATH") or DEFAULT_MODEL_PATH
@@ -72,11 +75,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--config", default=bootstrap_args.config)
     parser.add_argument(
         "--train-csv",
-        default=defaults.get("train_csv", "data/training_ready_clean/phase2_sft.csv"),
+        default=defaults.get("train_csv", str(DEFAULT_TRAIN_CSV)),
     )
     parser.add_argument(
         "--split-csv",
-        default=defaults.get("split_csv", "data/training_ready_clean/phase2_splits_80_10_10.csv"),
+        default=defaults.get("split_csv", str(DEFAULT_SPLIT_CSV)),
     )
     parser.add_argument(
         "--train-splits",
@@ -86,9 +89,12 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--output-dir",
-        default=defaults.get("output_dir", "outputs/grpo_stage2"),
+        default=defaults.get("output_dir", "outputs/grpo_single_phase"),
     )
-    parser.add_argument("--sft-adapter-dir", default=defaults.get("sft_adapter_dir"))
+    parser.add_argument(
+        "--sft-adapter-dir",
+        default=defaults.get("sft_adapter_dir", str(DEFAULT_SFT_ADAPTER_DIR)),
+    )
     parser.add_argument(
         "--model-path",
         default=defaults.get("model_path") or MODEL_PATH,

@@ -1,38 +1,71 @@
 {
   "output_csv": "data/single_phase_training_clean/single_phase_sft.csv",
-  "total_rows": 9425,
-  "phase2_rows": 9184,
-  "added_phase1_symbol_direct_synthetic_rows": 241,
+  "total_rows": 12491,
+  "phase2_rows": 11356,
+  "phase2_rows_after_replacing_bit": 9992,
+  "removed_phase2_bit_rows": 1364,
+  "added_huikang_bit_rows": 1758,
+  "added_huikang_bit_source_mode_counts": {
+    "huikang_real_bit": 1364,
+    "synthetic": 394
+  },
+  "excluded_huikang_synthetic_bit_ids": [
+    "186ade13-p0",
+    "30ba0cf4-p0",
+    "6a333ed6-p0",
+    "6c41f684-p0",
+    "eb359ea5-p0",
+    "ef2fe526-p0"
+  ],
+  "added_phase1_symbol_direct_synthetic_rows": 216,
+  "added_generated_symbol_direct_synthetic_rows": 325,
+  "added_text_cipher_confusion_synthetic_rows": 200,
   "symbol_direct_template_total": {
     "phase2_real": 59,
-    "phase1_synthetic_added": 241,
-    "total": 300
+    "phase1_synthetic_added": 216,
+    "generated_synthetic_added": 325,
+    "total": 600
   },
   "added_phase1_source_category_counts": {
-    "direct_template_contrast_0134": 16,
-    "direct_template_contrast_3401": 39,
-    "fresh_balanced_direct_template_0134": 32,
-    "fresh_balanced_direct_template_3401": 75,
-    "real_anchored_synthetic_direct_template_0134": 64,
-    "real_anchored_synthetic_direct_template_3401": 15
+    "direct_template_contrast_0134": 23,
+    "direct_template_contrast_3401": 44,
+    "fresh_balanced_direct_template_0134": 8,
+    "fresh_balanced_direct_template_3401": 25,
+    "real_anchored_synthetic_direct_template_0134": 97,
+    "real_anchored_synthetic_direct_template_3401": 19
   },
+  "generated_direct_template_counts": {
+    "0134": 224,
+    "3401": 101
+  },
+  "text_cipher_confusion_synthetic_csv": "data/single_phase_training_clean/text_cipher_confusion_synthetic.csv",
   "source_mode_counts": {
-    "phase1_synthetic_direct_template": 241,
-    "real": 8434,
-    "synthetic": 750
+    "huikang_real_bit": 1364,
+    "phase1_synthetic_direct_template": 216,
+    "real": 7074,
+    "single_phase_synthetic_direct_template": 325,
+    "single_phase_synthetic_text_cipher_confusion": 200,
+    "synthetic": 3312
   },
   "category_counts": {
-    "Bit Manipulation": 1364,
+    "Bit Manipulation": 1758,
     "Gravity": 1597,
     "Numeral System": 1576,
-    "Numeric Equation Transformation Rules": 1355,
-    "Symbol Transform": 363,
-    "Text Cipher": 1576,
+    "Numeric Equation Transformation Rules": 3527,
+    "Symbol Transform": 663,
+    "Text Cipher": 1776,
     "Unit Conversion": 1594
   },
   "prompt_rewrite": {
     "from": "In Alice's Wonderland symbol-equation transformation rules, below are a few examples:",
     "to": "In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:"
   },
-  "cot_opening": "We use encrypted digit search with BA_DC|rev or AB_CD|plain. We choose the arithmetic family from same-operator RHS length, keep visible survivor grids, use other examples only to complete the map, then solve the query."
+  "cot_opening": "We use encrypted digit search with formats BA_DC|rev or AB_CD|plain. For each format, we choose the arithmetic family from same-operator RHS length and use other examples only to complete the map.",
+  "single_phase_split_csv": "data/single_phase_training_clean/single_phase_splits_80_10_10.csv",
+  "single_phase_split_counts": {
+    "eval_holdout": 1261,
+    "grpo_holdout": 1237,
+    "sft_train": 9993
+  },
+  "single_phase_split_strategy": "80/10/10 stratified by category, source_mode, and stable source subtype; eval_holdout is the optional GRPO training bucket and grpo_holdout is final local eval"
 }

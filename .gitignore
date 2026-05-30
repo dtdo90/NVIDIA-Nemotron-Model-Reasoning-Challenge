@@ -20,6 +20,10 @@ data/training_ready_clean/phase2_traces/
 data/training_ready_clean/phase1_components/
 data/training_ready_clean/phase3_grpo_real_splits_80_10_10.csv
 data/training_ready_clean/trace_manifest.csv
+legacy/two_phase/data/training_ready_clean/phase2_traces/
+legacy/two_phase/data/training_ready_clean/phase1_components/
+legacy/two_phase/data/training_ready_clean/phase3_grpo_real_splits_80_10_10.csv
+legacy/two_phase/data/training_ready_clean/trace_manifest.csv
 
 # Local scratch and old trace workspaces.
 docs/0e375364.md

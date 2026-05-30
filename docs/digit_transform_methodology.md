@@ -397,7 +397,7 @@ If we later convert this into knowledge-injection data, I would split it into:
 
 3. hard-negative exemplars
    - wrong combo fits `EX1` but fails `EX2`
-   - signed subtraction vs `|x-y|`
+   - signed subtraction vs `abs(x-y)`
    - integer reverse vs text reverse
 
 This is the part we want the model to internalize:

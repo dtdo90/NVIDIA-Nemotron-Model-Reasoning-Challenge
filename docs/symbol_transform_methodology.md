@@ -389,7 +389,7 @@ x+y+1
 x+y-1
 x-y
 y-x
-|x-y|
+abs(x-y)
 ```
 
 For the `BA_DC|rev` route, use the accepted numeric-equation statistics for
@@ -398,7 +398,7 @@ length-2 addition/subtraction rows. The current priority is:
 ```text
 x+y
 x-y
-|x-y|
+abs(x-y)
 x+y+1
 y-x
 x+y-1
@@ -419,7 +419,7 @@ One output character usually suggests subtraction family:
 ```text
 x-y
 y-x
-|x-y|
+abs(x-y)
 ```
 
 This happens when the difference is a one-digit number.
@@ -466,7 +466,7 @@ candidate in the family priority order.
 For example, if `%']/% = ?)` has already established that operator `]` uses
 `x-y`, then in `@"!") = ?`, operator `!` should not try `x-y` first. It should
 start from the next subtraction-family candidate according to the learned
-priority, such as `y-x` or `|x-y|`.
+priority, such as `y-x` or `abs(x-y)`.
 
 ## 6. Fallback Operation Priority
 
@@ -487,7 +487,7 @@ x*y-1
 x+y-1
 x+y+1
 x*y+1
-|x-y|
+abs(x-y)
 y-x
 ```
 
@@ -499,7 +499,7 @@ For length-2 helper rows, use:
 ```text
 x+y
 x-y
-|x-y|
+abs(x-y)
 x+y+1
 y-x
 x+y-1
@@ -510,7 +510,7 @@ first. If it fails, continue sequentially through the remaining length-2 rules.
 If multiple symbol-digit maps survive, keep the row only when they agree on the
 exact final query output needed for the boxed answer.
 
-Keep `|x-y|` as a real subtraction-family rule. It is not always replaceable by
+Keep `abs(x-y)` as a real subtraction-family rule. It is not always replaceable by
 one fixed direction: some rows require the direction to flip across examples,
 while the visible operator still behaves like absolute difference. Treat this
 as a genuine rule, but keep it behind the directed subtraction rules so we only
@@ -520,8 +520,8 @@ There is one narrow tie-break for query rendering. If `x-y` fits the same
 operator evidence and determines a valid map, but the query value under `x-y`
 would be negative, do not invent a sign-dropping render. Under `raw` or `rev`,
 negative query values are unsupported unless the examples explicitly show a
-signed format. If `|x-y|` fits the same evidence with the same valid map, move
-to `|x-y|` for the query and render the nonnegative value.
+signed format. If `abs(x-y)` fits the same evidence with the same valid map, move
+to `abs(x-y)` for the query and render the nonnegative value.
 
 When the visible operator suggests a family, use the family-aware priority
 inside the motif:
@@ -529,7 +529,7 @@ inside the motif:
 ```text
 visible *: x*y, x*y+1, x*y-1
 visible +: x+y, x+y+1, x+y-1
-visible -: x-y, y-x, |x-y|
+visible -: x-y, y-x, abs(x-y)
 ```
 
 ### 6.2 Under AB_CD | ... | raw
@@ -538,7 +538,7 @@ Use this priority after excluding concat:
 
 ```text
 x-y
-|x-y|
+abs(x-y)
 x*y
 x+y
 x*y+1
@@ -553,7 +553,7 @@ Again, the visible operator can reorder the local family:
 ```text
 visible *: x*y, x*y+1, x*y-1
 visible +: x+y, x+y+1, x+y-1
-visible -: x-y, y-x, |x-y|
+visible -: x-y, y-x, abs(x-y)
 ```
 
 ## 7. Fit Same-Operator Examples

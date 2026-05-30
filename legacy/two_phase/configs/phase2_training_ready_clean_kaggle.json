@@ -1,0 +1,26 @@
+{
+  "train_csv": "legacy/two_phase/data/training_ready_clean/phase2_sft.csv",
+  "split_csv": "legacy/two_phase/data/training_ready_clean/phase2_splits_80_10_10.csv",
+  "train_splits": [
+    "sft_train"
+  ],
+  "output_dir": "outputs/phase2_training_ready_clean_kaggle",
+  "init_adapter_dir": "outputs/phase1_training_ready_clean_kaggle/adapter",
+  "kaggle_model_handle": "metric/nemotron-3-nano-30b-a3b-bf16/transformers/default",
+  "seed": 42,
+  "val_fraction": 0.0,
+  "supervision_format": "cot",
+  "cot_column": "generated_cot",
+  "append_answer_instruction": true,
+  "answer_style": "boxed",
+  "max_seq_len": 8192,
+  "num_epochs": 1.0,
+  "per_device_train_batch_size": 1,
+  "gradient_accumulation_steps": 8,
+  "learning_rate": 2e-05,
+  "lora_rank": 32,
+  "lora_alpha": 32,
+  "lora_dropout": 0.05,
+  "logging_steps": 10,
+  "save_tokenizer": false
+}

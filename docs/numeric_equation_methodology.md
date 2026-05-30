@@ -83,8 +83,8 @@ symbol-transform traces. In the fixed shape `ABOCD`, where `O` is the visible
 operator:
 
 ```text
-Template 0134 -> ABCD
-Template 3401 -> CDAB
+template0134 -> ABCD
+template3401 -> CDAB
 ```
 
 This is analogous to direct template matching in symbol-transform rows. If a
@@ -153,7 +153,7 @@ Family candidates:
 ```text
 multiplication family: x*y, x*y+1, x*y-1
 addition family:       x+y, x+y+1, x+y-1
-subtraction family:    x-y, y-x, |x-y|, max(x,y)%min(x,y), x%y, y%x
+subtraction family:    x-y, y-x, abs(x-y), max(x,y)%min(x,y), x%y, y%x
 ```
 
 For length 3, use the capped learned order:
@@ -346,8 +346,8 @@ Apply numeric-equation transformation search.
 - Same-operator examples: 82/15=8241.
 
 Test direct templates first.
-- Template 0134: 82/15 -> 8215 vs 8241. FAIL.
-- Template 3401: 82/15 -> 1582 vs 8241. FAIL.
+- template0134: 82/15 -> 8215 vs 8241. FAIL.
+- template3401: 82/15 -> 1582 vs 8241. FAIL.
 
 Try BA_DC first.
 - Same-operator RHS is 8241, length 4, so use multiplication family.

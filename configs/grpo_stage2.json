@@ -1,11 +1,11 @@
 {
-  "train_csv": "data/training_ready_clean/phase2_sft.csv",
-  "split_csv": "data/training_ready_clean/phase2_splits_80_10_10.csv",
+  "train_csv": "data/single_phase_training_clean/single_phase_sft.csv",
+  "split_csv": "data/single_phase_training_clean/single_phase_splits_80_10_10.csv",
   "train_splits": [
     "eval_holdout"
   ],
-  "output_dir": "outputs/grpo_stage2",
-  "sft_adapter_dir": "outputs/sft_two_stage_h100/adapter",
+  "output_dir": "outputs/grpo_single_phase",
+  "sft_adapter_dir": "outputs/sft_single_phase_h200/adapter",
   "kaggle_model_handle": "metric/nemotron-3-nano-30b-a3b-bf16/transformers/default",
   "seed": 42,
   "num_epochs": 1.0,

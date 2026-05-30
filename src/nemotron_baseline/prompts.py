@@ -100,13 +100,16 @@ def apply_chat_template(
     messages: list[dict[str, str]],
     *,
     add_generation_prompt: bool,
+    enable_thinking: bool | None = None,
 ) -> str:
     try:
-        return tokenizer.apply_chat_template(
-            messages,
-            tokenize=False,
-            add_generation_prompt=add_generation_prompt,
-        )
+        kwargs = {
+            "tokenize": False,
+            "add_generation_prompt": add_generation_prompt,
+        }
+        if enable_thinking is not None:
+            kwargs["enable_thinking"] = enable_thinking
+        return tokenizer.apply_chat_template(messages, **kwargs)
     except Exception:
         rendered: list[str] = []
         for message in messages:
@@ -171,4 +174,62 @@ def build_generation_prompt(tokenizer, prompt: str) -> str:
         tokenizer,
         build_messages(prompt, None),
         add_generation_prompt=True,
+        enable_thinking=True,
+    )
+
+
+def build_assistant_trace_content(
+    answer: str,
+    *,
+    generated_cot: str | None = None,
+    assistant_content: str | None = None,
+) -> str:
+    """Build the assistant completion scored by SFT.
+
+    The completion follows the competition-style thinking format:
+    <think> ... Answer: \boxed{...} </think> \boxed{...}
+    """
+    if assistant_content and assistant_content.strip():
+        return assistant_content.strip()
+
+    cot = normalize_generated_cot(generated_cot)
+    if cot.lstrip().startswith("<think>") and "</think>" in cot:
+        think_match = THINK_BLOCK_RE.search(cot)
+        inner = think_match.group(1).strip() if think_match else cot.strip()
+    else:
+        inner = cot.strip()
+
+    if inner:
+        lines = inner.splitlines()
+        while lines and not lines[-1].strip():
+            lines.pop()
+        if not lines or not re.search(r"(?i)^\s*Answer\s*:", lines[-1]) or "\\boxed{" not in lines[-1]:
+            lines.extend(["", f"Answer: \\boxed{{{answer}}}"])
+        inner = "\n".join(lines).strip()
+    else:
+        inner = f"Answer: \\boxed{{{answer}}}"
+
+    return f"<think>\n{inner}\n</think>\n\\boxed{{{answer}}}"
+
+
+def build_competition_prompt(
+    tokenizer,
+    prompt: str,
+    *,
+    append_answer_instruction: bool = True,
+) -> str:
+    """Render the exact user-side prompt style used by the competition metric."""
+    return apply_chat_template(
+        tokenizer,
+        [
+            {
+                "role": "user",
+                "content": build_user_message(
+                    prompt,
+                    append_answer_instruction=append_answer_instruction,
+                ),
+            }
+        ],
+        add_generation_prompt=True,
+        enable_thinking=True,
     )

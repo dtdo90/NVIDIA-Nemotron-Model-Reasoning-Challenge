@@ -30,9 +30,8 @@ from nemotron_baseline.data import (
     summarize_categories,
 )
 from nemotron_baseline.prompts import (
-    apply_chat_template,
-    build_training_text,
-    build_user_message,
+    build_assistant_trace_content,
+    build_competition_prompt,
     normalize_generated_cot,
 )
 from nemotron_baseline.runtime import (
@@ -144,29 +143,85 @@ def single_phase_train_examples(train_csv: str | Path) -> list[Example]:
     return examples
 
 
-def build_dataset(dataset_cls, tokenizer, examples: list[Example]):
+def assistant_end_token(tokenizer) -> str:
+    return tokenizer.eos_token or "<|im_end|>"
+
+
+def tokenize_masked_example(
+    tokenizer,
+    example: Example,
+    *,
+    max_seq_len: int,
+) -> dict:
+    prompt_text = build_competition_prompt(
+        tokenizer,
+        example.prompt,
+        append_answer_instruction=True,
+    )
+    assistant_content = build_assistant_trace_content(
+        example.answer,
+        generated_cot=example.generated_cot,
+        assistant_content=example.assistant_content,
+    )
+    end_token = assistant_end_token(tokenizer)
+    completion_text = assistant_content
+    if end_token and not completion_text.endswith(end_token):
+        completion_text += end_token
+
+    full_text = prompt_text + completion_text
+    prompt_ids = tokenizer(prompt_text, add_special_tokens=False)["input_ids"]
+    tokenized = tokenizer(full_text, add_special_tokens=False)
+    input_ids = tokenized["input_ids"]
+    attention_mask = tokenized["attention_mask"]
+    if len(input_ids) > max_seq_len:
+        raise SystemExit(
+            f"id={example.id} has {len(input_ids)} tokens, exceeding max_seq_len={max_seq_len}"
+        )
+    if len(prompt_ids) >= len(input_ids):
+        raise SystemExit(f"id={example.id} has no assistant tokens to score")
+    labels = [-100] * len(prompt_ids) + input_ids[len(prompt_ids) :]
+    return {
+        "id": example.id,
+        "input_ids": input_ids,
+        "attention_mask": attention_mask,
+        "labels": labels,
+        "prompt_tokens": len(prompt_ids),
+        "completion_tokens": len(input_ids) - len(prompt_ids),
+        "total_tokens": len(input_ids),
+    }
+
+
+def build_dataset(dataset_cls, tokenizer, examples: list[Example], *, max_seq_len: int):
     rows = []
     for example in examples:
-        if example.assistant_content:
-            text = apply_chat_template(
-                tokenizer,
-                [
-                    {"role": "user", "content": build_user_message(example.prompt, append_answer_instruction=True)},
-                    {"role": "assistant", "content": example.assistant_content},
-                ],
-                add_generation_prompt=False,
-            )
-        else:
-            text = build_training_text(
-                tokenizer,
-                example.prompt,
-                example.answer,
-                generated_cot=example.generated_cot,
-                append_answer_instruction=True,
-                answer_style="boxed",
-            )
-        rows.append({"id": example.id, "text": text})
+        rows.append(tokenize_masked_example(tokenizer, example, max_seq_len=max_seq_len))
     return dataset_cls.from_list(rows)
+
+
+class MaskedCausalLMDataCollator:
+    def __init__(self, tokenizer) -> None:
+        self.tokenizer = tokenizer
+
+    def __call__(self, features: list[dict]):
+        import torch  # type: ignore
+
+        pad_token_id = self.tokenizer.pad_token_id
+        if pad_token_id is None:
+            pad_token_id = self.tokenizer.eos_token_id
+        max_length = max(len(feature["input_ids"]) for feature in features)
+        input_ids = []
+        attention_mask = []
+        labels = []
+        for feature in features:
+            pad_length = max_length - len(feature["input_ids"])
+            input_ids.append(feature["input_ids"] + [pad_token_id] * pad_length)
+            attention_mask.append(feature["attention_mask"] + [0] * pad_length)
+            labels.append(feature["labels"] + [-100] * pad_length)
+        return {
+            "input_ids": torch.tensor(input_ids, dtype=torch.long),
+            "attention_mask": torch.tensor(attention_mask, dtype=torch.long),
+            "labels": torch.tensor(labels, dtype=torch.long),
+        }
 
 
 def make_sft_config(sft_config_cls, **kwargs):
@@ -274,6 +329,8 @@ def print_summary(args: argparse.Namespace, train_examples: list[Example]) -> No
         "gradient_accumulation_steps": args.gradient_accumulation_steps,
         "effective_batch_size": args.per_device_train_batch_size * args.gradient_accumulation_steps,
         "optim": args.optim,
+        "loss_masking": "assistant_only",
+        "prompt_format": "competition_chat_template",
     }
     print(json.dumps(summary, indent=2, ensure_ascii=False))
 
@@ -290,8 +347,7 @@ def main() -> None:
 
     from datasets import Dataset  # type: ignore
     from peft import LoraConfig, TaskType, get_peft_model  # type: ignore
-    from transformers import AutoModelForCausalLM, AutoTokenizer, TrainerCallback  # type: ignore
-    from trl import SFTConfig, SFTTrainer  # type: ignore
+    from transformers import AutoModelForCausalLM, AutoTokenizer, Trainer, TrainerCallback, TrainingArguments  # type: ignore
     import torch  # type: ignore
 
     torch.backends.cuda.matmul.allow_tf32 = True
@@ -305,7 +361,7 @@ def main() -> None:
         tokenizer.pad_token = tokenizer.eos_token
     tokenizer.padding_side = "right"
 
-    dataset = build_dataset(Dataset, tokenizer, train_examples)
+    dataset = build_dataset(Dataset, tokenizer, train_examples, max_seq_len=args.max_seq_len)
     model = AutoModelForCausalLM.from_pretrained(
         args.model_path,
         device_map="auto",
@@ -336,7 +392,7 @@ def main() -> None:
     model.train()
 
     trainer_args = make_sft_config(
-        SFTConfig,
+        TrainingArguments,
         output_dir=str(output_dir / "trainer_state"),
         per_device_train_batch_size=args.per_device_train_batch_size,
         gradient_accumulation_steps=args.gradient_accumulation_steps,
@@ -351,20 +407,18 @@ def main() -> None:
         warmup_ratio=0.05,
         save_strategy="no",
         report_to="none",
-        dataset_text_field="text",
-        max_length=args.max_seq_len,
-        packing=False,
         group_by_length=True,
         dataloader_num_workers=4,
         dataloader_pin_memory=True,
+        remove_unused_columns=False,
         gradient_checkpointing=args.gradient_checkpointing,
         gradient_checkpointing_kwargs={"use_reentrant": False},
         seed=42,
     )
-    trainer = SFTTrainer(
+    trainer = Trainer(
         model=model,
         train_dataset=dataset,
-        processing_class=tokenizer,
+        data_collator=MaskedCausalLMDataCollator(tokenizer),
         args=trainer_args,
         callbacks=[make_min_lr_callback(TrainerCallback, args.min_learning_rate)],
     )
@@ -406,6 +460,8 @@ def main() -> None:
             "per_device_train_batch_size": args.per_device_train_batch_size,
             "gradient_accumulation_steps": args.gradient_accumulation_steps,
             "effective_batch_size": args.per_device_train_batch_size * args.gradient_accumulation_steps,
+            "loss_masking": "assistant_only",
+            "prompt_format": "competition_chat_template",
         },
     )
     write_json(

@@ -167,6 +167,8 @@ def load_split_assignments(csv_path: str | Path) -> dict[str, str]:
                     raise ValueError(
                         f"Split JSON has an invalid row id {row_id!r} in split {split_name!r}"
                     )
+                if row_id in assignments:
+                    raise ValueError(f"Split JSON has duplicate row id: {row_id!r}")
                 assignments[row_id] = split_name.strip()
         return assignments
 
@@ -181,6 +183,8 @@ def load_split_assignments(csv_path: str | Path) -> dict[str, str]:
             split_name = row["split"].strip()
             if not split_name:
                 raise ValueError(f"Split CSV has an empty split name for id={row_id!r}")
+            if row_id in assignments:
+                raise ValueError(f"Split CSV has duplicate row id: {row_id!r}")
             assignments[row_id] = split_name
     return assignments
 

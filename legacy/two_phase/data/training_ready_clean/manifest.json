@@ -1,0 +1,120 @@
+{
+  "bundle": "data/training_ready_clean",
+  "csv_components": {
+    "text_knowledge_phase1.csv": 1553,
+    "phase1_numeric_equation_curriculum.csv": 1534,
+    "phase1_symbol_transform_direct_curriculum.csv": 1990
+  },
+  "trace_counts": {
+    "bit_manipulation": 1364,
+    "gravity": 1597,
+    "numeral_system": 1576,
+    "numeric_equation_transformation_rules": 3527,
+    "symbol_transform": 122,
+    "text_cipher": 1576,
+    "unit_conversion": 1594
+  },
+  "total_traces": 11356,
+  "excluded": [
+    "data/artifacts/phase1/phase1_components_clean_v2/phase1a_bit_manipulation_knowledge.csv",
+    "data/artifacts/phase1/phase1_components_clean_v2/phase1b_bit_manipulation_methodology.csv",
+    "docs/train_ready/numeric_equation_transformation_rules/work_on/STUDY_FURTHER.txt",
+    "bit manipulation tier2/depth-4/op3 trace folders",
+    "old exploratory symbol/numeric trace folders outside docs/train_ready and docs/symbol_transform"
+  ],
+  "text_trace_format": "solution-only; phase2 traces are stored under data/training_ready_clean/phase2_traces",
+  "phase1_train_csv": {
+    "path": "data/training_ready_clean/phase1_train.csv",
+    "rows": 5077
+  },
+  "source_mode_counts": {
+    "real": 8438,
+    "synthetic": 2918
+  },
+  "category_counts": {
+    "Bit Manipulation": 1364,
+    "Gravity": 1597,
+    "Numeral System": 1576,
+    "Numeric Equation Transformation Rules": 3527,
+    "Symbol Transform": 122,
+    "Text Cipher": 1576,
+    "Unit Conversion": 1594
+  },
+  "synthetic_low_confidence_counts": {
+    "ab_cd_low_confidence/subtraction": 20,
+    "ba_dc_low_confidence/addition": 40,
+    "ba_dc_low_confidence/modular": 24,
+    "ba_dc_low_confidence/subtraction": 100
+  },
+  "total_rows": 11356,
+  "row_count": 11356,
+  "num_rows": 11356,
+  "by_category": {
+    "Bit Manipulation": 1364,
+    "Gravity": 1597,
+    "Numeral System": 1576,
+    "Numeric Equation Transformation Rules": 3527,
+    "Symbol Transform": 122,
+    "Text Cipher": 1576,
+    "Unit Conversion": 1594
+  },
+  "by_source_mode": {
+    "real": 8438,
+    "synthetic": 2918
+  },
+  "synthetic_prefix_postfix_counts": {
+    "prefix_ab_cd_xminusy": 25,
+    "prefix_ba_dc_xminusy": 25,
+    "postfix_ab_cd_yminusx": 25,
+    "postfix_ba_dc_yminusx": 25
+  },
+  "synthetic_prefix_postfix_total": 100,
+  "numeric_ba_dc_addition_synthetic_total": 487,
+  "numeric_ba_dc_addition_total_after_synthetic": 600,
+  "numeric_ba_dc_addition_target_by_subtype": {
+    "ba_dc_len2": 138,
+    "ba_dc_len3": 308,
+    "ba_dc_mix": 154
+  },
+  "numeric_ba_dc_addition_synthetic_by_subtype": {
+    "ba_dc_len2": 112,
+    "ba_dc_len3": 250,
+    "ba_dc_mix": 125
+  },
+  "numeric_ba_dc_addition_synthetic_example_count_by_subtype": {
+    "ba_dc_len2": {
+      "1": 74,
+      "2": 34,
+      "3": 4
+    },
+    "ba_dc_len3": {
+      "1": 147,
+      "2": 94,
+      "3": 9
+    },
+    "ba_dc_mix": {
+      "2": 56,
+      "3": 56,
+      "4": 13
+    }
+  },
+  "numeric_ba_dc_addition_synthetic_query_len3_by_subtype": {
+    "ba_dc_len2": 22,
+    "ba_dc_len3": 50,
+    "ba_dc_mix": 25
+  },
+  "numeric_ba_dc_subtraction_target_total": 400,
+  "numeric_ba_dc_subtraction_target_by_operator": {
+    "x-y": 250,
+    "abs(x-y)": 80,
+    "y-x": 60,
+    "min(x,y)-max(x,y)": 10
+  },
+  "numeric_ba_dc_subtraction_synthetic_added": 319,
+  "numeric_ba_dc_multiplication_synthetic_added": 460,
+  "numeric_ba_dc_multiplication_synthetic_by_subtype": {
+    "ba_dc_mul": 264,
+    "ba_dc_mul_add_1": 88,
+    "ba_dc_mul_minus_1": 108
+  }
+}
