@@ -126,7 +126,7 @@ python3 infer_eval.py \
   --train-csv data/single_phase_training_clean/single_phase_sft.csv \
   --adapter-dir outputs/sft_single_phase_h200/adapter \
   --split-csv data/single_phase_training_clean/single_phase_splits_80_10_10.csv \
-  --eval-splits grpo_holdout \
+  --eval-splits eval_holdout grpo_holdout \
   --backend vllm \
   --max-model-len 8192 \
   --max-new-tokens 7680
@@ -139,7 +139,7 @@ python3 infer_eval.py \
   --train-csv data/single_phase_training_clean/single_phase_sft.csv \
   --adapter-dir outputs/sft_single_phase_h200/adapter \
   --split-csv data/single_phase_training_clean/single_phase_splits_80_10_10.csv \
-  --eval-splits eval_holdout \
+  --eval-splits eval_holdout grpo_holdout \
   --backend vllm \
   --max-model-len 8192 \
   --max-new-tokens 7680
