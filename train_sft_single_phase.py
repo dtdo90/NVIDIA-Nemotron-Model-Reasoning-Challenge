@@ -23,6 +23,17 @@ SINGLE_PHASE_SPLIT_CSV = ROOT / "data/single_phase_training_clean/single_phase_s
 HF_MODEL_PATH = "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16"
 KAGGLE_MODEL_PATH = Path("/kaggle/input/models/metric/nemotron-3-nano-30b-a3b-bf16/transformers/default/1")
 MAX_LORA_RANK = 32
+LORA_TARGET_MODULES = [
+    "q_proj",
+    "k_proj",
+    "v_proj",
+    "o_proj",
+    "in_proj",
+    "out_proj",
+    "up_proj",
+    "down_proj",
+    "lm_head",
+]
 DEFAULT_MAX_SEQ_LEN = 8192
 os.environ.setdefault("PYTORCH_CUDA_ALLOC_CONF", "expandable_segments:True")
 
@@ -417,6 +428,7 @@ def print_summary(
         "all_category_counts": summarize_categories(all_examples),
         "max_seq_len": args.max_seq_len,
         "lora_rank": MAX_LORA_RANK,
+        "lora_target_modules": LORA_TARGET_MODULES,
         "learning_rate": args.learning_rate,
         "lr_scheduler_type": "cosine",
         "warmup_ratio": 0.05,
@@ -477,7 +489,7 @@ def main() -> None:
     lora_config = LoraConfig(
         r=MAX_LORA_RANK,
         lora_alpha=32,
-        target_modules="all-linear",
+        target_modules=LORA_TARGET_MODULES,
         lora_dropout=args.lora_dropout,
         bias="none",
         task_type=TaskType.CAUSAL_LM,
@@ -564,6 +576,7 @@ def main() -> None:
             "warmup_ratio": 0.05,
             "min_learning_rate": args.min_learning_rate,
             "lora_rank": MAX_LORA_RANK,
+            "lora_target_modules": LORA_TARGET_MODULES,
             "gradient_checkpointing": args.gradient_checkpointing,
             "lora_dropout": args.lora_dropout,
             "optim": args.optim,

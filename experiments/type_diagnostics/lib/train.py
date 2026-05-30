@@ -24,6 +24,7 @@ from .common import (
 
 from train_sft_single_phase import (  # type: ignore
     DEFAULT_MAX_SEQ_LEN,
+    LORA_TARGET_MODULES,
     MAX_LORA_RANK,
     MaskedCausalLMDataCollator,
     build_dataset,
@@ -105,6 +106,7 @@ def print_summary(args: argparse.Namespace, paths, train_examples, rows, assignm
         "train_category_counts": summarize_categories(train_examples),
         "max_seq_len": args.max_seq_len,
         "lora_rank": MAX_LORA_RANK,
+        "lora_target_modules": LORA_TARGET_MODULES,
         "learning_rate": args.learning_rate,
         "lr_scheduler_type": "cosine",
         "warmup_ratio": 0.05,
@@ -163,7 +165,7 @@ def main(default_question_type: str | None = None) -> None:
     lora_config = LoraConfig(
         r=MAX_LORA_RANK,
         lora_alpha=32,
-        target_modules="all-linear",
+        target_modules=LORA_TARGET_MODULES,
         lora_dropout=args.lora_dropout,
         bias="none",
         task_type=TaskType.CAUSAL_LM,
@@ -241,6 +243,7 @@ def main(default_question_type: str | None = None) -> None:
             "warmup_ratio": 0.05,
             "min_learning_rate": args.min_learning_rate,
             "lora_rank": MAX_LORA_RANK,
+            "lora_target_modules": LORA_TARGET_MODULES,
             "gradient_checkpointing": args.gradient_checkpointing,
             "lora_dropout": args.lora_dropout,
             "optim": args.optim,
