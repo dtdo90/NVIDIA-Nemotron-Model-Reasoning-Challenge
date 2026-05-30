@@ -13,19 +13,31 @@ Core files:
 1. `data/train.csv`: original competition train set
 2. `data/test.csv`: original competition test set
 3. `data/single_phase_training_clean/single_phase_sft.csv`: active SFT corpus
-4. `data/single_phase_training_clean/single_phase_splits_80_10_10.csv`: optional GRPO/eval split
+4. `data/single_phase_training_clean/single_phase_splits_80_10_10.csv`: canonical SFT/GRPO/eval split
 5. `data/single_phase_training_clean/manifest.json`: source counts and split metadata
+6. `experiments/type_diagnostics/data/global_splits_80_10_10.csv`: same split assignment, generated from the per-type diagnostics
 
 Current validated single-phase counts:
 
-1. SFT corpus: `12491` rows
-2. Optional GRPO train bucket, named `eval_holdout`: `1261` rows
-3. Final local eval bucket, named `grpo_holdout`: `1237` rows
-4. SFT split bucket, named `sft_train`: `9993` rows
+1. Full SFT corpus: `12487` rows
+2. SFT training bucket, named `sft_train`: `9982` rows
+3. Optional GRPO train bucket, named `eval_holdout`: `1255` rows
+4. Final local eval bucket, named `grpo_holdout`: `1250` rows
 
 The single-phase corpus contains real traces plus selected synthetic curriculum
 rows. Bit manipulation uses HuiKang-style traces, while transformation-rule and
 text-cipher traces use the cleaned methodology formats.
+
+The split ratios are approximate. The important invariant is that the full
+single-phase run and the per-question-type diagnostic runs use the same row-level
+split assignment. Regenerate and sync the split with:
+
+```bash
+python3 experiments/type_diagnostics/prepare_type_datasets.py
+```
+
+This writes the seven per-type split files and copies their union to
+`data/single_phase_training_clean/single_phase_splits_80_10_10.csv`.
 
 ## Install
 
@@ -60,9 +72,10 @@ python3 train_sft_single_phase.py \
   --gradient-accumulation-steps 8
 ```
 
-This trains fresh LoRA weights on
-`data/single_phase_training_clean/single_phase_sft.csv` for one epoch at
-learning rate `2e-4` and writes:
+This trains fresh LoRA weights for one epoch at learning rate `2e-4`. By
+default it uses only the `sft_train` rows from
+`data/single_phase_training_clean/single_phase_splits_80_10_10.csv`, which is
+the same split assignment used by the type-diagnostic experiments.
 
 1. final adapter: `outputs/sft_single_phase_h200/adapter`
 2. submission zip: `outputs/sft_single_phase_h200/submission.zip`
@@ -72,6 +85,12 @@ Validate data wiring without loading the model:
 
 ```bash
 python3 train_sft_single_phase.py --validate-only
+```
+
+To intentionally train on every row, bypassing holdouts:
+
+```bash
+python3 train_sft_single_phase.py --train-all
 ```
 
 Default trainer settings:
@@ -126,7 +145,7 @@ python3 infer_eval.py \
   --train-csv data/single_phase_training_clean/single_phase_sft.csv \
   --adapter-dir outputs/sft_single_phase_h200/adapter \
   --split-csv data/single_phase_training_clean/single_phase_splits_80_10_10.csv \
-  --eval-splits eval_holdout grpo_holdout \
+  --eval-splits grpo_holdout \
   --backend vllm \
   --max-model-len 8192 \
   --max-new-tokens 7680
@@ -139,7 +158,7 @@ python3 infer_eval.py \
   --train-csv data/single_phase_training_clean/single_phase_sft.csv \
   --adapter-dir outputs/sft_single_phase_h200/adapter \
   --split-csv data/single_phase_training_clean/single_phase_splits_80_10_10.csv \
-  --eval-splits eval_holdout grpo_holdout \
+  --eval-splits eval_holdout \
   --backend vllm \
   --max-model-len 8192 \
   --max-new-tokens 7680
@@ -149,6 +168,61 @@ For a smoke test, add `--max-eval-samples 20`. If vLLM is unavailable, pass
 `--backend transformers`.
 
 The competition metric expects the final answer in `\boxed{...}`.
+
+## Type Diagnostics
+
+Use these experiments to isolate whether each question type's traces are
+learnable without mixed-task interference.
+
+Prepare all seven diagnostic datasets and sync the root single-phase split:
+
+```bash
+python3 experiments/type_diagnostics/prepare_type_datasets.py
+```
+
+Train one question type:
+
+```bash
+python3 experiments/type_diagnostics/scripts/train_numeric_equation.py \
+  --per-device-train-batch-size 1 \
+  --gradient-accumulation-steps 8
+```
+
+Evaluate one question type on its held-out `eval_holdout` split:
+
+```bash
+python3 experiments/type_diagnostics/scripts/infer_numeric_equation.py \
+  --adapter-dir experiments/type_diagnostics/outputs/numeric_equation/adapter \
+  --backend vllm \
+  --max-model-len 8192 \
+  --max-new-tokens 7680
+```
+
+Evaluate both held-out diagnostic splits:
+
+```bash
+python3 experiments/type_diagnostics/scripts/infer_numeric_equation.py \
+  --adapter-dir experiments/type_diagnostics/outputs/numeric_equation/adapter \
+  --eval-splits eval_holdout grpo_holdout \
+  --backend vllm \
+  --max-model-len 8192 \
+  --max-new-tokens 7680
+```
+
+Type-specific train/infer wrappers exist for:
+
+1. `bit_manipulation`
+2. `gravity`
+3. `unit_conversion`
+4. `text_cipher`
+5. `numeral_system`
+6. `numeric_equation`
+7. `symbol_transform`
+
+Each diagnostic report writes subtype accuracy to
+`experiments/type_diagnostics/reports/{type}/metrics.json` and saves up to
+three failed model generations for every non-100% subtype under
+`experiments/type_diagnostics/reports/{type}/failed_traces/`.
 
 ## Legacy
 

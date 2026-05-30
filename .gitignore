@@ -20,6 +20,9 @@ data/training_ready_clean/phase2_traces/
 data/training_ready_clean/phase1_components/
 data/training_ready_clean/phase3_grpo_real_splits_80_10_10.csv
 data/training_ready_clean/trace_manifest.csv
+data/single_phase_training_clean/exported_traces/
+data/single_phase_training_clean/heldout_over_cap_exported_traces/
+data/single_phase_training_clean/trace_manifest_from_csv.csv
 legacy/two_phase/data/training_ready_clean/phase2_traces/
 legacy/two_phase/data/training_ready_clean/phase1_components/
 legacy/two_phase/data/training_ready_clean/phase3_grpo_real_splits_80_10_10.csv
@@ -45,3 +48,7 @@ scripts/
 
 # Local notebook runner; keep the script as source of truth.
 train_sft_kaggle.ipynb
+
+# Per-type diagnostic model/eval outputs are generated artifacts.
+experiments/type_diagnostics/outputs/
+experiments/type_diagnostics/reports/

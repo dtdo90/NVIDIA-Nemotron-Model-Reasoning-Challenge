@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import re
 
+from .metric import extract_boxed_answer
+
 BOXED_ANSWER_INSTRUCTION = (
     "Please put your final answer inside `\\boxed{}`. "
     "For example: `\\boxed{your answer}`"
@@ -192,6 +194,11 @@ def build_assistant_trace_content(
     if assistant_content and assistant_content.strip():
         return assistant_content.strip()
 
+    # Prefer the trace's own boxed answer when present. Some numeric traces are
+    # intentionally rounded from displayed intermediate values and differ from
+    # the CSV answer by a tolerance-safe amount; replacing them would make the
+    # reasoning internally inconsistent.
+    trace_answer = extract_boxed_answer(generated_cot or "") or answer
     cot = normalize_generated_cot(generated_cot)
     if cot.lstrip().startswith("<think>") and "</think>" in cot:
         think_match = THINK_BLOCK_RE.search(cot)
@@ -204,12 +211,12 @@ def build_assistant_trace_content(
         while lines and not lines[-1].strip():
             lines.pop()
         if not lines or not re.search(r"(?i)^\s*Answer\s*:", lines[-1]) or "\\boxed{" not in lines[-1]:
-            lines.extend(["", f"Answer: \\boxed{{{answer}}}"])
+            lines.extend(["", f"Answer: \\boxed{{{trace_answer}}}"])
         inner = "\n".join(lines).strip()
     else:
-        inner = f"Answer: \\boxed{{{answer}}}"
+        inner = f"Answer: \\boxed{{{trace_answer}}}"
 
-    return f"<think>\n{inner}\n</think>\n\\boxed{{{answer}}}"
+    return f"<think>\n{inner}\n</think>\n\\boxed{{{trace_answer}}}"
 
 
 def build_competition_prompt(

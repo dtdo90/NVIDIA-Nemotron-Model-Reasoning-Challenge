@@ -19,6 +19,7 @@ if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
 SINGLE_PHASE_CSV = ROOT / "data/single_phase_training_clean/single_phase_sft.csv"
+SINGLE_PHASE_SPLIT_CSV = ROOT / "data/single_phase_training_clean/single_phase_splits_80_10_10.csv"
 HF_MODEL_PATH = "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16"
 KAGGLE_MODEL_PATH = Path("/kaggle/input/models/metric/nemotron-3-nano-30b-a3b-bf16/transformers/default/1")
 MAX_LORA_RANK = 32
@@ -32,7 +33,6 @@ from nemotron_baseline.data import (
 from nemotron_baseline.prompts import (
     build_assistant_trace_content,
     build_competition_prompt,
-    normalize_generated_cot,
 )
 from nemotron_baseline.runtime import (
     check_nemotron_runtime_dependencies,
@@ -72,6 +72,18 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--output-dir", default="outputs/sft_single_phase_h200")
     parser.add_argument("--train-csv", default=str(SINGLE_PHASE_CSV))
+    parser.add_argument("--split-csv", default=str(SINGLE_PHASE_SPLIT_CSV))
+    parser.add_argument(
+        "--train-splits",
+        nargs="+",
+        default=["sft_train"],
+        help="Split names to use for SFT. Defaults to the 80% sft_train bucket.",
+    )
+    parser.add_argument(
+        "--train-all",
+        action="store_true",
+        help="Ignore --split-csv and train on every row in --train-csv.",
+    )
     parser.add_argument("--validate-only", action="store_true")
     parser.add_argument("--per-device-train-batch-size", type=int, default=1)
     parser.add_argument("--gradient-accumulation-steps", type=int, default=8)
@@ -126,7 +138,7 @@ def load_examples(path: Path) -> list[Example]:
                     prompt=prompt,
                     answer=answer,
                     category=category,
-                    generated_cot=normalize_generated_cot(row.get("generated_cot") if has_cot else None),
+                    generated_cot=((row.get("generated_cot") or "").strip() if has_cot else ""),
                     assistant_content=(row.get("assistant_content", "").strip() if has_assistant else ""),
                     source_mode=(row.get("source_mode") or "unknown").strip() or "unknown",
                 )
@@ -136,11 +148,86 @@ def load_examples(path: Path) -> list[Example]:
     return examples
 
 
-def single_phase_train_examples(train_csv: str | Path) -> list[Example]:
+def load_split_assignments(path: str | Path) -> dict[str, str]:
+    assignments: dict[str, str] = {}
+    with Path(path).open(newline="", encoding="utf-8") as handle:
+        reader = csv.DictReader(handle)
+        fieldnames = set(reader.fieldnames or [])
+        missing = {"id", "split"} - fieldnames
+        if missing:
+            raise SystemExit(f"{path} is missing required columns: {sorted(missing)}")
+        for line_number, row in enumerate(reader, start=2):
+            row_id = (row.get("id") or "").strip()
+            split = (row.get("split") or "").strip()
+            if not row_id or not split:
+                raise SystemExit(f"{path} has an invalid row at line {line_number}")
+            if row_id in assignments:
+                raise SystemExit(f"{path} has duplicate id={row_id}")
+            assignments[row_id] = split
+    return assignments
+
+
+def validate_split_assignments(examples: list[Example], assignments: dict[str, str], split_csv: str | Path) -> None:
+    seen: set[str] = set()
+    duplicate_ids: list[str] = []
+    for example in examples:
+        if example.id in seen:
+            duplicate_ids.append(example.id)
+        seen.add(example.id)
+    if duplicate_ids:
+        raise SystemExit(f"{split_csv} cannot be used because train data has duplicate ids: {duplicate_ids[:5]}")
+    example_id_set = seen
+    assignment_ids = set(assignments)
+    missing = sorted(example_id_set - assignment_ids)
+    extra = sorted(assignment_ids - example_id_set)
+    if missing or extra:
+        raise SystemExit(
+            f"{split_csv} does not match --train-csv ids. "
+            f"Missing={missing[:5]} extra={extra[:5]}"
+        )
+
+
+def select_examples_by_split(
+    examples: list[Example],
+    assignments: dict[str, str],
+    train_splits: list[str],
+) -> list[Example]:
+    wanted = {split for split in train_splits if split}
+    if not wanted:
+        raise SystemExit("--train-splits must include at least one split name")
+    selected = [example for example in examples if assignments.get(example.id) in wanted]
+    if not selected:
+        raise SystemExit(f"No examples matched --train-splits {sorted(wanted)}")
+    return selected
+
+
+def split_counts(assignments: dict[str, str] | None) -> dict[str, int] | None:
+    if assignments is None:
+        return None
+    counts: dict[str, int] = {}
+    for split in assignments.values():
+        counts[split] = counts.get(split, 0) + 1
+    return dict(sorted(counts.items()))
+
+
+def single_phase_train_examples(
+    train_csv: str | Path,
+    *,
+    split_csv: str | Path | None = None,
+    train_splits: list[str] | None = None,
+    train_all: bool = False,
+) -> tuple[list[Example], list[Example], dict[str, str] | None]:
     examples = load_examples(Path(train_csv))
     if not examples:
         raise SystemExit("No single-phase rows were loaded")
-    return examples
+    if train_all:
+        return examples, examples, None
+    if not split_csv:
+        raise SystemExit("--split-csv is required unless --train-all is set")
+    assignments = load_split_assignments(split_csv)
+    validate_split_assignments(examples, assignments, split_csv)
+    selected = select_examples_by_split(examples, assignments, train_splits or ["sft_train"])
+    return selected, examples, assignments
 
 
 def assistant_end_token(tokenizer) -> str:
@@ -305,19 +392,29 @@ def print_trainable_parameters(model) -> None:
     )
 
 
-def print_summary(args: argparse.Namespace, train_examples: list[Example]) -> None:
+def print_summary(
+    args: argparse.Namespace,
+    train_examples: list[Example],
+    all_examples: list[Example],
+    assignments: dict[str, str] | None,
+) -> None:
     train_source_counts = source_counts(train_examples)
     summary = {
         "mode": "single_phase",
         "output_dir": str(Path(args.output_dir).resolve()),
         "train_csv": str(Path(args.train_csv).resolve()),
-        "total_train_rows": len(train_examples),
+        "split_csv": None if args.train_all else str(Path(args.split_csv).resolve()),
+        "train_splits": ["ALL"] if args.train_all else args.train_splits,
+        "all_rows": len(all_examples),
+        "sft_train_rows": len(train_examples),
+        "split_counts": split_counts(assignments),
         "phase1_synthetic_direct_template_rows": train_source_counts.get(
             "phase1_synthetic_direct_template",
             0,
         ),
         "train_source_counts": train_source_counts,
         "train_category_counts": summarize_categories(train_examples),
+        "all_category_counts": summarize_categories(all_examples),
         "max_seq_len": args.max_seq_len,
         "lora_rank": MAX_LORA_RANK,
         "learning_rate": args.learning_rate,
@@ -337,9 +434,14 @@ def print_summary(args: argparse.Namespace, train_examples: list[Example]) -> No
 
 def main() -> None:
     args = parse_args()
-    train_examples = single_phase_train_examples(args.train_csv)
+    train_examples, all_examples, assignments = single_phase_train_examples(
+        args.train_csv,
+        split_csv=args.split_csv,
+        train_splits=args.train_splits,
+        train_all=args.train_all,
+    )
     if args.validate_only:
-        print_summary(args, train_examples)
+        print_summary(args, train_examples, all_examples, assignments)
         return
 
     disable_transformers_vision_imports()
@@ -422,7 +524,11 @@ def main() -> None:
         args=trainer_args,
         callbacks=[make_min_lr_callback(TrainerCallback, args.min_learning_rate)],
     )
-    print(f"Starting single_phase: rows={len(train_examples)}, learning_rate={args.learning_rate}")
+    print(
+        f"Starting single_phase: rows={len(train_examples)}, "
+        f"splits={['ALL'] if args.train_all else args.train_splits}, "
+        f"learning_rate={args.learning_rate}"
+    )
     trainer.train()
 
     adapter_dir = output_dir / "adapter"
@@ -443,7 +549,11 @@ def main() -> None:
             "adapter_dir": str(adapter_dir.resolve()),
             "submission_zip": str(submission_path.resolve()),
             "train_csv": str(Path(args.train_csv).resolve()),
-            "total_train_rows": len(train_examples),
+            "split_csv": None if args.train_all else str(Path(args.split_csv).resolve()),
+            "train_splits": ["ALL"] if args.train_all else args.train_splits,
+            "sft_train_rows": len(train_examples),
+            "all_rows": len(all_examples),
+            "split_counts": split_counts(assignments),
             "phase1_synthetic_direct_template_rows": source_counts(train_examples).get(
                 "phase1_synthetic_direct_template",
                 0,
@@ -469,6 +579,9 @@ def main() -> None:
         {
             "train_source_counts": source_counts(train_examples),
             "train_category_counts": summarize_categories(train_examples),
+            "all_source_counts": source_counts(all_examples),
+            "all_category_counts": summarize_categories(all_examples),
+            "split_counts": split_counts(assignments),
         },
     )
     print(f"Single-phase rows: {len(train_examples)}")

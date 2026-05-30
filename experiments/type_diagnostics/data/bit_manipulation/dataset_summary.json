@@ -1,0 +1,36 @@
+{
+  "question_type": "bit_manipulation",
+  "category": "Bit Manipulation",
+  "source_csv": "/Users/taido/Desktop/Tai/NVIDIA Nemotron Model Reasoning/data/single_phase_training_clean/single_phase_sft.csv",
+  "train_csv": "/Users/taido/Desktop/Tai/NVIDIA Nemotron Model Reasoning/experiments/type_diagnostics/data/bit_manipulation/bit_manipulation.csv",
+  "split_csv": "/Users/taido/Desktop/Tai/NVIDIA Nemotron Model Reasoning/experiments/type_diagnostics/data/bit_manipulation/splits_80_10_10.csv",
+  "seed": 42,
+  "total": 1758,
+  "by_subtype": {
+    "huikang_real": 1364,
+    "huikang_synthetic": 394
+  },
+  "by_source_mode": {
+    "huikang_real_bit": 1364,
+    "synthetic": 394
+  },
+  "split_counts": {
+    "eval_holdout": 175,
+    "grpo_holdout": 175,
+    "sft_train": 1408
+  },
+  "by_split_subtype": {
+    "sft_train": {
+      "huikang_real": 1092,
+      "huikang_synthetic": 316
+    },
+    "eval_holdout": {
+      "huikang_real": 136,
+      "huikang_synthetic": 39
+    },
+    "grpo_holdout": {
+      "huikang_real": 136,
+      "huikang_synthetic": 39
+    }
+  }
+}

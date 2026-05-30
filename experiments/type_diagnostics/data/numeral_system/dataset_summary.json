@@ -1,0 +1,31 @@
+{
+  "question_type": "numeral_system",
+  "category": "Numeral System",
+  "source_csv": "/Users/taido/Desktop/Tai/NVIDIA Nemotron Model Reasoning/data/single_phase_training_clean/single_phase_sft.csv",
+  "train_csv": "/Users/taido/Desktop/Tai/NVIDIA Nemotron Model Reasoning/experiments/type_diagnostics/data/numeral_system/numeral_system.csv",
+  "split_csv": "/Users/taido/Desktop/Tai/NVIDIA Nemotron Model Reasoning/experiments/type_diagnostics/data/numeral_system/splits_80_10_10.csv",
+  "seed": 42,
+  "total": 1576,
+  "by_subtype": {
+    "standard": 1576
+  },
+  "by_source_mode": {
+    "real": 1576
+  },
+  "split_counts": {
+    "eval_holdout": 158,
+    "grpo_holdout": 158,
+    "sft_train": 1260
+  },
+  "by_split_subtype": {
+    "sft_train": {
+      "standard": 1260
+    },
+    "eval_holdout": {
+      "standard": 158
+    },
+    "grpo_holdout": {
+      "standard": 158
+    }
+  }
+}

@@ -94,7 +94,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--temperature", type=float, default=defaults.get("temperature", 0.0))
     parser.add_argument("--top-p", type=float, default=defaults.get("top_p", 1.0))
-    parser.add_argument("--max-num-seqs", type=int, default=defaults.get("max_num_seqs", 128))
+    parser.add_argument("--max-num-seqs", type=int, default=defaults.get("max_num_seqs", 64))
     parser.add_argument(
         "--gpu-memory-utilization",
         type=float,
@@ -557,7 +557,11 @@ def main() -> None:
             "max_new_tokens": args.max_new_tokens,
             "temperature": args.temperature,
             "top_p": args.top_p,
+            "max_num_seqs": args.max_num_seqs if args.backend == "vllm" else None,
             "max_model_len": args.max_model_len if args.backend == "vllm" else None,
+            "metric": "reference/evaluation.py-compatible",
+            "numeric_relative_tolerance": 1e-2,
+            "numeric_absolute_tolerance": 1e-5,
             "transformation_rules_detail": summarize_transformation_details(
                 eval_examples,
                 results,

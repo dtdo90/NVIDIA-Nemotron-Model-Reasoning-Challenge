@@ -1,0 +1,32 @@
+{
+  "question_type": "text_cipher",
+  "category": "Text Cipher",
+  "source_csv": "/Users/taido/Desktop/Tai/NVIDIA Nemotron Model Reasoning/data/single_phase_training_clean/single_phase_sft.csv",
+  "train_csv": "/Users/taido/Desktop/Tai/NVIDIA Nemotron Model Reasoning/experiments/type_diagnostics/data/text_cipher/text_cipher.csv",
+  "split_csv": "/Users/taido/Desktop/Tai/NVIDIA Nemotron Model Reasoning/experiments/type_diagnostics/data/text_cipher/splits_80_10_10.csv",
+  "seed": 42,
+  "total": 1776,
+  "by_subtype": {
+    "standard": 1776
+  },
+  "by_source_mode": {
+    "real": 1576,
+    "single_phase_synthetic_text_cipher_confusion": 200
+  },
+  "split_counts": {
+    "eval_holdout": 178,
+    "grpo_holdout": 178,
+    "sft_train": 1420
+  },
+  "by_split_subtype": {
+    "sft_train": {
+      "standard": 1420
+    },
+    "eval_holdout": {
+      "standard": 178
+    },
+    "grpo_holdout": {
+      "standard": 178
+    }
+  }
+}

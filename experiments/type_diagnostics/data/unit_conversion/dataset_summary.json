@@ -1,0 +1,31 @@
+{
+  "question_type": "unit_conversion",
+  "category": "Unit Conversion",
+  "source_csv": "/Users/taido/Desktop/Tai/NVIDIA Nemotron Model Reasoning/data/single_phase_training_clean/single_phase_sft.csv",
+  "train_csv": "/Users/taido/Desktop/Tai/NVIDIA Nemotron Model Reasoning/experiments/type_diagnostics/data/unit_conversion/unit_conversion.csv",
+  "split_csv": "/Users/taido/Desktop/Tai/NVIDIA Nemotron Model Reasoning/experiments/type_diagnostics/data/unit_conversion/splits_80_10_10.csv",
+  "seed": 42,
+  "total": 1594,
+  "by_subtype": {
+    "standard": 1594
+  },
+  "by_source_mode": {
+    "real": 1594
+  },
+  "split_counts": {
+    "eval_holdout": 159,
+    "grpo_holdout": 159,
+    "sft_train": 1276
+  },
+  "by_split_subtype": {
+    "sft_train": {
+      "standard": 1276
+    },
+    "eval_holdout": {
+      "standard": 159
+    },
+    "grpo_holdout": {
+      "standard": 159
+    }
+  }
+}

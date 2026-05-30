@@ -1,18 +1,18 @@
 from __future__ import annotations
 
 import json
+import math
 import re
 from dataclasses import dataclass
-from decimal import Decimal, InvalidOperation
 from typing import Iterable
 
 
-NUMERIC_PATTERN = re.compile(r"[-+]?\d+(?:\.\d+)?")
+NUMERIC_PATTERN = re.compile(r"-?\d+(?:\.\d+)?")
 PHRASE_PATTERNS = [
-    re.compile(
-        r"(?is)(?:final answer|answer)\s*(?:is|=|:)\s*(.+?)\s*$"
-    ),
-    re.compile(r"(?is)(?:therefore|thus|so)\s*,?\s*(.+?)\s*$"),
+    re.compile(r"The final answer is:\s*([^\n]+)", re.IGNORECASE),
+    re.compile(r"Final answer is:\s*([^\n]+)", re.IGNORECASE),
+    re.compile(r"Final answer\s*[:：]\s*([^\n]+)", re.IGNORECASE),
+    re.compile(r"final answer\s*[:：]\s*([^\n]+)", re.IGNORECASE),
 ]
 
 
@@ -26,129 +26,79 @@ class PredictionResult:
     correct: bool
 
 
-def _extract_balanced(text: str, start_index: int) -> str | None:
-    depth = 1
-    index = start_index
-    while index < len(text):
-        char = text[index]
-        if char == "{":
-            depth += 1
-        elif char == "}":
-            depth -= 1
-            if depth == 0:
-                return text[start_index:index]
-        index += 1
-    return None
+def extract_boxed_answer(text: str) -> str | None:
+    """Extract boxed answers using the competition metric convention.
 
-
-def _extract_literal_boxed_from_line(line: str) -> str | None:
-    """Extract the last boxed payload on one line as literal text.
-
-    Symbol-transform answers can contain literal braces, backslashes, or dollar
-    signs. For local audits we therefore treat the final boxed line as a
-    delimiter convention: content starts after the last ``\boxed{`` on the line
-    and ends at the line's final ``}``.
+    For each ``\boxed{`` occurrence, the reference evaluator reads up to the
+    last ``}`` before the next boxed answer. This preserves literal answer
+    characters such as ``}`` while still handling nested LaTeX-like payloads.
     """
 
-    marker = r"\boxed{"
-    marker_index = line.rfind(marker)
-    if marker_index < 0:
+    boxed_starts = list(re.finditer(r"\\boxed\{", text))
+    matches: list[str] = []
+    for index, match in enumerate(boxed_starts):
+        start = match.end()
+        end = boxed_starts[index + 1].start() if index + 1 < len(boxed_starts) else len(text)
+        segment = text[start:end]
+        last_brace = segment.rfind("}")
+        matches.append(segment[:last_brace] if last_brace != -1 else segment)
+    if not matches:
         return None
-    stripped = line.strip().rstrip(" .,;")
-    if not stripped.endswith("}"):
-        return stripped[marker_index + len(marker):].strip()
-    return stripped[marker_index + len(marker):-1].strip()
+    non_empty = [match.strip() for match in matches if match.strip()]
+    if non_empty:
+        return non_empty[-1]
+    return matches[-1].strip()
 
 
-def extract_boxed_answer(text: str) -> str | None:
-    marker = r"\boxed{"
+def extract_answer(text: str | None) -> str:
+    if text is None:
+        return "NOT_FOUND"
 
-    # Prefer final-line literal extraction. This preserves challenge symbols
-    # such as $, {, }, and \ that are valid answer characters.
-    for line in reversed(text.splitlines()):
-        content = _extract_literal_boxed_from_line(line)
-        if content is not None:
-            return content
-
-    found: list[str] = []
-    search_start = 0
-    while True:
-        marker_index = text.find(marker, search_start)
-        if marker_index < 0:
-            break
-        content_start = marker_index + len(marker)
-        content = _extract_balanced(text, content_start)
-        if content is not None:
-            found.append(content.strip())
-        search_start = content_start
-    return found[-1] if found else None
-
-
-def _strip_wrappers(text: str) -> str:
-    cleaned = text.strip()
-    cleaned = cleaned.strip("$")
-    cleaned = cleaned.strip()
-    if cleaned.startswith("{") and cleaned.endswith("}") and len(cleaned) >= 2:
-        cleaned = cleaned[1:-1].strip()
-    cleaned = cleaned.rstrip(" .,;")
-    cleaned = cleaned.strip()
-    return cleaned
-
-
-def extract_answer(text: str) -> str:
     boxed = extract_boxed_answer(text)
     if boxed is not None:
         return boxed.strip()
 
     for pattern in PHRASE_PATTERNS:
-        match = pattern.search(text)
-        if match:
-            return _strip_wrappers(match.group(1))
-
-    non_empty_lines = [line.strip() for line in text.splitlines() if line.strip()]
-    if non_empty_lines:
-        line = non_empty_lines[-1]
-        line = re.sub(r"^[-*]\s*", "", line)
-        return _strip_wrappers(line)
+        matches = pattern.findall(text)
+        if matches:
+            return matches[-1].strip()
 
     numeric_matches = NUMERIC_PATTERN.findall(text)
     if numeric_matches:
         return numeric_matches[-1]
 
-    return ""
+    non_empty_lines = [line.strip() for line in text.splitlines() if line.strip()]
+    if non_empty_lines:
+        return non_empty_lines[-1]
 
-
-def _canonical_text(answer: str) -> str:
-    return re.sub(r"\s+", " ", answer.strip())
-
-
-def _parse_decimal(answer: str) -> Decimal | None:
-    normalized = _strip_wrappers(answer)
-    if not re.fullmatch(NUMERIC_PATTERN, normalized):
-        return None
-    try:
-        return Decimal(normalized)
-    except InvalidOperation:
-        return None
+    return "NOT_FOUND"
 
 
 def answers_match(predicted: str, gold: str, relative_tolerance: float = 1e-2) -> bool:
-    predicted_text = _canonical_text(predicted)
-    gold_text = _canonical_text(gold)
-    if predicted_text == gold_text:
-        return True
+    """Match answers using the reference competition metric.
 
-    predicted_number = _parse_decimal(predicted_text)
-    gold_number = _parse_decimal(gold_text)
-    if predicted_number is None or gold_number is None:
-        return False
+    Binary strings are compared strictly as strings. Other numeric answers use
+    the documented relative tolerance of 1e-2 plus the reference absolute
+    tolerance of 1e-5. Non-numeric answers compare case-insensitively.
+    """
 
-    if gold_number == 0:
-        return predicted_number == 0
+    predicted_text = predicted.strip()
+    gold_text = gold.strip()
 
-    difference = abs(predicted_number - gold_number)
-    threshold = abs(gold_number) * Decimal(str(relative_tolerance))
-    return difference <= threshold
+    if re.fullmatch(r"[01]+", gold_text):
+        return predicted_text.lower() == gold_text.lower()
+
+    try:
+        predicted_number = float(predicted_text)
+        gold_number = float(gold_text)
+        return math.isclose(
+            gold_number,
+            predicted_number,
+            rel_tol=relative_tolerance,
+            abs_tol=1e-5,
+        )
+    except Exception:
+        return predicted_text.lower() == gold_text.lower()
 
 
 def score_prediction(

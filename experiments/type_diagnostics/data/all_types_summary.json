@@ -1,0 +1,99 @@
+{
+  "source_csv": "/Users/taido/Desktop/Tai/NVIDIA Nemotron Model Reasoning/data/single_phase_training_clean/single_phase_sft.csv",
+  "seed": 42,
+  "prepared_types": [
+    "bit_manipulation",
+    "gravity",
+    "unit_conversion",
+    "text_cipher",
+    "numeral_system",
+    "numeric_equation",
+    "symbol_transform"
+  ],
+  "global_split_csv": "/Users/taido/Desktop/Tai/NVIDIA Nemotron Model Reasoning/experiments/type_diagnostics/data/global_splits_80_10_10.csv",
+  "global_split_counts": {
+    "eval_holdout": 1255,
+    "grpo_holdout": 1250,
+    "sft_train": 9982
+  },
+  "synced_root_split_csv": "/Users/taido/Desktop/Tai/NVIDIA Nemotron Model Reasoning/data/single_phase_training_clean/single_phase_splits_80_10_10.csv",
+  "synced_root_split_counts": {
+    "eval_holdout": 1255,
+    "grpo_holdout": 1250,
+    "sft_train": 9982
+  },
+  "totals": {
+    "bit_manipulation": {
+      "total": 1758,
+      "split_counts": {
+        "eval_holdout": 175,
+        "grpo_holdout": 175,
+        "sft_train": 1408
+      },
+      "subtype_count": 2
+    },
+    "gravity": {
+      "total": 1597,
+      "split_counts": {
+        "eval_holdout": 160,
+        "grpo_holdout": 160,
+        "sft_train": 1277
+      },
+      "subtype_count": 1
+    },
+    "unit_conversion": {
+      "total": 1594,
+      "split_counts": {
+        "eval_holdout": 159,
+        "grpo_holdout": 159,
+        "sft_train": 1276
+      },
+      "subtype_count": 1
+    },
+    "text_cipher": {
+      "total": 1776,
+      "split_counts": {
+        "eval_holdout": 178,
+        "grpo_holdout": 178,
+        "sft_train": 1420
+      },
+      "subtype_count": 1
+    },
+    "numeral_system": {
+      "total": 1576,
+      "split_counts": {
+        "eval_holdout": 158,
+        "grpo_holdout": 158,
+        "sft_train": 1260
+      },
+      "subtype_count": 1
+    },
+    "numeric_equation": {
+      "total": 3527,
+      "split_counts": {
+        "eval_holdout": 359,
+        "grpo_holdout": 354,
+        "sft_train": 2814
+      },
+      "subtype_count": 44
+    },
+    "symbol_transform": {
+      "total": 659,
+      "split_counts": {
+        "eval_holdout": 66,
+        "grpo_holdout": 66,
+        "sft_train": 527
+      },
+      "subtype_count": 3
+    }
+  },
+  "categories": {
+    "Bit Manipulation": "bit_manipulation",
+    "Gravity": "gravity",
+    "Numeral System": "numeral_system",
+    "Numeric Equation Transformation Rules": "numeric_equation",
+    "Symbol Transform": "symbol_transform",
+    "Text Cipher": "text_cipher",
+    "Unit Conversion": "unit_conversion"
+  }
+}

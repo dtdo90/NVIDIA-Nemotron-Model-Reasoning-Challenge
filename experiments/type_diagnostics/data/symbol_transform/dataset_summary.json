@@ -1,0 +1,41 @@
+{
+  "question_type": "symbol_transform",
+  "category": "Symbol Transform",
+  "source_csv": "/Users/taido/Desktop/Tai/NVIDIA Nemotron Model Reasoning/data/single_phase_training_clean/single_phase_sft.csv",
+  "train_csv": "/Users/taido/Desktop/Tai/NVIDIA Nemotron Model Reasoning/experiments/type_diagnostics/data/symbol_transform/symbol_transform.csv",
+  "split_csv": "/Users/taido/Desktop/Tai/NVIDIA Nemotron Model Reasoning/experiments/type_diagnostics/data/symbol_transform/splits_80_10_10.csv",
+  "seed": 42,
+  "total": 659,
+  "by_subtype": {
+    "ba_dc": 59,
+    "direct_template_template0134": 400,
+    "direct_template_template3401": 200
+  },
+  "by_source_mode": {
+    "phase1_synthetic_direct_template": 216,
+    "real": 118,
+    "single_phase_synthetic_direct_template": 325
+  },
+  "split_counts": {
+    "eval_holdout": 66,
+    "grpo_holdout": 66,
+    "sft_train": 527
+  },
+  "by_split_subtype": {
+    "sft_train": {
+      "ba_dc": 47,
+      "direct_template_template0134": 320,
+      "direct_template_template3401": 160
+    },
+    "eval_holdout": {
+      "ba_dc": 6,
+      "direct_template_template0134": 40,
+      "direct_template_template3401": 20
+    },
+    "grpo_holdout": {
+      "ba_dc": 6,
+      "direct_template_template0134": 40,
+      "direct_template_template3401": 20
+    }
+  }
+}
