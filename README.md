@@ -53,8 +53,14 @@ pip install --no-build-isolation --no-deps -r requirements-nemotron.txt
 For vLLM evaluation:
 
 ```bash
-pip install "numpy<2" vllm
+pip uninstall -y vllm opencv-python-headless
+pip install "vllm==0.18.0"
+pip install -U "scipy>=1.14" "pandas>=2.2.3" "scikit-learn>=1.5" "matplotlib>=3.9"
 ```
+
+Use `VLLM_USE_V1=0` for Nemotron LoRA inference. Newer/default vLLM V1 paths
+can try to register Nemotron `mixer.conv1d` as a LoRA layer and fail with
+`BaseLayerWithLoRA` assertions.
 
 The scripts use Kaggle's mounted model at
 `/kaggle/input/models/metric/nemotron-3-nano-30b-a3b-bf16/transformers/default/1`
@@ -142,6 +148,20 @@ Evaluate the single-phase SFT adapter on the final held-out bucket:
 
 ```bash
 python3 infer_eval.py \
+  --train-csv data/single_phase_training_clean/single_phase_sft.csv \
+  --adapter-dir outputs/sft_single_phase_h200/adapter \
+  --split-csv data/single_phase_training_clean/single_phase_splits_80_10_10.csv \
+  --eval-splits grpo_holdout \
+  --backend vllm \
+  --max-model-len 8192 \
+  --max-new-tokens 7680
+```
+
+If your local vLLM build hits a Nemotron LoRA `mixer.conv1d` assertion, force
+the classic vLLM engine:
+
+```bash
+VLLM_USE_V1=0 python3 infer_eval.py \
   --train-csv data/single_phase_training_clean/single_phase_sft.csv \
   --adapter-dir outputs/sft_single_phase_h200/adapter \
   --split-csv data/single_phase_training_clean/single_phase_splits_80_10_10.csv \
