@@ -25,14 +25,7 @@ Current validated single-phase counts:
 4. Final local eval bucket, named `grpo_holdout`: `848` rows
 
 The single-phase corpus contains real traces plus selected synthetic curriculum
-rows. Bit manipulation uses HuiKang-style traces, while transformation-rule and
-text-cipher traces use the cleaned methodology formats.
-The HuiKang `-p0` alternate bit traces are excluded because they duplicate real
-bit-manipulation prompts and answers.
-Bit manipulation now includes all `1602` HuiKang real traces plus `4515`
-HuiKang `matching` skill-drill rows. The extra real traces and matching drills
-are marked train-only, so they strengthen SFT but are excluded from eval metrics.
-Synthetic curriculum rows are also train-only. The two holdout buckets are drawn
+rows. Synthetic curriculum rows are also train-only. The two holdout buckets are drawn
 only from eval-eligible real/current-evaluation rows.
 
 The split ratios are approximate. The important invariant is that the full
@@ -79,21 +72,21 @@ when that path exists. Otherwise they use
 ## Train SFT
 
 Recommended single-phase SFT:
-
+If your hardware supports, train with batch size 2, or skip gradient-checkpointing for faster speed.
 ```bash
 python3 train_sft_single_phase.py \
   --per-device-train-batch-size 1 \
-  --gradient-accumulation-steps 8
+  --gradient-accumulation-steps 8 \
+  --gradient-checkpointing
 ```
-
 This trains fresh LoRA weights for one epoch at learning rate `2e-4`. By
 default it uses only the `sft_train` rows from
 `data/single_phase_training_clean/single_phase_splits_80_10_10.csv`, which is
 the same split assignment used by the type-diagnostic experiments.
 
-1. final adapter: `outputs/sft_single_phase_h200/adapter`
-2. submission zip: `outputs/sft_single_phase_h200/submission.zip`
-3. run metadata: `outputs/sft_single_phase_h200/run_config.json`
+1. final adapter: `outputs/sft_single_phase/adapter`
+2. submission zip: `outputs/sft_single_phase/submission.zip`
+3. run metadata: `outputs/sft_single_phase/run_config.json`
 
 Validate data wiring without loading the model:
 
@@ -114,24 +107,17 @@ Default trainer settings:
 3. bf16 + TF32
 4. cosine LR schedule with warmup ratio `0.05`
 5. minimum learning rate floor `2e-6`
-6. optimizer `adamw_torch_fused`
-7. LoRA dropout `0.05`
+6. optimizer `adamw_torch`
+7. LoRA dropout `0.0`
 8. assistant-only loss masking
 9. competition chat-template prompt format
 
-If memory is tight:
-
-```bash
-python3 train_sft_single_phase.py \
-  --per-device-train-batch-size 1 \
-  --gradient-accumulation-steps 8 \
-  --gradient-checkpointing
 ```
 
 ## Optional GRPO
 
 GRPO remains an optional second step for both regimes. In the active single-phase
-regime, it starts from `outputs/sft_single_phase_h200/adapter` and trains on the
+regime, it starts from `outputs/sft_single_phase/adapter` and trains on the
 10% bucket named `eval_holdout`.
 
 Smoke-check the wiring:
@@ -146,50 +132,26 @@ Run GRPO:
 python3 train_grpo.py --config configs/grpo_stage2.json
 ```
 
-The active config is `configs/grpo_stage2.json`. To run GRPO on the archived
-two-phase SFT adapter instead, pass
-`--config legacy/two_phase/configs/grpo_stage2.json`.
-
 ## Local Evaluation
 
-Evaluate the single-phase SFT adapter on the final held-out bucket:
+Evaluate the eval_holdout bucket (10% data):
 
 ```bash
 python3 infer_eval.py \
   --train-csv data/single_phase_training_clean/single_phase_sft.csv \
-  --adapter-dir outputs/sft_single_phase_h200/adapter \
+  --adapter-dir outputs/sft_single_phase/adapter \
   --split-csv data/single_phase_training_clean/single_phase_splits_80_10_10.csv \
-  --eval-splits grpo_holdout \
-  --backend vllm \
-  --max-model-len 8192 \
-  --max-new-tokens 7680
+  --eval-splits eval_holdout
 ```
 
-If your local vLLM build hits a Nemotron LoRA `mixer.conv1d` assertion, force
-the classic vLLM engine:
-
-```bash
-VLLM_USE_V1=0 python3 infer_eval.py \
-  --train-csv data/single_phase_training_clean/single_phase_sft.csv \
-  --adapter-dir outputs/sft_single_phase_h200/adapter \
-  --split-csv data/single_phase_training_clean/single_phase_splits_80_10_10.csv \
-  --eval-splits grpo_holdout \
-  --backend vllm \
-  --max-model-len 8192 \
-  --max-new-tokens 7680
-```
-
-Evaluate the optional GRPO training bucket if needed:
+Evaluate both held-out buckets (20% data):
 
 ```bash
 python3 infer_eval.py \
   --train-csv data/single_phase_training_clean/single_phase_sft.csv \
-  --adapter-dir outputs/sft_single_phase_h200/adapter \
+  --adapter-dir outputs/sft_single_phase/adapter \
   --split-csv data/single_phase_training_clean/single_phase_splits_80_10_10.csv \
-  --eval-splits eval_holdout \
-  --backend vllm \
-  --max-model-len 8192 \
-  --max-new-tokens 7680
+  --eval-splits grpo_holdout eval_holdout
 ```
 
 For a smoke test, add `--max-eval-samples 20`. If vLLM is unavailable, pass

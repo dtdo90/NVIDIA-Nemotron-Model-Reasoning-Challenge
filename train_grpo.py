@@ -19,7 +19,7 @@ if str(SRC) not in sys.path:
 
 DEFAULT_TRAIN_CSV = ROOT / "data/single_phase_training_clean/single_phase_sft.csv"
 DEFAULT_SPLIT_CSV = ROOT / "data/single_phase_training_clean/single_phase_splits_80_10_10.csv"
-DEFAULT_SFT_ADAPTER_DIR = ROOT / "outputs/sft_single_phase_h200/adapter"
+DEFAULT_SFT_ADAPTER_DIR = ROOT / "outputs/sft_single_phase/adapter"
 COMPETITION_MAX_TOKENS = 7680
 DEFAULT_MODEL_PATH = "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16"
 MODEL_PATH = os.environ.get("MODEL_PATH") or os.environ.get("BASE_MODEL_PATH") or DEFAULT_MODEL_PATH

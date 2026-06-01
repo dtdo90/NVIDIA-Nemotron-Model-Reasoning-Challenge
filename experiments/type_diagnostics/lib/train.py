@@ -62,8 +62,8 @@ def parse_args(default_question_type: str | None = None) -> argparse.Namespace:
     parser.add_argument("--min-learning-rate", type=float, default=2e-6)
     parser.add_argument("--max-seq-len", type=int, default=DEFAULT_MAX_SEQ_LEN)
     parser.add_argument("--gradient-checkpointing", action="store_true")
-    parser.add_argument("--lora-dropout", type=float, default=0.05)
-    parser.add_argument("--optim", default="adamw_torch_fused")
+    parser.add_argument("--lora-dropout", type=float, default=0.0)
+    parser.add_argument("--optim", default="adamw_torch")
     args = parser.parse_args()
     args.question_type = normalize_question_type(args.question_type)
     return args

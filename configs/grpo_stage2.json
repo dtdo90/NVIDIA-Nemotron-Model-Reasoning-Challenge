@@ -5,7 +5,7 @@
     "eval_holdout"
   ],
   "output_dir": "outputs/grpo_single_phase",
-  "sft_adapter_dir": "outputs/sft_single_phase_h200/adapter",
+  "sft_adapter_dir": "outputs/sft_single_phase/adapter",
   "kaggle_model_handle": "metric/nemotron-3-nano-30b-a3b-bf16/transformers/default",
   "seed": 42,
   "num_epochs": 1.0,

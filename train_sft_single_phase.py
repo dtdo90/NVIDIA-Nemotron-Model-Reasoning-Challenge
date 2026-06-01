@@ -88,7 +88,7 @@ def parse_args() -> argparse.Namespace:
             f"when present, otherwise {HF_MODEL_PATH}."
         ),
     )
-    parser.add_argument("--output-dir", default="outputs/sft_single_phase_h200")
+    parser.add_argument("--output-dir", default="outputs/sft_single_phase")
     parser.add_argument("--train-csv", default=str(SINGLE_PHASE_CSV))
     parser.add_argument("--split-csv", default=str(SINGLE_PHASE_SPLIT_CSV))
     parser.add_argument(
@@ -109,11 +109,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--min-learning-rate", type=float, default=2e-6)
     parser.add_argument("--max-seq-len", type=int, default=DEFAULT_MAX_SEQ_LEN)
     parser.add_argument("--gradient-checkpointing", action="store_true")
-    parser.add_argument("--lora-dropout", type=float, default=0.05)
+    parser.add_argument("--lora-dropout", type=float, default=0.0)
     parser.add_argument(
         "--optim",
-        default="adamw_torch_fused",
-        help="Trainer optimizer. Use adamw_torch if fused AdamW is unavailable.",
+        default="adamw_torch",
+        help="Trainer optimizer.",
     )
     return parser.parse_args()
 
