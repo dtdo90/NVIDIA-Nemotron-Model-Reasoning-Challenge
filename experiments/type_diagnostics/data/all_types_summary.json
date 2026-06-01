@@ -12,25 +12,25 @@
   ],
   "global_split_csv": "/Users/taido/Desktop/Tai/NVIDIA Nemotron Model Reasoning/experiments/type_diagnostics/data/global_splits_80_10_10.csv",
   "global_split_counts": {
-    "eval_holdout": 1255,
-    "grpo_holdout": 1250,
-    "sft_train": 9982
+    "eval_holdout": 853,
+    "grpo_holdout": 848,
+    "sft_train": 15459
   },
   "synced_root_split_csv": "/Users/taido/Desktop/Tai/NVIDIA Nemotron Model Reasoning/data/single_phase_training_clean/single_phase_splits_80_10_10.csv",
   "synced_root_split_counts": {
-    "eval_holdout": 1255,
-    "grpo_holdout": 1250,
-    "sft_train": 9982
+    "eval_holdout": 853,
+    "grpo_holdout": 848,
+    "sft_train": 15459
   },
   "totals": {
     "bit_manipulation": {
-      "total": 1758,
+      "total": 6117,
       "split_counts": {
-        "eval_holdout": 175,
-        "grpo_holdout": 175,
-        "sft_train": 1408
+        "eval_holdout": 136,
+        "grpo_holdout": 136,
+        "sft_train": 5845
       },
-      "subtype_count": 2
+      "subtype_count": 3
     },
     "gravity": {
       "total": 1597,
@@ -53,9 +53,9 @@
     "text_cipher": {
       "total": 1776,
       "split_counts": {
-        "eval_holdout": 178,
-        "grpo_holdout": 178,
-        "sft_train": 1420
+        "eval_holdout": 158,
+        "grpo_holdout": 158,
+        "sft_train": 1460
       },
       "subtype_count": 1
     },
@@ -69,20 +69,20 @@
       "subtype_count": 1
     },
     "numeric_equation": {
-      "total": 3527,
+      "total": 3841,
       "split_counts": {
-        "eval_holdout": 359,
-        "grpo_holdout": 354,
-        "sft_train": 2814
+        "eval_holdout": 70,
+        "grpo_holdout": 65,
+        "sft_train": 3706
       },
-      "subtype_count": 44
+      "subtype_count": 51
     },
     "symbol_transform": {
       "total": 659,
       "split_counts": {
-        "eval_holdout": 66,
-        "grpo_holdout": 66,
-        "sft_train": 527
+        "eval_holdout": 12,
+        "grpo_holdout": 12,
+        "sft_train": 635
       },
       "subtype_count": 3
     }

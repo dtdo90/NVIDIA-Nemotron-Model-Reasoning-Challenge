@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import argparse
+import json
+from collections import Counter
 from pathlib import Path
 
 from .common import (
@@ -11,6 +13,8 @@ from .common import (
     SOURCE_CSV,
     build_stratified_splits,
     classify_subtype,
+    is_eval_eligible,
+    is_train_only,
     load_type_rows,
     normalize_question_type,
     read_csv_rows,
@@ -68,13 +72,23 @@ def prepare_one(question_type: str, *, source_csv: Path, data_dir: Path, seed: i
             "diagnostic_type": slug,
             "diagnostic_subtype": row["diagnostic_subtype"],
             "source_mode": row.get("source_mode", "unknown"),
+            "eval_eligible": "true" if is_eval_eligible(row) else "false",
+            "split_policy": "train_only" if is_train_only(row) else (row.get("split_policy", "auto") or "auto"),
         }
         for row in rows
     ]
     write_csv_rows(
         paths.split_csv,
         split_rows,
-        ["id", "split", "diagnostic_type", "diagnostic_subtype", "source_mode"],
+        [
+            "id",
+            "split",
+            "diagnostic_type",
+            "diagnostic_subtype",
+            "source_mode",
+            "eval_eligible",
+            "split_policy",
+        ],
     )
 
     summary = {
@@ -117,6 +131,41 @@ def write_global_split_from_type_splits(
     return dict(sorted(counts.items()))
 
 
+def update_single_phase_manifest(
+    *,
+    source_csv: Path,
+    root_split_csv: Path,
+    split_counts: dict[str, int] | None,
+) -> None:
+    manifest_path = ROOT / "data/single_phase_training_clean/manifest.json"
+    if manifest_path.exists():
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    else:
+        manifest = {}
+
+    rows, _ = read_csv_rows(source_csv)
+    manifest.update(
+        {
+            "output_csv": str(source_csv.relative_to(ROOT)),
+            "total_rows": len(rows),
+            "source_mode_counts": dict(
+                sorted(Counter(row.get("source_mode", "unknown") for row in rows).items())
+            ),
+            "category_counts": dict(
+                sorted(Counter(row.get("category", "unknown") for row in rows).items())
+            ),
+            "single_phase_split_csv": str(root_split_csv.relative_to(ROOT)),
+            "single_phase_split_counts": split_counts,
+            "single_phase_split_strategy": (
+                "80/10/10 stratified per question type by diagnostic_subtype and source_mode; "
+                "rows marked split_policy=train_only or eval_eligible=false stay in sft_train; "
+                "eval_holdout is the optional GRPO training bucket and grpo_holdout is final local eval"
+            ),
+        }
+    )
+    write_json(manifest_path, manifest)
+
+
 def main(default_question_type: str | None = None) -> None:
     args = parse_args()
     source_csv = Path(args.source_csv)
@@ -127,22 +176,25 @@ def main(default_question_type: str | None = None) -> None:
         question_types = [normalize_question_type(args.question_type)]
     else:
         question_types = list(QUESTION_TYPES)
+    is_full_prepare = set(question_types) == set(QUESTION_TYPES)
 
     summaries = [
         prepare_one(question_type, source_csv=source_csv, data_dir=data_dir, seed=args.seed)
         for question_type in question_types
     ]
     global_split_path = data_dir / "global_splits_80_10_10.csv"
-    global_split_counts = write_global_split_from_type_splits(
-        [str(summary["question_type"]) for summary in summaries],
-        data_dir=data_dir,
-        output_csv=global_split_path,
-    )
+    global_split_counts = None
+    if is_full_prepare:
+        global_split_counts = write_global_split_from_type_splits(
+            [str(summary["question_type"]) for summary in summaries],
+            data_dir=data_dir,
+            output_csv=global_split_path,
+        )
     root_split_path = ROOT / "data/single_phase_training_clean/single_phase_splits_80_10_10.csv"
     root_split_counts = None
     should_sync_root_split = (
         not args.no_sync_root_split
-        and set(question_types) == set(QUESTION_TYPES)
+        and is_full_prepare
         and source_csv.resolve() == SOURCE_CSV.resolve()
     )
     if should_sync_root_split:
@@ -151,29 +203,35 @@ def main(default_question_type: str | None = None) -> None:
             data_dir=data_dir,
             output_csv=root_split_path,
         )
+        update_single_phase_manifest(
+            source_csv=source_csv,
+            root_split_csv=root_split_path,
+            split_counts=root_split_counts,
+        )
 
     data_dir.mkdir(parents=True, exist_ok=True)
-    write_json(
-        data_dir / "all_types_summary.json",
-        {
-            "source_csv": str(source_csv),
-            "seed": args.seed,
-            "prepared_types": [summary["question_type"] for summary in summaries],
-            "global_split_csv": str(global_split_path),
-            "global_split_counts": global_split_counts,
-            "synced_root_split_csv": str(root_split_path) if should_sync_root_split else None,
-            "synced_root_split_counts": root_split_counts,
-            "totals": {
-                summary["question_type"]: {
-                    "total": summary["total"],
-                    "split_counts": summary["split_counts"],
-                    "subtype_count": len(summary["by_subtype"]),
-                }
-                for summary in summaries
+    if is_full_prepare:
+        write_json(
+            data_dir / "all_types_summary.json",
+            {
+                "source_csv": str(source_csv),
+                "seed": args.seed,
+                "prepared_types": [summary["question_type"] for summary in summaries],
+                "global_split_csv": str(global_split_path),
+                "global_split_counts": global_split_counts,
+                "synced_root_split_csv": str(root_split_path) if should_sync_root_split else None,
+                "synced_root_split_counts": root_split_counts,
+                "totals": {
+                    summary["question_type"]: {
+                        "total": summary["total"],
+                        "split_counts": summary["split_counts"],
+                        "subtype_count": len(summary["by_subtype"]),
+                    }
+                    for summary in summaries
+                },
+                "categories": dict(sorted(CATEGORY_TO_SLUG.items())),
             },
-            "categories": dict(sorted(CATEGORY_TO_SLUG.items())),
-        },
-    )
+        )
 
     for summary in summaries:
         print(

@@ -1,13 +1,12 @@
 {
   "output_csv": "data/single_phase_training_clean/single_phase_sft.csv",
-  "total_rows": 12491,
+  "total_rows": 17160,
   "phase2_rows": 11356,
   "phase2_rows_after_replacing_bit": 9992,
   "removed_phase2_bit_rows": 1364,
-  "added_huikang_bit_rows": 1758,
+  "added_huikang_bit_rows": 1364,
   "added_huikang_bit_source_mode_counts": {
-    "huikang_real_bit": 1364,
-    "synthetic": 394
+    "huikang_real_bit": 1364
   },
   "excluded_huikang_synthetic_bit_ids": [
     "186ade13-p0",
@@ -41,18 +40,20 @@
   "text_cipher_confusion_synthetic_csv": "data/single_phase_training_clean/text_cipher_confusion_synthetic.csv",
   "source_mode_counts": {
     "huikang_real_bit": 1364,
+    "huikang_real_bit_extra_trace": 238,
+    "huikang_synthetic_matching": 4515,
     "phase1_synthetic_direct_template": 216,
-    "real": 7074,
+    "real": 7085,
     "single_phase_synthetic_direct_template": 325,
     "single_phase_synthetic_text_cipher_confusion": 200,
-    "synthetic": 3312
+    "synthetic": 3217
   },
   "category_counts": {
-    "Bit Manipulation": 1758,
+    "Bit Manipulation": 6117,
     "Gravity": 1597,
     "Numeral System": 1576,
-    "Numeric Equation Transformation Rules": 3527,
-    "Symbol Transform": 663,
+    "Numeric Equation Transformation Rules": 3841,
+    "Symbol Transform": 659,
     "Text Cipher": 1776,
     "Unit Conversion": 1594
   },
@@ -61,11 +62,13 @@
     "to": "In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:"
   },
   "cot_opening": "We use encrypted digit search with formats BA_DC|rev or AB_CD|plain. For each format, we choose the arithmetic family from same-operator RHS length and use other examples only to complete the map.",
+  "removed_huikang_duplicate_bit_alternate_trace_rows": 394,
+  "removed_huikang_duplicate_bit_alternate_trace_note": "Rows with source_mode=synthetic in Bit Manipulation are -p0 alternate traces for real HuiKang bit problems with identical prompts/answers, so they are excluded to avoid duplicate bias and split leakage.",
   "single_phase_split_csv": "data/single_phase_training_clean/single_phase_splits_80_10_10.csv",
   "single_phase_split_counts": {
-    "eval_holdout": 1261,
-    "grpo_holdout": 1237,
-    "sft_train": 9993
+    "eval_holdout": 853,
+    "grpo_holdout": 848,
+    "sft_train": 15459
   },
-  "single_phase_split_strategy": "80/10/10 stratified by category, source_mode, and stable source subtype; eval_holdout is the optional GRPO training bucket and grpo_holdout is final local eval"
+  "single_phase_split_strategy": "80/10/10 stratified per question type by diagnostic_subtype and source_mode; rows marked split_policy=train_only or eval_eligible=false stay in sft_train; eval_holdout is the optional GRPO training bucket and grpo_holdout is final local eval"
 }

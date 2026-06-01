@@ -13,20 +13,28 @@
     "real": 1576,
     "single_phase_synthetic_text_cipher_confusion": 200
   },
+  "by_eval_eligible": {
+    "false": 200,
+    "true": 1576
+  },
+  "by_split_policy": {
+    "auto": 1576,
+    "train_only": 200
+  },
   "split_counts": {
-    "eval_holdout": 178,
-    "grpo_holdout": 178,
-    "sft_train": 1420
+    "eval_holdout": 158,
+    "grpo_holdout": 158,
+    "sft_train": 1460
   },
   "by_split_subtype": {
     "sft_train": {
-      "standard": 1420
+      "standard": 1460
     },
     "eval_holdout": {
-      "standard": 178
+      "standard": 158
     },
     "grpo_holdout": {
-      "standard": 178
+      "standard": 158
     }
   }
 }

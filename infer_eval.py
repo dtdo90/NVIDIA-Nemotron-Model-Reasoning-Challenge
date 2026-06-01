@@ -5,13 +5,23 @@ import argparse
 import csv
 import json
 import os
+import shutil
 import sys
+from collections import Counter, defaultdict
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 SRC = ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
+
+from experiments.type_diagnostics.lib.common import (
+    CATEGORY_TO_SLUG,
+    QUESTION_TYPES,
+    classify_subtype,
+    is_eval_eligible,
+    safe_label,
+)
 
 from nemotron_baseline.data import (
     load_examples,
@@ -20,7 +30,7 @@ from nemotron_baseline.data import (
     stratified_split,
     summarize_split_assignments,
 )
-from nemotron_baseline.metric import result_to_json, score_prediction, summarize_results
+from nemotron_baseline.metric import score_prediction, summarize_results
 from nemotron_baseline.prompts import build_generation_prompt, build_user_message
 from nemotron_baseline.runtime import (
     check_nemotron_runtime_dependencies,
@@ -28,7 +38,19 @@ from nemotron_baseline.runtime import (
 )
 
 DEFAULT_MODEL_PATH = "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16"
-MODEL_PATH = os.environ.get("MODEL_PATH") or os.environ.get("BASE_MODEL_PATH") or DEFAULT_MODEL_PATH
+KAGGLE_MODEL_PATH = Path("/kaggle/input/models/metric/nemotron-3-nano-30b-a3b-bf16/transformers/default/1")
+
+
+def default_model_path() -> str:
+    explicit_model_path = os.environ.get("MODEL_PATH") or os.environ.get("BASE_MODEL_PATH")
+    if explicit_model_path:
+        return explicit_model_path
+    if KAGGLE_MODEL_PATH.exists():
+        return str(KAGGLE_MODEL_PATH)
+    return DEFAULT_MODEL_PATH
+
+
+MODEL_PATH = default_model_path()
 os.environ.setdefault("PYTORCH_CUDA_ALLOC_CONF", "expandable_segments:True")
 
 
@@ -107,6 +129,22 @@ def parse_args() -> argparse.Namespace:
         "--predictions-jsonl",
         default=None,
         help="Optional output file for per-example predictions.",
+    )
+    parser.add_argument(
+        "--report-dir",
+        default=defaults.get("report_dir"),
+        help="Optional directory for summary, predictions, and failed trace samples.",
+    )
+    parser.add_argument(
+        "--failed-traces-per-subtype",
+        type=int,
+        default=defaults.get("failed_traces_per_subtype", 3),
+        help="Write and print up to this many failed generations for each non-perfect subtype.",
+    )
+    parser.add_argument(
+        "--no-print-failed-traces",
+        action="store_true",
+        help="Write failed trace samples to disk but do not print the generations to stdout.",
     )
     return parser.parse_args(remaining)
 
@@ -278,6 +316,10 @@ def load_row_metadata(csv_path: str | Path) -> dict[str, dict[str, str]]:
     return metadata
 
 
+def is_eval_eligible_metadata(row_metadata: dict[str, str]) -> bool:
+    return is_eval_eligible(row_metadata)
+
+
 def _stats_payload(total: int, correct: int) -> dict[str, int | float]:
     return {
         "total": total,
@@ -286,90 +328,229 @@ def _stats_payload(total: int, correct: int) -> dict[str, int | float]:
     }
 
 
-def classify_transformation_detail(example, row_metadata: dict[str, str]) -> tuple[str, str] | None:
-    if example.category != "Transformation Rules":
-        return None
+def row_category(example, row_metadata: dict[str, str]) -> str:
+    return (
+        row_metadata.get("category")
+        or row_metadata.get("label")
+        or example.category
+        or "unknown"
+    )
 
-    source = row_metadata.get("source", "")
-    label = row_metadata.get("category") or row_metadata.get("label") or ""
-    source_lower = source.lower()
-    label_lower = label.lower()
 
+def infer_question_type(example, row_metadata: dict[str, str]) -> str:
+    diagnostic_type = row_metadata.get("diagnostic_type", "").strip()
+    if diagnostic_type in QUESTION_TYPES:
+        return diagnostic_type
+
+    category = row_category(example, row_metadata)
+    if category in CATEGORY_TO_SLUG:
+        return CATEGORY_TO_SLUG[category]
+
+    source_lower = row_metadata.get("source", "").lower()
+    label_lower = (row_metadata.get("label") or row_metadata.get("category") or "").lower()
     if "numeric_equation_transformation_rules" in source_lower or "numeric equation" in label_lower:
-        family = "numeric_equation"
-        if "direct_template" in source_lower:
-            subtype = "direct_template"
-        elif "operator_absence" in source_lower:
-            subtype = "operator_absence"
-        elif "ab_cd" in source_lower:
-            subtype = "ab_cd"
-        elif "ba_dc" in source_lower:
-            subtype = "ba_dc"
-        else:
-            subtype = "others"
-        return family, subtype
-
+        return "numeric_equation"
     if (
         "symbol_equation_transformation_rules" in source_lower
         or "symbol_transform" in source_lower
         or "symbol transform" in label_lower
     ):
-        family = "symbol_equation"
-        if "direct_template" in source_lower:
-            subtype = "direct_template"
-        elif "ba_dc" in source_lower:
-            subtype = "ba_dc"
-        else:
-            subtype = "others"
-        return family, subtype
+        return "symbol_transform"
 
-    # Held-out rows without source metadata still count as Transformation Rules,
-    # but we do not want to invent a subtype from weak evidence.
-    return "unknown", "others"
+    if example.category == "Transformation Rules":
+        return "transformation_rules_unknown"
+    return safe_label(category)
 
 
-def summarize_transformation_details(eval_examples, results, metadata_by_id: dict[str, dict[str, str]]) -> dict[str, object]:
-    family_order = {
-        "numeric_equation": ["ab_cd", "ba_dc", "direct_template", "operator_absence", "others"],
-        "symbol_equation": ["ba_dc", "direct_template", "others"],
-        "unknown": ["others"],
-    }
-    counters: dict[str, dict[str, dict[str, int]]] = {}
+def infer_diagnostic_subtype(example, row_metadata: dict[str, str], question_type: str) -> str:
+    diagnostic_subtype = row_metadata.get("diagnostic_subtype", "").strip()
+    if diagnostic_subtype:
+        return diagnostic_subtype
 
+    if question_type in QUESTION_TYPES:
+        row_for_classification = dict(row_metadata)
+        row_for_classification.setdefault("id", example.id)
+        row_for_classification.setdefault("prompt", example.prompt)
+        row_for_classification.setdefault("answer", example.answer or "")
+        if not row_for_classification.get("category"):
+            row_for_classification["category"] = QUESTION_TYPES[question_type]["category"]
+        try:
+            return classify_subtype(row_for_classification)
+        except Exception:
+            return "standard"
+
+    return "unknown"
+
+
+def question_type_display(question_type: str, category: str) -> str:
+    if question_type in QUESTION_TYPES:
+        return QUESTION_TYPES[question_type]["display"]
+    return category or question_type
+
+
+def build_evaluation_records(eval_examples, results, metadata_by_id: dict[str, dict[str, str]]) -> list[dict[str, object]]:
+    records: list[dict[str, object]] = []
     for example, result in zip(eval_examples, results):
-        detail = classify_transformation_detail(example, metadata_by_id.get(example.id, {}))
-        if detail is None:
-            continue
-        family, subtype = detail
-        if family not in counters:
-            counters[family] = {}
-        if subtype not in counters[family]:
-            counters[family][subtype] = {"total": 0, "correct": 0}
-        counters[family][subtype]["total"] += 1
-        counters[family][subtype]["correct"] += 1 if result.correct else 0
+        row_metadata = metadata_by_id.get(example.id, {})
+        category = row_category(example, row_metadata)
+        question_type = infer_question_type(example, row_metadata)
+        diagnostic_subtype = infer_diagnostic_subtype(example, row_metadata, question_type)
+        records.append(
+            {
+                "id": result.example_id,
+                "category": category,
+                "question_type": question_type,
+                "question_type_display": question_type_display(question_type, category),
+                "diagnostic_subtype": diagnostic_subtype,
+                "source_mode": row_metadata.get("source_mode", "unknown") or "unknown",
+                "source": row_metadata.get("source", ""),
+                "gold_answer": result.gold_answer,
+                "extracted_prediction": result.extracted_prediction,
+                "correct": result.correct,
+                "prompt": example.prompt,
+                "raw_prediction": result.raw_prediction,
+            }
+        )
+    return records
+
+
+def summarize_by_type(records: list[dict[str, object]]) -> dict[str, object]:
+    type_totals: dict[str, dict[str, int]] = defaultdict(lambda: {"total": 0, "correct": 0})
+    subtype_totals: dict[str, dict[str, dict[str, int]]] = defaultdict(
+        lambda: defaultdict(lambda: {"total": 0, "correct": 0})
+    )
+    subtype_sources: dict[str, dict[str, Counter]] = defaultdict(lambda: defaultdict(Counter))
+    type_display: dict[str, str] = {}
+
+    for record in records:
+        question_type = str(record["question_type"])
+        subtype = str(record["diagnostic_subtype"])
+        source_mode = str(record.get("source_mode") or "unknown")
+        is_correct = bool(record["correct"])
+        type_display[question_type] = str(record["question_type_display"])
+
+        type_totals[question_type]["total"] += 1
+        type_totals[question_type]["correct"] += 1 if is_correct else 0
+        subtype_totals[question_type][subtype]["total"] += 1
+        subtype_totals[question_type][subtype]["correct"] += 1 if is_correct else 0
+        subtype_sources[question_type][subtype][source_mode] += 1
 
     summary: dict[str, object] = {}
-    for family in ("numeric_equation", "symbol_equation", "unknown"):
-        subtype_counts = counters.get(family, {})
-        if not subtype_counts:
-            continue
-        total = sum(stats["total"] for stats in subtype_counts.values())
-        correct = sum(stats["correct"] for stats in subtype_counts.values())
-        ordered_subtypes = family_order.get(family, []) + sorted(
-            set(subtype_counts) - set(family_order.get(family, []))
-        )
+    for question_type in sorted(type_totals):
+        type_stats = type_totals[question_type]
         by_subtype = {
-            subtype: _stats_payload(
-                subtype_counts.get(subtype, {}).get("total", 0),
-                subtype_counts.get(subtype, {}).get("correct", 0),
-            )
-            for subtype in ordered_subtypes
+            subtype: {
+                **_stats_payload(stats["total"], stats["correct"]),
+                "source_modes": dict(sorted(subtype_sources[question_type][subtype].items())),
+            }
+            for subtype, stats in sorted(subtype_totals[question_type].items())
         }
-        summary[family] = {
-            **_stats_payload(total, correct),
+        summary[question_type] = {
+            "display": type_display.get(question_type, question_type),
+            **_stats_payload(type_stats["total"], type_stats["correct"]),
             "by_subtype": by_subtype,
         }
     return summary
+
+
+def prediction_record_to_json(record: dict[str, object]) -> str:
+    return json.dumps(
+        {
+            "id": record["id"],
+            "category": record["category"],
+            "question_type": record["question_type"],
+            "diagnostic_subtype": record["diagnostic_subtype"],
+            "source_mode": record["source_mode"],
+            "source": record["source"],
+            "gold_answer": record["gold_answer"],
+            "extracted_prediction": record["extracted_prediction"],
+            "correct": record["correct"],
+            "raw_prediction": record["raw_prediction"],
+        },
+        ensure_ascii=False,
+    )
+
+
+def write_failed_trace_samples(
+    failed_root: Path,
+    records: list[dict[str, object]],
+    *,
+    per_subtype: int,
+) -> tuple[dict[str, dict[str, int]], list[dict[str, object]]]:
+    failed_by_subtype: dict[tuple[str, str], list[dict[str, object]]] = defaultdict(list)
+    totals: Counter = Counter()
+    correct: Counter = Counter()
+    for record in records:
+        key = (str(record["question_type"]), str(record["diagnostic_subtype"]))
+        totals[key] += 1
+        correct[key] += 1 if bool(record["correct"]) else 0
+        if not bool(record["correct"]):
+            failed_by_subtype[key].append(record)
+
+    if failed_root.exists():
+        shutil.rmtree(failed_root)
+
+    written_counts: dict[str, dict[str, int]] = defaultdict(dict)
+    printable_samples: list[dict[str, object]] = []
+    for question_type, subtype in sorted(totals):
+        if correct[(question_type, subtype)] == totals[(question_type, subtype)]:
+            continue
+        samples = failed_by_subtype.get((question_type, subtype), [])[:per_subtype]
+        written_counts[question_type][subtype] = len(samples)
+        subtype_dir = failed_root / safe_label(question_type) / safe_label(subtype)
+        subtype_dir.mkdir(parents=True, exist_ok=True)
+        for index, record in enumerate(samples, start=1):
+            payload = {
+                "id": record["id"],
+                "category": record["category"],
+                "question_type": record["question_type"],
+                "question_type_display": record["question_type_display"],
+                "diagnostic_subtype": record["diagnostic_subtype"],
+                "source_mode": record["source_mode"],
+                "source": record["source"],
+                "gold_answer": record["gold_answer"],
+                "extracted_prediction": record["extracted_prediction"],
+                "correct": record["correct"],
+                "prompt": record["prompt"],
+                "raw_prediction": record["raw_prediction"],
+            }
+            write_json(subtype_dir / f"{index:02d}_{record['id']}.json", payload)
+            (subtype_dir / f"{index:02d}_{record['id']}.txt").write_text(
+                format_failed_trace_sample(record),
+                encoding="utf-8",
+            )
+            printable_samples.append(record)
+
+    return {key: dict(value) for key, value in sorted(written_counts.items())}, printable_samples
+
+
+def format_failed_trace_sample(record: dict[str, object]) -> str:
+    return "\n".join(
+        [
+            f"ID: {record['id']}",
+            f"Type: {record['question_type']}",
+            f"Subtype: {record['diagnostic_subtype']}",
+            f"Source mode: {record['source_mode']}",
+            f"Gold answer: {record['gold_answer']}",
+            f"Extracted prediction: {record['extracted_prediction']}",
+            "",
+            "Prompt:",
+            str(record["prompt"]),
+            "",
+            "Model generation:",
+            str(record["raw_prediction"]),
+            "",
+        ]
+    )
+
+
+def print_failed_trace_samples(samples: list[dict[str, object]]) -> None:
+    if not samples:
+        return
+    print("\nFAILED TRACE SAMPLES")
+    for record in samples:
+        print("\n" + "=" * 80)
+        print(format_failed_trace_sample(record), end="")
 
 
 def build_vllm_generation_prompt(tokenizer, prompt: str) -> str:
@@ -507,15 +688,24 @@ def main() -> None:
     metadata_by_id = load_row_metadata(args.train_csv)
     split_assignments = None
     output_split_name = args.split
+    skipped_eval_ineligible = 0
     if args.split_csv:
         split_assignments = load_split_assignments(args.split_csv)
         eval_split_names = args.eval_splits or ["eval"]
         selected_ids = select_ids_for_splits(split_assignments, eval_split_names)
         eval_examples = [example for example in examples if example.id in selected_ids]
+        before_filter = len(eval_examples)
+        eval_examples = [
+            example
+            for example in eval_examples
+            if is_eval_eligible_metadata(metadata_by_id.get(example.id, {}))
+        ]
+        skipped_eval_ineligible = before_filter - len(eval_examples)
         output_split_name = "_".join(eval_split_names)
         if not eval_examples:
             raise SystemExit(
-                f"No evaluation examples matched splits {eval_split_names!r} in {args.split_csv!r}."
+                f"No eval-eligible examples matched splits {eval_split_names!r} in {args.split_csv!r}. "
+                f"Skipped eval-ineligible rows: {skipped_eval_ineligible}"
             )
     else:
         train_examples, val_examples = stratified_split(
@@ -524,6 +714,13 @@ def main() -> None:
             seed=args.seed,
         )
         eval_examples = val_examples if args.split == "val" else train_examples
+        before_filter = len(eval_examples)
+        eval_examples = [
+            example
+            for example in eval_examples
+            if is_eval_eligible_metadata(metadata_by_id.get(example.id, {}))
+        ]
+        skipped_eval_ineligible = before_filter - len(eval_examples)
     if args.max_eval_samples is not None:
         eval_examples = eval_examples[: args.max_eval_samples]
 
@@ -535,19 +732,30 @@ def main() -> None:
     results = [
         score_prediction(
             example_id=example.id,
-            category=example.category,
+            category=row_category(example, metadata_by_id.get(example.id, {})),
             raw_prediction=raw_prediction,
             gold_answer=example.answer or "",
         )
         for example, raw_prediction in zip(eval_examples, raw_predictions)
     ]
+    evaluation_records = build_evaluation_records(eval_examples, results, metadata_by_id)
+    adapter_root = Path(args.adapter_dir).resolve().parent
+    report_dir = Path(args.report_dir).resolve() if args.report_dir else adapter_root
+    failed_trace_dir = report_dir / f"{output_split_name}_failed_traces"
+    failed_sample_counts, failed_samples = write_failed_trace_samples(
+        failed_trace_dir,
+        evaluation_records,
+        per_subtype=args.failed_traces_per_subtype,
+    )
 
     summary = summarize_results(results)
     summary.update(
         {
+            "mode": "full_inference",
             "backend": args.backend,
             "model_path": model_path,
             "adapter_dir": str(Path(args.adapter_dir).resolve()),
+            "report_dir": str(report_dir),
             "split": output_split_name,
             "split_csv": str(Path(args.split_csv).resolve()) if args.split_csv else None,
             "eval_splits": args.eval_splits or (["eval"] if args.split_csv else None),
@@ -562,27 +770,28 @@ def main() -> None:
             "metric": "reference/evaluation.py-compatible",
             "numeric_relative_tolerance": 1e-2,
             "numeric_absolute_tolerance": 1e-5,
-            "transformation_rules_detail": summarize_transformation_details(
-                eval_examples,
-                results,
-                metadata_by_id,
-            ),
+            "by_type": summarize_by_type(evaluation_records),
+            "failed_trace_dir": str(failed_trace_dir),
+            "failed_trace_sample_counts": failed_sample_counts,
             "evaluated_examples": len(results),
+            "skipped_eval_ineligible": skipped_eval_ineligible,
         }
     )
 
     print(json.dumps(summary, indent=2, ensure_ascii=False))
+    if not args.no_print_failed_traces:
+        print_failed_trace_samples(failed_samples)
 
-    adapter_root = Path(args.adapter_dir).resolve().parent
-    write_json(adapter_root / f"{output_split_name}_summary.json", summary)
+    report_dir.mkdir(parents=True, exist_ok=True)
+    write_json(report_dir / f"{output_split_name}_summary.json", summary)
 
     if args.predictions_jsonl:
         prediction_path = Path(args.predictions_jsonl)
     else:
-        prediction_path = adapter_root / f"{output_split_name}_predictions.jsonl"
+        prediction_path = report_dir / f"{output_split_name}_predictions.jsonl"
     prediction_path.parent.mkdir(parents=True, exist_ok=True)
     prediction_path.write_text(
-        "\n".join(result_to_json(result) for result in results) + "\n",
+        "\n".join(prediction_record_to_json(record) for record in evaluation_records) + "\n",
         encoding="utf-8",
     )
 

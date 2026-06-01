@@ -5,32 +5,41 @@
   "train_csv": "/Users/taido/Desktop/Tai/NVIDIA Nemotron Model Reasoning/experiments/type_diagnostics/data/bit_manipulation/bit_manipulation.csv",
   "split_csv": "/Users/taido/Desktop/Tai/NVIDIA Nemotron Model Reasoning/experiments/type_diagnostics/data/bit_manipulation/splits_80_10_10.csv",
   "seed": 42,
-  "total": 1758,
+  "total": 6117,
   "by_subtype": {
-    "huikang_real": 1364,
-    "huikang_synthetic": 394
+    "huikang_real_extra_trace": 238,
+    "huikang_real_rule_found": 1364,
+    "huikang_synthetic_matching": 4515
   },
   "by_source_mode": {
     "huikang_real_bit": 1364,
-    "synthetic": 394
+    "huikang_real_bit_extra_trace": 238,
+    "huikang_synthetic_matching": 4515
+  },
+  "by_eval_eligible": {
+    "false": 4753,
+    "true": 1364
+  },
+  "by_split_policy": {
+    "auto": 1364,
+    "train_only": 4753
   },
   "split_counts": {
-    "eval_holdout": 175,
-    "grpo_holdout": 175,
-    "sft_train": 1408
+    "eval_holdout": 136,
+    "grpo_holdout": 136,
+    "sft_train": 5845
   },
   "by_split_subtype": {
     "sft_train": {
-      "huikang_real": 1092,
-      "huikang_synthetic": 316
+      "huikang_real_extra_trace": 238,
+      "huikang_real_rule_found": 1092,
+      "huikang_synthetic_matching": 4515
     },
     "eval_holdout": {
-      "huikang_real": 136,
-      "huikang_synthetic": 39
+      "huikang_real_rule_found": 136
     },
     "grpo_holdout": {
-      "huikang_real": 136,
-      "huikang_synthetic": 39
+      "huikang_real_rule_found": 136
     }
   }
 }

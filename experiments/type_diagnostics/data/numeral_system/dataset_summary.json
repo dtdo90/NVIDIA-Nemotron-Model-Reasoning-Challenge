@@ -12,6 +12,12 @@
   "by_source_mode": {
     "real": 1576
   },
+  "by_eval_eligible": {
+    "true": 1576
+  },
+  "by_split_policy": {
+    "auto": 1576
+  },
   "split_counts": {
     "eval_holdout": 158,
     "grpo_holdout": 158,

@@ -24,6 +24,14 @@ COMPETITION_MAX_TOKENS = 7680
 DEFAULT_MODEL_PATH = "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16"
 MODEL_PATH = os.environ.get("MODEL_PATH") or os.environ.get("BASE_MODEL_PATH") or DEFAULT_MODEL_PATH
 os.environ.setdefault("PYTORCH_CUDA_ALLOC_CONF", "expandable_segments:True")
+TRAIN_ONLY_SOURCE_MODES = {
+    "huikang_real_bit_extra_trace",
+    "huikang_synthetic_matching",
+    "phase1_synthetic_direct_template",
+    "single_phase_synthetic_direct_template",
+    "single_phase_synthetic_text_cipher_confusion",
+    "synthetic",
+}
 
 from nemotron_baseline.data import (
     infer_category,
@@ -51,6 +59,21 @@ class RLExample:
     answer: str
     category: str
     label: str | None = None
+    eval_eligible: bool = True
+    split_policy: str = "auto"
+    source_mode: str = "unknown"
+
+
+def parse_bool(value: str | None, *, default: bool = True) -> bool:
+    if value is None or value == "":
+        return default
+    return value.strip().lower() not in {"0", "false", "no", "n", "off"}
+
+
+def row_eval_eligible(row: dict[str, str]) -> bool:
+    if (row.get("source_mode") or "") in TRAIN_ONLY_SOURCE_MODES:
+        return False
+    return parse_bool(row.get("eval_eligible"), default=True)
 
 
 def load_config_defaults(config_path: str | None) -> dict[str, object]:
@@ -279,6 +302,9 @@ def load_training_examples(csv_path: str) -> list[RLExample]:
                     answer=answer,
                     category=category,
                     label=row.get("label"),
+                    eval_eligible=row_eval_eligible(row),
+                    split_policy=(row.get("split_policy") or "auto").strip() or "auto",
+                    source_mode=(row.get("source_mode") or "unknown").strip() or "unknown",
                 )
             )
     if not examples:
@@ -323,6 +349,7 @@ def build_preflight_summary(
     split_assignments: dict[str, str],
     selected_ids: set[str],
     effective_batch: int,
+    skipped_eval_ineligible: int,
 ) -> dict[str, object]:
     example_ids = {example.id for example in examples}
     selected_missing_ids = sorted(selected_ids - example_ids)
@@ -344,6 +371,7 @@ def build_preflight_summary(
         "sft_adapter_dir": str(Path(args.sft_adapter_dir).resolve()) if args.sft_adapter_dir else None,
         "total_rows": len(examples),
         "train_rows": len(train_examples),
+        "skipped_eval_ineligible_rows": skipped_eval_ineligible,
         "duplicate_id_rows": duplicate_count,
         "train_category_counts": summarize_categories(train_examples),
         "split_counts": summarize_split_assignments(split_assignments),
@@ -392,10 +420,13 @@ def main() -> None:
     split_assignments = load_split_assignments(args.split_csv)
     selected_ids = select_ids_for_splits(split_assignments, args.train_splits)
     examples = load_training_examples(args.train_csv)
-    train_examples = [example for example in examples if example.id in selected_ids]
+    selected_examples = [example for example in examples if example.id in selected_ids]
+    skipped_eval_ineligible = sum(1 for example in selected_examples if not example.eval_eligible)
+    train_examples = [example for example in selected_examples if example.eval_eligible]
     if not train_examples:
         raise SystemExit(
-            f"No GRPO training examples matched splits {args.train_splits!r} in {args.split_csv!r}."
+            f"No eval-eligible GRPO training examples matched splits {args.train_splits!r} in {args.split_csv!r}. "
+            f"Skipped eval-ineligible rows: {skipped_eval_ineligible}."
         )
     if args.max_train_samples is not None:
         train_examples = train_examples[: args.max_train_samples]
@@ -408,6 +439,7 @@ def main() -> None:
             split_assignments=split_assignments,
             selected_ids=selected_ids,
             effective_batch=effective_batch,
+            skipped_eval_ineligible=skipped_eval_ineligible,
         )
         print(json.dumps(summary, indent=2, ensure_ascii=False))
         return
@@ -540,6 +572,7 @@ def main() -> None:
     dataset_summary = {
         "total_examples": len(examples),
         "train_examples": len(train_examples),
+        "skipped_eval_ineligible_examples": skipped_eval_ineligible,
         "train_category_counts": summarize_categories(train_examples),
         "split_counts": summarize_split_assignments(split_assignments),
     }

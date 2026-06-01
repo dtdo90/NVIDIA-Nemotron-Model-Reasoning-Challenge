@@ -12,6 +12,7 @@ from .common import (
     DATA_DIR,
     QUESTION_TYPES,
     SPLIT_NAMES,
+    assert_type_dataset_fresh,
     load_split_assignments,
     normalize_question_type,
     read_csv_rows,
@@ -75,6 +76,7 @@ def load_diagnostic_train_examples(paths) -> tuple[list, list[dict[str, str]], d
             f"  python3 experiments/type_diagnostics/prepare_type_datasets.py --question-type {paths.slug}"
         )
 
+    assert_type_dataset_fresh(paths.slug, type_csv=paths.train_csv)
     rows, _ = read_csv_rows(paths.train_csv)
     assignments = load_split_assignments(paths.split_csv)
     validate_split_assignments(rows, assignments, split_csv=paths.split_csv)

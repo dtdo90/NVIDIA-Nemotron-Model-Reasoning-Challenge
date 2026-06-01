@@ -10,7 +10,9 @@ from pathlib import Path
 from .common import (
     DATA_DIR,
     QUESTION_TYPES,
+    assert_type_dataset_fresh,
     classify_subtype,
+    is_eval_eligible,
     load_split_assignments,
     normalize_question_type,
     read_csv_rows,
@@ -83,15 +85,19 @@ def parse_args(default_question_type: str | None = None) -> argparse.Namespace:
 
 
 def load_eval_examples(paths, eval_splits: list[str], max_eval_samples: int | None) -> list[EvalExample]:
+    assert_type_dataset_fresh(paths.slug, type_csv=paths.train_csv)
     rows, _ = read_csv_rows(paths.train_csv)
     assignments = load_split_assignments(paths.split_csv)
     validate_split_assignments(rows, assignments, split_csv=paths.split_csv)
     selected_rows = select_rows_for_splits(rows, assignments, eval_splits)
+    skipped_ineligible = [row for row in selected_rows if not is_eval_eligible(row)]
+    selected_rows = [row for row in selected_rows if is_eval_eligible(row)]
     if max_eval_samples is not None:
         selected_rows = selected_rows[:max_eval_samples]
     if not selected_rows:
         raise SystemExit(
-            f"No rows selected for {paths.slug} splits {eval_splits!r} in {paths.split_csv}"
+            f"No eval-eligible rows selected for {paths.slug} splits {eval_splits!r} in {paths.split_csv}. "
+            f"Skipped eval-ineligible rows: {len(skipped_ineligible)}"
         )
 
     examples: list[EvalExample] = []

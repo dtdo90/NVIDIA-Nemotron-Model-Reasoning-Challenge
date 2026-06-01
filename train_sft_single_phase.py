@@ -60,6 +60,13 @@ class Example:
     generated_cot: str = ""
     assistant_content: str = ""
     source_mode: str = "unknown"
+    append_answer_instruction: bool = True
+
+
+def parse_bool(value: str | None, *, default: bool = True) -> bool:
+    if value is None or value == "":
+        return default
+    return value.strip().lower() not in {"0", "false", "no", "n", "off"}
 
 
 def default_model_path() -> str:
@@ -152,6 +159,10 @@ def load_examples(path: Path) -> list[Example]:
                     generated_cot=((row.get("generated_cot") or "").strip() if has_cot else ""),
                     assistant_content=(row.get("assistant_content", "").strip() if has_assistant else ""),
                     source_mode=(row.get("source_mode") or "unknown").strip() or "unknown",
+                    append_answer_instruction=parse_bool(
+                        row.get("append_answer_instruction"),
+                        default=True,
+                    ),
                 )
             )
     if not examples:
@@ -245,6 +256,25 @@ def assistant_end_token(tokenizer) -> str:
     return tokenizer.eos_token or "<|im_end|>"
 
 
+def completion_after_generation_prompt(prompt_text: str, assistant_content: str) -> str:
+    """Return only the assistant continuation that should be scored.
+
+    Nemotron's chat template opens the generation turn with
+    ``<|im_start|>assistant\n<think>\n`` when thinking is enabled. Most of our
+    stored CoT traces are self-contained and therefore start with ``<think>``.
+    During SFT, we score the continuation after the prompt-opened think tag, so
+    the completion must not introduce a second opening tag.
+    """
+
+    if prompt_text.rstrip().endswith("<think>") and assistant_content.lstrip().startswith("<think>"):
+        content = assistant_content.lstrip()
+        content = content[len("<think>") :]
+        if content.startswith("\n"):
+            content = content[1:]
+        return content
+    return assistant_content
+
+
 def tokenize_masked_example(
     tokenizer,
     example: Example,
@@ -254,7 +284,7 @@ def tokenize_masked_example(
     prompt_text = build_competition_prompt(
         tokenizer,
         example.prompt,
-        append_answer_instruction=True,
+        append_answer_instruction=example.append_answer_instruction,
     )
     assistant_content = build_assistant_trace_content(
         example.answer,
@@ -262,7 +292,7 @@ def tokenize_masked_example(
         assistant_content=example.assistant_content,
     )
     end_token = assistant_end_token(tokenizer)
-    completion_text = assistant_content
+    completion_text = completion_after_generation_prompt(prompt_text, assistant_content)
     if end_token and not completion_text.endswith(end_token):
         completion_text += end_token
 

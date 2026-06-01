@@ -16,26 +16,34 @@
     "real": 118,
     "single_phase_synthetic_direct_template": 325
   },
+  "by_eval_eligible": {
+    "false": 541,
+    "true": 118
+  },
+  "by_split_policy": {
+    "auto": 118,
+    "train_only": 541
+  },
   "split_counts": {
-    "eval_holdout": 66,
-    "grpo_holdout": 66,
-    "sft_train": 527
+    "eval_holdout": 12,
+    "grpo_holdout": 12,
+    "sft_train": 635
   },
   "by_split_subtype": {
     "sft_train": {
       "ba_dc": 47,
-      "direct_template_template0134": 320,
-      "direct_template_template3401": 160
+      "direct_template_template0134": 390,
+      "direct_template_template3401": 198
     },
     "eval_holdout": {
       "ba_dc": 6,
-      "direct_template_template0134": 40,
-      "direct_template_template3401": 20
+      "direct_template_template0134": 5,
+      "direct_template_template3401": 1
     },
     "grpo_holdout": {
       "ba_dc": 6,
-      "direct_template_template0134": 40,
-      "direct_template_template3401": 20
+      "direct_template_template0134": 5,
+      "direct_template_template3401": 1
     }
   }
 }

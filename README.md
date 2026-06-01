@@ -19,14 +19,21 @@ Core files:
 
 Current validated single-phase counts:
 
-1. Full SFT corpus: `12487` rows
-2. SFT training bucket, named `sft_train`: `9982` rows
-3. Optional GRPO train bucket, named `eval_holdout`: `1255` rows
-4. Final local eval bucket, named `grpo_holdout`: `1250` rows
+1. Full SFT corpus: `17160` rows
+2. SFT training bucket, named `sft_train`: `15459` rows
+3. Optional GRPO train bucket, named `eval_holdout`: `853` rows
+4. Final local eval bucket, named `grpo_holdout`: `848` rows
 
 The single-phase corpus contains real traces plus selected synthetic curriculum
 rows. Bit manipulation uses HuiKang-style traces, while transformation-rule and
 text-cipher traces use the cleaned methodology formats.
+The HuiKang `-p0` alternate bit traces are excluded because they duplicate real
+bit-manipulation prompts and answers.
+Bit manipulation now includes all `1602` HuiKang real traces plus `4515`
+HuiKang `matching` skill-drill rows. The extra real traces and matching drills
+are marked train-only, so they strengthen SFT but are excluded from eval metrics.
+Synthetic curriculum rows are also train-only. The two holdout buckets are drawn
+only from eval-eligible real/current-evaluation rows.
 
 The split ratios are approximate. The important invariant is that the full
 single-phase run and the per-question-type diagnostic runs use the same row-level
@@ -38,11 +45,12 @@ python3 experiments/type_diagnostics/prepare_type_datasets.py
 
 This writes the seven per-type split files and copies their union to
 `data/single_phase_training_clean/single_phase_splits_80_10_10.csv`.
+Type-diagnostic train/infer scripts check freshness against the root SFT CSV
+and stop if the cached per-type files are stale.
 
 ## Install
 
-Use an H100/H200-class machine when possible. RTX6000/L40S can work with smaller
-micro-batches and gradient checkpointing.
+Use an RTX6000/H100/H200 machine when possible. RTX6000/H100 would need gradient checkpointing. 
 
 ```bash
 pip install -r requirements.txt
@@ -186,6 +194,13 @@ python3 infer_eval.py \
 
 For a smoke test, add `--max-eval-samples 20`. If vLLM is unavailable, pass
 `--backend transformers`.
+
+`infer_eval.py` reports accuracy by question type and diagnostic subtype under
+`by_type`. For every subtype that is not 100% correct, it writes and prints up
+to three failed generations by default. Add `--no-print-failed-traces` to keep
+stdout compact. Failed samples are saved under
+`{adapter_parent}/{split}_failed_traces/{type}/{subtype}/`, or under
+`--report-dir` if provided.
 
 The competition metric expects the final answer in `\boxed{...}`.
 

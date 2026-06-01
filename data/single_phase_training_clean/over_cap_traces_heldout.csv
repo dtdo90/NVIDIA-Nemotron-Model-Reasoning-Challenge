@@ -59,7 +59,7 @@ row_k: [961,x],[973,x],[985,x],[997,x],[1009,x],[1021,x],[1033,x],[1045,x],[1057
 No k works, so x*y+1 fails
 
 Now try x*y-1
-The current motif is BA_DC|x*y-1|rev
+The current format is BA_DC|x*y-1|rev
 
 Helper row 1
 ]|*$$ = >""""|
@@ -228,7 +228,7 @@ $ = h
 All variables are distinct digits from 0 to 9
 
 Try BA_DC|rev with x*y for operator *
-The current motif is BA_DC|x*y|rev
+The current format is BA_DC|x*y|rev
 
 First same-operator row
 [|*|) = ?'[[
@@ -343,7 +343,7 @@ $ = e
 All variables are distinct digits from 0 to 9
 
 Try BA_DC|rev with x-y for operator -
-The current motif is BA_DC|x-y|rev
+The current format is BA_DC|x-y|rev
 
 Same-operator row
 ?$-{"" = !
@@ -364,7 +364,7 @@ Helper row
 
 Helper RHS length 4 means multiplication
 Try x*y for this helper row
-The current motif is BA_DC|x*y|rev
+The current format is BA_DC|x*y|rev
 
 Under BA_DC
 ?) -> )? = 10a+f
@@ -535,7 +535,7 @@ Let
 All variables are distinct digits from 0 to 9
 
 Try BA_DC|rev with x*y for operator *
-The current motif is BA_DC|x*y|rev
+The current format is BA_DC|x*y|rev
 
 Same-operator row
 [#*""% = %/`<

@@ -23,6 +23,14 @@ DATA_DIR = WORKSPACE / "data"
 OUTPUT_DIR = WORKSPACE / "outputs"
 REPORT_DIR = WORKSPACE / "reports"
 SPLIT_NAMES = ("sft_train", "eval_holdout", "grpo_holdout")
+TRAIN_ONLY_SOURCE_MODES = {
+    "huikang_real_bit_extra_trace",
+    "huikang_synthetic_matching",
+    "phase1_synthetic_direct_template",
+    "single_phase_synthetic_direct_template",
+    "single_phase_synthetic_text_cipher_confusion",
+    "synthetic",
+}
 
 QUESTION_TYPES: dict[str, dict[str, str]] = {
     "bit_manipulation": {
@@ -184,6 +192,10 @@ def template_pass(text: str) -> str | None:
     current: str | None = None
     for raw_line in text.splitlines():
         line = raw_line.strip().lower().replace(" ", "")
+        if line == "template0134passesallexamples":
+            return "template0134"
+        if line == "template3401passesallexamples":
+            return "template3401"
         if line == "trytemplate0134":
             current = "template0134"
             continue
@@ -251,9 +263,13 @@ def classify_symbol_subtype(row: dict[str, str]) -> str:
 def classify_bit_subtype(row: dict[str, str]) -> str:
     source_mode = row.get("source_mode", "")
     if source_mode == "huikang_real_bit":
-        return "huikang_real"
+        return "huikang_real_rule_found"
+    if source_mode == "huikang_real_bit_extra_trace":
+        return "huikang_real_extra_trace"
+    if source_mode == "huikang_synthetic_matching":
+        return "huikang_synthetic_matching"
     if source_mode == "synthetic":
-        return "huikang_synthetic"
+        return "huikang_synthetic_legacy"
     return safe_label(source_mode or "unknown")
 
 
@@ -292,14 +308,35 @@ def split_counts(size: int) -> dict[str, int]:
     }
 
 
+def is_eval_eligible(row: dict[str, str]) -> bool:
+    if row.get("source_mode", "") in TRAIN_ONLY_SOURCE_MODES:
+        return False
+    value = (row.get("eval_eligible") or "true").strip().lower()
+    return value not in {"0", "false", "no", "n", "off"}
+
+
+def is_train_only(row: dict[str, str]) -> bool:
+    return (
+        row.get("source_mode", "") in TRAIN_ONLY_SOURCE_MODES
+        or (row.get("split_policy") or "").strip().lower() == "train_only"
+        or not is_eval_eligible(row)
+    )
+
+
 def build_stratified_splits(rows: list[dict[str, str]], *, seed: int = 42) -> dict[str, str]:
     rng = random.Random(seed)
     grouped: dict[str, list[dict[str, str]]] = defaultdict(list)
     for row in rows:
+        if is_train_only(row):
+            continue
         key = f"{row['diagnostic_subtype']}|{row.get('source_mode', 'unknown')}"
         grouped[key].append(row)
 
     assignments: dict[str, str] = {}
+    for row in rows:
+        if is_train_only(row):
+            assignments[row["id"]] = "sft_train"
+
     for key in sorted(grouped):
         bucket = list(grouped[key])
         rng.shuffle(bucket)
@@ -320,10 +357,14 @@ def build_stratified_splits(rows: list[dict[str, str]], *, seed: int = 42) -> di
 def summarize_rows(rows: list[dict[str, str]], assignments: dict[str, str] | None = None) -> dict[str, object]:
     subtype_counts = Counter(row["diagnostic_subtype"] for row in rows)
     source_counts = Counter(row.get("source_mode", "unknown") for row in rows)
+    eval_eligible_counts = Counter("true" if is_eval_eligible(row) else "false" for row in rows)
+    split_policy_counts = Counter(row.get("split_policy", "auto") or "auto" for row in rows)
     payload: dict[str, object] = {
         "total": len(rows),
         "by_subtype": dict(sorted(subtype_counts.items())),
         "by_source_mode": dict(sorted(source_counts.items())),
+        "by_eval_eligible": dict(sorted(eval_eligible_counts.items())),
+        "by_split_policy": dict(sorted(split_policy_counts.items())),
     }
     if assignments:
         split_counts_payload = Counter(assignments[row["id"]] for row in rows)
@@ -377,6 +418,80 @@ def validate_split_assignments(
     invalid_splits = sorted(set(assignments.values()) - set(SPLIT_NAMES))
     if invalid_splits:
         raise ValueError(f"{split_csv} has invalid split names: {invalid_splits}")
+
+
+FRESHNESS_COLUMNS = (
+    "prompt",
+    "answer",
+    "generated_cot",
+    "assistant_content",
+    "label",
+    "category",
+    "source",
+    "source_mode",
+    "eval_eligible",
+    "split_policy",
+    "append_answer_instruction",
+)
+
+
+def type_dataset_freshness_issues(
+    question_type: str,
+    *,
+    type_csv: str | Path,
+    source_csv: str | Path = SOURCE_CSV,
+) -> list[str]:
+    """Return human-readable issues if a cached type CSV differs from source."""
+    slug = normalize_question_type(question_type)
+    source_rows, _ = load_type_rows(slug, Path(source_csv))
+    type_rows, _ = read_csv_rows(type_csv)
+    source_by_id = {row["id"]: row for row in source_rows}
+    type_by_id = {row["id"]: row for row in type_rows}
+
+    issues: list[str] = []
+    missing = sorted(set(source_by_id) - set(type_by_id))
+    extra = sorted(set(type_by_id) - set(source_by_id))
+    if missing:
+        issues.append(f"missing ids from type CSV: {missing[:5]}")
+    if extra:
+        issues.append(f"extra ids in type CSV: {extra[:5]}")
+
+    changed: list[str] = []
+    for row_id in sorted(set(source_by_id) & set(type_by_id)):
+        source_row = source_by_id[row_id]
+        type_row = type_by_id[row_id]
+        for column in FRESHNESS_COLUMNS:
+            if source_row.get(column, "") != type_row.get(column, ""):
+                changed.append(f"{row_id}:{column}")
+                break
+        expected_subtype = classify_subtype(source_row)
+        if type_row.get("diagnostic_subtype", "") != expected_subtype:
+            changed.append(f"{row_id}:diagnostic_subtype")
+    if changed:
+        issues.append(f"stale row content: {changed[:5]}")
+    return issues
+
+
+def assert_type_dataset_fresh(
+    question_type: str,
+    *,
+    type_csv: str | Path,
+    source_csv: str | Path = SOURCE_CSV,
+) -> None:
+    issues = type_dataset_freshness_issues(
+        question_type,
+        type_csv=type_csv,
+        source_csv=source_csv,
+    )
+    if not issues:
+        return
+    issue_text = "\n  - ".join(issues)
+    raise SystemExit(
+        f"{type_csv} is stale relative to {source_csv}.\n"
+        f"  - {issue_text}\n"
+        "Regenerate diagnostics with:\n"
+        "  python3 experiments/type_diagnostics/prepare_type_datasets.py"
+    )
 
 
 def select_rows_for_splits(
