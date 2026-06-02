@@ -7,7 +7,9 @@ import csv
 import gc
 import inspect
 import json
+import math
 import os
+import random
 import sys
 import zipfile
 from dataclasses import dataclass
@@ -109,6 +111,15 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--min-learning-rate", type=float, default=2e-6)
     parser.add_argument("--max-seq-len", type=int, default=DEFAULT_MAX_SEQ_LEN)
     parser.add_argument("--gradient-checkpointing", action="store_true")
+    parser.add_argument(
+        "--balanced-accumulation",
+        action="store_true",
+        help=(
+            "Order training rows so each gradient-accumulation window is "
+            "approximately balanced by question category. This preserves one "
+            "puzzle per sequence and only changes sampler order."
+        ),
+    )
     parser.add_argument("--lora-dropout", type=float, default=0.0)
     parser.add_argument(
         "--optim",
@@ -230,6 +241,126 @@ def split_counts(assignments: dict[str, str] | None) -> dict[str, int] | None:
     for split in assignments.values():
         counts[split] = counts.get(split, 0) + 1
     return dict(sorted(counts.items()))
+
+
+def balanced_accumulation_order(
+    groups: list[str],
+    *,
+    effective_batch_size: int,
+    seed: int,
+) -> list[int]:
+    """Spread group labels evenly across optimizer-step accumulation windows."""
+    if not groups:
+        return []
+    if effective_batch_size <= 1:
+        return list(range(len(groups)))
+
+    rng = random.Random(seed)
+    n_windows = math.ceil(len(groups) / effective_batch_size)
+    windows: list[list[int]] = [[] for _ in range(n_windows)]
+    window_order = list(range(n_windows))
+    rng.shuffle(window_order)
+
+    by_group: dict[str, list[int]] = {}
+    for index, group in enumerate(groups):
+        by_group.setdefault(group or "unknown", []).append(index)
+
+    assigned = 0
+    for group in sorted(by_group):
+        indices = by_group[group]
+        rng.shuffle(indices)
+        for index in indices:
+            windows[window_order[assigned % n_windows]].append(index)
+            assigned += 1
+
+    order: list[int] = []
+    for window in windows:
+        rng.shuffle(window)
+        order.extend(window)
+    return order
+
+
+class BalancedAccumulationSampler:
+    """Sampler that preserves examples but balances groups per update window."""
+
+    def __init__(
+        self,
+        groups: list[str],
+        *,
+        effective_batch_size: int,
+        seed: int,
+    ) -> None:
+        self.order = balanced_accumulation_order(
+            groups,
+            effective_batch_size=effective_batch_size,
+            seed=seed,
+        )
+
+    def __iter__(self):
+        return iter(self.order)
+
+    def __len__(self) -> int:
+        return len(self.order)
+
+
+def make_balanced_trainer_cls(trainer_cls):
+    class BalancedAccumulationTrainer(trainer_cls):
+        def __init__(
+            self,
+            *args,
+            balanced_accumulation_groups: list[str] | None = None,
+            balanced_accumulation_effective_batch_size: int = 1,
+            balanced_accumulation_seed: int = 42,
+            min_learning_rate: float = 0.0,
+            **kwargs,
+        ):
+            self._balanced_accumulation_groups = balanced_accumulation_groups
+            self._balanced_accumulation_effective_batch_size = (
+                balanced_accumulation_effective_batch_size
+            )
+            self._balanced_accumulation_seed = balanced_accumulation_seed
+            self._min_learning_rate = min_learning_rate
+            super().__init__(*args, **kwargs)
+
+        def _get_train_sampler(self, *args, **kwargs):
+            if self._balanced_accumulation_groups:
+                if len(self._balanced_accumulation_groups) != len(self.train_dataset):
+                    raise ValueError(
+                        "balanced_accumulation_groups length must match train_dataset"
+                    )
+                return BalancedAccumulationSampler(
+                    self._balanced_accumulation_groups,
+                    effective_batch_size=(
+                        self._balanced_accumulation_effective_batch_size
+                    ),
+                    seed=self._balanced_accumulation_seed,
+                )
+            return super()._get_train_sampler(*args, **kwargs)
+
+        def create_scheduler(self, num_training_steps: int, optimizer=None):
+            if self.lr_scheduler is None:
+                from torch.optim.lr_scheduler import LambdaLR  # type: ignore
+
+                optimizer = self.optimizer if optimizer is None else optimizer
+                base_learning_rate = float(getattr(self.args, "learning_rate", 0.0))
+                min_lr_ratio = (
+                    self._min_learning_rate / base_learning_rate
+                    if base_learning_rate > 0
+                    else 0.0
+                )
+                num_warmup_steps = self.args.get_warmup_steps(num_training_steps)
+                self.lr_scheduler = LambdaLR(
+                    optimizer,
+                    lambda step: cosine_with_min_lr_lambda(
+                        step,
+                        num_warmup_steps=num_warmup_steps,
+                        num_training_steps=num_training_steps,
+                        min_lr_ratio=min_lr_ratio,
+                    ),
+                )
+            return self.lr_scheduler
+
+    return BalancedAccumulationTrainer
 
 
 def single_phase_train_examples(
@@ -388,6 +519,26 @@ def make_min_lr_callback(trainer_callback_cls, min_learning_rate: float):
     return MinLearningRateCallback()
 
 
+def cosine_with_min_lr_lambda(
+    current_step: int,
+    *,
+    num_warmup_steps: int,
+    num_training_steps: int,
+    min_lr_ratio: float,
+) -> float:
+    min_lr_ratio = max(0.0, min(1.0, min_lr_ratio))
+    if current_step < num_warmup_steps:
+        warmup_ratio = float(current_step) / float(max(1, num_warmup_steps))
+        return max(min_lr_ratio, warmup_ratio)
+
+    progress = float(current_step - num_warmup_steps) / float(
+        max(1, num_training_steps - num_warmup_steps)
+    )
+    progress = max(0.0, min(1.0, progress))
+    cosine_ratio = 0.5 * (1.0 + math.cos(math.pi * progress))
+    return min_lr_ratio + (1.0 - min_lr_ratio) * cosine_ratio
+
+
 def source_counts(examples: list[Example]) -> dict[str, int]:
     counts: dict[str, int] = {}
     for example in examples:
@@ -460,10 +611,12 @@ def print_summary(
         "lora_rank": MAX_LORA_RANK,
         "lora_target_modules": LORA_TARGET_MODULES,
         "learning_rate": args.learning_rate,
-        "lr_scheduler_type": "cosine",
+        "lr_scheduler_type": "cosine_with_min_lr",
         "warmup_ratio": 0.05,
         "min_learning_rate": args.min_learning_rate,
         "gradient_checkpointing": args.gradient_checkpointing,
+        "balanced_accumulation": args.balanced_accumulation,
+        "balanced_accumulation_group": "category" if args.balanced_accumulation else None,
         "per_device_train_batch_size": args.per_device_train_batch_size,
         "gradient_accumulation_steps": args.gradient_accumulation_steps,
         "effective_batch_size": args.per_device_train_batch_size * args.gradient_accumulation_steps,
@@ -551,7 +704,7 @@ def main() -> None:
         warmup_ratio=0.05,
         save_strategy="no",
         report_to="none",
-        group_by_length=True,
+        group_by_length=not args.balanced_accumulation,
         dataloader_num_workers=4,
         dataloader_pin_memory=True,
         remove_unused_columns=False,
@@ -559,17 +712,32 @@ def main() -> None:
         gradient_checkpointing_kwargs={"use_reentrant": False},
         seed=42,
     )
-    trainer = Trainer(
-        model=model,
-        train_dataset=dataset,
-        data_collator=MaskedCausalLMDataCollator(tokenizer),
-        args=trainer_args,
-        callbacks=[make_min_lr_callback(TrainerCallback, args.min_learning_rate)],
-    )
+    trainer_cls = make_balanced_trainer_cls(Trainer)
+    balanced_groups = [example.category for example in train_examples] if args.balanced_accumulation else None
+    trainer_kwargs = {
+        "model": model,
+        "train_dataset": dataset,
+        "data_collator": MaskedCausalLMDataCollator(tokenizer),
+        "args": trainer_args,
+        "callbacks": [make_min_lr_callback(TrainerCallback, args.min_learning_rate)],
+        "min_learning_rate": args.min_learning_rate,
+    }
+    if args.balanced_accumulation:
+        trainer_kwargs.update(
+            {
+                "balanced_accumulation_groups": balanced_groups,
+                "balanced_accumulation_effective_batch_size": (
+                    args.per_device_train_batch_size * args.gradient_accumulation_steps
+                ),
+                "balanced_accumulation_seed": 42,
+            }
+        )
+    trainer = trainer_cls(**trainer_kwargs)
     print(
         f"Starting single_phase: rows={len(train_examples)}, "
         f"splits={['ALL'] if args.train_all else args.train_splits}, "
-        f"learning_rate={args.learning_rate}"
+        f"learning_rate={args.learning_rate}, "
+        f"balanced_accumulation={args.balanced_accumulation}"
     )
     trainer.train()
 
@@ -602,7 +770,7 @@ def main() -> None:
             ),
             "max_seq_len": args.max_seq_len,
             "learning_rate": args.learning_rate,
-            "lr_scheduler_type": "cosine",
+            "lr_scheduler_type": "cosine_with_min_lr",
             "warmup_ratio": 0.05,
             "min_learning_rate": args.min_learning_rate,
             "lora_rank": MAX_LORA_RANK,
@@ -610,6 +778,10 @@ def main() -> None:
             "gradient_checkpointing": args.gradient_checkpointing,
             "lora_dropout": args.lora_dropout,
             "optim": args.optim,
+            "balanced_accumulation": args.balanced_accumulation,
+            "balanced_accumulation_group": (
+                "category" if args.balanced_accumulation else None
+            ),
             "per_device_train_batch_size": args.per_device_train_batch_size,
             "gradient_accumulation_steps": args.gradient_accumulation_steps,
             "effective_batch_size": args.per_device_train_batch_size * args.gradient_accumulation_steps,

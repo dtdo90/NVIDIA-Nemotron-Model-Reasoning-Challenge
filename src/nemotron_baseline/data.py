@@ -12,6 +12,7 @@ from typing import Iterable
 
 CATEGORY_BY_FIRST_SENTENCE = {
     "In Alice's Wonderland, a secret bit manipulation rule transforms 8-bit binary numbers.": "Bit Manipulation",
+    "In Alice's Wonderland, secret processing rules are used on text.": "Bit Manipulation",
     "In Alice's Wonderland, the gravitational constant has been secretly changed.": "Gravity",
     "In Alice's Wonderland, a secret unit conversion is applied to measurements.": "Unit Conversion",
     "In Alice's Wonderland, secret encryption rules are used on text.": "Text Cipher",

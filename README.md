@@ -48,7 +48,17 @@ Use an RTX6000/H100/H200 machine when possible. RTX6000/H100 would need gradient
 ```bash
 pip install -r requirements.txt
 pip uninstall -y torchvision
-pip install --no-build-isolation --no-deps -r requirements-nemotron.txt
+pip install -U pip setuptools wheel packaging ninja einops
+pip install --no-build-isolation --no-deps causal-conv1d mamba-ssm
+```
+
+Install the Nemotron CUDA extensions after PyTorch is installed. If imports fail
+with an undefined-symbol error, rebuild them against the active PyTorch install:
+
+```bash
+pip uninstall -y causal-conv1d mamba-ssm
+MAX_JOBS=8 pip install --no-build-isolation --no-deps --no-cache-dir --force-reinstall --no-binary=causal-conv1d causal-conv1d
+MAX_JOBS=8 pip install --no-build-isolation --no-deps --no-cache-dir --force-reinstall --no-binary=mamba-ssm mamba-ssm
 ```
 
 For vLLM evaluation:
@@ -77,12 +87,15 @@ If your hardware supports, train with batch size 2, or skip gradient-checkpointi
 python3 train_sft_single_phase.py \
   --per-device-train-batch-size 1 \
   --gradient-accumulation-steps 8 \
-  --gradient-checkpointing
+  --gradient-checkpointing \
+  --balanced-accumulation
 ```
 This trains fresh LoRA weights for one epoch at learning rate `2e-4`. By
 default it uses only the `sft_train` rows from
 `data/single_phase_training_clean/single_phase_splits_80_10_10.csv`, which is
 the same split assignment used by the type-diagnostic experiments.
+`--balanced-accumulation` keeps one puzzle per sequence but spreads question
+types across each gradient-accumulation update.
 
 1. final adapter: `outputs/sft_single_phase/adapter`
 2. submission zip: `outputs/sft_single_phase/submission.zip`
@@ -182,7 +195,8 @@ Train one question type:
 ```bash
 python3 experiments/type_diagnostics/scripts/train_numeric_equation.py \
   --per-device-train-batch-size 1 \
-  --gradient-accumulation-steps 8
+  --gradient-accumulation-steps 8 \
+  --balanced-accumulation
 ```
 
 Evaluate one question type on its held-out `eval_holdout` split:

@@ -1,5 +1,9 @@
 # Install after PyTorch is already installed.
-# Use: pip install --no-build-isolation --no-deps -r requirements-nemotron.txt
+# Prefer rebuilding these CUDA extensions against the active torch install:
+#   pip uninstall -y causal-conv1d mamba-ssm
+#   pip install -U pip setuptools wheel packaging ninja einops
+#   MAX_JOBS=8 pip install --no-build-isolation --no-deps --no-cache-dir --force-reinstall --no-binary=causal-conv1d causal-conv1d
+#   MAX_JOBS=8 pip install --no-build-isolation --no-deps --no-cache-dir --force-reinstall --no-binary=mamba-ssm mamba-ssm
 einops
 causal-conv1d
 mamba-ssm

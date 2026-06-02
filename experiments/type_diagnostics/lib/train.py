@@ -32,6 +32,7 @@ from train_sft_single_phase import (  # type: ignore
     clear_memory,
     default_model_path,
     load_examples,
+    make_balanced_trainer_cls,
     make_min_lr_callback,
     make_sft_config,
     print_trainable_parameters,
@@ -62,6 +63,14 @@ def parse_args(default_question_type: str | None = None) -> argparse.Namespace:
     parser.add_argument("--min-learning-rate", type=float, default=2e-6)
     parser.add_argument("--max-seq-len", type=int, default=DEFAULT_MAX_SEQ_LEN)
     parser.add_argument("--gradient-checkpointing", action="store_true")
+    parser.add_argument(
+        "--balanced-accumulation",
+        action="store_true",
+        help=(
+            "Order training rows so each gradient-accumulation window is "
+            "approximately balanced by diagnostic subtype."
+        ),
+    )
     parser.add_argument("--lora-dropout", type=float, default=0.0)
     parser.add_argument("--optim", default="adamw_torch")
     args = parser.parse_args()
@@ -90,6 +99,23 @@ def load_diagnostic_train_examples(paths) -> tuple[list, list[dict[str, str]], d
     return examples, rows, assignments
 
 
+def diagnostic_balance_groups(
+    rows: list[dict[str, str]],
+    train_examples,
+) -> list[str]:
+    rows_by_id = {row["id"]: row for row in rows}
+    groups: list[str] = []
+    for example in train_examples:
+        row = rows_by_id.get(example.id, {})
+        groups.append(
+            row.get("diagnostic_subtype")
+            or row.get("source_mode")
+            or example.source_mode
+            or example.category
+        )
+    return groups
+
+
 def print_summary(args: argparse.Namespace, paths, train_examples, rows, assignments) -> None:
     train_rows = select_rows_for_splits(rows, assignments, ["sft_train"])
     payload = {
@@ -111,10 +137,14 @@ def print_summary(args: argparse.Namespace, paths, train_examples, rows, assignm
         "lora_target_modules": LORA_TARGET_MODULES,
         "learning_rate": args.learning_rate,
         "num_train_epochs": 1.0,
-        "lr_scheduler_type": "cosine",
+        "lr_scheduler_type": "cosine_with_min_lr",
         "warmup_ratio": 0.05,
         "min_learning_rate": args.min_learning_rate,
         "gradient_checkpointing": args.gradient_checkpointing,
+        "balanced_accumulation": args.balanced_accumulation,
+        "balanced_accumulation_group": "diagnostic_subtype"
+        if args.balanced_accumulation
+        else None,
         "per_device_train_batch_size": args.per_device_train_batch_size,
         "gradient_accumulation_steps": args.gradient_accumulation_steps,
         "effective_batch_size": args.per_device_train_batch_size * args.gradient_accumulation_steps,
@@ -200,7 +230,7 @@ def main(default_question_type: str | None = None) -> None:
         warmup_ratio=0.05,
         save_strategy="no",
         report_to="none",
-        group_by_length=True,
+        group_by_length=not args.balanced_accumulation,
         dataloader_num_workers=4,
         dataloader_pin_memory=True,
         remove_unused_columns=False,
@@ -208,16 +238,33 @@ def main(default_question_type: str | None = None) -> None:
         gradient_checkpointing_kwargs={"use_reentrant": False},
         seed=42,
     )
-    trainer = Trainer(
-        model=model,
-        train_dataset=dataset,
-        data_collator=MaskedCausalLMDataCollator(tokenizer),
-        args=trainer_args,
-        callbacks=[make_min_lr_callback(TrainerCallback, args.min_learning_rate)],
-    )
+    trainer_cls = make_balanced_trainer_cls(Trainer)
+    trainer_kwargs = {
+        "model": model,
+        "train_dataset": dataset,
+        "data_collator": MaskedCausalLMDataCollator(tokenizer),
+        "args": trainer_args,
+        "callbacks": [make_min_lr_callback(TrainerCallback, args.min_learning_rate)],
+        "min_learning_rate": args.min_learning_rate,
+    }
+    if args.balanced_accumulation:
+        trainer_kwargs.update(
+            {
+                "balanced_accumulation_groups": diagnostic_balance_groups(
+                    rows,
+                    train_examples,
+                ),
+                "balanced_accumulation_effective_batch_size": (
+                    args.per_device_train_batch_size * args.gradient_accumulation_steps
+                ),
+                "balanced_accumulation_seed": 42,
+            }
+        )
+    trainer = trainer_cls(**trainer_kwargs)
     print(
         f"Starting {args.question_type}: rows={len(train_examples)}, "
-        f"learning_rate={args.learning_rate}, num_train_epochs=1.0"
+        f"learning_rate={args.learning_rate}, num_train_epochs=1.0, "
+        f"balanced_accumulation={args.balanced_accumulation}"
     )
     trainer.train()
 
@@ -243,7 +290,7 @@ def main(default_question_type: str | None = None) -> None:
             "max_seq_len": args.max_seq_len,
             "learning_rate": args.learning_rate,
             "num_train_epochs": 1.0,
-            "lr_scheduler_type": "cosine",
+            "lr_scheduler_type": "cosine_with_min_lr",
             "warmup_ratio": 0.05,
             "min_learning_rate": args.min_learning_rate,
             "lora_rank": MAX_LORA_RANK,
@@ -251,6 +298,10 @@ def main(default_question_type: str | None = None) -> None:
             "gradient_checkpointing": args.gradient_checkpointing,
             "lora_dropout": args.lora_dropout,
             "optim": args.optim,
+            "balanced_accumulation": args.balanced_accumulation,
+            "balanced_accumulation_group": (
+                "diagnostic_subtype" if args.balanced_accumulation else None
+            ),
             "per_device_train_batch_size": args.per_device_train_batch_size,
             "gradient_accumulation_steps": args.gradient_accumulation_steps,
             "effective_batch_size": args.per_device_train_batch_size * args.gradient_accumulation_steps,
