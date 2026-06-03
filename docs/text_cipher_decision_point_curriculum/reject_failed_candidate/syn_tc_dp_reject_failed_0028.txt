@@ -10,6 +10,7 @@ crvvnu -> rabbit
 Now, decrypt the following text: ygkpi
 
 Solution:
+<think>
 We need to decode the target strictly from left to right using the character mappings.
 
 Summary character mappings
@@ -158,3 +159,5 @@ Decoded phrase
 mouse
 
 Answer: \boxed{mouse}
+</think>
+\boxed{mouse}

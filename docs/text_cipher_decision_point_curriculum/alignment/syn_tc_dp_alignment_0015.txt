@@ -10,6 +10,7 @@ haoocp -> valley
 Now, decrypt the following text: yncab
 
 Solution:
+<think>
 We need to decode the target strictly from left to right using the character mappings.
 
 Summary character mappings
@@ -143,3 +144,5 @@ Decoded phrase
 ocean
 
 Answer: \boxed{ocean}
+</think>
+\boxed{ocean}

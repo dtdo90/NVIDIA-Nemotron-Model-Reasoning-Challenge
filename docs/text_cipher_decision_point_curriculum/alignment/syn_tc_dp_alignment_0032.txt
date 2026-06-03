@@ -10,6 +10,7 @@ icebf -> draws
 Now, decrypt the following text: gerrkc
 
 Solution:
+<think>
 We need to decode the target strictly from left to right using the character mappings.
 
 Summary character mappings
@@ -149,3 +150,5 @@ Decoded phrase
 hatter
 
 Answer: \boxed{hatter}
+</think>
+\boxed{hatter}

@@ -10,6 +10,7 @@ qxvkm -> reads
 Now, decrypt the following text: uyllyzm
 
 Solution:
+<think>
 We need to decode the target strictly from left to right using the character mappings.
 
 Summary character mappings
@@ -148,3 +149,5 @@ Decoded phrase
 follows
 
 Answer: \boxed{follows}
+</think>
+\boxed{follows}

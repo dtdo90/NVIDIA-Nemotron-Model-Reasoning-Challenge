@@ -9,6 +9,7 @@ swbqljrhyb -> mysterious
 Now, decrypt the following text: swbqljrhyb
 
 Solution:
+<think>
 We need to decode the target strictly from left to right using the character mappings.
 
 Process examples
@@ -63,3 +64,5 @@ Decoded phrase
 mysterious
 
 Answer: \boxed{mysterious}
+</think>
+\boxed{mysterious}

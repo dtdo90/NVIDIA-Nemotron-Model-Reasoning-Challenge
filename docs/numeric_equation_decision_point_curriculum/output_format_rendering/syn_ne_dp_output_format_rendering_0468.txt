@@ -16,6 +16,7 @@ In Alice's Wonderland, a secret set of transformation rules is applied to equati
 Now, determine the result for: 20$64
 
 Solution:
+<think>
 We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
 
 Query 20$64
@@ -134,3 +135,5 @@ For motif BA_DC with x-y negative, reverse the magnitude and use operator prefix
 $44
 
 Answer: \boxed{$44}
+</think>
+\boxed{$44}

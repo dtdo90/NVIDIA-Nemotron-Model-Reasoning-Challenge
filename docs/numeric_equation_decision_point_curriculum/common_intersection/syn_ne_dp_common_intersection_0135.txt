@@ -19,6 +19,7 @@ In Alice's Wonderland, a secret set of transformation rules is applied to equati
 Now, determine the result for: 35+30
 
 Solution:
+<think>
 We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
 
 Query 35+30
@@ -302,3 +303,5 @@ AB CD AB+CD-1 op_prefix_rev
 All common output formats agree on +46
 
 Answer: \boxed{+46}
+</think>
+\boxed{+46}

@@ -19,6 +19,7 @@ In Alice's Wonderland, a secret set of transformation rules is applied to equati
 Now, determine the result for: 31-94
 
 Solution:
+<think>
 We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
 
 Query 31-94
@@ -505,3 +506,5 @@ AB CD AB-CD plain op_prefix_if_neg
 All common output formats agree on -63
 
 Answer: \boxed{-63}
+</think>
+\boxed{-63}

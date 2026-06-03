@@ -10,6 +10,7 @@ fwykj -> reads
 Now, decrypt the following text: yozrw
 
 Solution:
+<think>
 We need to decode the target strictly from left to right using the character mappings.
 
 Summary character mappings
@@ -158,3 +159,5 @@ Decoded phrase
 alice
 
 Answer: \boxed{alice}
+</think>
+\boxed{alice}

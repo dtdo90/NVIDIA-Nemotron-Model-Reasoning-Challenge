@@ -16,6 +16,7 @@ In Alice's Wonderland, a secret set of transformation rules is applied to equati
 Now, determine the result for: 42/57
 
 Solution:
+<think>
 We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
 
 Query 42/57
@@ -138,3 +139,5 @@ BA DC DC-BA op_suffix
 All common output formats agree on 51/
 
 Answer: \boxed{51/}
+</think>
+\boxed{51/}

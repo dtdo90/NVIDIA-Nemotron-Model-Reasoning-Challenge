@@ -20,6 +20,7 @@ In Alice's Wonderland, a secret set of transformation rules is applied to equati
 Now, determine the result for: 15~57
 
 Solution:
+<think>
 We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
 
 Query 15~57
@@ -245,3 +246,5 @@ BA DC abs(BA-DC) op_prefix_rev
 All common output formats agree on ~42
 
 Answer: \boxed{~42}
+</think>
+\boxed{~42}

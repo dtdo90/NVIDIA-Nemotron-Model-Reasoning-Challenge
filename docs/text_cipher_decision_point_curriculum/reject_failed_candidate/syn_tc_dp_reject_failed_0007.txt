@@ -10,6 +10,7 @@ coiw -> dark
 Now, decrypt the following text: toh
 
 Solution:
+<think>
 We need to decode the target strictly from left to right using the character mappings.
 
 Summary character mappings
@@ -148,3 +149,5 @@ Decoded phrase
 map
 
 Answer: \boxed{map}
+</think>
+\boxed{map}

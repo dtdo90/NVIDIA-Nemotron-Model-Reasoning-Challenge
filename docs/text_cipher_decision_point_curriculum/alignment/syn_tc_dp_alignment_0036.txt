@@ -10,6 +10,7 @@ kqggem -> valley
 Now, decrypt the following text: yaccrc
 
 Solution:
+<think>
 We need to decode the target strictly from left to right using the character mappings.
 
 Summary character mappings
@@ -149,3 +150,5 @@ Decoded phrase
 mirror
 
 Answer: \boxed{mirror}
+</think>
+\boxed{mirror}

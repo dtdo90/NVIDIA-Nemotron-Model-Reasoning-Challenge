@@ -10,6 +10,7 @@ tlfcvk -> bright
 Now, decrypt the following text: akyxfda
 
 Solution:
+<think>
 We need to decode the target strictly from left to right using the character mappings.
 
 Summary character mappings
@@ -148,3 +149,5 @@ Decoded phrase
 studies
 
 Answer: \boxed{studies}
+</think>
+\boxed{studies}

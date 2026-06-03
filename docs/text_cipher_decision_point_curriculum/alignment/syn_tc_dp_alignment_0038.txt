@@ -10,6 +10,7 @@ kmciwx -> wizard
 Now, decrypt the following text: omuwiwt
 
 Solution:
+<think>
 We need to decode the target strictly from left to right using the character mappings.
 
 Summary character mappings
@@ -148,3 +149,5 @@ Decoded phrase
 library
 
 Answer: \boxed{library}
+</think>
+\boxed{library}

@@ -10,6 +10,7 @@ hvddfm -> valley
 Now, decrypt the following text: fnxdiafs
 
 Solution:
+<think>
 We need to decode the target strictly from left to right using the character mappings.
 
 Summary character mappings
@@ -151,3 +152,5 @@ Decoded phrase
 explores
 
 Answer: \boxed{explores}
+</think>
+\boxed{explores}

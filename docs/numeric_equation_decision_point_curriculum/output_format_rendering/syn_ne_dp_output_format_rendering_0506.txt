@@ -19,6 +19,7 @@ In Alice's Wonderland, a secret set of transformation rules is applied to equati
 Now, determine the result for: 59$17
 
 Solution:
+<think>
 We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
 
 Query 59$17
@@ -163,3 +164,5 @@ Training target:
 All common output formats agree on 6476
 
 Answer: \boxed{6476}
+</think>
+\boxed{6476}

@@ -17,6 +17,7 @@ In Alice's Wonderland, a secret set of transformation rules is applied to equati
 Now, determine the result for: 11:59
 
 Solution:
+<think>
 We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
 
 Query 11:59
@@ -191,3 +192,5 @@ CD = 59
 11 followed by 59 gives 1159
 
 Answer: \boxed{1159}
+</think>
+\boxed{1159}

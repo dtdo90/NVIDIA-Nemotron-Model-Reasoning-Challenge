@@ -16,6 +16,7 @@ In Alice's Wonderland, a secret set of transformation rules is applied to equati
 Now, determine the result for: 86@25
 
 Solution:
+<think>
 We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
 
 Query 86@25
@@ -78,3 +79,5 @@ plain
 61
 
 Answer: \boxed{61}
+</think>
+\boxed{61}

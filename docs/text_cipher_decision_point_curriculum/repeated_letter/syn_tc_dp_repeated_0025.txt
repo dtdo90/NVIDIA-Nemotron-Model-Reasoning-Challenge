@@ -10,6 +10,7 @@ urow -> king
 Now, decrypt the following text: zepreo
 
 Solution:
+<think>
 We need to decode the target strictly from left to right using the character mappings.
 
 Summary character mappings
@@ -146,3 +147,5 @@ Decoded phrase
 potion
 
 Answer: \boxed{potion}
+</think>
+\boxed{potion}

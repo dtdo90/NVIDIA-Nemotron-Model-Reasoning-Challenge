@@ -10,6 +10,7 @@ hlfhqs -> turtle
 Now, decrypt the following text: upcuws
 
 Solution:
+<think>
 We need to decode the target strictly from left to right using the character mappings.
 
 Summary character mappings
@@ -145,3 +146,5 @@ Decoded phrase
 inside
 
 Answer: \boxed{inside}
+</think>
+\boxed{inside}

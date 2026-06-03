@@ -10,6 +10,7 @@ hukkugy -> follows
 Now, decrypt the following text: reqwio
 
 Solution:
+<think>
 We need to decode the target strictly from left to right using the character mappings.
 
 Summary character mappings
@@ -158,3 +159,5 @@ Decoded phrase
 garden
 
 Answer: \boxed{garden}
+</think>
+\boxed{garden}

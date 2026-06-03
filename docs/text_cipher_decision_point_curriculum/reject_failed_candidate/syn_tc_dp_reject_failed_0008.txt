@@ -10,6 +10,7 @@ ulbbs -> queen
 Now, decrypt the following text: fqokb
 
 Solution:
+<think>
 We need to decode the target strictly from left to right using the character mappings.
 
 Summary character mappings
@@ -158,3 +159,5 @@ Decoded phrase
 above
 
 Answer: \boxed{above}
+</think>
+\boxed{above}

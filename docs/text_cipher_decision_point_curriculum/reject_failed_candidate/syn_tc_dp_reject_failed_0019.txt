@@ -10,6 +10,7 @@ yufwsj -> castle
 Now, decrypt the following text: xaumf
 
 Solution:
+<think>
 We need to decode the target strictly from left to right using the character mappings.
 
 Summary character mappings
@@ -155,3 +156,5 @@ Decoded phrase
 draws
 
 Answer: \boxed{draws}
+</think>
+\boxed{draws}

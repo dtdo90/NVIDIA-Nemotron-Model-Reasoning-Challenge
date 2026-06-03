@@ -10,6 +10,7 @@ rhm -> cat
 Now, decrypt the following text: sxuebm
 
 Solution:
+<think>
 We need to decode the target strictly from left to right using the character mappings.
 
 Summary character mappings
@@ -159,3 +160,5 @@ Decoded phrase
 bright
 
 Answer: \boxed{bright}
+</think>
+\boxed{bright}

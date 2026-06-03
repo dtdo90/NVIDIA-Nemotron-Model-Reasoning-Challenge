@@ -10,6 +10,7 @@ davsn -> draws
 Now, decrypt the following text: hrnuwaezgn
 
 Solution:
+<think>
 We need to decode the target strictly from left to right using the character mappings.
 
 Summary character mappings
@@ -154,3 +155,5 @@ Decoded phrase
 mysterious
 
 Answer: \boxed{mysterious}
+</think>
+\boxed{mysterious}

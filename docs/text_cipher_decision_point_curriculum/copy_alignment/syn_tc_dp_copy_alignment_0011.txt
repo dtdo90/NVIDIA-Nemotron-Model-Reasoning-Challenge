@@ -9,6 +9,7 @@ ijuueu -> mirror
 Now, decrypt the following text: ijuueu
 
 Solution:
+<think>
 We need to decode the target strictly from left to right using the character mappings.
 
 Process examples
@@ -50,3 +51,5 @@ Decoded phrase
 mirror
 
 Answer: \boxed{mirror}
+</think>
+\boxed{mirror}

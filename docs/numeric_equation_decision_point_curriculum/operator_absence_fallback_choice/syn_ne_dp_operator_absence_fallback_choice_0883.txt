@@ -17,6 +17,7 @@ In Alice's Wonderland, a secret set of transformation rules is applied to equati
 Now, determine the result for: 10[70
 
 Solution:
+<think>
 We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
 
 Query 10[70
@@ -191,3 +192,5 @@ CD = 70
 10 followed by 70 gives 1070
 
 Answer: \boxed{1070}
+</think>
+\boxed{1070}

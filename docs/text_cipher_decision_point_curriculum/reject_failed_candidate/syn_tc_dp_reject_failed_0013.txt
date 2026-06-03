@@ -10,6 +10,7 @@ twgr -> wise
 Now, decrypt the following text: eqc
 
 Solution:
+<think>
 We need to decode the target strictly from left to right using the character mappings.
 
 Summary character mappings
@@ -149,3 +150,5 @@ Decoded phrase
 cat
 
 Answer: \boxed{cat}
+</think>
+\boxed{cat}

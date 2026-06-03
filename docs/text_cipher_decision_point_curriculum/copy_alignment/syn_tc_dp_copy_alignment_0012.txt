@@ -9,6 +9,7 @@ bcafuy -> garden
 Now, decrypt the following text: bcafuy
 
 Solution:
+<think>
 We need to decode the target strictly from left to right using the character mappings.
 
 Process examples
@@ -52,3 +53,5 @@ Decoded phrase
 garden
 
 Answer: \boxed{garden}
+</think>
+\boxed{garden}

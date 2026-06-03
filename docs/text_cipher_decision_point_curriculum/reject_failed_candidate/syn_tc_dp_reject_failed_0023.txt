@@ -10,6 +10,7 @@ tmmh -> door
 Now, decrypt the following text: zqn
 
 Solution:
+<think>
 We need to decode the target strictly from left to right using the character mappings.
 
 Summary character mappings
@@ -150,3 +151,5 @@ Decoded phrase
 key
 
 Answer: \boxed{key}
+</think>
+\boxed{key}

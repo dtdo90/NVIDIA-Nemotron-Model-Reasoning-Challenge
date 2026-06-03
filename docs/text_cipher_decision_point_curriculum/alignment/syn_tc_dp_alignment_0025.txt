@@ -10,6 +10,7 @@ msznejsz -> treasure
 Now, decrypt the following text: pjswcje
 
 Solution:
+<think>
 We need to decode the target strictly from left to right using the character mappings.
 
 Summary character mappings
@@ -150,3 +151,5 @@ Decoded phrase
 curious
 
 Answer: \boxed{curious}
+</think>
+\boxed{curious}

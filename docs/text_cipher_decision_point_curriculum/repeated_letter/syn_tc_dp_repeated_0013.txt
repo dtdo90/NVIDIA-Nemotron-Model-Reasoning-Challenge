@@ -10,6 +10,7 @@ xfbjvfy -> magical
 Now, decrypt the following text: pwsglnw
 
 Solution:
+<think>
 We need to decode the target strictly from left to right using the character mappings.
 
 Summary character mappings
@@ -149,3 +150,5 @@ Decoded phrase
 student
 
 Answer: \boxed{student}
+</think>
+\boxed{student}

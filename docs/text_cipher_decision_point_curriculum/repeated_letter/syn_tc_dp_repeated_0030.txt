@@ -10,6 +10,7 @@ anvvk -> queen
 Now, decrypt the following text: feyhhj
 
 Solution:
+<think>
 We need to decode the target strictly from left to right using the character mappings.
 
 Summary character mappings
@@ -146,3 +147,5 @@ Decoded phrase
 school
 
 Answer: \boxed{school}
+</think>
+\boxed{school}

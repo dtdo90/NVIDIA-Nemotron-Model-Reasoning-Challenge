@@ -10,6 +10,7 @@ uaxjf -> found
 Now, decrypt the following text: rtcbzxtc
 
 Solution:
+<think>
 We need to decode the target strictly from left to right using the character mappings.
 
 Summary character mappings
@@ -149,3 +150,5 @@ Decoded phrase
 treasure
 
 Answer: \boxed{treasure}
+</think>
+\boxed{treasure}

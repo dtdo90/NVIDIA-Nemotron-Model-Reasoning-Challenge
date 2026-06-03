@@ -10,6 +10,7 @@ hvgkxpvg -> treasure
 Now, decrypt the following text: bokxgx
 
 Solution:
+<think>
 We need to decode the target strictly from left to right using the character mappings.
 
 Summary character mappings
@@ -143,3 +144,5 @@ Decoded phrase
 chases
 
 Answer: \boxed{chases}
+</think>
+\boxed{chases}

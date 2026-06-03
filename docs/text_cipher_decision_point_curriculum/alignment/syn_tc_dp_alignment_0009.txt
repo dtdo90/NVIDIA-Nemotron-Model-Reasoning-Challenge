@@ -10,6 +10,7 @@ luxmk -> story
 Now, decrypt the following text: smvnpl
 
 Solution:
+<think>
 We need to decode the target strictly from left to right using the character mappings.
 
 Summary character mappings
@@ -146,3 +147,5 @@ Decoded phrase
 dreams
 
 Answer: \boxed{dreams}
+</think>
+\boxed{dreams}

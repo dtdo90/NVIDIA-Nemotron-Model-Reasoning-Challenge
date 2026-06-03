@@ -10,6 +10,7 @@ lka -> the
 Now, decrypt the following text: vgaoat
 
 Solution:
+<think>
 We need to decode the target strictly from left to right using the character mappings.
 
 Summary character mappings
@@ -146,3 +147,5 @@ Decoded phrase
 clever
 
 Answer: \boxed{clever}
+</think>
+\boxed{clever}

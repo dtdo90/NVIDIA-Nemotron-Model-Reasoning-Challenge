@@ -10,6 +10,7 @@ wsldojteul -> mysterious
 Now, decrypt the following text: fjmpec
 
 Solution:
+<think>
 We need to decode the target strictly from left to right using the character mappings.
 
 Summary character mappings
@@ -149,3 +150,5 @@ Decoded phrase
 dragon
 
 Answer: \boxed{dragon}
+</think>
+\boxed{dragon}

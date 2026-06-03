@@ -10,6 +10,7 @@ glmxkw -> knight
 Now, decrypt the following text: xhfqdl
 
 Solution:
+<think>
 We need to decode the target strictly from left to right using the character mappings.
 
 Summary character mappings
@@ -157,3 +158,5 @@ Decoded phrase
 golden
 
 Answer: \boxed{golden}
+</think>
+\boxed{golden}

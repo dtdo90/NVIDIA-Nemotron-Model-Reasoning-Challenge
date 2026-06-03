@@ -10,6 +10,7 @@ tsppup -> mirror
 Now, decrypt the following text: auhqdpvnhq
 
 Solution:
+<think>
 We need to decode the target strictly from left to right using the character mappings.
 
 Summary character mappings
@@ -154,3 +155,5 @@ Decoded phrase
 wonderland
 
 Answer: \boxed{wonderland}
+</think>
+\boxed{wonderland}

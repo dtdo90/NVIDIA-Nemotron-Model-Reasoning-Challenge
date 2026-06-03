@@ -10,6 +10,7 @@ svelbvu -> teacher
 Now, decrypt the following text: ximwn
 
 Solution:
+<think>
 We need to decode the target strictly from left to right using the character mappings.
 
 Summary character mappings
@@ -158,3 +159,5 @@ Decoded phrase
 found
 
 Answer: \boxed{found}
+</think>
+\boxed{found}

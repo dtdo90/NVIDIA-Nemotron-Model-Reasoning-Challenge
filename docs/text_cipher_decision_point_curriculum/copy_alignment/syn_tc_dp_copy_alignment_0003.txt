@@ -9,6 +9,7 @@ blmmhr -> rabbit
 Now, decrypt the following text: blmmhr
 
 Solution:
+<think>
 We need to decode the target strictly from left to right using the character mappings.
 
 Process examples
@@ -51,3 +52,5 @@ Decoded phrase
 rabbit
 
 Answer: \boxed{rabbit}
+</think>
+\boxed{rabbit}

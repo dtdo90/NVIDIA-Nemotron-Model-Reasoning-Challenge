@@ -9,6 +9,7 @@ jonnsg -> valley
 Now, decrypt the following text: jonnsg
 
 Solution:
+<think>
 We need to decode the target strictly from left to right using the character mappings.
 
 Process examples
@@ -51,3 +52,5 @@ Decoded phrase
 valley
 
 Answer: \boxed{valley}
+</think>
+\boxed{valley}

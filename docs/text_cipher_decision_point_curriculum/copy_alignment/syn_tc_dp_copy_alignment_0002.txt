@@ -9,6 +9,7 @@ jfmmei -> hidden
 Now, decrypt the following text: jfmmei
 
 Solution:
+<think>
 We need to decode the target strictly from left to right using the character mappings.
 
 Process examples
@@ -51,3 +52,5 @@ Decoded phrase
 hidden
 
 Answer: \boxed{hidden}
+</think>
+\boxed{hidden}

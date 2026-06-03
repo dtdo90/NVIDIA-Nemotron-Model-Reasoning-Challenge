@@ -10,6 +10,7 @@ dpbgnh -> silver
 Now, decrypt the following text: evtwj
 
 Solution:
+<think>
 We need to decode the target strictly from left to right using the character mappings.
 
 Summary character mappings
@@ -146,3 +147,5 @@ Decoded phrase
 found
 
 Answer: \boxed{found}
+</think>
+\boxed{found}

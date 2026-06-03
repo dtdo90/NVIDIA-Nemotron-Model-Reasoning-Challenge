@@ -10,6 +10,7 @@ ylhntv -> knight
 Now, decrypt the following text: spudbv
 
 Solution:
+<think>
 We need to decode the target strictly from left to right using the character mappings.
 
 Summary character mappings
@@ -148,3 +149,5 @@ Decoded phrase
 forest
 
 Answer: \boxed{forest}
+</think>
+\boxed{forest}

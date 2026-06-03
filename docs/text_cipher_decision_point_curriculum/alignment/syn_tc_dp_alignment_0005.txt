@@ -10,6 +10,7 @@ gvkfvl -> secret
 Now, decrypt the following text: jokcvol
 
 Solution:
+<think>
 We need to decode the target strictly from left to right using the character mappings.
 
 Summary character mappings
@@ -146,3 +147,5 @@ Decoded phrase
 ancient
 
 Answer: \boxed{ancient}
+</think>
+\boxed{ancient}

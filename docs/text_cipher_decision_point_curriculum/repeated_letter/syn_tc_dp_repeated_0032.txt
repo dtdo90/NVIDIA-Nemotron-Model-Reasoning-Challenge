@@ -10,6 +10,7 @@ wkmuoeq -> watches
 Now, decrypt the following text: ifbbtb
 
 Solution:
+<think>
 We need to decode the target strictly from left to right using the character mappings.
 
 Summary character mappings
@@ -148,3 +149,5 @@ Decoded phrase
 mirror
 
 Answer: \boxed{mirror}
+</think>
+\boxed{mirror}

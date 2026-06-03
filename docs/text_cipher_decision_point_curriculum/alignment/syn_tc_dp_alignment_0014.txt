@@ -10,6 +10,7 @@ xpl -> key
 Now, decrypt the following text: ezbwl
 
 Solution:
+<think>
 We need to decode the target strictly from left to right using the character mappings.
 
 Summary character mappings
@@ -141,3 +142,5 @@ Decoded phrase
 story
 
 Answer: \boxed{story}
+</think>
+\boxed{story}

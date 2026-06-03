@@ -20,6 +20,7 @@ In Alice's Wonderland, a secret set of transformation rules is applied to equati
 Now, determine the result for: 36{24
 
 Solution:
+<think>
 We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
 
 Query 36{24
@@ -375,3 +376,5 @@ AB CD AB*CD plain op_prefix_if_neg abs
 All common output formats agree on 864
 
 Answer: \boxed{864}
+</think>
+\boxed{864}

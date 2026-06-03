@@ -10,6 +10,7 @@ jok -> map
 Now, decrypt the following text: bxozl
 
 Solution:
+<think>
 We need to decode the target strictly from left to right using the character mappings.
 
 Summary character mappings
@@ -143,3 +144,5 @@ Decoded phrase
 reads
 
 Answer: \boxed{reads}
+</think>
+\boxed{reads}

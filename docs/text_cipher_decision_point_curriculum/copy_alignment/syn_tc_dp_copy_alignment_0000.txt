@@ -9,6 +9,7 @@ nywwbe -> puzzle
 Now, decrypt the following text: nywwbe
 
 Solution:
+<think>
 We need to decode the target strictly from left to right using the character mappings.
 
 Process examples
@@ -51,3 +52,5 @@ Decoded phrase
 puzzle
 
 Answer: \boxed{puzzle}
+</think>
+\boxed{puzzle}

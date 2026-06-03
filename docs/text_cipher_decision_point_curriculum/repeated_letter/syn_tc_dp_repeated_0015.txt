@@ -10,6 +10,7 @@ egj -> cat
 Now, decrypt the following text: lorrix
 
 Solution:
+<think>
 We need to decode the target strictly from left to right using the character mappings.
 
 Summary character mappings
@@ -144,3 +145,5 @@ Decoded phrase
 hidden
 
 Answer: \boxed{hidden}
+</think>
+\boxed{hidden}
