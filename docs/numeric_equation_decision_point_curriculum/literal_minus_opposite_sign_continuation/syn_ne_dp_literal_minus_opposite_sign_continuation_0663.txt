@@ -1,0 +1,99 @@
+Problem syn_ne_dp_literal_minus_opposite_sign_continuation_0663
+Bucket: literal_minus_opposite_sign_continuation
+Subbucket: BA_DC_literal_minus
+Source id: syn_ne_policy_literal_minus_opposite_sign_0019
+Source mode: synthetic
+Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/non_unanimous_policy/literal_minus_opposite_sign/syn_ne_policy_literal_minus_opposite_sign_0019.txt
+Gold answer: -73
+Pairing: BA_DC
+Operator: -
+Note: opposite_sign
+
+Training prompt:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+05-79 = -74
+Now, determine the result for: 88-15
+
+Solution:
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 88-15
+Query operator is -
+
+Compare example operators
+05-79 = -74 operator -
+same
+
+Same operator examples
+05-79 = -74
+
+Same operator RHS values are -74
+The RHS values have length 2, so use addition, subtraction, or modular
+Try x-y,y-x,abs(x-y),min(x,y)-max(x,y),max(x,y)%min(x,y),x%y,y%x
+
+Try BA_DC first
+
+Try BA_DC with x-y for operator -
+The current format is BA_DC|x-y
+
+Example 05-79 = -74
+BA DC BA-DC op_prefix_rev
+50 97 -47 -74
+Match
+op_prefix_rev
+
+Common
+op_prefix_rev
+
+Apply format BA_DC|x-y|common to the query
+
+Query
+88-15
+BA DC BA-DC op_prefix_rev
+88 51 37 -73
+The common output formats agree on -73, but this query uses the opposite sign branch from all the examples, so continue scanning.
+
+Try BA_DC with y-x for operator -
+The current format is BA_DC|y-x
+
+Example 05-79 = -74
+BA DC DC-BA op_prefix_rev
+50 97 47 -74
+Match
+op_prefix_rev
+
+Common
+op_prefix_rev
+
+Apply format BA_DC|y-x|common to the query
+
+Query
+88-15
+BA DC DC-BA op_prefix_rev
+88 51 -37 -73
+
+Training target:
+The common output formats agree on -73, but this query uses the opposite sign branch from all the examples, so continue scanning.
+
+Try BA_DC with abs(x-y) for operator -
+The current format is BA_DC|abs(x-y)
+
+Example 05-79 = -74
+BA DC abs(BA-DC) op_prefix_rev
+50 97 47 -74
+Match
+op_prefix_rev
+
+Common
+op_prefix_rev
+
+Apply format BA_DC|abs(x-y)|common to the query
+
+Query
+88-15
+BA DC abs(BA-DC) op_prefix_rev
+88 51 37 -73
+All common output formats agree on -73
+The output format gives the same negative sign as the same-operator example
+
+Answer: \boxed{-73}

@@ -1,0 +1,94 @@
+Problem syn_ne_dp_output_format_rendering_0335
+Bucket: output_format_rendering
+Subbucket: agree
+Source id: syn_ne_ba_dc_add_len2_xplusyplus1_0016
+Source mode: synthetic
+Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/ba_dc_addition/ba_dc_len2/syn_ne_ba_dc_add_len2_xplusyplus1_0016.txt
+Gold answer: 89
+Pairing: BA_DC
+Operator: &
+Note: agree_BA_DC_&
+
+Training prompt:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+68%91 = 10
+20&49 = 79
+44@85 = 201
+Now, determine the result for: 50&29
+
+Solution:
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 50&29
+Query operator is &
+
+Compare example operators
+68%91 = 10 operator %
+different
+20&49 = 79 operator &
+same
+44@85 = 201 operator @
+different
+
+Same operator examples
+20&49 = 79
+
+Same operator RHS values are 79
+The RHS values have length 2, so use addition, subtraction, or modular
+Try x+y,x+y-1,x+y+1,x-y,y-x,abs(x-y),min(x,y)-max(x,y),max(x,y)%min(x,y),x%y,y%x
+
+Try BA_DC first
+
+Try BA_DC with x+y for operator &
+The current format is BA_DC|x+y
+
+Example 20&49 = 79
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+2 94 96 69 96 96 69 &96 69 96& &69 69 96
+Match
+none
+
+Common
+none
+
+Try BA_DC with x+y-1 for operator &
+The current format is BA_DC|x+y-1
+
+Example 20&49 = 79
+BA DC BA+DC-1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+2 94 95 59 95 95 59 &95 59 95& &59 59 95
+Match
+none
+
+Common
+none
+
+Try BA_DC with x+y+1 for operator &
+The current format is BA_DC|x+y+1
+
+Example 20&49 = 79
+BA DC BA+DC+1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+2 94 97 79 97 97 79 &97 79 97& &79 79 97
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Common
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Apply BA_DC|x+y+1|common to the query
+
+Query
+50&29
+BA DC BA+DC+1 rev rev_or_op_prefix_rev_if_neg rev_or_op_suffix_rev_if_neg abs_rev
+5 92 98 89 89 89 89
+
+Training target:
+All common output formats agree on 89
+
+Answer: \boxed{89}

@@ -1,0 +1,94 @@
+Problem syn_ne_dp_common_intersection_0248
+Bucket: common_intersection
+Subbucket: triple_plus
+Source id: syn_ne_ba_dc_add_len3_xplusyplus1_0240
+Source mode: synthetic
+Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/ba_dc_addition/ba_dc_len3/syn_ne_ba_dc_add_len3_xplusyplus1_0240.txt
+Gold answer: 24
+Pairing: BA_DC
+Operator: +
+Note: common_triple_plus_BA_DC
+
+Training prompt:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+34-34 = 0
+28+57 = 851
+09%39 = 3
+Now, determine the result for: 23+90
+
+Solution:
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 23+90
+Query operator is +
+
+Compare example operators
+34-34 = 0 operator -
+different
+28+57 = 851 operator +
+same
+09%39 = 3 operator %
+different
+
+Same operator examples
+28+57 = 851
+
+Same operator RHS values are 851
+The RHS values have length 3, so use addition or multiplication
+Try x+y,x+y-1,x+y+1,x*y,x*y+1,x*y-1
+
+Try BA_DC first
+
+Try BA_DC with x+y for operator +
+The current format is BA_DC|x+y
+
+Example 28+57 = 851
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+82 75 157 751 157 157 751 +157 751 157+ +751 751 157
+Match
+none
+
+Common
+none
+
+Try BA_DC with x+y-1 for operator +
+The current format is BA_DC|x+y-1
+
+Example 28+57 = 851
+BA DC BA+DC-1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+82 75 156 651 156 156 651 +156 651 156+ +651 651 156
+Match
+none
+
+Common
+none
+
+Try BA_DC with x+y+1 for operator +
+The current format is BA_DC|x+y+1
+
+Example 28+57 = 851
+BA DC BA+DC+1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+82 75 158 851 158 158 851 +158 851 158+ +851 851 158
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Common
+
+Training target:
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Apply BA_DC|x+y+1|common to the query
+
+Query
+23+90
+BA DC BA+DC+1 rev rev_or_op_prefix_rev_if_neg rev_or_op_suffix_rev_if_neg abs_rev
+32 9 42 24 24 24 24
+All common output formats agree on 24
+
+Answer: \boxed{24}

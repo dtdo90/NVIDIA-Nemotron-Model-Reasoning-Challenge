@@ -1,0 +1,86 @@
+Problem syn_ne_dp_common_intersection_0227
+Bucket: common_intersection
+Subbucket: double
+Source id: syn_ne_policy_ab_cd_x_y_positive_priority_0013
+Source mode: synthetic
+Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/non_unanimous_policy/ab_cd_x_y_positive_priority/syn_ne_policy_ab_cd_x_y_positive_priority_0013.txt
+Gold answer: 14
+Pairing: AB_CD
+Operator: @
+Note: common_double_AB_CD
+
+Training prompt:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+86@93 = -7
+92@90 = 2
+Now, determine the result for: 43@29
+
+Solution:
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 43@29
+Query operator is @
+
+Compare example operators
+86@93 = -7 operator @
+same
+92@90 = 2 operator @
+same
+
+Same operator examples
+86@93 = -7
+92@90 = 2
+
+Same operator RHS values are -7 and 2
+The RHS values have length 1, so use subtraction or modular
+Try x-y,y-x,abs(x-y),min(x,y)-max(x,y),max(x,y)%min(x,y),x%y,y%x
+
+Try BA_DC first
+BA_DC has no common output format for this family, so try AB_CD
+
+Try AB_CD
+
+Try AB_CD with x-y for operator @
+The current format is AB_CD|x-y
+
+Example 86@93 = -7
+AB CD AB-CD plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+86 93 -7 -7 -7 @7 @7 @-7 7@ -7@ @7 7 7
+Match
+plain
+rev
+
+Example 92@90 = 2
+AB CD AB-CD plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+92 90 2 2 2 2 2 @2 2 2@ @2 2 2
+Match
+plain
+rev
+op_prefix_if_neg
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+abs
+
+Common
+
+Training target:
+plain
+rev
+
+Apply format AB_CD|x-y|common to the query
+
+Query
+43@29
+AB CD AB-CD plain rev
+43 29 14 14 41
+
+All common output formats do not agree
+The selected operator x-y gives positive value: 43-29=14
+For motif AB_CD with x-y positive, use the first common format in priority order
+
+First common format in priority order
+plain
+14
+
+Answer: \boxed{14}

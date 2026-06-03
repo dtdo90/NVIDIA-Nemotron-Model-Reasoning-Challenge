@@ -1,0 +1,157 @@
+Problem syn_ne_dp_common_intersection_0282
+Bucket: common_intersection
+Subbucket: triple_plus
+Source id: syn_ne_ab_cd_add_minus1_len3_0008
+Source mode: synthetic
+Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/ab_cd_addition/ab_cd_len3/syn_ne_ab_cd_add_minus1_len3_0008.txt
+Gold answer: 051
+Pairing: AB_CD
+Operator: "
+Note: common_triple_plus_AB_CD
+
+Training prompt:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+72"59 = 031
+12/80 = 92
+68~35 = 2380
+Now, determine the result for: 87"64
+
+Solution:
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 87"64
+Query operator is "
+
+Compare example operators
+72"59 = 031 operator "
+same
+12/80 = 92 operator /
+different
+68~35 = 2380 operator ~
+different
+
+Same operator examples
+72"59 = 031
+
+Same operator RHS values are 031
+The RHS values have length 3, so use addition or multiplication
+Try x+y,x+y-1,x+y+1,x*y,x*y+1,x*y-1
+
+Try BA_DC first
+
+Try BA_DC with x+y for operator "
+The current format is BA_DC|x+y
+
+Example 72"59 = 031
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+27 95 122 221 122 122 221 "122 221 122" "221 221 122
+Match
+none
+
+Common
+none
+
+Try BA_DC with x+y-1 for operator "
+The current format is BA_DC|x+y-1
+
+Example 72"59 = 031
+BA DC BA+DC-1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+27 95 121 121 121 121 121 "121 121 121" "121 121 121
+Match
+none
+
+Common
+none
+
+Try BA_DC with x+y+1 for operator "
+The current format is BA_DC|x+y+1
+
+Example 72"59 = 031
+BA DC BA+DC+1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+27 95 123 321 123 123 321 "123 321 123" "321 321 123
+Match
+none
+
+Common
+none
+
+Try BA_DC with x*y for operator "
+The current format is BA_DC|x*y
+
+Example 72"59 = 031
+BA DC BA*DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+27 95 2565 5652 2565 2565 5652 "2565 5652 2565" "5652 5652 2565
+Match
+none
+
+Common
+none
+
+Try BA_DC with x*y+1 for operator "
+The current format is BA_DC|x*y+1
+
+Example 72"59 = 031
+BA DC BA*DC+1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+27 95 2566 6652 2566 2566 6652 "2566 6652 2566" "6652 6652 2566
+Match
+none
+
+Common
+none
+
+Try BA_DC with x*y-1 for operator "
+The current format is BA_DC|x*y-1
+
+Example 72"59 = 031
+BA DC BA*DC-1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+27 95 2564 4652 2564 2564 4652 "2564 4652 2564" "4652 4652 2564
+Match
+none
+
+Common
+none
+
+BA_DC has no common output format for this family
+Try AB_CD
+
+Try AB_CD with x+y for operator "
+The current format is AB_CD|x+y
+
+Example 72"59 = 031
+AB CD AB+CD plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+72 59 131 131 131 131 131 "131 131 131" "131 131 131
+Match
+none
+
+Common
+none
+
+Try AB_CD with x+y-1 for operator "
+The current format is AB_CD|x+y-1
+
+Example 72"59 = 031
+AB CD AB+CD-1 plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+72 59 130 130 031 130 031 "130 031 130" "031 031 130
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Common
+
+Training target:
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Apply AB_CD|x+y-1|common to the query
+
+Query
+87"64
+AB CD AB+CD-1 rev rev_or_op_prefix_rev_if_neg rev_or_op_suffix_rev_if_neg abs_rev
+87 64 150 051 051 051 051
+All common output formats agree on 051
+
+Answer: \boxed{051}

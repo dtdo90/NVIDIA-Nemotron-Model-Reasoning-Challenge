@@ -1,0 +1,131 @@
+Problem syn_ne_dp_common_intersection_0131
+Bucket: common_intersection
+Subbucket: single
+Source id: syn_ne_ab_cd_add_mix_0024
+Source mode: synthetic
+Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/ab_cd_addition/ab_cd_mix/syn_ne_ab_cd_add_mix_0024.txt
+Gold answer: 148+
+Pairing: AB_CD
+Operator: +
+Note: common_single_AB_CD
+
+Training prompt:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+71+10 = 81+
+25@45 = 601
+79+21 = 100+
+70^65 = 4550
+Now, determine the result for: 81+67
+
+Solution:
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 81+67
+Query operator is +
+
+Compare example operators
+71+10 = 81+ operator +
+same
+25@45 = 601 operator @
+different
+79+21 = 100+ operator +
+same
+70^65 = 4550 operator ^
+different
+
+Same operator examples
+71+10 = 81+
+79+21 = 100+
+
+Same operator RHS values are 81+ and 100+
+The RHS values mix length 2 and 3, so use the addition family
+Try x+y,x+y-1,x+y+1
+
+Try BA_DC first
+
+Try BA_DC with x+y for operator +
+The current format is BA_DC|x+y
+
+Example 71+10 = 81+
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+17 01 18 81 18 18 81 +18 81 18+ +81 81 18
+Match
+none
+
+Example 79+21 = 100+
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+97 12 109 901 109 109 901 +109 901 109+ +901 901 109
+Match
+none
+
+Common
+none
+
+Try BA_DC with x+y-1 for operator +
+The current format is BA_DC|x+y-1
+
+Example 71+10 = 81+
+BA DC BA+DC-1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+17 01 17 71 17 17 71 +17 71 17+ +71 71 17
+Match
+none
+
+Example 79+21 = 100+
+BA DC BA+DC-1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+97 12 108 801 108 108 801 +108 801 108+ +801 801 108
+Match
+none
+
+Common
+none
+
+Try BA_DC with x+y+1 for operator +
+The current format is BA_DC|x+y+1
+
+Example 71+10 = 81+
+BA DC BA+DC+1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+17 01 19 91 19 19 91 +19 91 19+ +91 91 19
+Match
+none
+
+Example 79+21 = 100+
+BA DC BA+DC+1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+97 12 110 011 110 110 011 +110 011 110+ +011 011 110
+Match
+none
+
+Common
+none
+
+BA_DC has no common output format for this family
+Try AB_CD
+
+Try AB_CD with x+y for operator +
+The current format is AB_CD|x+y
+
+Example 71+10 = 81+
+AB CD AB+CD plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+71 10 81 81 18 81 18 +81 18 81+ +18 18 81
+Match
+op_suffix
+
+Example 79+21 = 100+
+AB CD AB+CD plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+79 21 100 100 001 100 001 +100 001 100+ +001 001 100
+Match
+op_suffix
+
+Common
+
+Training target:
+op_suffix
+
+Apply AB_CD|x+y|common to the query
+
+Query
+81+67
+AB CD AB+CD op_suffix
+81 67 148 148+
+All common output formats agree on 148+
+
+Answer: \boxed{148+}

@@ -1,0 +1,330 @@
+Problem syn_ne_dp_common_intersection_0279
+Bucket: common_intersection
+Subbucket: triple_plus
+Source id: syn_ne_ab_cd_sub_xminusy_mix_0017
+Source mode: synthetic
+Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/ab_cd_subtraction/ab_cd_mix/syn_ne_ab_cd_sub_xminusy_mix_0017.txt
+Gold answer: 28
+Pairing: AB_CD
+Operator: -
+Note: common_triple_plus_AB_CD
+
+Training prompt:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+73-66 = 7
+68-50 = 18
+44%97 = 321
+80-51 = 29
+71-67 = 4
+Now, determine the result for: 38-10
+
+Solution:
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 38-10
+Query operator is -
+
+Compare example operators
+73-66 = 7 operator -
+same
+68-50 = 18 operator -
+same
+44%97 = 321 operator %
+different
+80-51 = 29 operator -
+same
+71-67 = 4 operator -
+same
+
+Same operator examples
+73-66 = 7
+68-50 = 18
+80-51 = 29
+71-67 = 4
+
+Same operator RHS values are 7 and 18 and 29 and 4
+The RHS values mix length 1 and 2, so use subtraction or modular
+Try x-y,y-x,abs(x-y),min(x,y)-max(x,y),max(x,y)%min(x,y),x%y,y%x
+
+Try BA_DC first
+
+Try BA_DC with x-y for operator -
+The current format is BA_DC|x-y
+
+Example 73-66 = 7
+BA DC BA-DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+37 66 -29 -92 -29 -29 -92 29 92- -29- 92 92 29
+Match
+none
+
+Example 68-50 = 18
+BA DC BA-DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+86 05 81 18 81 81 18 -81 18 81- -18 18 81
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Example 80-51 = 29
+BA DC BA-DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+08 15 -7 -7 -7 -7 -7 7 7- -7- 7 7 7
+Match
+none
+
+Example 71-67 = 4
+BA DC BA-DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+17 76 -59 -95 -59 -59 -95 59 95- -59- 95 95 59
+Match
+none
+
+Common
+none
+
+Try BA_DC with y-x for operator -
+The current format is BA_DC|y-x
+
+Example 73-66 = 7
+BA DC DC-BA rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+37 66 29 92 29 29 92 -29 92 29- -92 92 29
+Match
+none
+
+Example 68-50 = 18
+BA DC DC-BA rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+86 05 -81 -18 -81 -81 -18 81 18- -81- 18 18 81
+Match
+op_prefix_rev
+abs_rev
+
+Example 80-51 = 29
+BA DC DC-BA rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+08 15 7 7 7 7 7 -7 7 7- -7 7 7
+Match
+none
+
+Example 71-67 = 4
+BA DC DC-BA rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+17 76 59 95 59 59 95 -59 95 59- -95 95 59
+Match
+none
+
+Common
+none
+
+Try BA_DC with abs(x-y) for operator -
+The current format is BA_DC|abs(x-y)
+
+Example 73-66 = 7
+BA DC abs(BA-DC) rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+37 66 29 92 29 29 92 -29 92 29- -92 92 29
+Match
+none
+
+Example 68-50 = 18
+BA DC abs(BA-DC) rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+86 05 81 18 81 81 18 -81 18 81- -18 18 81
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Example 80-51 = 29
+BA DC abs(BA-DC) rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+08 15 7 7 7 7 7 -7 7 7- -7 7 7
+Match
+none
+
+Example 71-67 = 4
+BA DC abs(BA-DC) rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+17 76 59 95 59 59 95 -59 95 59- -95 95 59
+Match
+none
+
+Common
+none
+
+Try BA_DC with min(x,y)-max(x,y) for operator -
+The current format is BA_DC|min(x,y)-max(x,y)
+
+Example 73-66 = 7
+BA DC min(BA,DC)-max(BA,DC) rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+37 66 -29 -92 -29 -29 -92 29 92- -29- 92 92 29
+Match
+none
+
+Example 68-50 = 18
+BA DC min(BA,DC)-max(BA,DC) rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+86 05 -81 -18 -81 -81 -18 81 18- -81- 18 18 81
+Match
+op_prefix_rev
+abs_rev
+
+Example 80-51 = 29
+BA DC min(BA,DC)-max(BA,DC) rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+08 15 -7 -7 -7 -7 -7 7 7- -7- 7 7 7
+Match
+none
+
+Example 71-67 = 4
+BA DC min(BA,DC)-max(BA,DC) rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+17 76 -59 -95 -59 -59 -95 59 95- -59- 95 95 59
+Match
+none
+
+Common
+none
+
+Try BA_DC with max(x,y)%min(x,y) for operator -
+The current format is BA_DC|max(x,y)%min(x,y)
+
+Example 73-66 = 7
+BA DC max(BA,DC)%min(BA,DC) rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+37 66 29 92 29 29 92 -29 92 29- -92 92 29
+Match
+none
+
+Example 68-50 = 18
+BA DC max(BA,DC)%min(BA,DC) rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+86 05 1 1 1 1 1 -1 1 1- -1 1 1
+Match
+none
+
+Example 80-51 = 29
+BA DC max(BA,DC)%min(BA,DC) rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+08 15 7 7 7 7 7 -7 7 7- -7 7 7
+Match
+none
+
+Example 71-67 = 4
+BA DC max(BA,DC)%min(BA,DC) rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+17 76 8 8 8 8 8 -8 8 8- -8 8 8
+Match
+none
+
+Common
+none
+
+Try BA_DC with x%y for operator -
+The current format is BA_DC|x%y
+
+Example 73-66 = 7
+BA DC BA%DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+37 66 37 73 37 37 73 -37 73 37- -73 73 37
+Match
+none
+
+Example 68-50 = 18
+BA DC BA%DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+86 05 1 1 1 1 1 -1 1 1- -1 1 1
+Match
+none
+
+Example 80-51 = 29
+BA DC BA%DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+08 15 8 8 8 8 8 -8 8 8- -8 8 8
+Match
+none
+
+Example 71-67 = 4
+BA DC BA%DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+17 76 17 71 17 17 71 -17 71 17- -71 71 17
+Match
+none
+
+Common
+none
+
+Try BA_DC with y%x for operator -
+The current format is BA_DC|y%x
+
+Example 73-66 = 7
+BA DC DC%BA rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+37 66 29 92 29 29 92 -29 92 29- -92 92 29
+Match
+none
+
+Example 68-50 = 18
+BA DC DC%BA rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+86 05 5 5 5 5 5 -5 5 5- -5 5 5
+Match
+none
+
+Example 80-51 = 29
+BA DC DC%BA rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+08 15 7 7 7 7 7 -7 7 7- -7 7 7
+Match
+none
+
+Example 71-67 = 4
+BA DC DC%BA rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+17 76 8 8 8 8 8 -8 8 8- -8 8 8
+Match
+none
+
+Common
+none
+
+BA_DC has no common output format for this family
+Try AB_CD
+
+Try AB_CD with x-y for operator -
+The current format is AB_CD|x-y
+
+Example 73-66 = 7
+AB CD AB-CD plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+73 66 7 7 7 7 7 -7 7 7- -7 7 7
+Match
+plain
+rev
+op_prefix_if_neg
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+abs
+
+Example 68-50 = 18
+AB CD AB-CD plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+68 50 18 18 81 18 81 -18 81 18- -81 81 18
+Match
+plain
+op_prefix_if_neg
+abs
+
+Example 80-51 = 29
+AB CD AB-CD plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+80 51 29 29 92 29 92 -29 92 29- -92 92 29
+Match
+plain
+op_prefix_if_neg
+abs
+
+Example 71-67 = 4
+AB CD AB-CD plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+71 67 4 4 4 4 4 -4 4 4- -4 4 4
+Match
+plain
+rev
+op_prefix_if_neg
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+abs
+
+Common
+
+Training target:
+plain
+op_prefix_if_neg
+abs
+
+Apply AB_CD|x-y|common to the query
+
+Query
+38-10
+AB CD AB-CD plain op_prefix_if_neg abs
+38 10 28 28 28 28
+All common output formats agree on 28
+
+Answer: \boxed{28}

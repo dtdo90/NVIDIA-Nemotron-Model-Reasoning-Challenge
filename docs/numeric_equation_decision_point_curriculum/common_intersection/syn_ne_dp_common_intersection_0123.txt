@@ -1,0 +1,149 @@
+Problem syn_ne_dp_common_intersection_0123
+Bucket: common_intersection
+Subbucket: single
+Source id: syn_ne_ab_cd_add_minus1_mix_0024
+Source mode: synthetic
+Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/ab_cd_addition/ab_cd_mix/syn_ne_ab_cd_add_minus1_mix_0024.txt
+Gold answer: +751
+Pairing: AB_CD
+Operator: +
+Note: common_single_AB_CD
+
+Training prompt:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+13+93 = +501
+32@45 = 77
+26+49 = +47
+61^68 = 4148
+Now, determine the result for: 84+74
+
+Solution:
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 84+74
+Query operator is +
+
+Compare example operators
+13+93 = +501 operator +
+same
+32@45 = 77 operator @
+different
+26+49 = +47 operator +
+same
+61^68 = 4148 operator ^
+different
+
+Same operator examples
+13+93 = +501
+26+49 = +47
+
+Same operator RHS values are +501 and +47
+The RHS values mix length 2 and 3, so use the addition family
+Try x+y,x+y-1,x+y+1
+
+Try BA_DC first
+
+Try BA_DC with x+y for operator +
+The current format is BA_DC|x+y
+
+Example 13+93 = +501
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+31 39 70 07 70 70 07 +70 07 70+ +07 07 70
+Match
+none
+
+Example 26+49 = +47
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+62 94 156 651 156 156 651 +156 651 156+ +651 651 156
+Match
+none
+
+Common
+none
+
+Try BA_DC with x+y-1 for operator +
+The current format is BA_DC|x+y-1
+
+Example 13+93 = +501
+BA DC BA+DC-1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+31 39 69 96 69 69 96 +69 96 69+ +96 96 69
+Match
+none
+
+Example 26+49 = +47
+BA DC BA+DC-1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+62 94 155 551 155 155 551 +155 551 155+ +551 551 155
+Match
+none
+
+Common
+none
+
+Try BA_DC with x+y+1 for operator +
+The current format is BA_DC|x+y+1
+
+Example 13+93 = +501
+BA DC BA+DC+1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+31 39 71 17 71 71 17 +71 17 71+ +17 17 71
+Match
+none
+
+Example 26+49 = +47
+BA DC BA+DC+1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+62 94 157 751 157 157 751 +157 751 157+ +751 751 157
+Match
+none
+
+Common
+none
+
+BA_DC has no common output format for this family
+Try AB_CD
+
+Try AB_CD with x+y for operator +
+The current format is AB_CD|x+y
+
+Example 13+93 = +501
+AB CD AB+CD plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+13 93 106 106 601 106 601 +106 601 106+ +601 601 106
+Match
+none
+
+Example 26+49 = +47
+AB CD AB+CD plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+26 49 75 75 57 75 57 +75 57 75+ +57 57 75
+Match
+none
+
+Common
+none
+
+Try AB_CD with x+y-1 for operator +
+The current format is AB_CD|x+y-1
+
+Example 13+93 = +501
+AB CD AB+CD-1 plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+13 93 105 105 501 105 501 +105 501 105+ +501 501 105
+Match
+op_prefix_rev
+
+Example 26+49 = +47
+AB CD AB+CD-1 plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+26 49 74 74 47 74 47 +74 47 74+ +47 47 74
+Match
+op_prefix_rev
+
+Common
+
+Training target:
+op_prefix_rev
+
+Apply AB_CD|x+y-1|common to the query
+
+Query
+84+74
+AB CD AB+CD-1 op_prefix_rev
+84 74 157 +751
+All common output formats agree on +751
+
+Answer: \boxed{+751}

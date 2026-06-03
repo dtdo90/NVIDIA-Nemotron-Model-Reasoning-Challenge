@@ -1,0 +1,94 @@
+Problem syn_ne_dp_output_format_rendering_0469
+Bucket: output_format_rendering
+Subbucket: agree
+Source id: syn_ne_ba_dc_add_len3_xplusyplus1_0079
+Source mode: synthetic
+Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/ba_dc_addition/ba_dc_len3/syn_ne_ba_dc_add_len3_xplusyplus1_0079.txt
+Gold answer: 72
+Pairing: BA_DC
+Operator: <
+Note: agree_BA_DC_<
+
+Training prompt:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+35*15 = 3072
+39<51 = 901
+74%90 = 2
+Now, determine the result for: 20<42
+
+Solution:
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 20<42
+Query operator is <
+
+Compare example operators
+35*15 = 3072 operator *
+different
+39<51 = 901 operator <
+same
+74%90 = 2 operator %
+different
+
+Same operator examples
+39<51 = 901
+
+Same operator RHS values are 901
+The RHS values have length 3, so use addition or multiplication
+Try x+y,x+y-1,x+y+1,x*y,x*y+1,x*y-1
+
+Try BA_DC first
+
+Try BA_DC with x+y for operator <
+The current format is BA_DC|x+y
+
+Example 39<51 = 901
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+93 15 108 801 108 108 801 <108 801 108< <801 801 108
+Match
+none
+
+Common
+none
+
+Try BA_DC with x+y-1 for operator <
+The current format is BA_DC|x+y-1
+
+Example 39<51 = 901
+BA DC BA+DC-1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+93 15 107 701 107 107 701 <107 701 107< <701 701 107
+Match
+none
+
+Common
+none
+
+Try BA_DC with x+y+1 for operator <
+The current format is BA_DC|x+y+1
+
+Example 39<51 = 901
+BA DC BA+DC+1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+93 15 109 901 109 109 901 <109 901 109< <901 901 109
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Common
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Apply BA_DC|x+y+1|common to the query
+
+Query
+20<42
+BA DC BA+DC+1 rev rev_or_op_prefix_rev_if_neg rev_or_op_suffix_rev_if_neg abs_rev
+2 24 27 72 72 72 72
+
+Training target:
+All common output formats agree on 72
+
+Answer: \boxed{72}

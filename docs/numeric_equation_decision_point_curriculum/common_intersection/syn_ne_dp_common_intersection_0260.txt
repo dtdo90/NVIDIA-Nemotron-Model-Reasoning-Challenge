@@ -1,0 +1,120 @@
+Problem syn_ne_dp_common_intersection_0260
+Bucket: common_intersection
+Subbucket: triple_plus
+Source id: syn_ne_ba_dc_add_len3_xplusyminus1_0018
+Source mode: synthetic
+Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/ba_dc_addition/ba_dc_len3/syn_ne_ba_dc_add_len3_xplusyminus1_0018.txt
+Gold answer: 09
+Pairing: BA_DC
+Operator: $
+Note: common_triple_plus_BA_DC
+
+Training prompt:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+08%85 = 22
+46$65 = 911
+90$29 = 001
+69*02 = 0291
+19$45 = 441
+Now, determine the result for: 20$98
+
+Solution:
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 20$98
+Query operator is $
+
+Compare example operators
+08%85 = 22 operator %
+different
+46$65 = 911 operator $
+same
+90$29 = 001 operator $
+same
+69*02 = 0291 operator *
+different
+19$45 = 441 operator $
+same
+
+Same operator examples
+46$65 = 911
+90$29 = 001
+19$45 = 441
+
+Same operator RHS values are 911 and 001 and 441
+The RHS values have length 3, so use addition or multiplication
+Try x+y,x+y-1,x+y+1,x*y,x*y+1,x*y-1
+
+Try BA_DC first
+
+Try BA_DC with x+y for operator $
+The current format is BA_DC|x+y
+
+Example 46$65 = 911
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+64 56 120 021 120 120 021 $120 021 120$ $021 021 120
+Match
+none
+
+Example 90$29 = 001
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+9 92 101 101 101 101 101 $101 101 101$ $101 101 101
+Match
+none
+
+Example 19$45 = 441
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+91 54 145 541 145 145 541 $145 541 145$ $541 541 145
+Match
+none
+
+Common
+none
+
+Try BA_DC with x+y-1 for operator $
+The current format is BA_DC|x+y-1
+
+Example 46$65 = 911
+BA DC BA+DC-1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+64 56 119 911 119 119 911 $119 911 119$ $911 911 119
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Example 90$29 = 001
+BA DC BA+DC-1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+9 92 100 001 100 100 001 $100 001 100$ $001 001 100
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Example 19$45 = 441
+BA DC BA+DC-1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+91 54 144 441 144 144 441 $144 441 144$ $441 441 144
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Common
+
+Training target:
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Apply BA_DC|x+y-1|common to the query
+
+Query
+20$98
+BA DC BA+DC-1 rev rev_or_op_prefix_rev_if_neg rev_or_op_suffix_rev_if_neg abs_rev
+2 89 90 09 09 09 09
+All common output formats agree on 09
+
+Answer: \boxed{09}

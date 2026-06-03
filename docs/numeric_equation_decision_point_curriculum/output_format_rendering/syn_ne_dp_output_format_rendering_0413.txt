@@ -1,0 +1,101 @@
+Problem syn_ne_dp_output_format_rendering_0413
+Bucket: output_format_rendering
+Subbucket: agree
+Source id: syn_ne_ba_dc_add_len3_xplusyminus1_0194
+Source mode: synthetic
+Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/ba_dc_addition/ba_dc_len3/syn_ne_ba_dc_add_len3_xplusyminus1_0194.txt
+Gold answer: 98
+Pairing: BA_DC
+Operator: ^
+Note: agree_BA_DC_^
+
+Training prompt:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+36*31 = 918
+86^53 = 201
+14^78 = 721
+63-05 = -14
+Now, determine the result for: 23^85
+
+Solution:
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 23^85
+Query operator is ^
+
+Compare example operators
+36*31 = 918 operator *
+different
+86^53 = 201 operator ^
+same
+14^78 = 721 operator ^
+same
+63-05 = -14 operator -
+different
+
+Same operator examples
+86^53 = 201
+14^78 = 721
+
+Same operator RHS values are 201 and 721
+The RHS values have length 3, so use addition or multiplication
+Try x+y,x+y-1,x+y+1,x*y,x*y+1,x*y-1
+
+Try BA_DC first
+
+Try BA_DC with x+y for operator ^
+The current format is BA_DC|x+y
+
+Example 86^53 = 201
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+68 35 103 301 103 103 301 ^103 301 103^ ^301 301 103
+Match
+none
+
+Example 14^78 = 721
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+41 87 128 821 128 128 821 ^128 821 128^ ^821 821 128
+Match
+none
+
+Common
+none
+
+Try BA_DC with x+y-1 for operator ^
+The current format is BA_DC|x+y-1
+
+Example 86^53 = 201
+BA DC BA+DC-1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+68 35 102 201 102 102 201 ^102 201 102^ ^201 201 102
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Example 14^78 = 721
+BA DC BA+DC-1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+41 87 127 721 127 127 721 ^127 721 127^ ^721 721 127
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Common
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Apply BA_DC|x+y-1|common to the query
+
+Query
+23^85
+BA DC BA+DC-1 rev rev_or_op_prefix_rev_if_neg rev_or_op_suffix_rev_if_neg abs_rev
+32 58 89 98 98 98 98
+
+Training target:
+All common output formats agree on 98
+
+Answer: \boxed{98}

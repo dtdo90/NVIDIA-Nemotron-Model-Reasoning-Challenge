@@ -1,0 +1,83 @@
+Problem syn_ne_dp_common_intersection_0242
+Bucket: common_intersection
+Subbucket: triple_plus
+Source id: syn_ne_ba_dc_add_mix_xplusy_0112
+Source mode: synthetic
+Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/ba_dc_addition/ba_dc_mix/syn_ne_ba_dc_add_mix_xplusy_0112.txt
+Gold answer: 82
+Pairing: BA_DC
+Operator: >
+Note: common_triple_plus_BA_DC
+
+Training prompt:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+85-71 = 41
+98>93 = 821
+54>72 = 27
+87@65 = 431
+Now, determine the result for: 32>50
+
+Solution:
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 32>50
+Query operator is >
+
+Compare example operators
+85-71 = 41 operator -
+different
+98>93 = 821 operator >
+same
+54>72 = 27 operator >
+same
+87@65 = 431 operator @
+different
+
+Same operator examples
+98>93 = 821
+54>72 = 27
+
+Same operator RHS values are 821 and 27
+The RHS values mix length 2 and 3, so use the addition family
+Try x+y,x+y-1,x+y+1
+
+Try BA_DC first
+
+Try BA_DC with x+y for operator >
+The current format is BA_DC|x+y
+
+Example 98>93 = 821
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+89 39 128 821 128 128 821 >128 821 128> >821 821 128
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Example 54>72 = 27
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+45 27 72 27 72 72 27 >72 27 72> >27 27 72
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Common
+
+Training target:
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Apply BA_DC|x+y|common to the query
+
+Query
+32>50
+BA DC BA+DC rev rev_or_op_prefix_rev_if_neg rev_or_op_suffix_rev_if_neg abs_rev
+23 5 28 82 82 82 82
+All common output formats agree on 82
+
+Answer: \boxed{82}

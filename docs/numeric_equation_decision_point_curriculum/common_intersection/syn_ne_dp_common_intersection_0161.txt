@@ -1,0 +1,128 @@
+Problem syn_ne_dp_common_intersection_0161
+Bucket: common_intersection
+Subbucket: double
+Source id: syn_ne_low_ba_dc_sub_vote_0084
+Source mode: synthetic
+Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/low_confidence/ba_dc_subtraction/syn_ne_low_ba_dc_sub_vote_0084.txt
+Gold answer: -15
+Pairing: BA_DC
+Operator: -
+Note: common_double_BA_DC
+
+Training prompt:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+32-72 = -4
+76-06 = -7
+Now, determine the result for: 92-44
+
+Solution:
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 92-44
+Query operator is -
+
+Compare example operators
+32-72 = -4 operator -
+same
+76-06 = -7 operator -
+same
+
+Same operator examples
+32-72 = -4
+76-06 = -7
+
+Same operator RHS values are -4 and -7
+The RHS values have length 1, so use subtraction or modular
+Try x-y,y-x,abs(x-y),min(x,y)-max(x,y),max(x,y)%min(x,y),x%y,y%x
+
+Try BA_DC first
+
+Try BA_DC with x-y for operator -
+The current format is BA_DC|x-y
+
+Example 32-72 = -4
+BA DC BA-DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+23 27 -4 -4 -4 -4 -4 4 4- -4- 4 4 4
+Match
+rev
+plain
+op_prefix_if_neg
+rev_or_op_prefix_rev_if_neg
+
+Example 76-06 = -7
+BA DC BA-DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+67 60 7 7 7 7 7 -7 7 7- -7 7 7
+Match
+op_prefix
+op_prefix_rev
+
+Common
+
+Training target:
+none
+x-y fails under BA_DC
+
+Try BA_DC with y-x for operator -
+The current format is BA_DC|y-x
+
+Example 32-72 = -4
+BA DC DC-BA rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+23 27 4 4 4 4 4 -4 4 4- -4 4 4
+Match
+op_prefix
+op_prefix_rev
+
+Example 76-06 = -7
+BA DC DC-BA rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+67 60 -7 -7 -7 -7 -7 7 7- -7- 7 7 7
+Match
+rev
+plain
+op_prefix_if_neg
+rev_or_op_prefix_rev_if_neg
+
+Common
+none
+y-x fails under BA_DC
+
+Try BA_DC with abs(x-y) for operator -
+The current format is BA_DC|abs(x-y)
+
+Example 32-72 = -4
+BA DC abs(BA-DC) rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+23 27 4 4 4 4 4 -4 4 4- -4 4 4
+Match
+op_prefix
+op_prefix_rev
+
+Example 76-06 = -7
+BA DC abs(BA-DC) rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+67 60 7 7 7 7 7 -7 7 7- -7 7 7
+Match
+op_prefix
+op_prefix_rev
+
+Common
+op_prefix
+op_prefix_rev
+
+Apply format BA_DC|abs(x-y)|common to the query
+
+Query
+92-44
+BA DC abs(BA-DC) op_prefix op_prefix_rev
+29 44 15 -15 -51
+All common output formats do not agree
+The selected operator abs(x-y) is neither x-y nor y-x
+For motif BA_DC with selected operator neither x-y nor y-x, use voting. If voting ties, use the first common format in priority order
+
+Votes
+-15 has 1 votes
+-51 has 1 votes
+Tie
+
+First common format in priority order
+op_prefix
+-15
+
+Answer: \boxed{-15}

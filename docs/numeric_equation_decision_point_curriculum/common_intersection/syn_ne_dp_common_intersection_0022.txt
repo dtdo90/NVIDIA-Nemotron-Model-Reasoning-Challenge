@@ -1,0 +1,149 @@
+Problem syn_ne_dp_common_intersection_0022
+Bucket: common_intersection
+Subbucket: none
+Source id: syn_ne_ab_cd_add_minus1_mix_0009
+Source mode: synthetic
+Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/ab_cd_addition/ab_cd_mix/syn_ne_ab_cd_add_minus1_mix_0009.txt
+Gold answer: ^78
+Pairing: BA_DC
+Operator: ^
+Note: common_none_BA_DC
+
+Training prompt:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+93^24 = ^611
+25-44 = 69
+20^68 = ^78
+87}91 = 7917
+Now, determine the result for: 56^32
+
+Solution:
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 56^32
+Query operator is ^
+
+Compare example operators
+93^24 = ^611 operator ^
+same
+25-44 = 69 operator -
+different
+20^68 = ^78 operator ^
+same
+87}91 = 7917 operator }
+different
+
+Same operator examples
+93^24 = ^611
+20^68 = ^78
+
+Same operator RHS values are ^611 and ^78
+The RHS values mix length 2 and 3, so use the addition family
+Try x+y,x+y-1,x+y+1
+
+Try BA_DC first
+
+Try BA_DC with x+y for operator ^
+The current format is BA_DC|x+y
+
+Example 93^24 = ^611
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+39 42 81 18 81 81 18 ^81 18 81^ ^18 18 81
+Match
+none
+
+Example 20^68 = ^78
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+02 86 88 88 88 88 88 ^88 88 88^ ^88 88 88
+Match
+none
+
+Common
+none
+
+Try BA_DC with x+y-1 for operator ^
+The current format is BA_DC|x+y-1
+
+Example 93^24 = ^611
+BA DC BA+DC-1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+39 42 80 08 80 80 08 ^80 08 80^ ^08 08 80
+Match
+none
+
+Example 20^68 = ^78
+BA DC BA+DC-1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+02 86 87 78 87 87 78 ^87 78 87^ ^78 78 87
+Match
+op_prefix_rev
+
+Common
+
+Training target:
+none
+
+Try BA_DC with x+y+1 for operator ^
+The current format is BA_DC|x+y+1
+
+Example 93^24 = ^611
+BA DC BA+DC+1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+39 42 82 28 82 82 28 ^82 28 82^ ^28 28 82
+Match
+none
+
+Example 20^68 = ^78
+BA DC BA+DC+1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+02 86 89 98 89 89 98 ^89 98 89^ ^98 98 89
+Match
+none
+
+Common
+none
+
+BA_DC has no common output format for this family
+Try AB_CD
+
+Try AB_CD with x+y for operator ^
+The current format is AB_CD|x+y
+
+Example 93^24 = ^611
+AB CD AB+CD plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+93 24 117 117 711 117 711 ^117 711 117^ ^711 711 117
+Match
+none
+
+Example 20^68 = ^78
+AB CD AB+CD plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+20 68 88 88 88 88 88 ^88 88 88^ ^88 88 88
+Match
+none
+
+Common
+none
+
+Try AB_CD with x+y-1 for operator ^
+The current format is AB_CD|x+y-1
+
+Example 93^24 = ^611
+AB CD AB+CD-1 plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+93 24 116 116 611 116 611 ^116 611 116^ ^611 611 116
+Match
+op_prefix_rev
+
+Example 20^68 = ^78
+AB CD AB+CD-1 plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+20 68 87 87 78 87 78 ^87 78 87^ ^78 78 87
+Match
+op_prefix_rev
+
+Common
+op_prefix_rev
+
+Apply AB_CD|x+y-1|common to the query
+
+Query
+56^32
+AB CD AB+CD-1 op_prefix_rev
+56 32 87 ^78
+All common output formats agree on ^78
+
+Answer: \boxed{^78}

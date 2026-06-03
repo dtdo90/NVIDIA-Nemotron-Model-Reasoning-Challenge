@@ -1,0 +1,94 @@
+Problem syn_ne_dp_common_intersection_0259
+Bucket: common_intersection
+Subbucket: triple_plus
+Source id: syn_ne_ba_dc_add_len3_xplusyplus1_0049
+Source mode: synthetic
+Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/ba_dc_addition/ba_dc_len3/syn_ne_ba_dc_add_len3_xplusyplus1_0049.txt
+Gold answer: 64
+Pairing: BA_DC
+Operator: $
+Note: common_triple_plus_BA_DC
+
+Training prompt:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+76*48 = 8265
+09$27 = 361
+57@36 = 831
+Now, determine the result for: 72$81
+
+Solution:
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 72$81
+Query operator is $
+
+Compare example operators
+76*48 = 8265 operator *
+different
+09$27 = 361 operator $
+same
+57@36 = 831 operator @
+different
+
+Same operator examples
+09$27 = 361
+
+Same operator RHS values are 361
+The RHS values have length 3, so use addition or multiplication
+Try x+y,x+y-1,x+y+1,x*y,x*y+1,x*y-1
+
+Try BA_DC first
+
+Try BA_DC with x+y for operator $
+The current format is BA_DC|x+y
+
+Example 09$27 = 361
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+90 72 162 261 162 162 261 $162 261 162$ $261 261 162
+Match
+none
+
+Common
+none
+
+Try BA_DC with x+y-1 for operator $
+The current format is BA_DC|x+y-1
+
+Example 09$27 = 361
+BA DC BA+DC-1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+90 72 161 161 161 161 161 $161 161 161$ $161 161 161
+Match
+none
+
+Common
+none
+
+Try BA_DC with x+y+1 for operator $
+The current format is BA_DC|x+y+1
+
+Example 09$27 = 361
+BA DC BA+DC+1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+90 72 163 361 163 163 361 $163 361 163$ $361 361 163
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Common
+
+Training target:
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Apply BA_DC|x+y+1|common to the query
+
+Query
+72$81
+BA DC BA+DC+1 rev rev_or_op_prefix_rev_if_neg rev_or_op_suffix_rev_if_neg abs_rev
+27 18 46 64 64 64 64
+All common output formats agree on 64
+
+Answer: \boxed{64}

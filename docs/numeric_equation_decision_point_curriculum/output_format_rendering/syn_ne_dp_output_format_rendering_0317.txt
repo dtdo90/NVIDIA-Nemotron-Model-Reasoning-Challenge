@@ -1,0 +1,138 @@
+Problem syn_ne_dp_output_format_rendering_0317
+Bucket: output_format_rendering
+Subbucket: agree
+Source id: syn_ne_opabs_tlock_3401_helper_0004
+Source mode: synthetic
+Source path: synthetic/operator_absence_direct_template_motif_lock/3401_helper
+Gold answer: 801
+Pairing: BA_DC
+Operator: +
+Note: agree_BA_DC_+
+
+Training prompt:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+24@45 = 4524
+39@16 = 1639
+14#35 = 49
+28#17 = 351
+Now, determine the result for: 34+56
+
+Solution:
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 34+56
+Query operator is +
+
+Compare example operators
+24@45 = 4524 operator @
+different
+39@16 = 1639 operator @
+different
+14#35 = 49 operator #
+different
+28#17 = 351 operator #
+different
+
+Same operator examples
+None
+First solve motif and output formats from visible examples
+
+Use visible operator @ to infer the motif and output formats
+Examples with operator @
+24@45 = 4524
+39@16 = 1639
+
+RHS values are 4524 and 1639
+The RHS values have length 4, so use direct templates or multiplication
+Try template0134,template3401,x*y,x*y+1,x*y-1
+
+We try direct templates first. If they fail, we proceed to arithmetic search on motifs BA_DC and AB_CD
+
+Try template0134 for operator @
+template0134 means AB followed by CD
+
+Example 24@45 = 4524
+AB = 24
+operator = @
+CD = 45
+24 followed by 45 gives 2445 vs 4524
+No match
+
+template0134 fails
+
+Try template3401 for operator @
+template3401 means CD followed by AB
+
+Example 24@45 = 4524
+AB = 24
+operator = @
+CD = 45
+45 followed by 24 gives 4524 vs 4524
+Match
+
+Example 39@16 = 1639
+AB = 39
+operator = @
+CD = 16
+16 followed by 39 gives 1639 vs 1639
+Match
+
+template3401 passes all examples
+
+template3401 suggests candidate motif BA_DC
+
+Test candidate motif BA_DC on remaining examples
+Use visible operator # to test candidate motif BA_DC
+Examples with operator #
+14#35 = 49
+28#17 = 351
+
+RHS values are 49 and 351
+The RHS values have length 2, so use addition, subtraction, or modular
+Try x+y,x+y-1,x+y+1,x-y,y-x,abs(x-y),min(x,y)-max(x,y),max(x,y)%min(x,y),x%y,y%x
+
+Try BA_DC with x+y for operator #
+The current format is BA_DC|x+y
+
+Example 14#35 = 49
+BA DC BA+DC plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+41 53 94 94 49 94 49 #94 49 94# #49 49 94
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Example 28#17 = 351
+BA DC BA+DC plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+82 71 153 153 351 153 351 #153 351 153# #351 351 153
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Common
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Candidate motif BA_DC is supported by remaining examples
+Use BA_DC as the inferred motif
+
+Apply the inferred motif and output formats to the absent query operator
+Query operator + is visible and does not appear in examples
+Use x+y
+
+Apply format BA_DC|x+y|common to the query
+
+Query
+34+56
+BA DC BA+DC rev rev_or_op_prefix_rev_if_neg rev_or_op_suffix_rev_if_neg abs_rev
+43 65 108 801 801 801 801
+
+Training target:
+All common output formats agree on 801
+
+Answer: \boxed{801}

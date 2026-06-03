@@ -1,0 +1,193 @@
+Problem syn_ne_dp_operator_absence_fallback_choice_0894
+Bucket: operator_absence_fallback_choice
+Subbucket: AB_CD_choose_template0134
+Source id: syn_ne_opa_ab_cd_fallback_0026
+Source mode: synthetic
+Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/operator_absence/syn_ne_opa_ab_cd_fallback_0026.txt
+Gold answer: 1088
+Pairing: AB_CD
+Operator: [
+Note: fallback_choice
+
+Training prompt:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+10+10 = 20
+10+37 = 47
+54*60 = 114
+Now, determine the result for: 10[88
+
+Solution:
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 10[88
+Query operator is [
+
+Compare example operators
+10+10 = 20 operator +
+different
+10+37 = 47 operator +
+different
+54*60 = 114 operator *
+different
+
+Same operator examples
+None
+First solve motif and output formats from visible examples
+
+Use visible operator * to infer the motif and output formats
+Examples with operator *
+54*60 = 114
+
+RHS values are 114
+The RHS values have length 3, so use addition or multiplication
+Try x+y,x+y-1,x+y+1,x*y,x*y+1,x*y-1
+
+Try BA_DC first
+
+Try BA_DC with x+y
+The current format is BA_DC|x+y
+Example 54*60 = 114
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+45 6 51 15 51 51 15 *51 15 51* *15 15 51
+Match
+none
+
+Common
+none
+
+Try BA_DC with x+y-1
+The current format is BA_DC|x+y-1
+Example 54*60 = 114
+BA DC BA+DC-1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+45 6 50 05 50 50 05 *50 05 50* *05 05 50
+Match
+none
+
+Common
+none
+
+Try BA_DC with x+y+1
+The current format is BA_DC|x+y+1
+Example 54*60 = 114
+BA DC BA+DC+1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+45 6 52 25 52 52 25 *52 25 52* *25 25 52
+Match
+none
+
+Common
+none
+
+Try BA_DC with x*y
+The current format is BA_DC|x*y
+Example 54*60 = 114
+BA DC BA*DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+45 6 270 072 270 270 072 *270 072 270* *072 072 270
+Match
+none
+
+Common
+none
+
+Try BA_DC with x*y+1
+The current format is BA_DC|x*y+1
+Example 54*60 = 114
+BA DC BA*DC+1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+45 6 271 172 271 271 172 *271 172 271* *172 172 271
+Match
+none
+
+Common
+none
+
+Try BA_DC with x*y-1
+The current format is BA_DC|x*y-1
+Example 54*60 = 114
+BA DC BA*DC-1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+45 6 269 962 269 269 962 *269 962 269* *962 962 269
+Match
+none
+
+Common
+none
+
+Try AB_CD
+
+Try AB_CD with x+y
+The current format is AB_CD|x+y
+Example 54*60 = 114
+AB CD AB+CD plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+54 60 114 114 411 114 411 *114 411 114* *411 411 114
+Match
+plain
+op_prefix_if_neg
+abs
+
+Common
+plain
+op_prefix_if_neg
+abs
+
+Check other visible operators to verify the motif and output formats
+Motif
+AB_CD
+Output formats
+plain
+op_prefix_if_neg
+abs
+
+Visible operator +
+Examples with operator +
+10+10 = 20
+10+37 = 47
+
+RHS values are 20 and 47
+The RHS values have length 2, so use addition, subtraction, or modular
+Try x+y,x+y-1,x+y+1,x-y,y-x,abs(x-y),min(x,y)-max(x,y),max(x,y)%min(x,y),x%y,y%x
+
+Try AB_CD with x+y
+The current format is AB_CD|x+y
+Example 10+10 = 20
+AB CD AB+CD plain op_prefix_if_neg abs
+10 10 20 20 20 20
+Match
+plain
+op_prefix_if_neg
+abs
+
+Example 10+37 = 47
+AB CD AB+CD plain op_prefix_if_neg abs
+10 37 47 47 47 47
+Match
+plain
+op_prefix_if_neg
+abs
+
+Common after verification
+plain
+op_prefix_if_neg
+abs
+
+Apply the inferred motif and output formats to the absent query operator
+Query operator [ is absent
+[ is none of the visible operators +,-,*,%
+Used operators in the examples
+x+y
+Use fallback order for AB_CD
+template0134, x-y, x*y, x+y
+Skip operators already used by examples
+x+y
+
+Training target:
+Choose template0134
+
+Apply AB_CD|template0134 to the query
+template0134 means AB followed by CD
+
+Query
+10[88
+AB = 10
+operator = [
+CD = 88
+10 followed by 88 gives 1088
+
+Answer: \boxed{1088}

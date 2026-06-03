@@ -1,0 +1,85 @@
+Problem syn_ne_dp_output_format_rendering_0493
+Bucket: output_format_rendering
+Subbucket: disagree
+Source id: syn_ne_policy_ba_dc_x_y_negative_prefix_0104
+Source mode: synthetic
+Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/non_unanimous_policy/ba_dc_x_y_negative_prefix/syn_ne_policy_ba_dc_x_y_negative_prefix_0104.txt
+Gold answer: @03
+Pairing: BA_DC
+Operator: @
+Note: disagree_BA_DC_@
+
+Training prompt:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+46@12 = 34
+89@45 = 44
+Now, determine the result for: 65@68
+
+Solution:
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 65@68
+Query operator is @
+
+Compare example operators
+46@12 = 34 operator @
+same
+89@45 = 44 operator @
+same
+
+Same operator examples
+46@12 = 34
+89@45 = 44
+
+Same operator RHS values are 34 and 44
+The RHS values have length 2, so use addition, subtraction, or modular
+Try x-y,y-x,abs(x-y),min(x,y)-max(x,y),max(x,y)%min(x,y),x%y,y%x
+
+Try BA_DC first
+
+Try BA_DC with x-y for operator @
+The current format is BA_DC|x-y
+
+Example 46@12 = 34
+BA DC BA-DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+64 21 43 34 43 43 34 @43 34 43@ @34 34 43
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Example 89@45 = 44
+BA DC BA-DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+98 54 44 44 44 44 44 @44 44 44@ @44 44 44
+Match
+rev
+plain
+op_prefix_if_neg
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+abs
+
+Common
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Apply format BA_DC|x-y|common to the query
+
+Query
+65@68
+BA DC BA-DC rev rev_or_op_prefix_rev_if_neg rev_or_op_suffix_rev_if_neg abs_rev
+56 86 -30 -03 @03 03@ 03
+
+Training target:
+All common output formats do not agree
+The selected operator x-y gives negative value: 56-86=-30
+For motif BA_DC with x-y negative, reverse the magnitude and use operator prefix
+
+30 -> 03
+@03
+
+Answer: \boxed{@03}

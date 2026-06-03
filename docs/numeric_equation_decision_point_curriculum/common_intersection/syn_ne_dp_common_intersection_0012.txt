@@ -1,0 +1,101 @@
+Problem syn_ne_dp_common_intersection_0012
+Bucket: common_intersection
+Subbucket: none
+Source id: syn_ne_ba_dc_add_len2_xplusyminus1_0101
+Source mode: synthetic
+Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/ba_dc_addition/ba_dc_len2/syn_ne_ba_dc_add_len2_xplusyminus1_0101.txt
+Gold answer: 94
+Pairing: BA_DC
+Operator: $
+Note: common_none_BA_DC
+
+Training prompt:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+24%94 = 7
+04$93 = 87
+61$02 = 53
+52*34 = 5701
+Now, determine the result for: 54$50
+
+Solution:
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 54$50
+Query operator is $
+
+Compare example operators
+24%94 = 7 operator %
+different
+04$93 = 87 operator $
+same
+61$02 = 53 operator $
+same
+52*34 = 5701 operator *
+different
+
+Same operator examples
+04$93 = 87
+61$02 = 53
+
+Same operator RHS values are 87 and 53
+The RHS values have length 2, so use addition, subtraction, or modular
+Try x+y,x+y-1,x+y+1,x-y,y-x,abs(x-y),min(x,y)-max(x,y),max(x,y)%min(x,y),x%y,y%x
+
+Try BA_DC first
+
+Try BA_DC with x+y for operator $
+The current format is BA_DC|x+y
+
+Example 04$93 = 87
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+40 39 79 97 79 79 97 $79 97 79$ $97 97 79
+Match
+none
+
+Example 61$02 = 53
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+16 20 36 63 36 36 63 $36 63 36$ $63 63 36
+Match
+none
+
+Common
+
+Training target:
+none
+
+Try BA_DC with x+y-1 for operator $
+The current format is BA_DC|x+y-1
+
+Example 04$93 = 87
+BA DC BA+DC-1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+40 39 78 87 78 78 87 $78 87 78$ $87 87 78
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Example 61$02 = 53
+BA DC BA+DC-1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+16 20 35 53 35 35 53 $35 53 35$ $53 53 35
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Common
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Apply BA_DC|x+y-1|common to the query
+
+Query
+54$50
+BA DC BA+DC-1 rev rev_or_op_prefix_rev_if_neg rev_or_op_suffix_rev_if_neg abs_rev
+45 5 49 94 94 94 94
+All common output formats agree on 94
+
+Answer: \boxed{94}

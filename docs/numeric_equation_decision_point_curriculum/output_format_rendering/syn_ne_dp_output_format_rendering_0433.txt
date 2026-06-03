@@ -1,0 +1,142 @@
+Problem syn_ne_dp_output_format_rendering_0433
+Bucket: output_format_rendering
+Subbucket: agree
+Source id: syn_ne_ba_dc_mul_xmulyminus1_0061
+Source mode: synthetic
+Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/ba_dc_multiplication/ba_dc_mul_minus_1/syn_ne_ba_dc_mul_xmulyminus1_0061.txt
+Gold answer: 4145
+Pairing: BA_DC
+Operator: %
+Note: agree_BA_DC_%
+
+Training prompt:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+37%35 = 8683
+17%07 = 9694
+Now, determine the result for: 75%59
+
+Solution:
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 75%59
+Query operator is %
+
+Compare example operators
+37%35 = 8683 operator %
+same
+17%07 = 9694 operator %
+same
+
+Same operator examples
+37%35 = 8683
+17%07 = 9694
+
+Same operator RHS values are 8683 and 9694
+The RHS values have length 4, so use direct templates or multiplication
+Try template0134,template3401,x*y,x*y+1,x*y-1
+
+We try direct templates first. If they fail, we proceed to arithmetic search on motifs BA_DC and AB_CD
+
+Try template0134 for operator %
+template0134 means AB followed by CD
+
+Example 37%35 = 8683
+AB = 37
+operator = %
+CD = 35
+37 followed by 35 gives 3735 vs 8683
+No match
+
+template0134 fails
+
+Try template3401 for operator %
+template3401 means CD followed by AB
+
+Example 37%35 = 8683
+AB = 37
+operator = %
+CD = 35
+35 followed by 37 gives 3537 vs 8683
+No match
+
+template3401 fails
+
+Direct templates fail
+Proceed to arithmetic search on motifs BA_DC and AB_CD
+
+Try BA_DC first
+
+Try BA_DC with x*y for operator %
+The current format is BA_DC|x*y
+
+Example 37%35 = 8683
+BA DC BA*DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+73 53 3869 9683 3869 3869 9683 %3869 9683 3869% %9683 9683 3869
+Match
+none
+
+Example 17%07 = 9694
+BA DC BA*DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+71 70 4970 0794 4970 4970 0794 %4970 0794 4970% %0794 0794 4970
+Match
+none
+
+Common
+none
+
+Try BA_DC with x*y+1 for operator %
+The current format is BA_DC|x*y+1
+
+Example 37%35 = 8683
+BA DC BA*DC+1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+73 53 3870 0783 3870 3870 0783 %3870 0783 3870% %0783 0783 3870
+Match
+none
+
+Example 17%07 = 9694
+BA DC BA*DC+1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+71 70 4971 1794 4971 4971 1794 %4971 1794 4971% %1794 1794 4971
+Match
+none
+
+Common
+none
+
+Try BA_DC with x*y-1 for operator %
+The current format is BA_DC|x*y-1
+
+Example 37%35 = 8683
+BA DC BA*DC-1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+73 53 3868 8683 3868 3868 8683 %3868 8683 3868% %8683 8683 3868
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Example 17%07 = 9694
+BA DC BA*DC-1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+71 70 4969 9694 4969 4969 9694 %4969 9694 4969% %9694 9694 4969
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Common
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Apply format BA_DC|x*y-1|common to the query
+
+Query
+75%59
+BA DC BA*DC-1 rev rev_or_op_prefix_rev_if_neg rev_or_op_suffix_rev_if_neg abs_rev
+57 95 5414 4145 4145 4145 4145
+
+Training target:
+All common output formats agree on 4145
+
+Answer: \boxed{4145}

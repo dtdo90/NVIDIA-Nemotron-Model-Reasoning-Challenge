@@ -1,0 +1,95 @@
+Problem syn_ne_dp_low_confidence_branch_discipline_0826
+Bucket: low_confidence_branch_discipline
+Subbucket: AB_CD_?
+Source id: syn_ne_policy_ab_cd_non_x_y_priority_0009
+Source mode: synthetic
+Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/non_unanimous_policy/ab_cd_non_x_y_priority/syn_ne_policy_ab_cd_non_x_y_priority_0009.txt
+Gold answer: 14
+Pairing: AB_CD
+Operator: ?
+Note: disagree_AB_CD_?
+
+Training prompt:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+71?49 = 22
+22?07 = 1
+Now, determine the result for: 23?60
+
+Solution:
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 23?60
+Query operator is ?
+
+Compare example operators
+71?49 = 22 operator ?
+same
+22?07 = 1 operator ?
+same
+
+Same operator examples
+71?49 = 22
+22?07 = 1
+
+Same operator RHS values are 22 and 1
+The RHS values mix length 1 and 2, so use subtraction or modular
+Try x-y,y-x,abs(x-y),min(x,y)-max(x,y),max(x,y)%min(x,y),x%y,y%x
+
+Try BA_DC first
+BA_DC has no common output format for this family, so try AB_CD
+
+Try AB_CD
+
+Try AB_CD with max(x,y)%min(x,y) for operator ?
+The current format is AB_CD|max(x,y)%min(x,y)
+
+Example 71?49 = 22
+AB CD max(AB,CD)%min(AB,CD) plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+71 49 22 22 22 22 22 ?22 22 22? ?22 22 22
+Match
+plain
+rev
+op_prefix_if_neg
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+abs
+
+Example 22?07 = 1
+AB CD max(AB,CD)%min(AB,CD) plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+22 07 1 1 1 1 1 ?1 1 1? ?1 1 1
+Match
+plain
+rev
+op_prefix_if_neg
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+abs
+
+Common
+plain
+rev
+op_prefix_if_neg
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+abs
+
+Apply format AB_CD|max(x,y)%min(x,y)|common to the query
+
+Query
+23?60
+AB CD max(AB,CD)%min(AB,CD) plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg rev_or_op_suffix_rev_if_neg abs_rev abs
+23 60 14 14 41 14 41 41 41 14
+
+Training target:
+All common output formats do not agree
+The selected operator max(x,y)%min(x,y) is not x-y
+For motif AB_CD with selected operator not x-y, use the first common format in priority order
+
+First common format in priority order
+plain
+14
+
+Answer: \boxed{14}

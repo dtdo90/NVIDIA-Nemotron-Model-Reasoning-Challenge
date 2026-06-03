@@ -1,0 +1,95 @@
+Problem syn_ne_dp_low_confidence_branch_discipline_0828
+Bucket: low_confidence_branch_discipline
+Subbucket: AB_CD_^
+Source id: syn_ne_policy_ab_cd_non_x_y_priority_0029
+Source mode: synthetic
+Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/non_unanimous_policy/ab_cd_non_x_y_priority/syn_ne_policy_ab_cd_non_x_y_priority_0029.txt
+Gold answer: 60
+Pairing: AB_CD
+Operator: ^
+Note: disagree_AB_CD_^
+
+Training prompt:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+46^38 = 8
+96^91 = 5
+Now, determine the result for: 14^74
+
+Solution:
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 14^74
+Query operator is ^
+
+Compare example operators
+46^38 = 8 operator ^
+same
+96^91 = 5 operator ^
+same
+
+Same operator examples
+46^38 = 8
+96^91 = 5
+
+Same operator RHS values are 8 and 5
+The RHS values have length 1, so use subtraction or modular
+Try x-y,y-x,abs(x-y),min(x,y)-max(x,y),max(x,y)%min(x,y),x%y,y%x
+
+Try BA_DC first
+BA_DC has no common output format for this family, so try AB_CD
+
+Try AB_CD
+
+Try AB_CD with abs(x-y) for operator ^
+The current format is AB_CD|abs(x-y)
+
+Example 46^38 = 8
+AB CD abs(AB-CD) plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+46 38 8 8 8 8 8 ^8 8 8^ ^8 8 8
+Match
+plain
+rev
+op_prefix_if_neg
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+abs
+
+Example 96^91 = 5
+AB CD abs(AB-CD) plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+96 91 5 5 5 5 5 ^5 5 5^ ^5 5 5
+Match
+plain
+rev
+op_prefix_if_neg
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+abs
+
+Common
+plain
+rev
+op_prefix_if_neg
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+abs
+
+Apply format AB_CD|abs(x-y)|common to the query
+
+Query
+14^74
+AB CD abs(AB-CD) plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg rev_or_op_suffix_rev_if_neg abs_rev abs
+14 74 60 60 06 60 06 06 06 60
+
+Training target:
+All common output formats do not agree
+The selected operator abs(x-y) is not x-y
+For motif AB_CD with selected operator not x-y, use the first common format in priority order
+
+First common format in priority order
+plain
+60
+
+Answer: \boxed{60}

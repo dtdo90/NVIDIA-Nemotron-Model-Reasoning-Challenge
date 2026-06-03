@@ -1,0 +1,96 @@
+Problem syn_ne_dp_common_intersection_0262
+Bucket: common_intersection
+Subbucket: triple_plus
+Source id: syn_ne_ba_dc_add_mix_xplusy_0010
+Source mode: synthetic
+Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/ba_dc_addition/ba_dc_mix/syn_ne_ba_dc_add_mix_xplusy_0010.txt
+Gold answer: 221
+Pairing: BA_DC
+Operator: ^
+Note: common_triple_plus_BA_DC
+
+Training prompt:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+13*98 = 9572
+72^51 = 24
+81^06 = 87
+27-25 = 20
+98^75 = 641
+Now, determine the result for: 98^33
+
+Solution:
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 98^33
+Query operator is ^
+
+Compare example operators
+13*98 = 9572 operator *
+different
+72^51 = 24 operator ^
+same
+81^06 = 87 operator ^
+same
+27-25 = 20 operator -
+different
+98^75 = 641 operator ^
+same
+
+Same operator examples
+72^51 = 24
+81^06 = 87
+98^75 = 641
+
+Same operator RHS values are 24 and 87 and 641
+The RHS values mix length 2 and 3, so use the addition family
+Try x+y,x+y-1,x+y+1
+
+Try BA_DC first
+
+Try BA_DC with x+y for operator ^
+The current format is BA_DC|x+y
+
+Example 72^51 = 24
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+27 15 42 24 42 42 24 ^42 24 42^ ^24 24 42
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Example 81^06 = 87
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+18 60 78 87 78 78 87 ^78 87 78^ ^87 87 78
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Example 98^75 = 641
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+89 57 146 641 146 146 641 ^146 641 146^ ^641 641 146
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Common
+
+Training target:
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Apply BA_DC|x+y|common to the query
+
+Query
+98^33
+BA DC BA+DC rev rev_or_op_prefix_rev_if_neg rev_or_op_suffix_rev_if_neg abs_rev
+89 33 122 221 221 221 221
+All common output formats agree on 221
+
+Answer: \boxed{221}

@@ -1,0 +1,122 @@
+Problem syn_ne_dp_literal_minus_rendering_policy_0551
+Bucket: literal_minus_rendering_policy
+Subbucket: BA_DC_unanimous_literal_minus_rendering
+Source id: syn_ne_ba_dc_mul_xmuly_0128
+Source mode: synthetic
+Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/ba_dc_multiplication/ba_dc_mul/syn_ne_ba_dc_mul_xmuly_0128.txt
+Gold answer: 4686
+Pairing: BA_DC
+Operator: -
+Note: agree_BA_DC_-
+
+Training prompt:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+98-38 = 7837
+66-54 = 0792
+89-08 = 0487
+14~67 = 6113
+Now, determine the result for: 88-87
+
+Solution:
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 88-87
+Query operator is -
+
+Compare example operators
+98-38 = 7837 operator -
+same
+66-54 = 0792 operator -
+same
+89-08 = 0487 operator -
+same
+14~67 = 6113 operator ~
+different
+
+Same operator examples
+98-38 = 7837
+66-54 = 0792
+89-08 = 0487
+
+Same operator RHS values are 7837 and 0792 and 0487
+The RHS values have length 4, so use direct templates or multiplication
+Try template0134,template3401,x*y,x*y+1,x*y-1
+
+We try direct templates first. If they fail, we proceed to arithmetic search on motifs BA_DC and AB_CD
+
+Try template0134 for operator -
+template0134 means AB followed by CD
+
+Example 98-38 = 7837
+AB = 98
+operator = -
+CD = 38
+98 followed by 38 gives 9838 vs 7837
+No match
+
+template0134 fails
+
+Try template3401 for operator -
+template3401 means CD followed by AB
+
+Example 98-38 = 7837
+AB = 98
+operator = -
+CD = 38
+38 followed by 98 gives 3898 vs 7837
+No match
+
+template3401 fails
+
+Direct templates fail
+Proceed to arithmetic search on motifs BA_DC and AB_CD
+
+Try BA_DC first
+
+Try BA_DC with x*y for operator -
+The current format is BA_DC|x*y
+
+Example 98-38 = 7837
+BA DC BA*DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+89 83 7387 7837 7387 7387 7837 -7387 7837 7387- -7837 7837 7387
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Example 66-54 = 0792
+BA DC BA*DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+66 45 2970 0792 2970 2970 0792 -2970 0792 2970- -0792 0792 2970
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Example 89-08 = 0487
+BA DC BA*DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+98 80 7840 0487 7840 7840 0487 -7840 0487 7840- -0487 0487 7840
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Common
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Apply format BA_DC|x*y|common to the query
+
+Query
+88-87
+BA DC BA*DC rev rev_or_op_prefix_rev_if_neg rev_or_op_suffix_rev_if_neg abs_rev
+88 78 6864 4686 4686 4686 4686
+
+Training target:
+All common output formats agree on 4686
+
+Answer: \boxed{4686}

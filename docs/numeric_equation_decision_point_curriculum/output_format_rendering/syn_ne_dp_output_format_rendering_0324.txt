@@ -1,0 +1,82 @@
+Problem syn_ne_dp_output_format_rendering_0324
+Bucket: output_format_rendering
+Subbucket: agree
+Source id: syn_ne_ba_dc_add_len3_xplusyminus1_0184
+Source mode: synthetic
+Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/ba_dc_addition/ba_dc_len3/syn_ne_ba_dc_add_len3_xplusyminus1_0184.txt
+Gold answer: 56
+Pairing: BA_DC
+Operator: ^
+Note: agree_BA_DC_^
+
+Training prompt:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+80%41 = 6
+59^31 = 701
+04@12 = 16
+Now, determine the result for: 03^63
+
+Solution:
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 03^63
+Query operator is ^
+
+Compare example operators
+80%41 = 6 operator %
+different
+59^31 = 701 operator ^
+same
+04@12 = 16 operator @
+different
+
+Same operator examples
+59^31 = 701
+
+Same operator RHS values are 701
+The RHS values have length 3, so use addition or multiplication
+Try x+y,x+y-1,x+y+1,x*y,x*y+1,x*y-1
+
+Try BA_DC first
+
+Try BA_DC with x+y for operator ^
+The current format is BA_DC|x+y
+
+Example 59^31 = 701
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+95 13 108 801 108 108 801 ^108 801 108^ ^801 801 108
+Match
+none
+
+Common
+none
+
+Try BA_DC with x+y-1 for operator ^
+The current format is BA_DC|x+y-1
+
+Example 59^31 = 701
+BA DC BA+DC-1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+95 13 107 701 107 107 701 ^107 701 107^ ^701 701 107
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Common
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Apply BA_DC|x+y-1|common to the query
+
+Query
+03^63
+BA DC BA+DC-1 rev rev_or_op_prefix_rev_if_neg rev_or_op_suffix_rev_if_neg abs_rev
+30 36 65 56 56 56 56
+
+Training target:
+All common output formats agree on 56
+
+Answer: \boxed{56}

@@ -1,0 +1,83 @@
+Problem syn_ne_dp_common_intersection_0241
+Bucket: common_intersection
+Subbucket: triple_plus
+Source id: syn_ne_policy_ba_dc_x_y_negative_prefix_0007
+Source mode: synthetic
+Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/non_unanimous_policy/ba_dc_x_y_negative_prefix/syn_ne_policy_ba_dc_x_y_negative_prefix_0007.txt
+Gold answer: ?11
+Pairing: BA_DC
+Operator: ?
+Note: common_triple_plus_BA_DC
+
+Training prompt:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+98?50 = 48
+76?34 = 42
+Now, determine the result for: 73?84
+
+Solution:
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 73?84
+Query operator is ?
+
+Compare example operators
+98?50 = 48 operator ?
+same
+76?34 = 42 operator ?
+same
+
+Same operator examples
+98?50 = 48
+76?34 = 42
+
+Same operator RHS values are 48 and 42
+The RHS values have length 2, so use addition, subtraction, or modular
+Try x-y,y-x,abs(x-y),min(x,y)-max(x,y),max(x,y)%min(x,y),x%y,y%x
+
+Try BA_DC first
+
+Try BA_DC with x-y for operator ?
+The current format is BA_DC|x-y
+
+Example 98?50 = 48
+BA DC BA-DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+89 05 84 48 84 84 48 ?84 48 84? ?48 48 84
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Example 76?34 = 42
+BA DC BA-DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+67 43 24 42 24 24 42 ?24 42 24? ?42 42 24
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Common
+
+Training target:
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Apply format BA_DC|x-y|common to the query
+
+Query
+73?84
+BA DC BA-DC rev rev_or_op_prefix_rev_if_neg rev_or_op_suffix_rev_if_neg abs_rev
+37 48 -11 -11 ?11 11? 11
+
+All common output formats do not agree
+The selected operator x-y gives negative value: 37-48=-11
+For motif BA_DC with x-y negative, reverse the magnitude and use operator prefix
+
+11 -> 11
+?11
+
+Answer: \boxed{?11}

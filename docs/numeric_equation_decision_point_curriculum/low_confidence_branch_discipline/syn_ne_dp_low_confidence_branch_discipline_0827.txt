@@ -1,0 +1,80 @@
+Problem syn_ne_dp_low_confidence_branch_discipline_0827
+Bucket: low_confidence_branch_discipline
+Subbucket: AB_CD_&
+Source id: syn_ne_policy_ab_cd_x_y_positive_priority_0036
+Source mode: synthetic
+Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/non_unanimous_policy/ab_cd_x_y_positive_priority/syn_ne_policy_ab_cd_x_y_positive_priority_0036.txt
+Gold answer: 25
+Pairing: AB_CD
+Operator: &
+Note: disagree_AB_CD_&
+
+Training prompt:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+63&72 = -9
+20&29 = -9
+Now, determine the result for: 66&41
+
+Solution:
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 66&41
+Query operator is &
+
+Compare example operators
+63&72 = -9 operator &
+same
+20&29 = -9 operator &
+same
+
+Same operator examples
+63&72 = -9
+20&29 = -9
+
+Same operator RHS values are -9 and -9
+The RHS values have length 1, so use subtraction or modular
+Try x-y,y-x,abs(x-y),min(x,y)-max(x,y),max(x,y)%min(x,y),x%y,y%x
+
+Try BA_DC first
+BA_DC has no common output format for this family, so try AB_CD
+
+Try AB_CD
+
+Try AB_CD with x-y for operator &
+The current format is AB_CD|x-y
+
+Example 63&72 = -9
+AB CD AB-CD plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+63 72 -9 -9 -9 &9 &9 &-9 9& -9& &9 9 9
+Match
+plain
+rev
+
+Example 20&29 = -9
+AB CD AB-CD plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+20 29 -9 -9 -9 &9 &9 &-9 9& -9& &9 9 9
+Match
+plain
+rev
+
+Common
+plain
+rev
+
+Apply format AB_CD|x-y|common to the query
+
+Query
+66&41
+AB CD AB-CD plain rev
+66 41 25 25 52
+
+Training target:
+All common output formats do not agree
+The selected operator x-y gives positive value: 66-41=25
+For motif AB_CD with x-y positive, use the first common format in priority order
+
+First common format in priority order
+plain
+25
+
+Answer: \boxed{25}

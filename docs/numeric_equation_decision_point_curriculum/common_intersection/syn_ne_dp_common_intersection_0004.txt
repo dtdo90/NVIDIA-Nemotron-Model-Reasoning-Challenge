@@ -1,0 +1,217 @@
+Problem syn_ne_dp_common_intersection_0004
+Bucket: common_intersection
+Subbucket: none
+Source id: syn_ne_ab_cd_mul_plus1_len4_0022
+Source mode: synthetic
+Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/ab_cd_multiplication/ab_cd_mul_plus1/syn_ne_ab_cd_mul_plus1_len4_0022.txt
+Gold answer: 2554
+Pairing: BA_DC
+Operator: ^
+Note: common_none_BA_DC
+
+Training prompt:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+12^91 = 1093
+96^49 = 4705
+71^51 = 3622
+55:44 = 99
+Now, determine the result for: 37^69
+
+Solution:
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 37^69
+Query operator is ^
+
+Compare example operators
+12^91 = 1093 operator ^
+same
+96^49 = 4705 operator ^
+same
+71^51 = 3622 operator ^
+same
+55:44 = 99 operator :
+different
+
+Same operator examples
+12^91 = 1093
+96^49 = 4705
+71^51 = 3622
+
+Same operator RHS values are 1093 and 4705 and 3622
+The RHS values have length 4, so use direct templates or multiplication
+Try template0134,template3401,x*y,x*y+1,x*y-1
+
+We try direct templates first. If they fail, we proceed to arithmetic search on motifs BA_DC and AB_CD
+
+Try template0134 for operator ^
+template0134 means AB followed by CD
+
+Example 12^91 = 1093
+AB = 12
+operator = ^
+CD = 91
+12 followed by 91 gives 1291 vs 1093
+No match
+
+template0134 fails
+
+Try template3401 for operator ^
+template3401 means CD followed by AB
+
+Example 12^91 = 1093
+AB = 12
+operator = ^
+CD = 91
+91 followed by 12 gives 9112 vs 1093
+No match
+
+template3401 fails
+
+Direct templates fail
+Proceed to arithmetic search on motifs BA_DC and AB_CD
+
+Try BA_DC first
+
+Try BA_DC with x*y for operator ^
+The current format is BA_DC|x*y
+
+Example 12^91 = 1093
+BA DC BA*DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+21 19 399 993 399 399 993 ^399 993 399^ ^993 993 399
+Match
+none
+
+Example 96^49 = 4705
+BA DC BA*DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+69 94 6486 6846 6486 6486 6846 ^6486 6846 6486^ ^6846 6846 6486
+Match
+none
+
+Example 71^51 = 3622
+BA DC BA*DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+17 15 255 552 255 255 552 ^255 552 255^ ^552 552 255
+Match
+none
+
+Common
+none
+
+Try BA_DC with x*y+1 for operator ^
+The current format is BA_DC|x*y+1
+
+Example 12^91 = 1093
+BA DC BA*DC+1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+21 19 400 004 400 400 004 ^400 004 400^ ^004 004 400
+Match
+none
+
+Example 96^49 = 4705
+BA DC BA*DC+1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+69 94 6487 7846 6487 6487 7846 ^6487 7846 6487^ ^7846 7846 6487
+Match
+none
+
+Example 71^51 = 3622
+BA DC BA*DC+1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+17 15 256 652 256 256 652 ^256 652 256^ ^652 652 256
+Match
+none
+
+Common
+none
+
+Try BA_DC with x*y-1 for operator ^
+The current format is BA_DC|x*y-1
+
+Example 12^91 = 1093
+BA DC BA*DC-1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+21 19 398 893 398 398 893 ^398 893 398^ ^893 893 398
+Match
+none
+
+Example 96^49 = 4705
+BA DC BA*DC-1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+69 94 6485 5846 6485 6485 5846 ^6485 5846 6485^ ^5846 5846 6485
+Match
+none
+
+Example 71^51 = 3622
+BA DC BA*DC-1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+17 15 254 452 254 254 452 ^254 452 254^ ^452 452 254
+Match
+none
+
+Common
+
+Training target:
+none
+
+BA_DC has no common output format for this family
+Try AB_CD
+
+Try AB_CD with x*y for operator ^
+The current format is AB_CD|x*y
+
+Example 12^91 = 1093
+AB CD AB*CD plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+12 91 1092 1092 2901 1092 2901 ^1092 2901 1092^ ^2901 2901 1092
+Match
+none
+
+Example 96^49 = 4705
+AB CD AB*CD plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+96 49 4704 4704 4074 4704 4074 ^4704 4074 4704^ ^4074 4074 4704
+Match
+none
+
+Example 71^51 = 3622
+AB CD AB*CD plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+71 51 3621 3621 1263 3621 1263 ^3621 1263 3621^ ^1263 1263 3621
+Match
+none
+
+Common
+none
+
+Try AB_CD with x*y+1 for operator ^
+The current format is AB_CD|x*y+1
+
+Example 12^91 = 1093
+AB CD AB*CD+1 plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+12 91 1093 1093 3901 1093 3901 ^1093 3901 1093^ ^3901 3901 1093
+Match
+plain
+op_prefix_if_neg
+abs
+
+Example 96^49 = 4705
+AB CD AB*CD+1 plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+96 49 4705 4705 5074 4705 5074 ^4705 5074 4705^ ^5074 5074 4705
+Match
+plain
+op_prefix_if_neg
+abs
+
+Example 71^51 = 3622
+AB CD AB*CD+1 plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+71 51 3622 3622 2263 3622 2263 ^3622 2263 3622^ ^2263 2263 3622
+Match
+plain
+op_prefix_if_neg
+abs
+
+Common
+plain
+op_prefix_if_neg
+abs
+
+Apply AB_CD|x*y+1|common to the query
+
+Query
+37^69
+AB CD AB*CD+1 plain op_prefix_if_neg abs
+37 69 2554 2554 2554 2554
+All common output formats agree on 2554
+
+Answer: \boxed{2554}

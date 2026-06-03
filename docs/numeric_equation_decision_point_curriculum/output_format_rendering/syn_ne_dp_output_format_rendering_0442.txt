@@ -1,0 +1,95 @@
+Problem syn_ne_dp_output_format_rendering_0442
+Bucket: output_format_rendering
+Subbucket: disagree
+Source id: syn_ne_policy_ab_cd_non_x_y_priority_0037
+Source mode: synthetic
+Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/non_unanimous_policy/ab_cd_non_x_y_priority/syn_ne_policy_ab_cd_non_x_y_priority_0037.txt
+Gold answer: 93
+Pairing: AB_CD
+Operator: ~
+Note: disagree_AB_CD_~
+
+Training prompt:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+81~19 = 99
+15~63 = 77
+Now, determine the result for: 24~70
+
+Solution:
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 24~70
+Query operator is ~
+
+Compare example operators
+81~19 = 99 operator ~
+same
+15~63 = 77 operator ~
+same
+
+Same operator examples
+81~19 = 99
+15~63 = 77
+
+Same operator RHS values are 99 and 77
+The RHS values have length 2, so use addition, subtraction, or modular
+Try x-y,y-x,abs(x-y),min(x,y)-max(x,y),max(x,y)%min(x,y),x%y,y%x
+
+Try BA_DC first
+BA_DC has no common output format for this family, so try AB_CD
+
+Try AB_CD
+
+Try AB_CD with x+y-1 for operator ~
+The current format is AB_CD|x+y-1
+
+Example 81~19 = 99
+AB CD AB+CD-1 plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+81 19 99 99 99 99 99 ~99 99 99~ ~99 99 99
+Match
+plain
+rev
+op_prefix_if_neg
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+abs
+
+Example 15~63 = 77
+AB CD AB+CD-1 plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+15 63 77 77 77 77 77 ~77 77 77~ ~77 77 77
+Match
+plain
+rev
+op_prefix_if_neg
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+abs
+
+Common
+plain
+rev
+op_prefix_if_neg
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+abs
+
+Apply format AB_CD|x+y-1|common to the query
+
+Query
+24~70
+AB CD AB+CD-1 plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg rev_or_op_suffix_rev_if_neg abs_rev abs
+24 70 93 93 39 93 39 39 39 93
+
+Training target:
+All common output formats do not agree
+The selected operator x+y-1 is not x-y
+For motif AB_CD with selected operator not x-y, use the first common format in priority order
+
+First common format in priority order
+plain
+93
+
+Answer: \boxed{93}

@@ -1,0 +1,82 @@
+Problem syn_ne_dp_low_confidence_branch_discipline_0758
+Bucket: low_confidence_branch_discipline
+Subbucket: BA_DC_~
+Source id: syn_ne_policy_ba_dc_y_x_negative_nonliteral_suffix_0004
+Source mode: synthetic
+Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/non_unanimous_policy/ba_dc_y_x_negative_nonliteral_suffix/syn_ne_policy_ba_dc_y_x_negative_nonliteral_suffix_0004.txt
+Gold answer: 21~
+Pairing: BA_DC
+Operator: ~
+Note: disagree_BA_DC_~
+
+Training prompt:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+46~09 = 62
+60~43 = 82
+Now, determine the result for: 69~48
+
+Solution:
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 69~48
+Query operator is ~
+
+Compare example operators
+46~09 = 62 operator ~
+same
+60~43 = 82 operator ~
+same
+
+Same operator examples
+46~09 = 62
+60~43 = 82
+
+Same operator RHS values are 62 and 82
+The RHS values have length 2, so use addition, subtraction, or modular
+Try x-y,y-x,abs(x-y),min(x,y)-max(x,y),max(x,y)%min(x,y),x%y,y%x
+
+Try BA_DC first
+
+Try BA_DC with y-x for operator ~
+The current format is BA_DC|y-x
+
+Example 46~09 = 62
+BA DC DC-BA rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+64 90 26 62 26 26 62 ~26 62 26~ ~62 62 26
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Example 60~43 = 82
+BA DC DC-BA rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+06 34 28 82 28 28 82 ~28 82 28~ ~82 82 28
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Common
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Apply format BA_DC|y-x|common to the query
+
+Query
+69~48
+BA DC DC-BA rev rev_or_op_prefix_rev_if_neg rev_or_op_suffix_rev_if_neg abs_rev
+96 84 -12 -21 ~21 21~ 21
+
+Training target:
+All common output formats do not agree
+The selected operator y-x gives negative value: 84-96=-12
+For motif BA_DC with y-x negative and operator ~ not literal -, reverse the magnitude and use operator suffix
+
+12 -> 21
+21~
+
+Answer: \boxed{21~}

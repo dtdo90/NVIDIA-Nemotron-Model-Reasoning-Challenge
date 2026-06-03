@@ -1,0 +1,148 @@
+Problem syn_ne_dp_low_confidence_branch_discipline_0855
+Bucket: low_confidence_branch_discipline
+Subbucket: BA_DC_^
+Source id: syn_ne_low_ba_dc_sub_vote_0056
+Source mode: synthetic
+Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/low_confidence/ba_dc_subtraction/syn_ne_low_ba_dc_sub_vote_0056.txt
+Gold answer: 12
+Pairing: BA_DC
+Operator: ^
+Note: disagree_BA_DC_^
+
+Training prompt:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+87^76 = 11
+79^35 = 44
+Now, determine the result for: 55^43
+
+Solution:
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 55^43
+Query operator is ^
+
+Compare example operators
+87^76 = 11 operator ^
+same
+79^35 = 44 operator ^
+same
+
+Same operator examples
+87^76 = 11
+79^35 = 44
+
+Same operator RHS values are 11 and 44
+The RHS values have length 2, so use addition, subtraction, or modular
+Try x+y,x+y-1,x+y+1,x-y,y-x,abs(x-y),min(x,y)-max(x,y),max(x,y)%min(x,y),x%y,y%x
+
+Try BA_DC first
+
+Try BA_DC with x+y for operator ^
+The current format is BA_DC|x+y
+
+Example 87^76 = 11
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+78 67 145 541 145 145 541 ^145 541 145^ ^541 541 145
+Match
+none
+
+Example 79^35 = 44
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+97 53 150 051 150 150 051 ^150 051 150^ ^051 051 150
+Match
+none
+
+Common
+none
+
+Try BA_DC with x+y-1 for operator ^
+The current format is BA_DC|x+y-1
+
+Example 87^76 = 11
+BA DC BA+DC-1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+78 67 144 441 144 144 441 ^144 441 144^ ^441 441 144
+Match
+none
+
+Example 79^35 = 44
+BA DC BA+DC-1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+97 53 149 941 149 149 941 ^149 941 149^ ^941 941 149
+Match
+none
+
+Common
+none
+
+Try BA_DC with x+y+1 for operator ^
+The current format is BA_DC|x+y+1
+
+Example 87^76 = 11
+BA DC BA+DC+1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+78 67 146 641 146 146 641 ^146 641 146^ ^641 641 146
+Match
+none
+
+Example 79^35 = 44
+BA DC BA+DC+1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+97 53 151 151 151 151 151 ^151 151 151^ ^151 151 151
+Match
+none
+
+Common
+none
+
+Try BA_DC with x-y for operator ^
+The current format is BA_DC|x-y
+
+Example 87^76 = 11
+BA DC BA-DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+78 67 11 11 11 11 11 ^11 11 11^ ^11 11 11
+Match
+rev
+plain
+op_prefix_if_neg
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+abs
+
+Example 79^35 = 44
+BA DC BA-DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+97 53 44 44 44 44 44 ^44 44 44^ ^44 44 44
+Match
+rev
+plain
+op_prefix_if_neg
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+abs
+
+Common
+rev
+plain
+op_prefix_if_neg
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+abs
+
+Apply format BA_DC|x-y|common to the query
+
+Query
+55^43
+BA DC BA-DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg rev_or_op_suffix_rev_if_neg abs_rev abs
+55 34 21 12 21 21 12 12 12 21
+
+Training target:
+All common output formats do not agree
+The selected operator x-y gives positive value: 55-34=21
+For motif BA_DC with x-y positive, use voting. If voting ties, use the first common format in priority order
+
+Votes
+12 has 4 votes
+21 has 3 votes
+Vote winner
+12
+
+Answer: \boxed{12}

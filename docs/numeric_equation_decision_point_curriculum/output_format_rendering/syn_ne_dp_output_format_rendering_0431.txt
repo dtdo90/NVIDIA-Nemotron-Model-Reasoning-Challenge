@@ -1,0 +1,85 @@
+Problem syn_ne_dp_output_format_rendering_0431
+Bucket: output_format_rendering
+Subbucket: disagree
+Source id: syn_ne_policy_ba_dc_x_y_negative_prefix_0110
+Source mode: synthetic
+Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/non_unanimous_policy/ba_dc_x_y_negative_prefix/syn_ne_policy_ba_dc_x_y_negative_prefix_0110.txt
+Gold answer: @61
+Pairing: BA_DC
+Operator: @
+Note: disagree_BA_DC_@
+
+Training prompt:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+01@40 = 6
+86@91 = 94
+Now, determine the result for: 20@81
+
+Solution:
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 20@81
+Query operator is @
+
+Compare example operators
+01@40 = 6 operator @
+same
+86@91 = 94 operator @
+same
+
+Same operator examples
+01@40 = 6
+86@91 = 94
+
+Same operator RHS values are 6 and 94
+The RHS values mix length 1 and 2, so use subtraction or modular
+Try x-y,y-x,abs(x-y),min(x,y)-max(x,y),max(x,y)%min(x,y),x%y,y%x
+
+Try BA_DC first
+
+Try BA_DC with x-y for operator @
+The current format is BA_DC|x-y
+
+Example 01@40 = 6
+BA DC BA-DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+10 04 6 6 6 6 6 @6 6 6@ @6 6 6
+Match
+rev
+plain
+op_prefix_if_neg
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+abs
+
+Example 86@91 = 94
+BA DC BA-DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+68 19 49 94 49 49 94 @49 94 49@ @94 94 49
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Common
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Apply format BA_DC|x-y|common to the query
+
+Query
+20@81
+BA DC BA-DC rev rev_or_op_prefix_rev_if_neg rev_or_op_suffix_rev_if_neg abs_rev
+02 18 -16 -61 @61 61@ 61
+
+Training target:
+All common output formats do not agree
+The selected operator x-y gives negative value: 02-18=-16
+For motif BA_DC with x-y negative, reverse the magnitude and use operator prefix
+
+16 -> 61
+@61
+
+Answer: \boxed{@61}

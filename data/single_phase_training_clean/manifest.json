@@ -1,6 +1,6 @@
 {
   "output_csv": "data/single_phase_training_clean/single_phase_sft.csv",
-  "total_rows": 17160,
+  "total_rows": 18219,
   "phase2_rows": 11356,
   "phase2_rows_after_replacing_bit": 9992,
   "removed_phase2_bit_rows": 1364,
@@ -19,6 +19,15 @@
   "added_phase1_symbol_direct_synthetic_rows": 216,
   "added_generated_symbol_direct_synthetic_rows": 325,
   "added_text_cipher_confusion_synthetic_rows": 200,
+  "added_numeric_equation_decision_point_curriculum_rows": 900,
+  "numeric_equation_decision_point_curriculum": {
+    "source_dir": "docs/numeric_equation_decision_point_curriculum",
+    "source_mode": "numeric_equation_decision_point_curriculum",
+    "prompt_format": "raw_completion",
+    "split_policy": "train_only",
+    "eval_eligible": false,
+    "append_answer_instruction": false
+  },
   "symbol_direct_template_total": {
     "phase2_real": 59,
     "phase1_synthetic_added": 216,
@@ -42,8 +51,9 @@
     "huikang_real_bit": 1364,
     "huikang_real_bit_extra_trace": 238,
     "huikang_synthetic_matching": 4515,
+    "numeric_equation_decision_point_curriculum": 900,
     "phase1_synthetic_direct_template": 216,
-    "real": 7085,
+    "real": 7080,
     "single_phase_synthetic_direct_template": 325,
     "single_phase_synthetic_text_cipher_confusion": 200,
     "synthetic": 3217
@@ -52,8 +62,8 @@
     "Bit Manipulation": 6117,
     "Gravity": 1597,
     "Numeral System": 1576,
-    "Numeric Equation Transformation Rules": 3841,
-    "Symbol Transform": 659,
+    "Numeric Equation Transformation Rules": 4741,
+    "Symbol Transform": 818,
     "Text Cipher": 1776,
     "Unit Conversion": 1594
   },
@@ -67,8 +77,12 @@
   "single_phase_split_csv": "data/single_phase_training_clean/single_phase_splits_80_10_10.csv",
   "single_phase_split_counts": {
     "eval_holdout": 853,
-    "grpo_holdout": 848,
-    "sft_train": 15459
+    "grpo_holdout": 847,
+    "sft_train": 16519
   },
-  "single_phase_split_strategy": "80/10/10 stratified per question type by diagnostic_subtype and source_mode; rows marked split_policy=train_only or eval_eligible=false stay in sft_train; eval_holdout is the optional GRPO training bucket and grpo_holdout is final local eval"
+  "single_phase_split_strategy": "80/10/10 stratified per question type by diagnostic_subtype and source_mode; rows marked split_policy=train_only or eval_eligible=false stay in sft_train; eval_holdout is the optional GRPO training bucket and grpo_holdout is final local eval",
+  "prompt_format_counts": {
+    "competition_chat_template": 17319,
+    "raw_completion": 900
+  }
 }

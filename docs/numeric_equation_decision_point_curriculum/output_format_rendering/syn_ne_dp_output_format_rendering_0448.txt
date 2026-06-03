@@ -1,0 +1,146 @@
+Problem syn_ne_dp_output_format_rendering_0448
+Bucket: output_format_rendering
+Subbucket: agree
+Source id: syn_ne_ba_dc_sub_yminusx_0039
+Source mode: synthetic
+Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/ba_dc_subtraction/y_x/syn_ne_ba_dc_sub_yminusx_0039.txt
+Gold answer: ~-93
+Pairing: BA_DC
+Operator: ~
+Note: agree_BA_DC_~
+
+Training prompt:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+24~41 = ~-82
+82~69 = ~86
+38^58 = 861
+37&94 = 221
+Now, determine the result for: 65~71
+
+Solution:
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 65~71
+Query operator is ~
+
+Compare example operators
+24~41 = ~-82 operator ~
+same
+82~69 = ~86 operator ~
+same
+38^58 = 861 operator ^
+different
+37&94 = 221 operator &
+different
+
+Same operator examples
+24~41 = ~-82
+82~69 = ~86
+
+Same operator RHS values are ~-82 and ~86
+The RHS values have length 2, so use addition, subtraction, or modular
+Try x+y,x+y-1,x+y+1,x-y,y-x,abs(x-y),min(x,y)-max(x,y),max(x,y)%min(x,y),x%y,y%x
+
+Try BA_DC first
+
+Try BA_DC with x+y for operator ~
+The current format is BA_DC|x+y
+
+Example 24~41 = ~-82
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+42 14 56 65 56 56 65 ~56 65 56~ ~65 65 56
+Match
+none
+
+Example 82~69 = ~86
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+28 96 124 421 124 124 421 ~124 421 124~ ~421 421 124
+Match
+none
+
+Common
+none
+
+Try BA_DC with x+y-1 for operator ~
+The current format is BA_DC|x+y-1
+
+Example 24~41 = ~-82
+BA DC BA+DC-1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+42 14 55 55 55 55 55 ~55 55 55~ ~55 55 55
+Match
+none
+
+Example 82~69 = ~86
+BA DC BA+DC-1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+28 96 123 321 123 123 321 ~123 321 123~ ~321 321 123
+Match
+none
+
+Common
+none
+
+Try BA_DC with x+y+1 for operator ~
+The current format is BA_DC|x+y+1
+
+Example 24~41 = ~-82
+BA DC BA+DC+1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+42 14 57 75 57 57 75 ~57 75 57~ ~75 75 57
+Match
+none
+
+Example 82~69 = ~86
+BA DC BA+DC+1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+28 96 125 521 125 125 521 ~125 521 125~ ~521 521 125
+Match
+none
+
+Common
+none
+
+Try BA_DC with x-y for operator ~
+The current format is BA_DC|x-y
+
+Example 24~41 = ~-82
+BA DC BA-DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+42 14 28 82 28 28 82 ~28 82 28~ ~82 82 28
+Match
+none
+
+Example 82~69 = ~86
+BA DC BA-DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+28 96 -68 -86 -68 ~68 ~86 ~-68 86~ -68~ ~-86 86 68
+Match
+rev_or_op_prefix_rev_if_neg
+
+Common
+none
+
+Try BA_DC with y-x for operator ~
+The current format is BA_DC|y-x
+
+Example 24~41 = ~-82
+BA DC DC-BA rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+42 14 -28 -82 -28 ~28 ~82 ~-28 82~ -28~ ~-82 82 28
+Match
+op_prefix_rev
+
+Example 82~69 = ~86
+BA DC DC-BA rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+28 96 68 86 68 68 86 ~68 86 68~ ~86 86 68
+Match
+op_prefix_rev
+
+Common
+op_prefix_rev
+
+Apply format BA_DC|y-x|common to the query
+
+Query
+65~71
+BA DC DC-BA op_prefix_rev
+56 17 -39 ~-93
+
+Training target:
+All common output formats agree on ~-93
+
+Answer: \boxed{~-93}

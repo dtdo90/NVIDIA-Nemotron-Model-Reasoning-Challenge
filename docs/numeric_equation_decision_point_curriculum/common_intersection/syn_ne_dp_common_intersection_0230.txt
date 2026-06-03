@@ -1,0 +1,85 @@
+Problem syn_ne_dp_common_intersection_0230
+Bucket: common_intersection
+Subbucket: double
+Source id: syn_ne_policy_ab_cd_x_y_negative_nonliteral_prefix_0001
+Source mode: synthetic
+Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/non_unanimous_policy/ab_cd_x_y_negative_nonliteral_prefix/syn_ne_policy_ab_cd_x_y_negative_nonliteral_prefix_0001.txt
+Gold answer: }52
+Pairing: AB_CD
+Operator: }
+Note: common_double_AB_CD
+
+Training prompt:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+41}34 = 7
+67}89 = -22
+Now, determine the result for: 01}53
+
+Solution:
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 01}53
+Query operator is }
+
+Compare example operators
+41}34 = 7 operator }
+same
+67}89 = -22 operator }
+same
+
+Same operator examples
+41}34 = 7
+67}89 = -22
+
+Same operator RHS values are 7 and -22
+The RHS values mix length 1 and 2, so use subtraction or modular
+Try x-y,y-x,abs(x-y),min(x,y)-max(x,y),max(x,y)%min(x,y),x%y,y%x
+
+Try BA_DC first
+BA_DC has no common output format for this family, so try AB_CD
+
+Try AB_CD
+
+Try AB_CD with x-y for operator }
+The current format is AB_CD|x-y
+
+Example 41}34 = 7
+AB CD AB-CD plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+41 34 7 7 7 7 7 }7 7 7} }7 7 7
+Match
+plain
+rev
+op_prefix_if_neg
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+abs
+
+Example 67}89 = -22
+AB CD AB-CD plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+67 89 -22 -22 -22 }22 }22 }-22 22} -22} }22 22 22
+Match
+plain
+rev
+
+Common
+
+Training target:
+plain
+rev
+
+Apply format AB_CD|x-y|common to the query
+
+Query
+01}53
+AB CD AB-CD plain rev
+01 53 -52 -52 -25
+
+All common output formats do not agree
+The selected operator x-y gives negative value: 01-53=-52
+For motif AB_CD with x-y negative, use operator prefix
+
+52 -> }52
+}52
+
+Answer: \boxed{}52}

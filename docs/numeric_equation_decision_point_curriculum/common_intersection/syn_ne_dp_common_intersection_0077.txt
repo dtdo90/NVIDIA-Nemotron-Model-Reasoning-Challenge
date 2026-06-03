@@ -1,0 +1,145 @@
+Problem syn_ne_dp_common_intersection_0077
+Bucket: common_intersection
+Subbucket: single
+Source id: syn_ne_ba_dc_sub_yminusx_0018
+Source mode: synthetic
+Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/ba_dc_subtraction/y_x/syn_ne_ba_dc_sub_yminusx_0018.txt
+Gold answer: 36
+Pairing: BA_DC
+Operator: /
+Note: common_single_BA_DC
+
+Training prompt:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+19/76 = /24
+13/25 = 21
+12-04 = 16
+Now, determine the result for: 84/48
+
+Solution:
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 84/48
+Query operator is /
+
+Compare example operators
+19/76 = /24 operator /
+same
+13/25 = 21 operator /
+same
+12-04 = 16 operator -
+different
+
+Same operator examples
+19/76 = /24
+13/25 = 21
+
+Same operator RHS values are /24 and 21
+The RHS values have length 2, so use addition, subtraction, or modular
+Try x+y,x+y-1,x+y+1,x-y,y-x,abs(x-y),min(x,y)-max(x,y),max(x,y)%min(x,y),x%y,y%x
+
+Try BA_DC first
+
+Try BA_DC with x+y for operator /
+The current format is BA_DC|x+y
+
+Example 19/76 = /24
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+91 67 158 851 158 158 851 /158 851 158/ /851 851 158
+Match
+none
+
+Example 13/25 = 21
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+31 52 83 38 83 83 38 /83 38 83/ /38 38 83
+Match
+none
+
+Common
+none
+
+Try BA_DC with x+y-1 for operator /
+The current format is BA_DC|x+y-1
+
+Example 19/76 = /24
+BA DC BA+DC-1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+91 67 157 751 157 157 751 /157 751 157/ /751 751 157
+Match
+none
+
+Example 13/25 = 21
+BA DC BA+DC-1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+31 52 82 28 82 82 28 /82 28 82/ /28 28 82
+Match
+none
+
+Common
+none
+
+Try BA_DC with x+y+1 for operator /
+The current format is BA_DC|x+y+1
+
+Example 19/76 = /24
+BA DC BA+DC+1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+91 67 159 951 159 159 951 /159 951 159/ /951 951 159
+Match
+none
+
+Example 13/25 = 21
+BA DC BA+DC+1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+31 52 84 48 84 84 48 /84 48 84/ /48 48 84
+Match
+none
+
+Common
+none
+
+Try BA_DC with x-y for operator /
+The current format is BA_DC|x-y
+
+Example 19/76 = /24
+BA DC BA-DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+91 67 24 42 24 24 42 /24 42 24/ /42 42 24
+Match
+op_prefix
+
+Example 13/25 = 21
+BA DC BA-DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+31 52 -21 -12 -21 /21 /12 /-21 12/ -21/ /-12 12 21
+Match
+abs
+
+Common
+none
+
+Try BA_DC with y-x for operator /
+The current format is BA_DC|y-x
+
+Example 19/76 = /24
+BA DC DC-BA rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+91 67 -24 -42 -24 /24 /42 /-24 42/ -24/ /-42 42 24
+Match
+op_prefix_if_neg
+
+Example 13/25 = 21
+BA DC DC-BA rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+31 52 21 12 21 21 12 /21 12 21/ /12 12 21
+Match
+plain
+op_prefix_if_neg
+abs
+
+Common
+
+Training target:
+op_prefix_if_neg
+
+Apply format BA_DC|y-x|common to the query
+
+Query
+84/48
+BA DC DC-BA op_prefix_if_neg
+48 84 36 36
+All common output formats agree on 36
+
+Answer: \boxed{36}

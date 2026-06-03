@@ -1,0 +1,97 @@
+Problem syn_ne_dp_literal_minus_rendering_policy_0586
+Bucket: literal_minus_rendering_policy
+Subbucket: BA_DC_x_y_positive_nonunanimous_policy
+Source id: syn_ne_low_ba_dc_sub_vote_0012
+Source mode: synthetic
+Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/low_confidence/ba_dc_subtraction/syn_ne_low_ba_dc_sub_vote_0012.txt
+Gold answer: 34
+Pairing: BA_DC
+Operator: -
+Note: disagree_BA_DC_-
+
+Training prompt:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+22-81 = 4
+06-35 = 7
+12^34 = 1234
+Now, determine the result for: 35-01
+
+Solution:
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 35-01
+Query operator is -
+
+Compare example operators
+22-81 = 4 operator -
+same
+06-35 = 7 operator -
+same
+12^34 = 1234 operator ^
+different
+
+Same operator examples
+22-81 = 4
+06-35 = 7
+
+Same operator RHS values are 4 and 7
+The RHS values have length 1, so use subtraction or modular
+Try x-y,y-x,abs(x-y),min(x,y)-max(x,y),max(x,y)%min(x,y),x%y,y%x
+
+Try BA_DC first
+
+Try BA_DC with x-y for operator -
+The current format is BA_DC|x-y
+
+Example 22-81 = 4
+BA DC BA-DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+22 18 4 4 4 4 4 -4 4 4- -4 4 4
+Match
+rev
+plain
+op_prefix_if_neg
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+abs
+
+Example 06-35 = 7
+BA DC BA-DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+60 53 7 7 7 7 7 -7 7 7- -7 7 7
+Match
+rev
+plain
+op_prefix_if_neg
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+abs
+
+Common
+rev
+plain
+op_prefix_if_neg
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+abs
+
+Apply format BA_DC|x-y|common to the query
+
+Query
+35-01
+BA DC BA-DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg rev_or_op_suffix_rev_if_neg abs_rev abs
+53 10 43 34 43 43 34 34 34 43
+
+Training target:
+All common output formats do not agree
+The selected operator x-y gives positive value: 53-10=43
+For motif BA_DC with x-y positive, use voting. If voting ties, use the first common format in priority order
+
+Votes
+34 has 4 votes
+43 has 3 votes
+Vote winner
+34
+
+Answer: \boxed{34}

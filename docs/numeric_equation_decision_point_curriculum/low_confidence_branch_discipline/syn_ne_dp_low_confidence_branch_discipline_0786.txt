@@ -1,0 +1,95 @@
+Problem syn_ne_dp_low_confidence_branch_discipline_0786
+Bucket: low_confidence_branch_discipline
+Subbucket: AB_CD_^
+Source id: syn_ne_policy_ab_cd_x_y_positive_priority_0049
+Source mode: synthetic
+Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/non_unanimous_policy/ab_cd_x_y_positive_priority/syn_ne_policy_ab_cd_x_y_positive_priority_0049.txt
+Gold answer: 36
+Pairing: AB_CD
+Operator: ^
+Note: disagree_AB_CD_^
+
+Training prompt:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+46^13 = 33
+72^64 = 8
+Now, determine the result for: 81^45
+
+Solution:
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 81^45
+Query operator is ^
+
+Compare example operators
+46^13 = 33 operator ^
+same
+72^64 = 8 operator ^
+same
+
+Same operator examples
+46^13 = 33
+72^64 = 8
+
+Same operator RHS values are 33 and 8
+The RHS values mix length 1 and 2, so use subtraction or modular
+Try x-y,y-x,abs(x-y),min(x,y)-max(x,y),max(x,y)%min(x,y),x%y,y%x
+
+Try BA_DC first
+BA_DC has no common output format for this family, so try AB_CD
+
+Try AB_CD
+
+Try AB_CD with x-y for operator ^
+The current format is AB_CD|x-y
+
+Example 46^13 = 33
+AB CD AB-CD plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+46 13 33 33 33 33 33 ^33 33 33^ ^33 33 33
+Match
+plain
+rev
+op_prefix_if_neg
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+abs
+
+Example 72^64 = 8
+AB CD AB-CD plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+72 64 8 8 8 8 8 ^8 8 8^ ^8 8 8
+Match
+plain
+rev
+op_prefix_if_neg
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+abs
+
+Common
+plain
+rev
+op_prefix_if_neg
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+abs
+
+Apply format AB_CD|x-y|common to the query
+
+Query
+81^45
+AB CD AB-CD plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg rev_or_op_suffix_rev_if_neg abs_rev abs
+81 45 36 36 63 36 63 63 63 36
+
+Training target:
+All common output formats do not agree
+The selected operator x-y gives positive value: 81-45=36
+For motif AB_CD with x-y positive, use the first common format in priority order
+
+First common format in priority order
+plain
+36
+
+Answer: \boxed{36}

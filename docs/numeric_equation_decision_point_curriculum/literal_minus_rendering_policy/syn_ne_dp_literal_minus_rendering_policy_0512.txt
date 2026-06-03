@@ -1,0 +1,123 @@
+Problem syn_ne_dp_literal_minus_rendering_policy_0512
+Bucket: literal_minus_rendering_policy
+Subbucket: AB_CD_unanimous_literal_minus_rendering
+Source id: syn_ne_opabs_tlock_0134_helper_0001
+Source mode: synthetic
+Source path: synthetic/operator_absence_direct_template_motif_lock/0134_helper
+Gold answer: 50
+Pairing: AB_CD
+Operator: -
+Note: agree_AB_CD_-
+
+Training prompt:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+21@42 = 2142
+36@13 = 3613
+11#32 = 43
+25#14 = 39
+Now, determine the result for: 71-21
+
+Solution:
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 71-21
+Query operator is -
+
+Compare example operators
+21@42 = 2142 operator @
+different
+36@13 = 3613 operator @
+different
+11#32 = 43 operator #
+different
+25#14 = 39 operator #
+different
+
+Same operator examples
+None
+First solve motif and output formats from visible examples
+
+Use visible operator @ to infer the motif and output formats
+Examples with operator @
+21@42 = 2142
+36@13 = 3613
+
+RHS values are 2142 and 3613
+The RHS values have length 4, so use direct templates or multiplication
+Try template0134,template3401,x*y,x*y+1,x*y-1
+
+We try direct templates first. If they fail, we proceed to arithmetic search on motifs BA_DC and AB_CD
+
+Try template0134 for operator @
+template0134 means AB followed by CD
+
+Example 21@42 = 2142
+AB = 21
+operator = @
+CD = 42
+21 followed by 42 gives 2142 vs 2142
+Match
+
+Example 36@13 = 3613
+AB = 36
+operator = @
+CD = 13
+36 followed by 13 gives 3613 vs 3613
+Match
+
+template0134 passes all examples
+
+template0134 suggests candidate motif AB_CD
+
+Test candidate motif AB_CD on remaining examples
+Use visible operator # to test candidate motif AB_CD
+Examples with operator #
+11#32 = 43
+25#14 = 39
+
+RHS values are 43 and 39
+The RHS values have length 2, so use addition, subtraction, or modular
+Try x+y,x+y-1,x+y+1,x-y,y-x,abs(x-y),min(x,y)-max(x,y),max(x,y)%min(x,y),x%y,y%x
+
+Try AB_CD with x+y for operator #
+The current format is AB_CD|x+y
+
+Example 11#32 = 43
+AB CD AB+CD plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+11 32 43 43 34 43 34 #43 34 43# #34 34 43
+Match
+plain
+op_prefix_if_neg
+abs
+
+Example 25#14 = 39
+AB CD AB+CD plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+25 14 39 39 93 39 93 #39 93 39# #93 93 39
+Match
+plain
+op_prefix_if_neg
+abs
+
+Common
+plain
+op_prefix_if_neg
+abs
+
+Candidate motif AB_CD is supported by remaining examples
+Use AB_CD as the inferred motif
+
+Apply the inferred motif and output formats to the absent query operator
+Query operator - is visible and does not appear in examples
+Use x-y
+
+Apply format AB_CD|x-y|common to the query
+
+Query
+71-21
+AB CD AB-CD plain op_prefix_if_neg abs
+71 21 50 50 50 50
+
+Training target:
+All common output formats agree on 50
+
+Answer: \boxed{50}

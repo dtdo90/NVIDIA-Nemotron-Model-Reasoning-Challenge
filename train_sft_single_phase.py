@@ -12,6 +12,7 @@ import os
 import random
 import sys
 import zipfile
+from collections import Counter
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -63,6 +64,7 @@ class Example:
     assistant_content: str = ""
     source_mode: str = "unknown"
     append_answer_instruction: bool = True
+    prompt_format: str = "competition_chat_template"
 
 
 def parse_bool(value: str | None, *, default: bool = True) -> bool:
@@ -174,6 +176,10 @@ def load_examples(path: Path) -> list[Example]:
                         row.get("append_answer_instruction"),
                         default=True,
                     ),
+                    prompt_format=(
+                        row.get("prompt_format") or "competition_chat_template"
+                    ).strip()
+                    or "competition_chat_template",
                 )
             )
     if not examples:
@@ -412,18 +418,30 @@ def tokenize_masked_example(
     *,
     max_seq_len: int,
 ) -> dict:
-    prompt_text = build_competition_prompt(
-        tokenizer,
-        example.prompt,
-        append_answer_instruction=example.append_answer_instruction,
-    )
-    assistant_content = build_assistant_trace_content(
-        example.answer,
-        generated_cot=example.generated_cot,
-        assistant_content=example.assistant_content,
-    )
     end_token = assistant_end_token(tokenizer)
-    completion_text = completion_after_generation_prompt(prompt_text, assistant_content)
+
+    if example.prompt_format == "raw_completion":
+        prompt_text = example.prompt.rstrip() + "\n"
+        completion_text = (example.assistant_content or example.generated_cot).lstrip()
+        if not completion_text:
+            raise SystemExit(f"id={example.id} has no raw completion content")
+    elif example.prompt_format == "competition_chat_template":
+        prompt_text = build_competition_prompt(
+            tokenizer,
+            example.prompt,
+            append_answer_instruction=example.append_answer_instruction,
+        )
+        assistant_content = build_assistant_trace_content(
+            example.answer,
+            generated_cot=example.generated_cot,
+            assistant_content=example.assistant_content,
+        )
+        completion_text = completion_after_generation_prompt(prompt_text, assistant_content)
+    else:
+        raise SystemExit(
+            f"id={example.id} has unsupported prompt_format={example.prompt_format!r}"
+        )
+
     if end_token and not completion_text.endswith(end_token):
         completion_text += end_token
 
@@ -622,7 +640,9 @@ def print_summary(
         "effective_batch_size": args.per_device_train_batch_size * args.gradient_accumulation_steps,
         "optim": args.optim,
         "loss_masking": "assistant_only",
-        "prompt_format": "competition_chat_template",
+        "prompt_format_counts": dict(
+            sorted(Counter(example.prompt_format for example in train_examples).items())
+        ),
     }
     print(json.dumps(summary, indent=2, ensure_ascii=False))
 
@@ -786,7 +806,9 @@ def main() -> None:
             "gradient_accumulation_steps": args.gradient_accumulation_steps,
             "effective_batch_size": args.per_device_train_batch_size * args.gradient_accumulation_steps,
             "loss_masking": "assistant_only",
-            "prompt_format": "competition_chat_template",
+            "prompt_format_counts": dict(
+                sorted(Counter(example.prompt_format for example in train_examples).items())
+            ),
         },
     )
     write_json(

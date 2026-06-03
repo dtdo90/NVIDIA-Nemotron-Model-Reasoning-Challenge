@@ -1,0 +1,197 @@
+Problem syn_ne_dp_common_intersection_0017
+Bucket: common_intersection
+Subbucket: none
+Source id: syn_ne_opa_ba_dc_visible_plus_0021
+Source mode: synthetic
+Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/operator_absence/syn_ne_opa_ba_dc_visible_plus_0021.txt
+Gold answer: 41
+Pairing: BA_DC
+Operator: +
+Note: common_none_BA_DC
+
+Training prompt:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+10-11 = -01
+10-33 = -23
+49*55 = 93
+Now, determine the result for: 10+31
+
+Solution:
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 10+31
+Query operator is +
+
+Compare example operators
+10-11 = -01 operator -
+different
+10-33 = -23 operator -
+different
+49*55 = 93 operator *
+different
+
+Same operator examples
+None
+First solve motif and output formats from visible examples
+
+Use visible operator - to infer the motif and output formats
+Examples with operator -
+10-11 = -01
+10-33 = -23
+
+RHS values are -01 and -23
+The RHS values have length 2, so use addition, subtraction, or modular
+Try x+y,x+y-1,x+y+1,x-y,y-x,abs(x-y),min(x,y)-max(x,y),max(x,y)%min(x,y),x%y,y%x
+
+Try BA_DC first
+
+Try BA_DC with x+y
+The current format is BA_DC|x+y
+Example 10-11 = -01
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+1 11 12 21 12 12 21 -12 21 12- -21 21 12
+Match
+none
+
+Example 10-33 = -23
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+1 33 34 43 34 34 43 -34 43 34- -43 43 34
+Match
+none
+
+Common
+none
+
+Try BA_DC with x+y-1
+The current format is BA_DC|x+y-1
+Example 10-11 = -01
+BA DC BA+DC-1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+1 11 11 11 11 11 11 -11 11 11- -11 11 11
+Match
+none
+
+Example 10-33 = -23
+BA DC BA+DC-1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+1 33 33 33 33 33 33 -33 33 33- -33 33 33
+Match
+none
+
+Common
+none
+
+Try BA_DC with x+y+1
+The current format is BA_DC|x+y+1
+Example 10-11 = -01
+BA DC BA+DC+1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+1 11 13 31 13 13 31 -13 31 13- -31 31 13
+Match
+none
+
+Example 10-33 = -23
+BA DC BA+DC+1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+1 33 35 53 35 35 53 -35 53 35- -53 53 35
+Match
+none
+
+Common
+
+Training target:
+none
+
+Try BA_DC with x-y
+The current format is BA_DC|x-y
+Example 10-11 = -01
+BA DC BA-DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+1 11 -10 -01 -10 -10 -01 10 01- -10- 01 01 10
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+
+Example 10-33 = -23
+BA DC BA-DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+1 33 -32 -23 -32 -32 -23 32 23- -32- 23 23 32
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+
+Common
+rev
+rev_or_op_prefix_rev_if_neg
+
+Check other visible operators to verify the motif and output formats
+Motif
+BA_DC
+Output formats
+rev
+rev_or_op_prefix_rev_if_neg
+
+Visible operator *
+Examples with operator *
+49*55 = 93
+
+RHS values are 93
+The RHS values have length 2, so use addition, subtraction, or modular
+Try x+y,x+y-1,x+y+1,x-y,y-x,abs(x-y),min(x,y)-max(x,y),max(x,y)%min(x,y),x%y,y%x
+
+Try BA_DC with x+y
+The current format is BA_DC|x+y
+Example 49*55 = 93
+BA DC BA+DC rev rev_or_op_prefix_rev_if_neg
+94 55 149 941 941
+Match
+none
+
+Common after verification
+none
+x+y fails under BA_DC
+
+Try BA_DC with x+y-1
+The current format is BA_DC|x+y-1
+Example 49*55 = 93
+BA DC BA+DC-1 rev rev_or_op_prefix_rev_if_neg
+94 55 148 841 841
+Match
+none
+
+Common after verification
+none
+x+y-1 fails under BA_DC
+
+Try BA_DC with x+y+1
+The current format is BA_DC|x+y+1
+Example 49*55 = 93
+BA DC BA+DC+1 rev rev_or_op_prefix_rev_if_neg
+94 55 150 051 051
+Match
+none
+
+Common after verification
+none
+x+y+1 fails under BA_DC
+
+Try BA_DC with x-y
+The current format is BA_DC|x-y
+Example 49*55 = 93
+BA DC BA-DC rev rev_or_op_prefix_rev_if_neg
+94 55 39 93 93
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+
+Common after verification
+rev
+rev_or_op_prefix_rev_if_neg
+
+Apply the inferred motif and output formats to the absent query operator
+Query operator + is visible and does not appear in examples
+Use x+y
+
+Apply format BA_DC|x+y|common to the query
+
+Query
+10+31
+BA DC BA+DC rev rev_or_op_prefix_rev_if_neg
+1 13 14 41 41
+All common output formats agree on 41
+
+Answer: \boxed{41}

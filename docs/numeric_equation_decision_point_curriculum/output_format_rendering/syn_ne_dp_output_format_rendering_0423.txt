@@ -1,0 +1,168 @@
+Problem syn_ne_dp_output_format_rendering_0423
+Bucket: output_format_rendering
+Subbucket: agree
+Source id: syn_ne_ba_dc_sub_xminusy_0043
+Source mode: synthetic
+Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/ba_dc_subtraction/x_y/syn_ne_ba_dc_sub_xminusy_0043.txt
+Gold answer: 46
+Pairing: BA_DC
+Operator: ^
+Note: agree_BA_DC_^
+
+Training prompt:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+49^55 = 93
+88^47 = 41
+88^36 = 52
+83/96 = 701
+21~85 = 07
+Now, determine the result for: 77^31
+
+Solution:
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 77^31
+Query operator is ^
+
+Compare example operators
+49^55 = 93 operator ^
+same
+88^47 = 41 operator ^
+same
+88^36 = 52 operator ^
+same
+83/96 = 701 operator /
+different
+21~85 = 07 operator ~
+different
+
+Same operator examples
+49^55 = 93
+88^47 = 41
+88^36 = 52
+
+Same operator RHS values are 93 and 41 and 52
+The RHS values have length 2, so use addition, subtraction, or modular
+Try x+y,x+y-1,x+y+1,x-y,y-x,abs(x-y),min(x,y)-max(x,y),max(x,y)%min(x,y),x%y,y%x
+
+Try BA_DC first
+
+Try BA_DC with x+y for operator ^
+The current format is BA_DC|x+y
+
+Example 49^55 = 93
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+94 55 149 941 149 149 941 ^149 941 149^ ^941 941 149
+Match
+none
+
+Example 88^47 = 41
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+88 74 162 261 162 162 261 ^162 261 162^ ^261 261 162
+Match
+none
+
+Example 88^36 = 52
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+88 63 151 151 151 151 151 ^151 151 151^ ^151 151 151
+Match
+none
+
+Common
+none
+
+Try BA_DC with x+y-1 for operator ^
+The current format is BA_DC|x+y-1
+
+Example 49^55 = 93
+BA DC BA+DC-1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+94 55 148 841 148 148 841 ^148 841 148^ ^841 841 148
+Match
+none
+
+Example 88^47 = 41
+BA DC BA+DC-1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+88 74 161 161 161 161 161 ^161 161 161^ ^161 161 161
+Match
+none
+
+Example 88^36 = 52
+BA DC BA+DC-1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+88 63 150 051 150 150 051 ^150 051 150^ ^051 051 150
+Match
+none
+
+Common
+none
+
+Try BA_DC with x+y+1 for operator ^
+The current format is BA_DC|x+y+1
+
+Example 49^55 = 93
+BA DC BA+DC+1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+94 55 150 051 150 150 051 ^150 051 150^ ^051 051 150
+Match
+none
+
+Example 88^47 = 41
+BA DC BA+DC+1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+88 74 163 361 163 163 361 ^163 361 163^ ^361 361 163
+Match
+none
+
+Example 88^36 = 52
+BA DC BA+DC+1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+88 63 152 251 152 152 251 ^152 251 152^ ^251 251 152
+Match
+none
+
+Common
+none
+
+Try BA_DC with x-y for operator ^
+The current format is BA_DC|x-y
+
+Example 49^55 = 93
+BA DC BA-DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+94 55 39 93 39 39 93 ^39 93 39^ ^93 93 39
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Example 88^47 = 41
+BA DC BA-DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+88 74 14 41 14 14 41 ^14 41 14^ ^41 41 14
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Example 88^36 = 52
+BA DC BA-DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+88 63 25 52 25 25 52 ^25 52 25^ ^52 52 25
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Common
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Apply format BA_DC|x-y|common to the query
+
+Query
+77^31
+BA DC BA-DC rev rev_or_op_prefix_rev_if_neg rev_or_op_suffix_rev_if_neg abs_rev
+77 13 64 46 46 46 46
+
+Training target:
+All common output formats agree on 46
+
+Answer: \boxed{46}

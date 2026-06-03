@@ -1,0 +1,70 @@
+Problem syn_ne_dp_output_format_rendering_0359
+Bucket: output_format_rendering
+Subbucket: agree
+Source id: syn_ne_ba_dc_add_len3_xplusy_0121
+Source mode: synthetic
+Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/ba_dc_addition/ba_dc_len3/syn_ne_ba_dc_add_len3_xplusy_0121.txt
+Gold answer: 221
+Pairing: BA_DC
+Operator: $
+Note: agree_BA_DC_$
+
+Training prompt:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+62@16 = 78
+24$28 = 421
+93*58 = 5133
+Now, determine the result for: 28$04
+
+Solution:
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 28$04
+Query operator is $
+
+Compare example operators
+62@16 = 78 operator @
+different
+24$28 = 421 operator $
+same
+93*58 = 5133 operator *
+different
+
+Same operator examples
+24$28 = 421
+
+Same operator RHS values are 421
+The RHS values have length 3, so use addition or multiplication
+Try x+y,x+y-1,x+y+1,x*y,x*y+1,x*y-1
+
+Try BA_DC first
+
+Try BA_DC with x+y for operator $
+The current format is BA_DC|x+y
+
+Example 24$28 = 421
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+42 82 124 421 124 124 421 $124 421 124$ $421 421 124
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Common
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Apply BA_DC|x+y|common to the query
+
+Query
+28$04
+BA DC BA+DC rev rev_or_op_prefix_rev_if_neg rev_or_op_suffix_rev_if_neg abs_rev
+82 40 122 221 221 221 221
+
+Training target:
+All common output formats agree on 221
+
+Answer: \boxed{221}

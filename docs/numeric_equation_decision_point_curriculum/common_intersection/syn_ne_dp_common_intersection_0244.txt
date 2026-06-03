@@ -1,0 +1,96 @@
+Problem syn_ne_dp_common_intersection_0244
+Bucket: common_intersection
+Subbucket: triple_plus
+Source id: syn_ne_ba_dc_add_mix_xplusy_0108
+Source mode: synthetic
+Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/ba_dc_addition/ba_dc_mix/syn_ne_ba_dc_add_mix_xplusy_0108.txt
+Gold answer: 79
+Pairing: BA_DC
+Operator: >
+Note: common_triple_plus_BA_DC
+
+Training prompt:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+25*13 = 2161
+15>96 = 021
+61>34 = 95
+57%47 = 1
+27>26 = 431
+Now, determine the result for: 96>82
+
+Solution:
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 96>82
+Query operator is >
+
+Compare example operators
+25*13 = 2161 operator *
+different
+15>96 = 021 operator >
+same
+61>34 = 95 operator >
+same
+57%47 = 1 operator %
+different
+27>26 = 431 operator >
+same
+
+Same operator examples
+15>96 = 021
+61>34 = 95
+27>26 = 431
+
+Same operator RHS values are 021 and 95 and 431
+The RHS values mix length 2 and 3, so use the addition family
+Try x+y,x+y-1,x+y+1
+
+Try BA_DC first
+
+Try BA_DC with x+y for operator >
+The current format is BA_DC|x+y
+
+Example 15>96 = 021
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+51 69 120 021 120 120 021 >120 021 120> >021 021 120
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Example 61>34 = 95
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+16 43 59 95 59 59 95 >59 95 59> >95 95 59
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Example 27>26 = 431
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+72 62 134 431 134 134 431 >134 431 134> >431 431 134
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Common
+
+Training target:
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Apply BA_DC|x+y|common to the query
+
+Query
+96>82
+BA DC BA+DC rev rev_or_op_prefix_rev_if_neg rev_or_op_suffix_rev_if_neg abs_rev
+69 28 97 79 79 79 79
+All common output formats agree on 79
+
+Answer: \boxed{79}

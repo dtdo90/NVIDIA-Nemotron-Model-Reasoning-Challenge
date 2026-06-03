@@ -1,0 +1,86 @@
+Problem syn_ne_dp_common_intersection_0214
+Bucket: common_intersection
+Subbucket: double
+Source id: syn_ne_policy_ab_cd_x_y_positive_priority_0038
+Source mode: synthetic
+Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/non_unanimous_policy/ab_cd_x_y_positive_priority/syn_ne_policy_ab_cd_x_y_positive_priority_0038.txt
+Gold answer: 16
+Pairing: AB_CD
+Operator: ?
+Note: common_double_AB_CD
+
+Training prompt:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+71?66 = 5
+24?35 = -11
+Now, determine the result for: 60?44
+
+Solution:
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 60?44
+Query operator is ?
+
+Compare example operators
+71?66 = 5 operator ?
+same
+24?35 = -11 operator ?
+same
+
+Same operator examples
+71?66 = 5
+24?35 = -11
+
+Same operator RHS values are 5 and -11
+The RHS values mix length 1 and 2, so use subtraction or modular
+Try x-y,y-x,abs(x-y),min(x,y)-max(x,y),max(x,y)%min(x,y),x%y,y%x
+
+Try BA_DC first
+BA_DC has no common output format for this family, so try AB_CD
+
+Try AB_CD
+
+Try AB_CD with x-y for operator ?
+The current format is AB_CD|x-y
+
+Example 71?66 = 5
+AB CD AB-CD plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+71 66 5 5 5 5 5 ?5 5 5? ?5 5 5
+Match
+plain
+rev
+op_prefix_if_neg
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+abs
+
+Example 24?35 = -11
+AB CD AB-CD plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+24 35 -11 -11 -11 ?11 ?11 ?-11 11? -11? ?11 11 11
+Match
+plain
+rev
+
+Common
+
+Training target:
+plain
+rev
+
+Apply format AB_CD|x-y|common to the query
+
+Query
+60?44
+AB CD AB-CD plain rev
+60 44 16 16 61
+
+All common output formats do not agree
+The selected operator x-y gives positive value: 60-44=16
+For motif AB_CD with x-y positive, use the first common format in priority order
+
+First common format in priority order
+plain
+16
+
+Answer: \boxed{16}

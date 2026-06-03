@@ -1,0 +1,96 @@
+Problem syn_ne_dp_common_intersection_0281
+Bucket: common_intersection
+Subbucket: triple_plus
+Source id: syn_ne_policy_ab_cd_x_y_positive_priority_0021
+Source mode: synthetic
+Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/non_unanimous_policy/ab_cd_x_y_positive_priority/syn_ne_policy_ab_cd_x_y_positive_priority_0021.txt
+Gold answer: 27
+Pairing: AB_CD
+Operator: &
+Note: common_triple_plus_AB_CD
+
+Training prompt:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+95&90 = 5
+36&33 = 3
+Now, determine the result for: 72&45
+
+Solution:
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 72&45
+Query operator is &
+
+Compare example operators
+95&90 = 5 operator &
+same
+36&33 = 3 operator &
+same
+
+Same operator examples
+95&90 = 5
+36&33 = 3
+
+Same operator RHS values are 5 and 3
+The RHS values have length 1, so use subtraction or modular
+Try x-y,y-x,abs(x-y),min(x,y)-max(x,y),max(x,y)%min(x,y),x%y,y%x
+
+Try BA_DC first
+BA_DC has no common output format for this family, so try AB_CD
+
+Try AB_CD
+
+Try AB_CD with x-y for operator &
+The current format is AB_CD|x-y
+
+Example 95&90 = 5
+AB CD AB-CD plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+95 90 5 5 5 5 5 &5 5 5& &5 5 5
+Match
+plain
+rev
+op_prefix_if_neg
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+abs
+
+Example 36&33 = 3
+AB CD AB-CD plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+36 33 3 3 3 3 3 &3 3 3& &3 3 3
+Match
+plain
+rev
+op_prefix_if_neg
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+abs
+
+Common
+
+Training target:
+plain
+rev
+op_prefix_if_neg
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+abs
+
+Apply format AB_CD|x-y|common to the query
+
+Query
+72&45
+AB CD AB-CD plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg rev_or_op_suffix_rev_if_neg abs_rev abs
+72 45 27 27 72 27 72 72 72 27
+
+All common output formats do not agree
+The selected operator x-y gives positive value: 72-45=27
+For motif AB_CD with x-y positive, use the first common format in priority order
+
+First common format in priority order
+plain
+27
+
+Answer: \boxed{27}

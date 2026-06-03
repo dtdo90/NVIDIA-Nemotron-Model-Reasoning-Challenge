@@ -1,0 +1,95 @@
+Problem syn_ne_dp_low_confidence_branch_discipline_0820
+Bucket: low_confidence_branch_discipline
+Subbucket: AB_CD_^
+Source id: syn_ne_policy_ab_cd_x_y_positive_priority_0029
+Source mode: synthetic
+Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/non_unanimous_policy/ab_cd_x_y_positive_priority/syn_ne_policy_ab_cd_x_y_positive_priority_0029.txt
+Gold answer: 15
+Pairing: AB_CD
+Operator: ^
+Note: disagree_AB_CD_^
+
+Training prompt:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+82^82 = 0
+32^25 = 7
+Now, determine the result for: 94^79
+
+Solution:
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 94^79
+Query operator is ^
+
+Compare example operators
+82^82 = 0 operator ^
+same
+32^25 = 7 operator ^
+same
+
+Same operator examples
+82^82 = 0
+32^25 = 7
+
+Same operator RHS values are 0 and 7
+The RHS values have length 1, so use subtraction or modular
+Try x-y,y-x,abs(x-y),min(x,y)-max(x,y),max(x,y)%min(x,y),x%y,y%x
+
+Try BA_DC first
+BA_DC has no common output format for this family, so try AB_CD
+
+Try AB_CD
+
+Try AB_CD with x-y for operator ^
+The current format is AB_CD|x-y
+
+Example 82^82 = 0
+AB CD AB-CD plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+82 82 0 0 0 0 0 ^0 0 0^ ^0 0 0
+Match
+plain
+rev
+op_prefix_if_neg
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+abs
+
+Example 32^25 = 7
+AB CD AB-CD plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+32 25 7 7 7 7 7 ^7 7 7^ ^7 7 7
+Match
+plain
+rev
+op_prefix_if_neg
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+abs
+
+Common
+plain
+rev
+op_prefix_if_neg
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+abs
+
+Apply format AB_CD|x-y|common to the query
+
+Query
+94^79
+AB CD AB-CD plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg rev_or_op_suffix_rev_if_neg abs_rev abs
+94 79 15 15 51 15 51 51 51 15
+
+Training target:
+All common output formats do not agree
+The selected operator x-y gives positive value: 94-79=15
+For motif AB_CD with x-y positive, use the first common format in priority order
+
+First common format in priority order
+plain
+15
+
+Answer: \boxed{15}

@@ -1,0 +1,82 @@
+Problem syn_ne_dp_common_intersection_0184
+Bucket: common_intersection
+Subbucket: double
+Source id: syn_ne_policy_ba_dc_x_y_negative_prefix_0025
+Source mode: synthetic
+Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/non_unanimous_policy/ba_dc_x_y_negative_prefix/syn_ne_policy_ba_dc_x_y_negative_prefix_0025.txt
+Gold answer: &26
+Pairing: BA_DC
+Operator: &
+Note: common_double_BA_DC
+
+Training prompt:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+90&10 = 8
+16&07 = -9
+Now, determine the result for: 70&96
+
+Solution:
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 70&96
+Query operator is &
+
+Compare example operators
+90&10 = 8 operator &
+same
+16&07 = -9 operator &
+same
+
+Same operator examples
+90&10 = 8
+16&07 = -9
+
+Same operator RHS values are 8 and -9
+The RHS values have length 1, so use subtraction or modular
+Try x-y,y-x,abs(x-y),min(x,y)-max(x,y),max(x,y)%min(x,y),x%y,y%x
+
+Try BA_DC first
+
+Try BA_DC with x-y for operator &
+The current format is BA_DC|x-y
+
+Example 90&10 = 8
+BA DC BA-DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+09 01 8 8 8 8 8 &8 8 8& &8 8 8
+Match
+rev
+plain
+op_prefix_if_neg
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+abs
+
+Example 16&07 = -9
+BA DC BA-DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+61 70 -9 -9 -9 &9 &9 &-9 9& -9& &9 9 9
+Match
+rev
+plain
+
+Common
+
+Training target:
+rev
+plain
+
+Apply format BA_DC|x-y|common to the query
+
+Query
+70&96
+BA DC BA-DC rev plain
+07 69 -62 -26 -62
+
+All common output formats do not agree
+The selected operator x-y gives negative value: 07-69=-62
+For motif BA_DC with x-y negative, reverse the magnitude and use operator prefix
+
+62 -> 26
+&26
+
+Answer: \boxed{&26}

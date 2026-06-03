@@ -1,0 +1,95 @@
+Problem syn_ne_dp_low_confidence_branch_discipline_0716
+Bucket: low_confidence_branch_discipline
+Subbucket: BA_DC_+
+Source id: syn_ne_low_ba_dc_add_vote_0108
+Source mode: synthetic
+Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/low_confidence/syn_ne_low_ba_dc_add_vote_0108.txt
+Gold answer: 95
+Pairing: BA_DC
+Operator: +
+Note: disagree_BA_DC_+
+
+Training prompt:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+56+65 = 121
+65+56 = 121
+Now, determine the result for: 54+41
+
+Solution:
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 54+41
+Query operator is +
+
+Compare example operators
+56+65 = 121 operator +
+same
+65+56 = 121 operator +
+same
+
+Same operator examples
+56+65 = 121
+65+56 = 121
+
+Same operator RHS values are 121 and 121
+The RHS values have length 3, so use addition or multiplication
+Try x+y,x+y-1,x+y+1,x*y,x*y+1,x*y-1
+
+Try BA_DC first
+
+Try BA_DC with x+y for operator +
+The current format is BA_DC|x+y
+
+Example 56+65 = 121
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+65 56 121 121 121 121 121 +121 121 121+ +121 121 121
+Match
+rev
+plain
+op_prefix_if_neg
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+abs
+
+Example 65+56 = 121
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+56 65 121 121 121 121 121 +121 121 121+ +121 121 121
+Match
+rev
+plain
+op_prefix_if_neg
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+abs
+
+Common
+rev
+plain
+op_prefix_if_neg
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+abs
+
+Apply format BA_DC|x+y|common to the query
+
+Query
+54+41
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg rev_or_op_suffix_rev_if_neg abs_rev abs
+45 14 59 95 59 59 95 95 95 59
+
+Training target:
+All common output formats do not agree
+The selected operator x+y is neither x-y nor y-x
+For motif BA_DC with selected operator neither x-y nor y-x, use voting. If voting ties, use the first common format in priority order
+
+Votes
+95 has 4 votes
+59 has 3 votes
+
+Vote winner
+95
+
+Answer: \boxed{95}

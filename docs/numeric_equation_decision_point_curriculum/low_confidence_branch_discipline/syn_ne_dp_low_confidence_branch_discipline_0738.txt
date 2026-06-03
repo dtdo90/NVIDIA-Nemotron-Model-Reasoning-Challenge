@@ -1,0 +1,85 @@
+Problem syn_ne_dp_low_confidence_branch_discipline_0738
+Bucket: low_confidence_branch_discipline
+Subbucket: BA_DC_$
+Source id: syn_ne_policy_ba_dc_x_y_negative_prefix_0036
+Source mode: synthetic
+Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/non_unanimous_policy/ba_dc_x_y_negative_prefix/syn_ne_policy_ba_dc_x_y_negative_prefix_0036.txt
+Gold answer: $3
+Pairing: BA_DC
+Operator: $
+Note: disagree_BA_DC_$
+
+Training prompt:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+81$11 = 7
+77$02 = 75
+Now, determine the result for: 46$76
+
+Solution:
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 46$76
+Query operator is $
+
+Compare example operators
+81$11 = 7 operator $
+same
+77$02 = 75 operator $
+same
+
+Same operator examples
+81$11 = 7
+77$02 = 75
+
+Same operator RHS values are 7 and 75
+The RHS values mix length 1 and 2, so use subtraction or modular
+Try x-y,y-x,abs(x-y),min(x,y)-max(x,y),max(x,y)%min(x,y),x%y,y%x
+
+Try BA_DC first
+
+Try BA_DC with x-y for operator $
+The current format is BA_DC|x-y
+
+Example 81$11 = 7
+BA DC BA-DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+18 11 7 7 7 7 7 $7 7 7$ $7 7 7
+Match
+rev
+plain
+op_prefix_if_neg
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+abs
+
+Example 77$02 = 75
+BA DC BA-DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+77 20 57 75 57 57 75 $57 75 57$ $75 75 57
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Common
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Apply format BA_DC|x-y|common to the query
+
+Query
+46$76
+BA DC BA-DC rev rev_or_op_prefix_rev_if_neg rev_or_op_suffix_rev_if_neg abs_rev
+64 67 -3 -3 $3 3$ 3
+
+Training target:
+All common output formats do not agree
+The selected operator x-y gives negative value: 64-67=-3
+For motif BA_DC with x-y negative, reverse the magnitude and use operator prefix
+
+3 -> 3
+$3
+
+Answer: \boxed{$3}

@@ -1,0 +1,82 @@
+Problem syn_ne_dp_output_format_rendering_0495
+Bucket: output_format_rendering
+Subbucket: agree
+Source id: syn_ne_ba_dc_add_len3_xplusyminus1_0095
+Source mode: synthetic
+Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/ba_dc_addition/ba_dc_len3/syn_ne_ba_dc_add_len3_xplusyminus1_0095.txt
+Gold answer: 07
+Pairing: BA_DC
+Operator: !
+Note: agree_BA_DC_!
+
+Training prompt:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+59-14 = 54
+05!86 = 711
+04*77 = 0803
+Now, determine the result for: 65!51
+
+Solution:
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 65!51
+Query operator is !
+
+Compare example operators
+59-14 = 54 operator -
+different
+05!86 = 711 operator !
+same
+04*77 = 0803 operator *
+different
+
+Same operator examples
+05!86 = 711
+
+Same operator RHS values are 711
+The RHS values have length 3, so use addition or multiplication
+Try x+y,x+y-1,x+y+1,x*y,x*y+1,x*y-1
+
+Try BA_DC first
+
+Try BA_DC with x+y for operator !
+The current format is BA_DC|x+y
+
+Example 05!86 = 711
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+50 68 118 811 118 118 811 !118 811 118! !811 811 118
+Match
+none
+
+Common
+none
+
+Try BA_DC with x+y-1 for operator !
+The current format is BA_DC|x+y-1
+
+Example 05!86 = 711
+BA DC BA+DC-1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+50 68 117 711 117 117 711 !117 711 117! !711 711 117
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Common
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Apply BA_DC|x+y-1|common to the query
+
+Query
+65!51
+BA DC BA+DC-1 rev rev_or_op_prefix_rev_if_neg rev_or_op_suffix_rev_if_neg abs_rev
+56 15 70 07 07 07 07
+
+Training target:
+All common output formats agree on 07
+
+Answer: \boxed{07}

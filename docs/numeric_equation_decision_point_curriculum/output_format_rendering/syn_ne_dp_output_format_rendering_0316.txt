@@ -1,0 +1,184 @@
+Problem syn_ne_dp_output_format_rendering_0316
+Bucket: output_format_rendering
+Subbucket: agree
+Source id: syn_ne_ab_cd_add_mix_0005
+Source mode: synthetic
+Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/ab_cd_addition/ab_cd_mix/syn_ne_ab_cd_add_mix_0005.txt
+Gold answer: *28
+Pairing: AB_CD
+Operator: *
+Note: agree_AB_CD_*
+
+Training prompt:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+29*50 = *97
+59:72 = 221
+58*13 = *17
+46*61 = *701
+87*77 = *461
+Now, determine the result for: 21*61
+
+Solution:
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 21*61
+Query operator is *
+
+Compare example operators
+29*50 = *97 operator *
+same
+59:72 = 221 operator :
+different
+58*13 = *17 operator *
+same
+46*61 = *701 operator *
+same
+87*77 = *461 operator *
+same
+
+Same operator examples
+29*50 = *97
+58*13 = *17
+46*61 = *701
+87*77 = *461
+
+Same operator RHS values are *97 and *17 and *701 and *461
+The RHS values mix length 2 and 3, so use the addition family
+Try x+y,x+y-1,x+y+1
+
+Try BA_DC first
+
+Try BA_DC with x+y for operator *
+The current format is BA_DC|x+y
+
+Example 29*50 = *97
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+92 05 97 79 97 97 79 *97 79 97* *79 79 97
+Match
+op_prefix
+
+Example 58*13 = *17
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+85 31 116 611 116 116 611 *116 611 116* *611 611 116
+Match
+none
+
+Example 46*61 = *701
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+64 16 80 08 80 80 08 *80 08 80* *08 08 80
+Match
+none
+
+Example 87*77 = *461
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+78 77 155 551 155 155 551 *155 551 155* *551 551 155
+Match
+none
+
+Common
+none
+
+Try BA_DC with x+y-1 for operator *
+The current format is BA_DC|x+y-1
+
+Example 29*50 = *97
+BA DC BA+DC-1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+92 05 96 69 96 96 69 *96 69 96* *69 69 96
+Match
+none
+
+Example 58*13 = *17
+BA DC BA+DC-1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+85 31 115 511 115 115 511 *115 511 115* *511 511 115
+Match
+none
+
+Example 46*61 = *701
+BA DC BA+DC-1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+64 16 79 97 79 79 97 *79 97 79* *97 97 79
+Match
+none
+
+Example 87*77 = *461
+BA DC BA+DC-1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+78 77 154 451 154 154 451 *154 451 154* *451 451 154
+Match
+none
+
+Common
+none
+
+Try BA_DC with x+y+1 for operator *
+The current format is BA_DC|x+y+1
+
+Example 29*50 = *97
+BA DC BA+DC+1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+92 05 98 89 98 98 89 *98 89 98* *89 89 98
+Match
+none
+
+Example 58*13 = *17
+BA DC BA+DC+1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+85 31 117 711 117 117 711 *117 711 117* *711 711 117
+Match
+none
+
+Example 46*61 = *701
+BA DC BA+DC+1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+64 16 81 18 81 81 18 *81 18 81* *18 18 81
+Match
+none
+
+Example 87*77 = *461
+BA DC BA+DC+1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+78 77 156 651 156 156 651 *156 651 156* *651 651 156
+Match
+none
+
+Common
+none
+
+BA_DC has no common output format for this family
+Try AB_CD
+
+Try AB_CD with x+y for operator *
+The current format is AB_CD|x+y
+
+Example 29*50 = *97
+AB CD AB+CD plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+29 50 79 79 97 79 97 *79 97 79* *97 97 79
+Match
+op_prefix_rev
+
+Example 58*13 = *17
+AB CD AB+CD plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+58 13 71 71 17 71 17 *71 17 71* *17 17 71
+Match
+op_prefix_rev
+
+Example 46*61 = *701
+AB CD AB+CD plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+46 61 107 107 701 107 701 *107 701 107* *701 701 107
+Match
+op_prefix_rev
+
+Example 87*77 = *461
+AB CD AB+CD plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+87 77 164 164 461 164 461 *164 461 164* *461 461 164
+Match
+op_prefix_rev
+
+Common
+op_prefix_rev
+
+Apply AB_CD|x+y|common to the query
+
+Query
+21*61
+AB CD AB+CD op_prefix_rev
+21 61 82 *28
+
+Training target:
+All common output formats agree on *28
+
+Answer: \boxed{*28}

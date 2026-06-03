@@ -1,0 +1,83 @@
+Problem syn_ne_dp_output_format_rendering_0456
+Bucket: output_format_rendering
+Subbucket: agree
+Source id: syn_ne_ba_dc_add_len3_xplusy_0234
+Source mode: synthetic
+Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/ba_dc_addition/ba_dc_len3/syn_ne_ba_dc_add_len3_xplusy_0234.txt
+Gold answer: 75
+Pairing: BA_DC
+Operator: ~
+Note: agree_BA_DC_~
+
+Training prompt:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+88@08 = 861
+19~62 = 711
+89~75 = 551
+18?53 = 611
+Now, determine the result for: 42~33
+
+Solution:
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 42~33
+Query operator is ~
+
+Compare example operators
+88@08 = 861 operator @
+different
+19~62 = 711 operator ~
+same
+89~75 = 551 operator ~
+same
+18?53 = 611 operator ?
+different
+
+Same operator examples
+19~62 = 711
+89~75 = 551
+
+Same operator RHS values are 711 and 551
+The RHS values have length 3, so use addition or multiplication
+Try x+y,x+y-1,x+y+1,x*y,x*y+1,x*y-1
+
+Try BA_DC first
+
+Try BA_DC with x+y for operator ~
+The current format is BA_DC|x+y
+
+Example 19~62 = 711
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+91 26 117 711 117 117 711 ~117 711 117~ ~711 711 117
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Example 89~75 = 551
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+98 57 155 551 155 155 551 ~155 551 155~ ~551 551 155
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Common
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Apply BA_DC|x+y|common to the query
+
+Query
+42~33
+BA DC BA+DC rev rev_or_op_prefix_rev_if_neg rev_or_op_suffix_rev_if_neg abs_rev
+24 33 57 75 75 75 75
+
+Training target:
+All common output formats agree on 75
+
+Answer: \boxed{75}

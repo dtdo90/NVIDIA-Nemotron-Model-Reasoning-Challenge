@@ -1,0 +1,90 @@
+Problem syn_ne_dp_output_format_rendering_0301
+Bucket: output_format_rendering
+Subbucket: disagree
+Source id: syn_ne_policy_ba_dc_y_x_negative_literal_vote_0003
+Source mode: synthetic
+Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/non_unanimous_policy/ba_dc_y_x_negative_literal_vote/syn_ne_policy_ba_dc_y_x_negative_literal_vote_0003.txt
+Gold answer: -1
+Pairing: BA_DC
+Operator: -
+Note: disagree_BA_DC_-
+
+Training prompt:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+15-25 = 1
+20-07 = 86
+Now, determine the result for: 68-58
+
+Solution:
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 68-58
+Query operator is -
+
+Compare example operators
+15-25 = 1 operator -
+same
+20-07 = 86 operator -
+same
+
+Same operator examples
+15-25 = 1
+20-07 = 86
+
+Same operator RHS values are 1 and 86
+The RHS values mix length 1 and 2, so use subtraction or modular
+Try x-y,y-x,abs(x-y),min(x,y)-max(x,y),max(x,y)%min(x,y),x%y,y%x
+
+Try BA_DC first
+
+Try BA_DC with y-x for operator -
+The current format is BA_DC|y-x
+
+Example 15-25 = 1
+BA DC DC-BA rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+51 52 1 1 1 1 1 -1 1 1- -1 1 1
+Match
+rev
+plain
+op_prefix_if_neg
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+abs
+
+Example 20-07 = 86
+BA DC DC-BA rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+02 70 68 86 68 68 86 -68 86 68- -86 86 68
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Common
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Apply format BA_DC|y-x|common to the query
+
+Query
+68-58
+BA DC DC-BA rev rev_or_op_prefix_rev_if_neg rev_or_op_suffix_rev_if_neg abs_rev
+86 85 -1 -1 -1 1- 1
+
+Training target:
+All common output formats do not agree
+The selected operator y-x gives negative value: 85-86=-1
+For motif BA_DC with y-x negative and literal -, use voting. If voting ties, use the first common format in priority order
+
+Votes
+-1 has 2 votes
+1- has 1 votes
+1 has 1 votes
+
+Vote winner
+-1
+
+Answer: \boxed{-1}
