@@ -1,0 +1,148 @@
+Problem syn_tc_dp_alignment_0005
+Bucket: alignment
+Gold answer: ancient
+Note: strict_left_to_right_alignment
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+nfcokvgg lhv -> princess the
+gvkfvl -> secret
+Now, decrypt the following text: jokcvol
+
+Solution:
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+c -> i
+f -> r
+g -> s
+h -> h
+k -> c
+l -> t
+n -> p
+o -> n
+v -> e
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+jokcvol
+
+Decode target words from character mappings
+
+jokcvol
+j -> ? unknown
+o -> n
+k -> c
+c -> i
+v -> e
+o -> n
+l -> t
+
+Training target:
+jokcvol -> ?ncient
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?ncient
+above -> ?ncient no match
+alice -> ?ncient no match
+ancient -> ?ncient match
+around -> ?ncient no match
+beyond -> ?ncient no match
+bird -> ?ncient no match
+book -> ?ncient no match
+bright -> ?ncient no match
+castle -> ?ncient no match
+cat -> ?ncient no match
+cave -> ?ncient no match
+chases -> ?ncient no match
+clever -> ?ncient no match
+colorful -> ?ncient no match
+creates -> ?ncient no match
+crystal -> ?ncient no match
+curious -> ?ncient no match
+dark -> ?ncient no match
+discovers -> ?ncient no match
+door -> ?ncient no match
+dragon -> ?ncient no match
+draws -> ?ncient no match
+dreams -> ?ncient no match
+explores -> ?ncient no match
+follows -> ?ncient no match
+forest -> ?ncient no match
+found -> ?ncient no match
+garden -> ?ncient no match
+golden -> ?ncient no match
+hatter -> ?ncient no match
+hidden -> ?ncient no match
+imagines -> ?ncient no match
+in -> ?ncient no match
+inside -> ?ncient no match
+island -> ?ncient no match
+key -> ?ncient no match
+king -> ?ncient no match
+knight -> ?ncient no match
+library -> ?ncient no match
+magical -> ?ncient no match
+map -> ?ncient no match
+message -> ?ncient no match
+mirror -> ?ncient no match
+mountain -> ?ncient no match
+mouse -> ?ncient no match
+mysterious -> ?ncient no match
+near -> ?ncient no match
+ocean -> ?ncient no match
+palace -> ?ncient no match
+potion -> ?ncient no match
+princess -> ?ncient no match
+puzzle -> ?ncient no match
+queen -> ?ncient no match
+rabbit -> ?ncient no match
+reads -> ?ncient no match
+school -> ?ncient no match
+secret -> ?ncient no match
+sees -> ?ncient no match
+silver -> ?ncient no match
+story -> ?ncient no match
+strange -> ?ncient no match
+student -> ?ncient no match
+studies -> ?ncient no match
+teacher -> ?ncient no match
+the -> ?ncient no match
+through -> ?ncient no match
+tower -> ?ncient no match
+treasure -> ?ncient no match
+turtle -> ?ncient no match
+under -> ?ncient no match
+valley -> ?ncient no match
+village -> ?ncient no match
+watches -> ?ncient no match
+wise -> ?ncient no match
+wizard -> ?ncient no match
+wonderland -> ?ncient no match
+writes -> ?ncient no match
+
+Scan candidates for ?ncient
+ancient
+
+Check scan candidates against summary mappings
+
+ancient
+j -> a new
+o -> n agrees
+k -> c agrees
+c -> i agrees
+v -> e agrees
+o -> n agrees
+l -> t agrees
+PASS
+add j -> a
+
+choose ancient
+
+Decoded phrase
+ancient
+
+Answer: \boxed{ancient}

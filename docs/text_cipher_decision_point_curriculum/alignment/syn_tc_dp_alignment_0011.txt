@@ -1,0 +1,149 @@
+Problem syn_tc_dp_alignment_0011
+Bucket: alignment
+Gold answer: princess
+Note: strict_left_to_right_alignment
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+gd lvzevk -> in secret
+zevrkvl -> creates
+Now, decrypt the following text: wegdzvll
+
+Solution:
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+d -> n
+e -> r
+g -> i
+k -> t
+l -> s
+r -> a
+v -> e
+z -> c
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+wegdzvll
+
+Decode target words from character mappings
+
+wegdzvll
+w -> ? unknown
+e -> r
+g -> i
+d -> n
+z -> c
+v -> e
+l -> s
+l -> s
+
+Training target:
+wegdzvll -> ?rincess
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?rincess
+above -> ?rincess no match
+alice -> ?rincess no match
+ancient -> ?rincess no match
+around -> ?rincess no match
+beyond -> ?rincess no match
+bird -> ?rincess no match
+book -> ?rincess no match
+bright -> ?rincess no match
+castle -> ?rincess no match
+cat -> ?rincess no match
+cave -> ?rincess no match
+chases -> ?rincess no match
+clever -> ?rincess no match
+colorful -> ?rincess no match
+creates -> ?rincess no match
+crystal -> ?rincess no match
+curious -> ?rincess no match
+dark -> ?rincess no match
+discovers -> ?rincess no match
+door -> ?rincess no match
+dragon -> ?rincess no match
+draws -> ?rincess no match
+dreams -> ?rincess no match
+explores -> ?rincess no match
+follows -> ?rincess no match
+forest -> ?rincess no match
+found -> ?rincess no match
+garden -> ?rincess no match
+golden -> ?rincess no match
+hatter -> ?rincess no match
+hidden -> ?rincess no match
+imagines -> ?rincess no match
+in -> ?rincess no match
+inside -> ?rincess no match
+island -> ?rincess no match
+key -> ?rincess no match
+king -> ?rincess no match
+knight -> ?rincess no match
+library -> ?rincess no match
+magical -> ?rincess no match
+map -> ?rincess no match
+message -> ?rincess no match
+mirror -> ?rincess no match
+mountain -> ?rincess no match
+mouse -> ?rincess no match
+mysterious -> ?rincess no match
+near -> ?rincess no match
+ocean -> ?rincess no match
+palace -> ?rincess no match
+potion -> ?rincess no match
+princess -> ?rincess match
+puzzle -> ?rincess no match
+queen -> ?rincess no match
+rabbit -> ?rincess no match
+reads -> ?rincess no match
+school -> ?rincess no match
+secret -> ?rincess no match
+sees -> ?rincess no match
+silver -> ?rincess no match
+story -> ?rincess no match
+strange -> ?rincess no match
+student -> ?rincess no match
+studies -> ?rincess no match
+teacher -> ?rincess no match
+the -> ?rincess no match
+through -> ?rincess no match
+tower -> ?rincess no match
+treasure -> ?rincess no match
+turtle -> ?rincess no match
+under -> ?rincess no match
+valley -> ?rincess no match
+village -> ?rincess no match
+watches -> ?rincess no match
+wise -> ?rincess no match
+wizard -> ?rincess no match
+wonderland -> ?rincess no match
+writes -> ?rincess no match
+
+Scan candidates for ?rincess
+princess
+
+Check scan candidates against summary mappings
+
+princess
+w -> p new
+e -> r agrees
+g -> i agrees
+d -> n agrees
+z -> c agrees
+v -> e agrees
+l -> s agrees
+l -> s agrees
+PASS
+add w -> p
+
+choose princess
+
+Decoded phrase
+princess
+
+Answer: \boxed{princess}

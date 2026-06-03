@@ -1,0 +1,147 @@
+Problem syn_tc_dp_alignment_0010
+Bucket: alignment
+Gold answer: castle
+Note: strict_left_to_right_alignment
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+xdfxro foyvt -> turtle reads
+uyrrom -> valley
+Now, decrypt the following text: wytxro
+
+Solution:
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+d -> u
+f -> r
+m -> y
+o -> e
+r -> l
+t -> s
+u -> v
+v -> d
+x -> t
+y -> a
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+wytxro
+
+Decode target words from character mappings
+
+wytxro
+w -> ? unknown
+y -> a
+t -> s
+x -> t
+r -> l
+o -> e
+
+Training target:
+wytxro -> ?astle
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?astle
+above -> ?astle no match
+alice -> ?astle no match
+ancient -> ?astle no match
+around -> ?astle no match
+beyond -> ?astle no match
+bird -> ?astle no match
+book -> ?astle no match
+bright -> ?astle no match
+castle -> ?astle match
+cat -> ?astle no match
+cave -> ?astle no match
+chases -> ?astle no match
+clever -> ?astle no match
+colorful -> ?astle no match
+creates -> ?astle no match
+crystal -> ?astle no match
+curious -> ?astle no match
+dark -> ?astle no match
+discovers -> ?astle no match
+door -> ?astle no match
+dragon -> ?astle no match
+draws -> ?astle no match
+dreams -> ?astle no match
+explores -> ?astle no match
+follows -> ?astle no match
+forest -> ?astle no match
+found -> ?astle no match
+garden -> ?astle no match
+golden -> ?astle no match
+hatter -> ?astle no match
+hidden -> ?astle no match
+imagines -> ?astle no match
+in -> ?astle no match
+inside -> ?astle no match
+island -> ?astle no match
+key -> ?astle no match
+king -> ?astle no match
+knight -> ?astle no match
+library -> ?astle no match
+magical -> ?astle no match
+map -> ?astle no match
+message -> ?astle no match
+mirror -> ?astle no match
+mountain -> ?astle no match
+mouse -> ?astle no match
+mysterious -> ?astle no match
+near -> ?astle no match
+ocean -> ?astle no match
+palace -> ?astle no match
+potion -> ?astle no match
+princess -> ?astle no match
+puzzle -> ?astle no match
+queen -> ?astle no match
+rabbit -> ?astle no match
+reads -> ?astle no match
+school -> ?astle no match
+secret -> ?astle no match
+sees -> ?astle no match
+silver -> ?astle no match
+story -> ?astle no match
+strange -> ?astle no match
+student -> ?astle no match
+studies -> ?astle no match
+teacher -> ?astle no match
+the -> ?astle no match
+through -> ?astle no match
+tower -> ?astle no match
+treasure -> ?astle no match
+turtle -> ?astle no match
+under -> ?astle no match
+valley -> ?astle no match
+village -> ?astle no match
+watches -> ?astle no match
+wise -> ?astle no match
+wizard -> ?astle no match
+wonderland -> ?astle no match
+writes -> ?astle no match
+
+Scan candidates for ?astle
+castle
+
+Check scan candidates against summary mappings
+
+castle
+w -> c new
+y -> a agrees
+t -> s agrees
+x -> t agrees
+r -> l agrees
+o -> e agrees
+PASS
+add w -> c
+
+choose castle
+
+Decoded phrase
+castle
+
+Answer: \boxed{castle}

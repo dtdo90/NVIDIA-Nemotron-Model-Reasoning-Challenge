@@ -1,0 +1,148 @@
+Problem syn_tc_dp_alignment_0007
+Bucket: alignment
+Gold answer: knight
+Note: strict_left_to_right_alignment
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+yicdgq cr -> bright in
+bixtqxa -> creates
+Now, decrypt the following text: urcdgq
+
+Solution:
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+a -> s
+b -> c
+c -> i
+d -> g
+g -> h
+i -> r
+q -> t
+r -> n
+t -> a
+x -> e
+y -> b
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+urcdgq
+
+Decode target words from character mappings
+
+urcdgq
+u -> ? unknown
+r -> n
+c -> i
+d -> g
+g -> h
+q -> t
+
+Training target:
+urcdgq -> ?night
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?night
+above -> ?night no match
+alice -> ?night no match
+ancient -> ?night no match
+around -> ?night no match
+beyond -> ?night no match
+bird -> ?night no match
+book -> ?night no match
+bright -> ?night no match
+castle -> ?night no match
+cat -> ?night no match
+cave -> ?night no match
+chases -> ?night no match
+clever -> ?night no match
+colorful -> ?night no match
+creates -> ?night no match
+crystal -> ?night no match
+curious -> ?night no match
+dark -> ?night no match
+discovers -> ?night no match
+door -> ?night no match
+dragon -> ?night no match
+draws -> ?night no match
+dreams -> ?night no match
+explores -> ?night no match
+follows -> ?night no match
+forest -> ?night no match
+found -> ?night no match
+garden -> ?night no match
+golden -> ?night no match
+hatter -> ?night no match
+hidden -> ?night no match
+imagines -> ?night no match
+in -> ?night no match
+inside -> ?night no match
+island -> ?night no match
+key -> ?night no match
+king -> ?night no match
+knight -> ?night match
+library -> ?night no match
+magical -> ?night no match
+map -> ?night no match
+message -> ?night no match
+mirror -> ?night no match
+mountain -> ?night no match
+mouse -> ?night no match
+mysterious -> ?night no match
+near -> ?night no match
+ocean -> ?night no match
+palace -> ?night no match
+potion -> ?night no match
+princess -> ?night no match
+puzzle -> ?night no match
+queen -> ?night no match
+rabbit -> ?night no match
+reads -> ?night no match
+school -> ?night no match
+secret -> ?night no match
+sees -> ?night no match
+silver -> ?night no match
+story -> ?night no match
+strange -> ?night no match
+student -> ?night no match
+studies -> ?night no match
+teacher -> ?night no match
+the -> ?night no match
+through -> ?night no match
+tower -> ?night no match
+treasure -> ?night no match
+turtle -> ?night no match
+under -> ?night no match
+valley -> ?night no match
+village -> ?night no match
+watches -> ?night no match
+wise -> ?night no match
+wizard -> ?night no match
+wonderland -> ?night no match
+writes -> ?night no match
+
+Scan candidates for ?night
+knight
+
+Check scan candidates against summary mappings
+
+knight
+u -> k new
+r -> n agrees
+c -> i agrees
+d -> g agrees
+g -> h agrees
+q -> t agrees
+PASS
+add u -> k
+
+choose knight
+
+Decoded phrase
+knight
+
+Answer: \boxed{knight}

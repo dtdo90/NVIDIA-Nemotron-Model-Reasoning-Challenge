@@ -1,0 +1,150 @@
+Problem syn_tc_dp_alignment_0012
+Bucket: alignment
+Gold answer: forest
+Note: strict_left_to_right_alignment
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+gqbvduhpkb yhln -> mysterious king
+ylhntv -> knight
+Now, decrypt the following text: spudbv
+
+Solution:
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+b -> s
+d -> e
+g -> m
+h -> i
+k -> u
+l -> n
+n -> g
+p -> o
+q -> y
+t -> h
+u -> r
+v -> t
+y -> k
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+spudbv
+
+Decode target words from character mappings
+
+spudbv
+s -> ? unknown
+p -> o
+u -> r
+d -> e
+b -> s
+v -> t
+
+Training target:
+spudbv -> ?orest
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?orest
+above -> ?orest no match
+alice -> ?orest no match
+ancient -> ?orest no match
+around -> ?orest no match
+beyond -> ?orest no match
+bird -> ?orest no match
+book -> ?orest no match
+bright -> ?orest no match
+castle -> ?orest no match
+cat -> ?orest no match
+cave -> ?orest no match
+chases -> ?orest no match
+clever -> ?orest no match
+colorful -> ?orest no match
+creates -> ?orest no match
+crystal -> ?orest no match
+curious -> ?orest no match
+dark -> ?orest no match
+discovers -> ?orest no match
+door -> ?orest no match
+dragon -> ?orest no match
+draws -> ?orest no match
+dreams -> ?orest no match
+explores -> ?orest no match
+follows -> ?orest no match
+forest -> ?orest match
+found -> ?orest no match
+garden -> ?orest no match
+golden -> ?orest no match
+hatter -> ?orest no match
+hidden -> ?orest no match
+imagines -> ?orest no match
+in -> ?orest no match
+inside -> ?orest no match
+island -> ?orest no match
+key -> ?orest no match
+king -> ?orest no match
+knight -> ?orest no match
+library -> ?orest no match
+magical -> ?orest no match
+map -> ?orest no match
+message -> ?orest no match
+mirror -> ?orest no match
+mountain -> ?orest no match
+mouse -> ?orest no match
+mysterious -> ?orest no match
+near -> ?orest no match
+ocean -> ?orest no match
+palace -> ?orest no match
+potion -> ?orest no match
+princess -> ?orest no match
+puzzle -> ?orest no match
+queen -> ?orest no match
+rabbit -> ?orest no match
+reads -> ?orest no match
+school -> ?orest no match
+secret -> ?orest no match
+sees -> ?orest no match
+silver -> ?orest no match
+story -> ?orest no match
+strange -> ?orest no match
+student -> ?orest no match
+studies -> ?orest no match
+teacher -> ?orest no match
+the -> ?orest no match
+through -> ?orest no match
+tower -> ?orest no match
+treasure -> ?orest no match
+turtle -> ?orest no match
+under -> ?orest no match
+valley -> ?orest no match
+village -> ?orest no match
+watches -> ?orest no match
+wise -> ?orest no match
+wizard -> ?orest no match
+wonderland -> ?orest no match
+writes -> ?orest no match
+
+Scan candidates for ?orest
+forest
+
+Check scan candidates against summary mappings
+
+forest
+s -> f new
+p -> o agrees
+u -> r agrees
+d -> e agrees
+b -> s agrees
+v -> t agrees
+PASS
+add s -> f
+
+choose forest
+
+Decoded phrase
+forest
+
+Answer: \boxed{forest}

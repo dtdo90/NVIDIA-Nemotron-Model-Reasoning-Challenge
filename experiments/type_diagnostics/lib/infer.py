@@ -51,6 +51,11 @@ def parse_args(default_question_type: str | None = None) -> argparse.Namespace:
     else:
         parser.set_defaults(question_type=default_question_type)
     parser.add_argument("--data-dir", default=str(DATA_DIR))
+    parser.add_argument(
+        "--split-csv",
+        default=None,
+        help="Optional split CSV override. Defaults to the type dataset's splits_80_10_10.csv.",
+    )
     parser.add_argument("--adapter-dir", default=None)
     parser.add_argument("--report-dir", default=None)
     parser.add_argument("--model-path", default=MODEL_PATH)
@@ -79,16 +84,22 @@ def parse_args(default_question_type: str | None = None) -> argparse.Namespace:
     args = parser.parse_args()
     args.question_type = normalize_question_type(args.question_type)
     paths = type_paths(args.question_type, data_dir=Path(args.data_dir))
+    args.split_csv = args.split_csv or str(paths.split_csv)
     args.adapter_dir = args.adapter_dir or str(paths.output_dir / "adapter")
     args.report_dir = args.report_dir or str(paths.report_dir)
     return args
 
 
-def load_eval_examples(paths, eval_splits: list[str], max_eval_samples: int | None) -> list[EvalExample]:
+def load_eval_examples(
+    paths,
+    split_csv: Path,
+    eval_splits: list[str],
+    max_eval_samples: int | None,
+) -> list[EvalExample]:
     assert_type_dataset_fresh(paths.slug, type_csv=paths.train_csv)
     rows, _ = read_csv_rows(paths.train_csv)
-    assignments = load_split_assignments(paths.split_csv)
-    validate_split_assignments(rows, assignments, split_csv=paths.split_csv)
+    assignments = load_split_assignments(split_csv)
+    validate_split_assignments(rows, assignments, split_csv=split_csv)
     selected_rows = select_rows_for_splits(rows, assignments, eval_splits)
     skipped_ineligible = [row for row in selected_rows if not is_eval_eligible(row)]
     selected_rows = [row for row in selected_rows if is_eval_eligible(row)]
@@ -96,7 +107,7 @@ def load_eval_examples(paths, eval_splits: list[str], max_eval_samples: int | No
         selected_rows = selected_rows[:max_eval_samples]
     if not selected_rows:
         raise SystemExit(
-            f"No eval-eligible rows selected for {paths.slug} splits {eval_splits!r} in {paths.split_csv}. "
+            f"No eval-eligible rows selected for {paths.slug} splits {eval_splits!r} in {split_csv}. "
             f"Skipped eval-ineligible rows: {len(skipped_ineligible)}"
         )
 
@@ -231,7 +242,8 @@ def write_failed_trace_samples(
 def main(default_question_type: str | None = None) -> None:
     args = parse_args(default_question_type)
     paths = type_paths(args.question_type, data_dir=Path(args.data_dir))
-    if not paths.train_csv.exists() or not paths.split_csv.exists():
+    split_csv = Path(args.split_csv)
+    if not paths.train_csv.exists() or not split_csv.exists():
         raise SystemExit(
             f"Missing diagnostic data for {args.question_type}. Run:\n"
             f"  python3 experiments/type_diagnostics/prepare_type_datasets.py --question-type {args.question_type}"
@@ -243,7 +255,7 @@ def main(default_question_type: str | None = None) -> None:
         kagglehub = None
 
     model_path = resolve_model_path(args, kagglehub)
-    eval_examples = load_eval_examples(paths, args.eval_splits, args.max_eval_samples)
+    eval_examples = load_eval_examples(paths, split_csv, args.eval_splits, args.max_eval_samples)
     if args.backend == "vllm":
         raw_predictions = generate_with_vllm(args, model_path, eval_examples)
     else:
@@ -284,7 +296,7 @@ def main(default_question_type: str | None = None) -> None:
         "model_path": model_path,
         "adapter_dir": str(Path(args.adapter_dir).resolve()),
         "train_csv": str(paths.train_csv.resolve()),
-        "split_csv": str(paths.split_csv.resolve()),
+        "split_csv": str(split_csv.resolve()),
         "eval_splits": args.eval_splits,
         "max_new_tokens": args.max_new_tokens,
         "temperature": args.temperature,

@@ -1,0 +1,143 @@
+Problem syn_tc_dp_alignment_0014
+Bucket: alignment
+Gold answer: story
+Note: strict_left_to_right_alignment
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+nbbw zqp -> door the
+xpl -> key
+Now, decrypt the following text: ezbwl
+
+Solution:
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+b -> o
+l -> y
+n -> d
+p -> e
+q -> h
+w -> r
+x -> k
+z -> t
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+ezbwl
+
+Decode target words from character mappings
+
+ezbwl
+e -> ? unknown
+z -> t
+b -> o
+w -> r
+l -> y
+
+Training target:
+ezbwl -> ?tory
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?tory
+above -> ?tory no match
+alice -> ?tory no match
+ancient -> ?tory no match
+around -> ?tory no match
+beyond -> ?tory no match
+bird -> ?tory no match
+book -> ?tory no match
+bright -> ?tory no match
+castle -> ?tory no match
+cat -> ?tory no match
+cave -> ?tory no match
+chases -> ?tory no match
+clever -> ?tory no match
+colorful -> ?tory no match
+creates -> ?tory no match
+crystal -> ?tory no match
+curious -> ?tory no match
+dark -> ?tory no match
+discovers -> ?tory no match
+door -> ?tory no match
+dragon -> ?tory no match
+draws -> ?tory no match
+dreams -> ?tory no match
+explores -> ?tory no match
+follows -> ?tory no match
+forest -> ?tory no match
+found -> ?tory no match
+garden -> ?tory no match
+golden -> ?tory no match
+hatter -> ?tory no match
+hidden -> ?tory no match
+imagines -> ?tory no match
+in -> ?tory no match
+inside -> ?tory no match
+island -> ?tory no match
+key -> ?tory no match
+king -> ?tory no match
+knight -> ?tory no match
+library -> ?tory no match
+magical -> ?tory no match
+map -> ?tory no match
+message -> ?tory no match
+mirror -> ?tory no match
+mountain -> ?tory no match
+mouse -> ?tory no match
+mysterious -> ?tory no match
+near -> ?tory no match
+ocean -> ?tory no match
+palace -> ?tory no match
+potion -> ?tory no match
+princess -> ?tory no match
+puzzle -> ?tory no match
+queen -> ?tory no match
+rabbit -> ?tory no match
+reads -> ?tory no match
+school -> ?tory no match
+secret -> ?tory no match
+sees -> ?tory no match
+silver -> ?tory no match
+story -> ?tory match
+strange -> ?tory no match
+student -> ?tory no match
+studies -> ?tory no match
+teacher -> ?tory no match
+the -> ?tory no match
+through -> ?tory no match
+tower -> ?tory no match
+treasure -> ?tory no match
+turtle -> ?tory no match
+under -> ?tory no match
+valley -> ?tory no match
+village -> ?tory no match
+watches -> ?tory no match
+wise -> ?tory no match
+wizard -> ?tory no match
+wonderland -> ?tory no match
+writes -> ?tory no match
+
+Scan candidates for ?tory
+story
+
+Check scan candidates against summary mappings
+
+story
+e -> s new
+z -> t agrees
+b -> o agrees
+w -> r agrees
+l -> y agrees
+PASS
+add e -> s
+
+choose story
+
+Decoded phrase
+story
+
+Answer: \boxed{story}

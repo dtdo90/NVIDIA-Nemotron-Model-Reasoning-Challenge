@@ -1,0 +1,160 @@
+Problem syn_tc_dp_reject_failed_0004
+Bucket: reject_failed_candidate
+Gold answer: garden
+Note: candidate_golden_must_fail_before_garden
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+rukwio cmor -> golden king
+hukkugy -> follows
+Now, decrypt the following text: reqwio
+
+Solution:
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+c -> k
+g -> w
+h -> f
+i -> e
+k -> l
+m -> i
+o -> n
+r -> g
+u -> o
+w -> d
+y -> s
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+reqwio
+
+Decode target words from character mappings
+
+reqwio
+r -> g
+e -> ? unknown
+q -> ? unknown
+w -> d
+i -> e
+o -> n
+
+Training target:
+reqwio -> g??den
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match g??den
+above -> g??den no match
+alice -> g??den no match
+ancient -> g??den no match
+around -> g??den no match
+beyond -> g??den no match
+bird -> g??den no match
+book -> g??den no match
+bright -> g??den no match
+castle -> g??den no match
+cat -> g??den no match
+cave -> g??den no match
+chases -> g??den no match
+clever -> g??den no match
+colorful -> g??den no match
+creates -> g??den no match
+crystal -> g??den no match
+curious -> g??den no match
+dark -> g??den no match
+discovers -> g??den no match
+door -> g??den no match
+dragon -> g??den no match
+draws -> g??den no match
+dreams -> g??den no match
+explores -> g??den no match
+follows -> g??den no match
+forest -> g??den no match
+found -> g??den no match
+garden -> g??den match
+golden -> g??den match
+hatter -> g??den no match
+hidden -> g??den no match
+imagines -> g??den no match
+in -> g??den no match
+inside -> g??den no match
+island -> g??den no match
+key -> g??den no match
+king -> g??den no match
+knight -> g??den no match
+library -> g??den no match
+magical -> g??den no match
+map -> g??den no match
+message -> g??den no match
+mirror -> g??den no match
+mountain -> g??den no match
+mouse -> g??den no match
+mysterious -> g??den no match
+near -> g??den no match
+ocean -> g??den no match
+palace -> g??den no match
+potion -> g??den no match
+princess -> g??den no match
+puzzle -> g??den no match
+queen -> g??den no match
+rabbit -> g??den no match
+reads -> g??den no match
+school -> g??den no match
+secret -> g??den no match
+sees -> g??den no match
+silver -> g??den no match
+story -> g??den no match
+strange -> g??den no match
+student -> g??den no match
+studies -> g??den no match
+teacher -> g??den no match
+the -> g??den no match
+through -> g??den no match
+tower -> g??den no match
+treasure -> g??den no match
+turtle -> g??den no match
+under -> g??den no match
+valley -> g??den no match
+village -> g??den no match
+watches -> g??den no match
+wise -> g??den no match
+wizard -> g??den no match
+wonderland -> g??den no match
+writes -> g??den no match
+
+Scan candidates for g??den
+garden, golden
+
+Check scan candidates against summary mappings
+
+golden
+r -> g agrees
+e -> o conflicts
+u -> o already exists
+q -> l conflicts
+k -> l already exists
+w -> d agrees
+i -> e agrees
+o -> n agrees
+FAIL
+
+garden
+r -> g agrees
+e -> a new
+q -> r new
+w -> d agrees
+i -> e agrees
+o -> n agrees
+PASS
+add e -> a
+add q -> r
+
+choose garden
+
+Decoded phrase
+garden
+
+Answer: \boxed{garden}

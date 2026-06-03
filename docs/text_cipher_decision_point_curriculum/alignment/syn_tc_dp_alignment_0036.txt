@@ -1,0 +1,151 @@
+Problem syn_tc_dp_alignment_0036
+Bucket: alignment
+Gold answer: mirror
+Note: strict_left_to_right_alignment
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+bwcarwt hrinecgqin -> curious wonderland
+kqggem -> valley
+Now, decrypt the following text: yaccrc
+
+Solution:
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+a -> i
+b -> c
+c -> r
+e -> e
+g -> l
+h -> w
+i -> n
+k -> v
+m -> y
+n -> d
+q -> a
+r -> o
+t -> s
+w -> u
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+yaccrc
+
+Decode target words from character mappings
+
+yaccrc
+y -> ? unknown
+a -> i
+c -> r
+c -> r
+r -> o
+c -> r
+
+Training target:
+yaccrc -> ?irror
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?irror
+above -> ?irror no match
+alice -> ?irror no match
+ancient -> ?irror no match
+around -> ?irror no match
+beyond -> ?irror no match
+bird -> ?irror no match
+book -> ?irror no match
+bright -> ?irror no match
+castle -> ?irror no match
+cat -> ?irror no match
+cave -> ?irror no match
+chases -> ?irror no match
+clever -> ?irror no match
+colorful -> ?irror no match
+creates -> ?irror no match
+crystal -> ?irror no match
+curious -> ?irror no match
+dark -> ?irror no match
+discovers -> ?irror no match
+door -> ?irror no match
+dragon -> ?irror no match
+draws -> ?irror no match
+dreams -> ?irror no match
+explores -> ?irror no match
+follows -> ?irror no match
+forest -> ?irror no match
+found -> ?irror no match
+garden -> ?irror no match
+golden -> ?irror no match
+hatter -> ?irror no match
+hidden -> ?irror no match
+imagines -> ?irror no match
+in -> ?irror no match
+inside -> ?irror no match
+island -> ?irror no match
+key -> ?irror no match
+king -> ?irror no match
+knight -> ?irror no match
+library -> ?irror no match
+magical -> ?irror no match
+map -> ?irror no match
+message -> ?irror no match
+mirror -> ?irror match
+mountain -> ?irror no match
+mouse -> ?irror no match
+mysterious -> ?irror no match
+near -> ?irror no match
+ocean -> ?irror no match
+palace -> ?irror no match
+potion -> ?irror no match
+princess -> ?irror no match
+puzzle -> ?irror no match
+queen -> ?irror no match
+rabbit -> ?irror no match
+reads -> ?irror no match
+school -> ?irror no match
+secret -> ?irror no match
+sees -> ?irror no match
+silver -> ?irror no match
+story -> ?irror no match
+strange -> ?irror no match
+student -> ?irror no match
+studies -> ?irror no match
+teacher -> ?irror no match
+the -> ?irror no match
+through -> ?irror no match
+tower -> ?irror no match
+treasure -> ?irror no match
+turtle -> ?irror no match
+under -> ?irror no match
+valley -> ?irror no match
+village -> ?irror no match
+watches -> ?irror no match
+wise -> ?irror no match
+wizard -> ?irror no match
+wonderland -> ?irror no match
+writes -> ?irror no match
+
+Scan candidates for ?irror
+mirror
+
+Check scan candidates against summary mappings
+
+mirror
+y -> m new
+a -> i agrees
+c -> r agrees
+c -> r agrees
+r -> o agrees
+c -> r agrees
+PASS
+add y -> m
+
+choose mirror
+
+Decoded phrase
+mirror
+
+Answer: \boxed{mirror}

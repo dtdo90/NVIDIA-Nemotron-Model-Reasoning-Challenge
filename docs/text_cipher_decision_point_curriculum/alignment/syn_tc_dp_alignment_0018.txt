@@ -1,0 +1,148 @@
+Problem syn_tc_dp_alignment_0018
+Bucket: alignment
+Gold answer: above
+Note: strict_left_to_right_alignment
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+cvoetu dwvgvp -> beyond clever
+xjsuvtj -> student
+Now, decrypt the following text: bcegv
+
+Solution:
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+c -> b
+d -> c
+e -> o
+g -> v
+j -> t
+o -> y
+p -> r
+s -> u
+t -> n
+u -> d
+v -> e
+w -> l
+x -> s
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+bcegv
+
+Decode target words from character mappings
+
+bcegv
+b -> ? unknown
+c -> b
+e -> o
+g -> v
+v -> e
+
+Training target:
+bcegv -> ?bove
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?bove
+above -> ?bove match
+alice -> ?bove no match
+ancient -> ?bove no match
+around -> ?bove no match
+beyond -> ?bove no match
+bird -> ?bove no match
+book -> ?bove no match
+bright -> ?bove no match
+castle -> ?bove no match
+cat -> ?bove no match
+cave -> ?bove no match
+chases -> ?bove no match
+clever -> ?bove no match
+colorful -> ?bove no match
+creates -> ?bove no match
+crystal -> ?bove no match
+curious -> ?bove no match
+dark -> ?bove no match
+discovers -> ?bove no match
+door -> ?bove no match
+dragon -> ?bove no match
+draws -> ?bove no match
+dreams -> ?bove no match
+explores -> ?bove no match
+follows -> ?bove no match
+forest -> ?bove no match
+found -> ?bove no match
+garden -> ?bove no match
+golden -> ?bove no match
+hatter -> ?bove no match
+hidden -> ?bove no match
+imagines -> ?bove no match
+in -> ?bove no match
+inside -> ?bove no match
+island -> ?bove no match
+key -> ?bove no match
+king -> ?bove no match
+knight -> ?bove no match
+library -> ?bove no match
+magical -> ?bove no match
+map -> ?bove no match
+message -> ?bove no match
+mirror -> ?bove no match
+mountain -> ?bove no match
+mouse -> ?bove no match
+mysterious -> ?bove no match
+near -> ?bove no match
+ocean -> ?bove no match
+palace -> ?bove no match
+potion -> ?bove no match
+princess -> ?bove no match
+puzzle -> ?bove no match
+queen -> ?bove no match
+rabbit -> ?bove no match
+reads -> ?bove no match
+school -> ?bove no match
+secret -> ?bove no match
+sees -> ?bove no match
+silver -> ?bove no match
+story -> ?bove no match
+strange -> ?bove no match
+student -> ?bove no match
+studies -> ?bove no match
+teacher -> ?bove no match
+the -> ?bove no match
+through -> ?bove no match
+tower -> ?bove no match
+treasure -> ?bove no match
+turtle -> ?bove no match
+under -> ?bove no match
+valley -> ?bove no match
+village -> ?bove no match
+watches -> ?bove no match
+wise -> ?bove no match
+wizard -> ?bove no match
+wonderland -> ?bove no match
+writes -> ?bove no match
+
+Scan candidates for ?bove
+above
+
+Check scan candidates against summary mappings
+
+above
+b -> a new
+c -> b agrees
+e -> o agrees
+g -> v agrees
+v -> e agrees
+PASS
+add b -> a
+
+choose above
+
+Decoded phrase
+above
+
+Answer: \boxed{above}

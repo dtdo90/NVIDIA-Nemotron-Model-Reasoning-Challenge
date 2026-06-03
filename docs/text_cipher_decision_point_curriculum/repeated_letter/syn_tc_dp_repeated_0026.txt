@@ -1,0 +1,151 @@
+Problem syn_tc_dp_repeated_0026
+Bucket: repeated_letter
+Gold answer: imagines
+Note: preserve_repeated_letter_pattern
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+fxdjzue pz -> strange in
+jhpte -> alice
+Now, decrypt the following text: pkjupzef
+
+Solution:
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+d -> r
+e -> e
+f -> s
+h -> l
+j -> a
+p -> i
+t -> c
+u -> g
+x -> t
+z -> n
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+pkjupzef
+
+Decode target words from character mappings
+
+pkjupzef
+p -> i
+k -> ? unknown
+j -> a
+u -> g
+p -> i
+z -> n
+e -> e
+f -> s
+
+Training target:
+pkjupzef -> i?agines
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match i?agines
+above -> i?agines no match
+alice -> i?agines no match
+ancient -> i?agines no match
+around -> i?agines no match
+beyond -> i?agines no match
+bird -> i?agines no match
+book -> i?agines no match
+bright -> i?agines no match
+castle -> i?agines no match
+cat -> i?agines no match
+cave -> i?agines no match
+chases -> i?agines no match
+clever -> i?agines no match
+colorful -> i?agines no match
+creates -> i?agines no match
+crystal -> i?agines no match
+curious -> i?agines no match
+dark -> i?agines no match
+discovers -> i?agines no match
+door -> i?agines no match
+dragon -> i?agines no match
+draws -> i?agines no match
+dreams -> i?agines no match
+explores -> i?agines no match
+follows -> i?agines no match
+forest -> i?agines no match
+found -> i?agines no match
+garden -> i?agines no match
+golden -> i?agines no match
+hatter -> i?agines no match
+hidden -> i?agines no match
+imagines -> i?agines match
+in -> i?agines no match
+inside -> i?agines no match
+island -> i?agines no match
+key -> i?agines no match
+king -> i?agines no match
+knight -> i?agines no match
+library -> i?agines no match
+magical -> i?agines no match
+map -> i?agines no match
+message -> i?agines no match
+mirror -> i?agines no match
+mountain -> i?agines no match
+mouse -> i?agines no match
+mysterious -> i?agines no match
+near -> i?agines no match
+ocean -> i?agines no match
+palace -> i?agines no match
+potion -> i?agines no match
+princess -> i?agines no match
+puzzle -> i?agines no match
+queen -> i?agines no match
+rabbit -> i?agines no match
+reads -> i?agines no match
+school -> i?agines no match
+secret -> i?agines no match
+sees -> i?agines no match
+silver -> i?agines no match
+story -> i?agines no match
+strange -> i?agines no match
+student -> i?agines no match
+studies -> i?agines no match
+teacher -> i?agines no match
+the -> i?agines no match
+through -> i?agines no match
+tower -> i?agines no match
+treasure -> i?agines no match
+turtle -> i?agines no match
+under -> i?agines no match
+valley -> i?agines no match
+village -> i?agines no match
+watches -> i?agines no match
+wise -> i?agines no match
+wizard -> i?agines no match
+wonderland -> i?agines no match
+writes -> i?agines no match
+
+Scan candidates for i?agines
+imagines
+
+Check scan candidates against summary mappings
+
+imagines
+p -> i agrees
+k -> m new
+j -> a agrees
+u -> g agrees
+p -> i agrees
+z -> n agrees
+e -> e agrees
+f -> s agrees
+PASS
+add k -> m
+
+choose imagines
+
+Decoded phrase
+imagines
+
+Answer: \boxed{imagines}

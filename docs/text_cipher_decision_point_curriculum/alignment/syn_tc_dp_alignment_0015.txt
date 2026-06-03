@@ -1,0 +1,145 @@
+Problem syn_tc_dp_alignment_0015
+Bucket: alignment
+Gold answer: ocean
+Note: strict_left_to_right_alignment
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+izccb nag -> queen cat
+haoocp -> valley
+Now, decrypt the following text: yncab
+
+Solution:
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+a -> a
+b -> n
+c -> e
+g -> t
+h -> v
+i -> q
+n -> c
+o -> l
+p -> y
+z -> u
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+yncab
+
+Decode target words from character mappings
+
+yncab
+y -> ? unknown
+n -> c
+c -> e
+a -> a
+b -> n
+
+Training target:
+yncab -> ?cean
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?cean
+above -> ?cean no match
+alice -> ?cean no match
+ancient -> ?cean no match
+around -> ?cean no match
+beyond -> ?cean no match
+bird -> ?cean no match
+book -> ?cean no match
+bright -> ?cean no match
+castle -> ?cean no match
+cat -> ?cean no match
+cave -> ?cean no match
+chases -> ?cean no match
+clever -> ?cean no match
+colorful -> ?cean no match
+creates -> ?cean no match
+crystal -> ?cean no match
+curious -> ?cean no match
+dark -> ?cean no match
+discovers -> ?cean no match
+door -> ?cean no match
+dragon -> ?cean no match
+draws -> ?cean no match
+dreams -> ?cean no match
+explores -> ?cean no match
+follows -> ?cean no match
+forest -> ?cean no match
+found -> ?cean no match
+garden -> ?cean no match
+golden -> ?cean no match
+hatter -> ?cean no match
+hidden -> ?cean no match
+imagines -> ?cean no match
+in -> ?cean no match
+inside -> ?cean no match
+island -> ?cean no match
+key -> ?cean no match
+king -> ?cean no match
+knight -> ?cean no match
+library -> ?cean no match
+magical -> ?cean no match
+map -> ?cean no match
+message -> ?cean no match
+mirror -> ?cean no match
+mountain -> ?cean no match
+mouse -> ?cean no match
+mysterious -> ?cean no match
+near -> ?cean no match
+ocean -> ?cean match
+palace -> ?cean no match
+potion -> ?cean no match
+princess -> ?cean no match
+puzzle -> ?cean no match
+queen -> ?cean no match
+rabbit -> ?cean no match
+reads -> ?cean no match
+school -> ?cean no match
+secret -> ?cean no match
+sees -> ?cean no match
+silver -> ?cean no match
+story -> ?cean no match
+strange -> ?cean no match
+student -> ?cean no match
+studies -> ?cean no match
+teacher -> ?cean no match
+the -> ?cean no match
+through -> ?cean no match
+tower -> ?cean no match
+treasure -> ?cean no match
+turtle -> ?cean no match
+under -> ?cean no match
+valley -> ?cean no match
+village -> ?cean no match
+watches -> ?cean no match
+wise -> ?cean no match
+wizard -> ?cean no match
+wonderland -> ?cean no match
+writes -> ?cean no match
+
+Scan candidates for ?cean
+ocean
+
+Check scan candidates against summary mappings
+
+ocean
+y -> o new
+n -> c agrees
+c -> e agrees
+a -> a agrees
+b -> n agrees
+PASS
+add y -> o
+
+choose ocean
+
+Decoded phrase
+ocean
+
+Answer: \boxed{ocean}

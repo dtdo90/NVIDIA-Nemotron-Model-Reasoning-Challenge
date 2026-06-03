@@ -1,0 +1,151 @@
+Problem syn_tc_dp_alignment_0030
+Bucket: alignment
+Gold answer: dragon
+Note: strict_left_to_right_alignment
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+ldjmcpo beek -> strange book
+wsldojteul -> mysterious
+Now, decrypt the following text: fjmpec
+
+Solution:
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+b -> b
+c -> n
+d -> t
+e -> o
+j -> r
+k -> k
+l -> s
+m -> a
+o -> e
+p -> g
+s -> y
+t -> i
+u -> u
+w -> m
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+fjmpec
+
+Decode target words from character mappings
+
+fjmpec
+f -> ? unknown
+j -> r
+m -> a
+p -> g
+e -> o
+c -> n
+
+Training target:
+fjmpec -> ?ragon
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?ragon
+above -> ?ragon no match
+alice -> ?ragon no match
+ancient -> ?ragon no match
+around -> ?ragon no match
+beyond -> ?ragon no match
+bird -> ?ragon no match
+book -> ?ragon no match
+bright -> ?ragon no match
+castle -> ?ragon no match
+cat -> ?ragon no match
+cave -> ?ragon no match
+chases -> ?ragon no match
+clever -> ?ragon no match
+colorful -> ?ragon no match
+creates -> ?ragon no match
+crystal -> ?ragon no match
+curious -> ?ragon no match
+dark -> ?ragon no match
+discovers -> ?ragon no match
+door -> ?ragon no match
+dragon -> ?ragon match
+draws -> ?ragon no match
+dreams -> ?ragon no match
+explores -> ?ragon no match
+follows -> ?ragon no match
+forest -> ?ragon no match
+found -> ?ragon no match
+garden -> ?ragon no match
+golden -> ?ragon no match
+hatter -> ?ragon no match
+hidden -> ?ragon no match
+imagines -> ?ragon no match
+in -> ?ragon no match
+inside -> ?ragon no match
+island -> ?ragon no match
+key -> ?ragon no match
+king -> ?ragon no match
+knight -> ?ragon no match
+library -> ?ragon no match
+magical -> ?ragon no match
+map -> ?ragon no match
+message -> ?ragon no match
+mirror -> ?ragon no match
+mountain -> ?ragon no match
+mouse -> ?ragon no match
+mysterious -> ?ragon no match
+near -> ?ragon no match
+ocean -> ?ragon no match
+palace -> ?ragon no match
+potion -> ?ragon no match
+princess -> ?ragon no match
+puzzle -> ?ragon no match
+queen -> ?ragon no match
+rabbit -> ?ragon no match
+reads -> ?ragon no match
+school -> ?ragon no match
+secret -> ?ragon no match
+sees -> ?ragon no match
+silver -> ?ragon no match
+story -> ?ragon no match
+strange -> ?ragon no match
+student -> ?ragon no match
+studies -> ?ragon no match
+teacher -> ?ragon no match
+the -> ?ragon no match
+through -> ?ragon no match
+tower -> ?ragon no match
+treasure -> ?ragon no match
+turtle -> ?ragon no match
+under -> ?ragon no match
+valley -> ?ragon no match
+village -> ?ragon no match
+watches -> ?ragon no match
+wise -> ?ragon no match
+wizard -> ?ragon no match
+wonderland -> ?ragon no match
+writes -> ?ragon no match
+
+Scan candidates for ?ragon
+dragon
+
+Check scan candidates against summary mappings
+
+dragon
+f -> d new
+j -> r agrees
+m -> a agrees
+p -> g agrees
+e -> o agrees
+c -> n agrees
+PASS
+add f -> d
+
+choose dragon
+
+Decoded phrase
+dragon
+
+Answer: \boxed{dragon}

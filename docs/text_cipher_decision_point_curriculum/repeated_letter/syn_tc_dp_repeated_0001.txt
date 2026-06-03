@@ -1,0 +1,156 @@
+Problem syn_tc_dp_repeated_0001
+Bucket: repeated_letter
+Gold answer: colorful
+Note: preserve_repeated_letter_pattern
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+zwkep oxdmjg -> found silver
+fexhny -> knight
+Now, decrypt the following text: qwdwgzkd
+
+Solution:
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+d -> l
+e -> n
+f -> k
+g -> r
+h -> g
+j -> e
+k -> u
+m -> v
+n -> h
+o -> s
+p -> d
+w -> o
+x -> i
+y -> t
+z -> f
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+qwdwgzkd
+
+Decode target words from character mappings
+
+qwdwgzkd
+q -> ? unknown
+w -> o
+d -> l
+w -> o
+g -> r
+z -> f
+k -> u
+d -> l
+
+Training target:
+qwdwgzkd -> ?olorful
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?olorful
+above -> ?olorful no match
+alice -> ?olorful no match
+ancient -> ?olorful no match
+around -> ?olorful no match
+beyond -> ?olorful no match
+bird -> ?olorful no match
+book -> ?olorful no match
+bright -> ?olorful no match
+castle -> ?olorful no match
+cat -> ?olorful no match
+cave -> ?olorful no match
+chases -> ?olorful no match
+clever -> ?olorful no match
+colorful -> ?olorful match
+creates -> ?olorful no match
+crystal -> ?olorful no match
+curious -> ?olorful no match
+dark -> ?olorful no match
+discovers -> ?olorful no match
+door -> ?olorful no match
+dragon -> ?olorful no match
+draws -> ?olorful no match
+dreams -> ?olorful no match
+explores -> ?olorful no match
+follows -> ?olorful no match
+forest -> ?olorful no match
+found -> ?olorful no match
+garden -> ?olorful no match
+golden -> ?olorful no match
+hatter -> ?olorful no match
+hidden -> ?olorful no match
+imagines -> ?olorful no match
+in -> ?olorful no match
+inside -> ?olorful no match
+island -> ?olorful no match
+key -> ?olorful no match
+king -> ?olorful no match
+knight -> ?olorful no match
+library -> ?olorful no match
+magical -> ?olorful no match
+map -> ?olorful no match
+message -> ?olorful no match
+mirror -> ?olorful no match
+mountain -> ?olorful no match
+mouse -> ?olorful no match
+mysterious -> ?olorful no match
+near -> ?olorful no match
+ocean -> ?olorful no match
+palace -> ?olorful no match
+potion -> ?olorful no match
+princess -> ?olorful no match
+puzzle -> ?olorful no match
+queen -> ?olorful no match
+rabbit -> ?olorful no match
+reads -> ?olorful no match
+school -> ?olorful no match
+secret -> ?olorful no match
+sees -> ?olorful no match
+silver -> ?olorful no match
+story -> ?olorful no match
+strange -> ?olorful no match
+student -> ?olorful no match
+studies -> ?olorful no match
+teacher -> ?olorful no match
+the -> ?olorful no match
+through -> ?olorful no match
+tower -> ?olorful no match
+treasure -> ?olorful no match
+turtle -> ?olorful no match
+under -> ?olorful no match
+valley -> ?olorful no match
+village -> ?olorful no match
+watches -> ?olorful no match
+wise -> ?olorful no match
+wizard -> ?olorful no match
+wonderland -> ?olorful no match
+writes -> ?olorful no match
+
+Scan candidates for ?olorful
+colorful
+
+Check scan candidates against summary mappings
+
+colorful
+q -> c new
+w -> o agrees
+d -> l agrees
+w -> o agrees
+g -> r agrees
+z -> f agrees
+k -> u agrees
+d -> l agrees
+PASS
+add q -> c
+
+choose colorful
+
+Decoded phrase
+colorful
+
+Answer: \boxed{colorful}

@@ -1,0 +1,146 @@
+Problem syn_tc_dp_repeated_0015
+Bucket: repeated_letter
+Gold answer: hidden
+Note: preserve_repeated_letter_pattern
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+cghrix ox -> garden in
+egj -> cat
+Now, decrypt the following text: lorrix
+
+Solution:
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+c -> g
+e -> c
+g -> a
+h -> r
+i -> e
+j -> t
+o -> i
+r -> d
+x -> n
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+lorrix
+
+Decode target words from character mappings
+
+lorrix
+l -> ? unknown
+o -> i
+r -> d
+r -> d
+i -> e
+x -> n
+
+Training target:
+lorrix -> ?idden
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?idden
+above -> ?idden no match
+alice -> ?idden no match
+ancient -> ?idden no match
+around -> ?idden no match
+beyond -> ?idden no match
+bird -> ?idden no match
+book -> ?idden no match
+bright -> ?idden no match
+castle -> ?idden no match
+cat -> ?idden no match
+cave -> ?idden no match
+chases -> ?idden no match
+clever -> ?idden no match
+colorful -> ?idden no match
+creates -> ?idden no match
+crystal -> ?idden no match
+curious -> ?idden no match
+dark -> ?idden no match
+discovers -> ?idden no match
+door -> ?idden no match
+dragon -> ?idden no match
+draws -> ?idden no match
+dreams -> ?idden no match
+explores -> ?idden no match
+follows -> ?idden no match
+forest -> ?idden no match
+found -> ?idden no match
+garden -> ?idden no match
+golden -> ?idden no match
+hatter -> ?idden no match
+hidden -> ?idden match
+imagines -> ?idden no match
+in -> ?idden no match
+inside -> ?idden no match
+island -> ?idden no match
+key -> ?idden no match
+king -> ?idden no match
+knight -> ?idden no match
+library -> ?idden no match
+magical -> ?idden no match
+map -> ?idden no match
+message -> ?idden no match
+mirror -> ?idden no match
+mountain -> ?idden no match
+mouse -> ?idden no match
+mysterious -> ?idden no match
+near -> ?idden no match
+ocean -> ?idden no match
+palace -> ?idden no match
+potion -> ?idden no match
+princess -> ?idden no match
+puzzle -> ?idden no match
+queen -> ?idden no match
+rabbit -> ?idden no match
+reads -> ?idden no match
+school -> ?idden no match
+secret -> ?idden no match
+sees -> ?idden no match
+silver -> ?idden no match
+story -> ?idden no match
+strange -> ?idden no match
+student -> ?idden no match
+studies -> ?idden no match
+teacher -> ?idden no match
+the -> ?idden no match
+through -> ?idden no match
+tower -> ?idden no match
+treasure -> ?idden no match
+turtle -> ?idden no match
+under -> ?idden no match
+valley -> ?idden no match
+village -> ?idden no match
+watches -> ?idden no match
+wise -> ?idden no match
+wizard -> ?idden no match
+wonderland -> ?idden no match
+writes -> ?idden no match
+
+Scan candidates for ?idden
+hidden
+
+Check scan candidates against summary mappings
+
+hidden
+l -> h new
+o -> i agrees
+r -> d agrees
+r -> d agrees
+i -> e agrees
+x -> n agrees
+PASS
+add l -> h
+
+choose hidden
+
+Decoded phrase
+hidden
+
+Answer: \boxed{hidden}

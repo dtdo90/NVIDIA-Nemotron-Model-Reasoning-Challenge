@@ -1,0 +1,149 @@
+Problem syn_tc_dp_alignment_0006
+Bucket: alignment
+Gold answer: bright
+Note: strict_left_to_right_alignment
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+tdfrwp dleq -> knight near
+ufbeqi -> wizard
+Now, decrypt the following text: jqfrwp
+
+Solution:
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+b -> z
+d -> n
+e -> a
+f -> i
+i -> d
+l -> e
+p -> t
+q -> r
+r -> g
+t -> k
+u -> w
+w -> h
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+jqfrwp
+
+Decode target words from character mappings
+
+jqfrwp
+j -> ? unknown
+q -> r
+f -> i
+r -> g
+w -> h
+p -> t
+
+Training target:
+jqfrwp -> ?right
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?right
+above -> ?right no match
+alice -> ?right no match
+ancient -> ?right no match
+around -> ?right no match
+beyond -> ?right no match
+bird -> ?right no match
+book -> ?right no match
+bright -> ?right match
+castle -> ?right no match
+cat -> ?right no match
+cave -> ?right no match
+chases -> ?right no match
+clever -> ?right no match
+colorful -> ?right no match
+creates -> ?right no match
+crystal -> ?right no match
+curious -> ?right no match
+dark -> ?right no match
+discovers -> ?right no match
+door -> ?right no match
+dragon -> ?right no match
+draws -> ?right no match
+dreams -> ?right no match
+explores -> ?right no match
+follows -> ?right no match
+forest -> ?right no match
+found -> ?right no match
+garden -> ?right no match
+golden -> ?right no match
+hatter -> ?right no match
+hidden -> ?right no match
+imagines -> ?right no match
+in -> ?right no match
+inside -> ?right no match
+island -> ?right no match
+key -> ?right no match
+king -> ?right no match
+knight -> ?right no match
+library -> ?right no match
+magical -> ?right no match
+map -> ?right no match
+message -> ?right no match
+mirror -> ?right no match
+mountain -> ?right no match
+mouse -> ?right no match
+mysterious -> ?right no match
+near -> ?right no match
+ocean -> ?right no match
+palace -> ?right no match
+potion -> ?right no match
+princess -> ?right no match
+puzzle -> ?right no match
+queen -> ?right no match
+rabbit -> ?right no match
+reads -> ?right no match
+school -> ?right no match
+secret -> ?right no match
+sees -> ?right no match
+silver -> ?right no match
+story -> ?right no match
+strange -> ?right no match
+student -> ?right no match
+studies -> ?right no match
+teacher -> ?right no match
+the -> ?right no match
+through -> ?right no match
+tower -> ?right no match
+treasure -> ?right no match
+turtle -> ?right no match
+under -> ?right no match
+valley -> ?right no match
+village -> ?right no match
+watches -> ?right no match
+wise -> ?right no match
+wizard -> ?right no match
+wonderland -> ?right no match
+writes -> ?right no match
+
+Scan candidates for ?right
+bright
+
+Check scan candidates against summary mappings
+
+bright
+j -> b new
+q -> r agrees
+f -> i agrees
+r -> g agrees
+w -> h agrees
+p -> t agrees
+PASS
+add j -> b
+
+choose bright
+
+Decoded phrase
+bright
+
+Answer: \boxed{bright}

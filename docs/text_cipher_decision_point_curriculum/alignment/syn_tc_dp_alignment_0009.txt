@@ -1,0 +1,148 @@
+Problem syn_tc_dp_alignment_0009
+Bucket: alignment
+Gold answer: dreams
+Note: strict_left_to_right_alignment
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+lumnofv pny -> strange map
+luxmk -> story
+Now, decrypt the following text: smvnpl
+
+Solution:
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+f -> g
+k -> y
+l -> s
+m -> r
+n -> a
+o -> n
+p -> m
+u -> t
+v -> e
+x -> o
+y -> p
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+smvnpl
+
+Decode target words from character mappings
+
+smvnpl
+s -> ? unknown
+m -> r
+v -> e
+n -> a
+p -> m
+l -> s
+
+Training target:
+smvnpl -> ?reams
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?reams
+above -> ?reams no match
+alice -> ?reams no match
+ancient -> ?reams no match
+around -> ?reams no match
+beyond -> ?reams no match
+bird -> ?reams no match
+book -> ?reams no match
+bright -> ?reams no match
+castle -> ?reams no match
+cat -> ?reams no match
+cave -> ?reams no match
+chases -> ?reams no match
+clever -> ?reams no match
+colorful -> ?reams no match
+creates -> ?reams no match
+crystal -> ?reams no match
+curious -> ?reams no match
+dark -> ?reams no match
+discovers -> ?reams no match
+door -> ?reams no match
+dragon -> ?reams no match
+draws -> ?reams no match
+dreams -> ?reams match
+explores -> ?reams no match
+follows -> ?reams no match
+forest -> ?reams no match
+found -> ?reams no match
+garden -> ?reams no match
+golden -> ?reams no match
+hatter -> ?reams no match
+hidden -> ?reams no match
+imagines -> ?reams no match
+in -> ?reams no match
+inside -> ?reams no match
+island -> ?reams no match
+key -> ?reams no match
+king -> ?reams no match
+knight -> ?reams no match
+library -> ?reams no match
+magical -> ?reams no match
+map -> ?reams no match
+message -> ?reams no match
+mirror -> ?reams no match
+mountain -> ?reams no match
+mouse -> ?reams no match
+mysterious -> ?reams no match
+near -> ?reams no match
+ocean -> ?reams no match
+palace -> ?reams no match
+potion -> ?reams no match
+princess -> ?reams no match
+puzzle -> ?reams no match
+queen -> ?reams no match
+rabbit -> ?reams no match
+reads -> ?reams no match
+school -> ?reams no match
+secret -> ?reams no match
+sees -> ?reams no match
+silver -> ?reams no match
+story -> ?reams no match
+strange -> ?reams no match
+student -> ?reams no match
+studies -> ?reams no match
+teacher -> ?reams no match
+the -> ?reams no match
+through -> ?reams no match
+tower -> ?reams no match
+treasure -> ?reams no match
+turtle -> ?reams no match
+under -> ?reams no match
+valley -> ?reams no match
+village -> ?reams no match
+watches -> ?reams no match
+wise -> ?reams no match
+wizard -> ?reams no match
+wonderland -> ?reams no match
+writes -> ?reams no match
+
+Scan candidates for ?reams
+dreams
+
+Check scan candidates against summary mappings
+
+dreams
+s -> d new
+m -> r agrees
+v -> e agrees
+n -> a agrees
+p -> m agrees
+l -> s agrees
+PASS
+add s -> d
+
+choose dreams
+
+Decoded phrase
+dreams
+
+Answer: \boxed{dreams}

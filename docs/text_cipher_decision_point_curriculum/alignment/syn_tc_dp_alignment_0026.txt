@@ -1,0 +1,147 @@
+Problem syn_tc_dp_alignment_0026
+Bucket: alignment
+Gold answer: around
+Note: strict_left_to_right_alignment
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+cpsmw hqbw -> found bird
+eqmz -> king
+Now, decrypt the following text: abpsmw
+
+Solution:
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+b -> r
+c -> f
+e -> k
+h -> b
+m -> n
+p -> o
+q -> i
+s -> u
+w -> d
+z -> g
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+abpsmw
+
+Decode target words from character mappings
+
+abpsmw
+a -> ? unknown
+b -> r
+p -> o
+s -> u
+m -> n
+w -> d
+
+Training target:
+abpsmw -> ?round
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?round
+above -> ?round no match
+alice -> ?round no match
+ancient -> ?round no match
+around -> ?round match
+beyond -> ?round no match
+bird -> ?round no match
+book -> ?round no match
+bright -> ?round no match
+castle -> ?round no match
+cat -> ?round no match
+cave -> ?round no match
+chases -> ?round no match
+clever -> ?round no match
+colorful -> ?round no match
+creates -> ?round no match
+crystal -> ?round no match
+curious -> ?round no match
+dark -> ?round no match
+discovers -> ?round no match
+door -> ?round no match
+dragon -> ?round no match
+draws -> ?round no match
+dreams -> ?round no match
+explores -> ?round no match
+follows -> ?round no match
+forest -> ?round no match
+found -> ?round no match
+garden -> ?round no match
+golden -> ?round no match
+hatter -> ?round no match
+hidden -> ?round no match
+imagines -> ?round no match
+in -> ?round no match
+inside -> ?round no match
+island -> ?round no match
+key -> ?round no match
+king -> ?round no match
+knight -> ?round no match
+library -> ?round no match
+magical -> ?round no match
+map -> ?round no match
+message -> ?round no match
+mirror -> ?round no match
+mountain -> ?round no match
+mouse -> ?round no match
+mysterious -> ?round no match
+near -> ?round no match
+ocean -> ?round no match
+palace -> ?round no match
+potion -> ?round no match
+princess -> ?round no match
+puzzle -> ?round no match
+queen -> ?round no match
+rabbit -> ?round no match
+reads -> ?round no match
+school -> ?round no match
+secret -> ?round no match
+sees -> ?round no match
+silver -> ?round no match
+story -> ?round no match
+strange -> ?round no match
+student -> ?round no match
+studies -> ?round no match
+teacher -> ?round no match
+the -> ?round no match
+through -> ?round no match
+tower -> ?round no match
+treasure -> ?round no match
+turtle -> ?round no match
+under -> ?round no match
+valley -> ?round no match
+village -> ?round no match
+watches -> ?round no match
+wise -> ?round no match
+wizard -> ?round no match
+wonderland -> ?round no match
+writes -> ?round no match
+
+Scan candidates for ?round
+around
+
+Check scan candidates against summary mappings
+
+around
+a -> a new
+b -> r agrees
+p -> o agrees
+s -> u agrees
+m -> n agrees
+w -> d agrees
+PASS
+add a -> a
+
+choose around
+
+Decoded phrase
+around
+
+Answer: \boxed{around}

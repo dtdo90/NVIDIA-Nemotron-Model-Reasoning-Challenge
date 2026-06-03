@@ -1,0 +1,149 @@
+Problem syn_tc_dp_repeated_0034
+Bucket: repeated_letter
+Gold answer: creates
+Note: preserve_repeated_letter_pattern
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+lfyhxzd ryhzpx -> strange dragon
+ryhcl -> draws
+Now, decrypt the following text: vydhfdl
+
+Solution:
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+c -> w
+d -> e
+f -> t
+h -> a
+l -> s
+p -> o
+r -> d
+x -> n
+y -> r
+z -> g
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+vydhfdl
+
+Decode target words from character mappings
+
+vydhfdl
+v -> ? unknown
+y -> r
+d -> e
+h -> a
+f -> t
+d -> e
+l -> s
+
+Training target:
+vydhfdl -> ?reates
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?reates
+above -> ?reates no match
+alice -> ?reates no match
+ancient -> ?reates no match
+around -> ?reates no match
+beyond -> ?reates no match
+bird -> ?reates no match
+book -> ?reates no match
+bright -> ?reates no match
+castle -> ?reates no match
+cat -> ?reates no match
+cave -> ?reates no match
+chases -> ?reates no match
+clever -> ?reates no match
+colorful -> ?reates no match
+creates -> ?reates match
+crystal -> ?reates no match
+curious -> ?reates no match
+dark -> ?reates no match
+discovers -> ?reates no match
+door -> ?reates no match
+dragon -> ?reates no match
+draws -> ?reates no match
+dreams -> ?reates no match
+explores -> ?reates no match
+follows -> ?reates no match
+forest -> ?reates no match
+found -> ?reates no match
+garden -> ?reates no match
+golden -> ?reates no match
+hatter -> ?reates no match
+hidden -> ?reates no match
+imagines -> ?reates no match
+in -> ?reates no match
+inside -> ?reates no match
+island -> ?reates no match
+key -> ?reates no match
+king -> ?reates no match
+knight -> ?reates no match
+library -> ?reates no match
+magical -> ?reates no match
+map -> ?reates no match
+message -> ?reates no match
+mirror -> ?reates no match
+mountain -> ?reates no match
+mouse -> ?reates no match
+mysterious -> ?reates no match
+near -> ?reates no match
+ocean -> ?reates no match
+palace -> ?reates no match
+potion -> ?reates no match
+princess -> ?reates no match
+puzzle -> ?reates no match
+queen -> ?reates no match
+rabbit -> ?reates no match
+reads -> ?reates no match
+school -> ?reates no match
+secret -> ?reates no match
+sees -> ?reates no match
+silver -> ?reates no match
+story -> ?reates no match
+strange -> ?reates no match
+student -> ?reates no match
+studies -> ?reates no match
+teacher -> ?reates no match
+the -> ?reates no match
+through -> ?reates no match
+tower -> ?reates no match
+treasure -> ?reates no match
+turtle -> ?reates no match
+under -> ?reates no match
+valley -> ?reates no match
+village -> ?reates no match
+watches -> ?reates no match
+wise -> ?reates no match
+wizard -> ?reates no match
+wonderland -> ?reates no match
+writes -> ?reates no match
+
+Scan candidates for ?reates
+creates
+
+Check scan candidates against summary mappings
+
+creates
+v -> c new
+y -> r agrees
+d -> e agrees
+h -> a agrees
+f -> t agrees
+d -> e agrees
+l -> s agrees
+PASS
+add v -> c
+
+choose creates
+
+Decoded phrase
+creates
+
+Answer: \boxed{creates}

@@ -1,0 +1,156 @@
+Problem syn_tc_dp_repeated_0002
+Bucket: repeated_letter
+Gold answer: mysterious
+Note: preserve_repeated_letter_pattern
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+nuzar nugdewn -> story studies
+davsn -> draws
+Now, decrypt the following text: hrnuwaezgn
+
+Solution:
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+a -> r
+d -> d
+e -> i
+g -> u
+n -> s
+r -> y
+s -> w
+u -> t
+v -> a
+w -> e
+z -> o
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+hrnuwaezgn
+
+Decode target words from character mappings
+
+hrnuwaezgn
+h -> ? unknown
+r -> y
+n -> s
+u -> t
+w -> e
+a -> r
+e -> i
+z -> o
+g -> u
+n -> s
+
+Training target:
+hrnuwaezgn -> ?ysterious
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?ysterious
+above -> ?ysterious no match
+alice -> ?ysterious no match
+ancient -> ?ysterious no match
+around -> ?ysterious no match
+beyond -> ?ysterious no match
+bird -> ?ysterious no match
+book -> ?ysterious no match
+bright -> ?ysterious no match
+castle -> ?ysterious no match
+cat -> ?ysterious no match
+cave -> ?ysterious no match
+chases -> ?ysterious no match
+clever -> ?ysterious no match
+colorful -> ?ysterious no match
+creates -> ?ysterious no match
+crystal -> ?ysterious no match
+curious -> ?ysterious no match
+dark -> ?ysterious no match
+discovers -> ?ysterious no match
+door -> ?ysterious no match
+dragon -> ?ysterious no match
+draws -> ?ysterious no match
+dreams -> ?ysterious no match
+explores -> ?ysterious no match
+follows -> ?ysterious no match
+forest -> ?ysterious no match
+found -> ?ysterious no match
+garden -> ?ysterious no match
+golden -> ?ysterious no match
+hatter -> ?ysterious no match
+hidden -> ?ysterious no match
+imagines -> ?ysterious no match
+in -> ?ysterious no match
+inside -> ?ysterious no match
+island -> ?ysterious no match
+key -> ?ysterious no match
+king -> ?ysterious no match
+knight -> ?ysterious no match
+library -> ?ysterious no match
+magical -> ?ysterious no match
+map -> ?ysterious no match
+message -> ?ysterious no match
+mirror -> ?ysterious no match
+mountain -> ?ysterious no match
+mouse -> ?ysterious no match
+mysterious -> ?ysterious match
+near -> ?ysterious no match
+ocean -> ?ysterious no match
+palace -> ?ysterious no match
+potion -> ?ysterious no match
+princess -> ?ysterious no match
+puzzle -> ?ysterious no match
+queen -> ?ysterious no match
+rabbit -> ?ysterious no match
+reads -> ?ysterious no match
+school -> ?ysterious no match
+secret -> ?ysterious no match
+sees -> ?ysterious no match
+silver -> ?ysterious no match
+story -> ?ysterious no match
+strange -> ?ysterious no match
+student -> ?ysterious no match
+studies -> ?ysterious no match
+teacher -> ?ysterious no match
+the -> ?ysterious no match
+through -> ?ysterious no match
+tower -> ?ysterious no match
+treasure -> ?ysterious no match
+turtle -> ?ysterious no match
+under -> ?ysterious no match
+valley -> ?ysterious no match
+village -> ?ysterious no match
+watches -> ?ysterious no match
+wise -> ?ysterious no match
+wizard -> ?ysterious no match
+wonderland -> ?ysterious no match
+writes -> ?ysterious no match
+
+Scan candidates for ?ysterious
+mysterious
+
+Check scan candidates against summary mappings
+
+mysterious
+h -> m new
+r -> y agrees
+n -> s agrees
+u -> t agrees
+w -> e agrees
+a -> r agrees
+e -> i agrees
+z -> o agrees
+g -> u agrees
+n -> s agrees
+PASS
+add h -> m
+
+choose mysterious
+
+Decoded phrase
+mysterious
+
+Answer: \boxed{mysterious}

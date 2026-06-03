@@ -1,0 +1,59 @@
+Problem syn_tc_dp_copy_alignment_0007
+Bucket: copy_alignment
+Gold answer: princess
+Note: copy_exact_example_cipher_word
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+itlbydff -> princess
+Now, decrypt the following text: itlbydff
+
+Solution:
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+itlbydff -> princess
+
+Training target:
+i -> p new
+t -> r new
+l -> i new
+b -> n new
+y -> c new
+d -> e new
+f -> s new
+f -> s agrees
+
+Summary character mappings
+b -> n
+d -> e
+f -> s
+i -> p
+l -> i
+t -> r
+y -> c
+
+Target text
+itlbydff
+
+Decode target words from character mappings
+
+itlbydff
+i -> p
+t -> r
+l -> i
+b -> n
+y -> c
+d -> e
+f -> s
+f -> s
+itlbydff -> princess
+fully mapped
+
+choose princess
+
+Decoded phrase
+princess
+
+Answer: \boxed{princess}

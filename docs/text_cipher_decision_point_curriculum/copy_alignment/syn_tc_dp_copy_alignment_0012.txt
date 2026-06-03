@@ -1,0 +1,54 @@
+Problem syn_tc_dp_copy_alignment_0012
+Bucket: copy_alignment
+Gold answer: garden
+Note: copy_exact_example_cipher_word
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+bcafuy -> garden
+Now, decrypt the following text: bcafuy
+
+Solution:
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+bcafuy -> garden
+
+Training target:
+b -> g new
+c -> a new
+a -> r new
+f -> d new
+u -> e new
+y -> n new
+
+Summary character mappings
+a -> r
+b -> g
+c -> a
+f -> d
+u -> e
+y -> n
+
+Target text
+bcafuy
+
+Decode target words from character mappings
+
+bcafuy
+b -> g
+c -> a
+a -> r
+f -> d
+u -> e
+y -> n
+bcafuy -> garden
+fully mapped
+
+choose garden
+
+Decoded phrase
+garden
+
+Answer: \boxed{garden}

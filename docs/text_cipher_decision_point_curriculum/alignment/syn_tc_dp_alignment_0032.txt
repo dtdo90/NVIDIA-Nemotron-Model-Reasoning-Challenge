@@ -1,0 +1,151 @@
+Problem syn_tc_dp_alignment_0032
+Bucket: alignment
+Gold answer: hatter
+Note: strict_left_to_right_alignment
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+frceylk pawacznw -> strange colorful
+icebf -> draws
+Now, decrypt the following text: gerrkc
+
+Solution:
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+a -> o
+b -> w
+c -> r
+e -> a
+f -> s
+i -> d
+k -> e
+l -> g
+n -> u
+p -> c
+r -> t
+w -> l
+y -> n
+z -> f
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+gerrkc
+
+Decode target words from character mappings
+
+gerrkc
+g -> ? unknown
+e -> a
+r -> t
+r -> t
+k -> e
+c -> r
+
+Training target:
+gerrkc -> ?atter
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?atter
+above -> ?atter no match
+alice -> ?atter no match
+ancient -> ?atter no match
+around -> ?atter no match
+beyond -> ?atter no match
+bird -> ?atter no match
+book -> ?atter no match
+bright -> ?atter no match
+castle -> ?atter no match
+cat -> ?atter no match
+cave -> ?atter no match
+chases -> ?atter no match
+clever -> ?atter no match
+colorful -> ?atter no match
+creates -> ?atter no match
+crystal -> ?atter no match
+curious -> ?atter no match
+dark -> ?atter no match
+discovers -> ?atter no match
+door -> ?atter no match
+dragon -> ?atter no match
+draws -> ?atter no match
+dreams -> ?atter no match
+explores -> ?atter no match
+follows -> ?atter no match
+forest -> ?atter no match
+found -> ?atter no match
+garden -> ?atter no match
+golden -> ?atter no match
+hatter -> ?atter match
+hidden -> ?atter no match
+imagines -> ?atter no match
+in -> ?atter no match
+inside -> ?atter no match
+island -> ?atter no match
+key -> ?atter no match
+king -> ?atter no match
+knight -> ?atter no match
+library -> ?atter no match
+magical -> ?atter no match
+map -> ?atter no match
+message -> ?atter no match
+mirror -> ?atter no match
+mountain -> ?atter no match
+mouse -> ?atter no match
+mysterious -> ?atter no match
+near -> ?atter no match
+ocean -> ?atter no match
+palace -> ?atter no match
+potion -> ?atter no match
+princess -> ?atter no match
+puzzle -> ?atter no match
+queen -> ?atter no match
+rabbit -> ?atter no match
+reads -> ?atter no match
+school -> ?atter no match
+secret -> ?atter no match
+sees -> ?atter no match
+silver -> ?atter no match
+story -> ?atter no match
+strange -> ?atter no match
+student -> ?atter no match
+studies -> ?atter no match
+teacher -> ?atter no match
+the -> ?atter no match
+through -> ?atter no match
+tower -> ?atter no match
+treasure -> ?atter no match
+turtle -> ?atter no match
+under -> ?atter no match
+valley -> ?atter no match
+village -> ?atter no match
+watches -> ?atter no match
+wise -> ?atter no match
+wizard -> ?atter no match
+wonderland -> ?atter no match
+writes -> ?atter no match
+
+Scan candidates for ?atter
+hatter
+
+Check scan candidates against summary mappings
+
+hatter
+g -> h new
+e -> a agrees
+r -> t agrees
+r -> t agrees
+k -> e agrees
+c -> r agrees
+PASS
+add g -> h
+
+choose hatter
+
+Decoded phrase
+hatter
+
+Answer: \boxed{hatter}

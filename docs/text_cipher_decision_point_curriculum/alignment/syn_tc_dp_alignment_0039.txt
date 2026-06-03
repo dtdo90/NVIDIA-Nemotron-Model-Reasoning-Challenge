@@ -1,0 +1,154 @@
+Problem syn_tc_dp_alignment_0039
+Bucket: alignment
+Gold answer: discovers
+Note: strict_left_to_right_alignment
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+hnfdcw plcbe -> silver ocean
+ibfblc -> palace
+Now, decrypt the following text: vnhlpdcwh
+
+Solution:
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+b -> a
+c -> e
+d -> v
+e -> n
+f -> l
+h -> s
+i -> p
+l -> c
+n -> i
+p -> o
+w -> r
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+vnhlpdcwh
+
+Decode target words from character mappings
+
+vnhlpdcwh
+v -> ? unknown
+n -> i
+h -> s
+l -> c
+p -> o
+d -> v
+c -> e
+w -> r
+h -> s
+
+Training target:
+vnhlpdcwh -> ?iscovers
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?iscovers
+above -> ?iscovers no match
+alice -> ?iscovers no match
+ancient -> ?iscovers no match
+around -> ?iscovers no match
+beyond -> ?iscovers no match
+bird -> ?iscovers no match
+book -> ?iscovers no match
+bright -> ?iscovers no match
+castle -> ?iscovers no match
+cat -> ?iscovers no match
+cave -> ?iscovers no match
+chases -> ?iscovers no match
+clever -> ?iscovers no match
+colorful -> ?iscovers no match
+creates -> ?iscovers no match
+crystal -> ?iscovers no match
+curious -> ?iscovers no match
+dark -> ?iscovers no match
+discovers -> ?iscovers match
+door -> ?iscovers no match
+dragon -> ?iscovers no match
+draws -> ?iscovers no match
+dreams -> ?iscovers no match
+explores -> ?iscovers no match
+follows -> ?iscovers no match
+forest -> ?iscovers no match
+found -> ?iscovers no match
+garden -> ?iscovers no match
+golden -> ?iscovers no match
+hatter -> ?iscovers no match
+hidden -> ?iscovers no match
+imagines -> ?iscovers no match
+in -> ?iscovers no match
+inside -> ?iscovers no match
+island -> ?iscovers no match
+key -> ?iscovers no match
+king -> ?iscovers no match
+knight -> ?iscovers no match
+library -> ?iscovers no match
+magical -> ?iscovers no match
+map -> ?iscovers no match
+message -> ?iscovers no match
+mirror -> ?iscovers no match
+mountain -> ?iscovers no match
+mouse -> ?iscovers no match
+mysterious -> ?iscovers no match
+near -> ?iscovers no match
+ocean -> ?iscovers no match
+palace -> ?iscovers no match
+potion -> ?iscovers no match
+princess -> ?iscovers no match
+puzzle -> ?iscovers no match
+queen -> ?iscovers no match
+rabbit -> ?iscovers no match
+reads -> ?iscovers no match
+school -> ?iscovers no match
+secret -> ?iscovers no match
+sees -> ?iscovers no match
+silver -> ?iscovers no match
+story -> ?iscovers no match
+strange -> ?iscovers no match
+student -> ?iscovers no match
+studies -> ?iscovers no match
+teacher -> ?iscovers no match
+the -> ?iscovers no match
+through -> ?iscovers no match
+tower -> ?iscovers no match
+treasure -> ?iscovers no match
+turtle -> ?iscovers no match
+under -> ?iscovers no match
+valley -> ?iscovers no match
+village -> ?iscovers no match
+watches -> ?iscovers no match
+wise -> ?iscovers no match
+wizard -> ?iscovers no match
+wonderland -> ?iscovers no match
+writes -> ?iscovers no match
+
+Scan candidates for ?iscovers
+discovers
+
+Check scan candidates against summary mappings
+
+discovers
+v -> d new
+n -> i agrees
+h -> s agrees
+l -> c agrees
+p -> o agrees
+d -> v agrees
+c -> e agrees
+w -> r agrees
+h -> s agrees
+PASS
+add v -> d
+
+choose discovers
+
+Decoded phrase
+discovers
+
+Answer: \boxed{discovers}

@@ -1,0 +1,52 @@
+Problem syn_tc_dp_copy_alignment_0011
+Bucket: copy_alignment
+Gold answer: mirror
+Note: copy_exact_example_cipher_word
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+ijuueu -> mirror
+Now, decrypt the following text: ijuueu
+
+Solution:
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+ijuueu -> mirror
+
+Training target:
+i -> m new
+j -> i new
+u -> r new
+u -> r agrees
+e -> o new
+u -> r agrees
+
+Summary character mappings
+e -> o
+i -> m
+j -> i
+u -> r
+
+Target text
+ijuueu
+
+Decode target words from character mappings
+
+ijuueu
+i -> m
+j -> i
+u -> r
+u -> r
+e -> o
+u -> r
+ijuueu -> mirror
+fully mapped
+
+choose mirror
+
+Decoded phrase
+mirror
+
+Answer: \boxed{mirror}

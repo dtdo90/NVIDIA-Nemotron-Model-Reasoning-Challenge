@@ -1,0 +1,149 @@
+Problem syn_tc_dp_alignment_0019
+Bucket: alignment
+Gold answer: teacher
+Note: strict_left_to_right_alignment
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+vtzqkq nydh -> chases bird
+gyqk -> wise
+Now, decrypt the following text: skzvtkd
+
+Solution:
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+d -> r
+g -> w
+h -> d
+k -> e
+n -> b
+q -> s
+t -> h
+v -> c
+y -> i
+z -> a
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+skzvtkd
+
+Decode target words from character mappings
+
+skzvtkd
+s -> ? unknown
+k -> e
+z -> a
+v -> c
+t -> h
+k -> e
+d -> r
+
+Training target:
+skzvtkd -> ?eacher
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?eacher
+above -> ?eacher no match
+alice -> ?eacher no match
+ancient -> ?eacher no match
+around -> ?eacher no match
+beyond -> ?eacher no match
+bird -> ?eacher no match
+book -> ?eacher no match
+bright -> ?eacher no match
+castle -> ?eacher no match
+cat -> ?eacher no match
+cave -> ?eacher no match
+chases -> ?eacher no match
+clever -> ?eacher no match
+colorful -> ?eacher no match
+creates -> ?eacher no match
+crystal -> ?eacher no match
+curious -> ?eacher no match
+dark -> ?eacher no match
+discovers -> ?eacher no match
+door -> ?eacher no match
+dragon -> ?eacher no match
+draws -> ?eacher no match
+dreams -> ?eacher no match
+explores -> ?eacher no match
+follows -> ?eacher no match
+forest -> ?eacher no match
+found -> ?eacher no match
+garden -> ?eacher no match
+golden -> ?eacher no match
+hatter -> ?eacher no match
+hidden -> ?eacher no match
+imagines -> ?eacher no match
+in -> ?eacher no match
+inside -> ?eacher no match
+island -> ?eacher no match
+key -> ?eacher no match
+king -> ?eacher no match
+knight -> ?eacher no match
+library -> ?eacher no match
+magical -> ?eacher no match
+map -> ?eacher no match
+message -> ?eacher no match
+mirror -> ?eacher no match
+mountain -> ?eacher no match
+mouse -> ?eacher no match
+mysterious -> ?eacher no match
+near -> ?eacher no match
+ocean -> ?eacher no match
+palace -> ?eacher no match
+potion -> ?eacher no match
+princess -> ?eacher no match
+puzzle -> ?eacher no match
+queen -> ?eacher no match
+rabbit -> ?eacher no match
+reads -> ?eacher no match
+school -> ?eacher no match
+secret -> ?eacher no match
+sees -> ?eacher no match
+silver -> ?eacher no match
+story -> ?eacher no match
+strange -> ?eacher no match
+student -> ?eacher no match
+studies -> ?eacher no match
+teacher -> ?eacher match
+the -> ?eacher no match
+through -> ?eacher no match
+tower -> ?eacher no match
+treasure -> ?eacher no match
+turtle -> ?eacher no match
+under -> ?eacher no match
+valley -> ?eacher no match
+village -> ?eacher no match
+watches -> ?eacher no match
+wise -> ?eacher no match
+wizard -> ?eacher no match
+wonderland -> ?eacher no match
+writes -> ?eacher no match
+
+Scan candidates for ?eacher
+teacher
+
+Check scan candidates against summary mappings
+
+teacher
+s -> t new
+k -> e agrees
+z -> a agrees
+v -> c agrees
+t -> h agrees
+k -> e agrees
+d -> r agrees
+PASS
+add s -> t
+
+choose teacher
+
+Decoded phrase
+teacher
+
+Answer: \boxed{teacher}

@@ -1,0 +1,150 @@
+Problem syn_tc_dp_alignment_0003
+Bucket: alignment
+Gold answer: follows
+Note: strict_left_to_right_alignment
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+mtiyyl zpmx -> school wise
+qxvkm -> reads
+Now, decrypt the following text: uyllyzm
+
+Solution:
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+i -> h
+k -> d
+l -> l
+m -> s
+p -> i
+q -> r
+t -> c
+v -> a
+x -> e
+y -> o
+z -> w
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+uyllyzm
+
+Decode target words from character mappings
+
+uyllyzm
+u -> ? unknown
+y -> o
+l -> l
+l -> l
+y -> o
+z -> w
+m -> s
+
+Training target:
+uyllyzm -> ?ollows
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?ollows
+above -> ?ollows no match
+alice -> ?ollows no match
+ancient -> ?ollows no match
+around -> ?ollows no match
+beyond -> ?ollows no match
+bird -> ?ollows no match
+book -> ?ollows no match
+bright -> ?ollows no match
+castle -> ?ollows no match
+cat -> ?ollows no match
+cave -> ?ollows no match
+chases -> ?ollows no match
+clever -> ?ollows no match
+colorful -> ?ollows no match
+creates -> ?ollows no match
+crystal -> ?ollows no match
+curious -> ?ollows no match
+dark -> ?ollows no match
+discovers -> ?ollows no match
+door -> ?ollows no match
+dragon -> ?ollows no match
+draws -> ?ollows no match
+dreams -> ?ollows no match
+explores -> ?ollows no match
+follows -> ?ollows match
+forest -> ?ollows no match
+found -> ?ollows no match
+garden -> ?ollows no match
+golden -> ?ollows no match
+hatter -> ?ollows no match
+hidden -> ?ollows no match
+imagines -> ?ollows no match
+in -> ?ollows no match
+inside -> ?ollows no match
+island -> ?ollows no match
+key -> ?ollows no match
+king -> ?ollows no match
+knight -> ?ollows no match
+library -> ?ollows no match
+magical -> ?ollows no match
+map -> ?ollows no match
+message -> ?ollows no match
+mirror -> ?ollows no match
+mountain -> ?ollows no match
+mouse -> ?ollows no match
+mysterious -> ?ollows no match
+near -> ?ollows no match
+ocean -> ?ollows no match
+palace -> ?ollows no match
+potion -> ?ollows no match
+princess -> ?ollows no match
+puzzle -> ?ollows no match
+queen -> ?ollows no match
+rabbit -> ?ollows no match
+reads -> ?ollows no match
+school -> ?ollows no match
+secret -> ?ollows no match
+sees -> ?ollows no match
+silver -> ?ollows no match
+story -> ?ollows no match
+strange -> ?ollows no match
+student -> ?ollows no match
+studies -> ?ollows no match
+teacher -> ?ollows no match
+the -> ?ollows no match
+through -> ?ollows no match
+tower -> ?ollows no match
+treasure -> ?ollows no match
+turtle -> ?ollows no match
+under -> ?ollows no match
+valley -> ?ollows no match
+village -> ?ollows no match
+watches -> ?ollows no match
+wise -> ?ollows no match
+wizard -> ?ollows no match
+wonderland -> ?ollows no match
+writes -> ?ollows no match
+
+Scan candidates for ?ollows
+follows
+
+Check scan candidates against summary mappings
+
+follows
+u -> f new
+y -> o agrees
+l -> l agrees
+l -> l agrees
+y -> o agrees
+z -> w agrees
+m -> s agrees
+PASS
+add u -> f
+
+choose follows
+
+Decoded phrase
+follows
+
+Answer: \boxed{follows}

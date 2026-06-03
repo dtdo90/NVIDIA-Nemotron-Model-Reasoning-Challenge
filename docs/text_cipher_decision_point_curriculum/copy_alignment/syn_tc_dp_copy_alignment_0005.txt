@@ -1,0 +1,58 @@
+Problem syn_tc_dp_copy_alignment_0005
+Bucket: copy_alignment
+Gold answer: colorful
+Note: copy_exact_example_cipher_word
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+yejewiaj -> colorful
+Now, decrypt the following text: yejewiaj
+
+Solution:
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+yejewiaj -> colorful
+
+Training target:
+y -> c new
+e -> o new
+j -> l new
+e -> o agrees
+w -> r new
+i -> f new
+a -> u new
+j -> l agrees
+
+Summary character mappings
+a -> u
+e -> o
+i -> f
+j -> l
+w -> r
+y -> c
+
+Target text
+yejewiaj
+
+Decode target words from character mappings
+
+yejewiaj
+y -> c
+e -> o
+j -> l
+e -> o
+w -> r
+i -> f
+a -> u
+j -> l
+yejewiaj -> colorful
+fully mapped
+
+choose colorful
+
+Decoded phrase
+colorful
+
+Answer: \boxed{colorful}

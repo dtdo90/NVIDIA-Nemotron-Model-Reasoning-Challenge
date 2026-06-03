@@ -1,0 +1,145 @@
+Problem syn_tc_dp_alignment_0017
+Bucket: alignment
+Gold answer: reads
+Note: strict_left_to_right_alignment
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+halhzx moc -> inside cat
+jok -> map
+Now, decrypt the following text: bxozl
+
+Solution:
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+a -> n
+c -> t
+h -> i
+j -> m
+k -> p
+l -> s
+m -> c
+o -> a
+x -> e
+z -> d
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+bxozl
+
+Decode target words from character mappings
+
+bxozl
+b -> ? unknown
+x -> e
+o -> a
+z -> d
+l -> s
+
+Training target:
+bxozl -> ?eads
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?eads
+above -> ?eads no match
+alice -> ?eads no match
+ancient -> ?eads no match
+around -> ?eads no match
+beyond -> ?eads no match
+bird -> ?eads no match
+book -> ?eads no match
+bright -> ?eads no match
+castle -> ?eads no match
+cat -> ?eads no match
+cave -> ?eads no match
+chases -> ?eads no match
+clever -> ?eads no match
+colorful -> ?eads no match
+creates -> ?eads no match
+crystal -> ?eads no match
+curious -> ?eads no match
+dark -> ?eads no match
+discovers -> ?eads no match
+door -> ?eads no match
+dragon -> ?eads no match
+draws -> ?eads no match
+dreams -> ?eads no match
+explores -> ?eads no match
+follows -> ?eads no match
+forest -> ?eads no match
+found -> ?eads no match
+garden -> ?eads no match
+golden -> ?eads no match
+hatter -> ?eads no match
+hidden -> ?eads no match
+imagines -> ?eads no match
+in -> ?eads no match
+inside -> ?eads no match
+island -> ?eads no match
+key -> ?eads no match
+king -> ?eads no match
+knight -> ?eads no match
+library -> ?eads no match
+magical -> ?eads no match
+map -> ?eads no match
+message -> ?eads no match
+mirror -> ?eads no match
+mountain -> ?eads no match
+mouse -> ?eads no match
+mysterious -> ?eads no match
+near -> ?eads no match
+ocean -> ?eads no match
+palace -> ?eads no match
+potion -> ?eads no match
+princess -> ?eads no match
+puzzle -> ?eads no match
+queen -> ?eads no match
+rabbit -> ?eads no match
+reads -> ?eads match
+school -> ?eads no match
+secret -> ?eads no match
+sees -> ?eads no match
+silver -> ?eads no match
+story -> ?eads no match
+strange -> ?eads no match
+student -> ?eads no match
+studies -> ?eads no match
+teacher -> ?eads no match
+the -> ?eads no match
+through -> ?eads no match
+tower -> ?eads no match
+treasure -> ?eads no match
+turtle -> ?eads no match
+under -> ?eads no match
+valley -> ?eads no match
+village -> ?eads no match
+watches -> ?eads no match
+wise -> ?eads no match
+wizard -> ?eads no match
+wonderland -> ?eads no match
+writes -> ?eads no match
+
+Scan candidates for ?eads
+reads
+
+Check scan candidates against summary mappings
+
+reads
+b -> r new
+x -> e agrees
+o -> a agrees
+z -> d agrees
+l -> s agrees
+PASS
+add b -> r
+
+choose reads
+
+Decoded phrase
+reads
+
+Answer: \boxed{reads}

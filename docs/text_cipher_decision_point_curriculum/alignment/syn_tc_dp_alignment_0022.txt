@@ -1,0 +1,150 @@
+Problem syn_tc_dp_alignment_0022
+Bucket: alignment
+Gold answer: student
+Note: strict_left_to_right_alignment
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+gzjhv ocs -> under cat
+dtvvev -> mirror
+Now, decrypt the following text: nsgjhzs
+
+Solution:
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+c -> a
+d -> m
+e -> o
+g -> u
+h -> e
+j -> d
+o -> c
+s -> t
+t -> i
+v -> r
+z -> n
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+nsgjhzs
+
+Decode target words from character mappings
+
+nsgjhzs
+n -> ? unknown
+s -> t
+g -> u
+j -> d
+h -> e
+z -> n
+s -> t
+
+Training target:
+nsgjhzs -> ?tudent
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?tudent
+above -> ?tudent no match
+alice -> ?tudent no match
+ancient -> ?tudent no match
+around -> ?tudent no match
+beyond -> ?tudent no match
+bird -> ?tudent no match
+book -> ?tudent no match
+bright -> ?tudent no match
+castle -> ?tudent no match
+cat -> ?tudent no match
+cave -> ?tudent no match
+chases -> ?tudent no match
+clever -> ?tudent no match
+colorful -> ?tudent no match
+creates -> ?tudent no match
+crystal -> ?tudent no match
+curious -> ?tudent no match
+dark -> ?tudent no match
+discovers -> ?tudent no match
+door -> ?tudent no match
+dragon -> ?tudent no match
+draws -> ?tudent no match
+dreams -> ?tudent no match
+explores -> ?tudent no match
+follows -> ?tudent no match
+forest -> ?tudent no match
+found -> ?tudent no match
+garden -> ?tudent no match
+golden -> ?tudent no match
+hatter -> ?tudent no match
+hidden -> ?tudent no match
+imagines -> ?tudent no match
+in -> ?tudent no match
+inside -> ?tudent no match
+island -> ?tudent no match
+key -> ?tudent no match
+king -> ?tudent no match
+knight -> ?tudent no match
+library -> ?tudent no match
+magical -> ?tudent no match
+map -> ?tudent no match
+message -> ?tudent no match
+mirror -> ?tudent no match
+mountain -> ?tudent no match
+mouse -> ?tudent no match
+mysterious -> ?tudent no match
+near -> ?tudent no match
+ocean -> ?tudent no match
+palace -> ?tudent no match
+potion -> ?tudent no match
+princess -> ?tudent no match
+puzzle -> ?tudent no match
+queen -> ?tudent no match
+rabbit -> ?tudent no match
+reads -> ?tudent no match
+school -> ?tudent no match
+secret -> ?tudent no match
+sees -> ?tudent no match
+silver -> ?tudent no match
+story -> ?tudent no match
+strange -> ?tudent no match
+student -> ?tudent match
+studies -> ?tudent no match
+teacher -> ?tudent no match
+the -> ?tudent no match
+through -> ?tudent no match
+tower -> ?tudent no match
+treasure -> ?tudent no match
+turtle -> ?tudent no match
+under -> ?tudent no match
+valley -> ?tudent no match
+village -> ?tudent no match
+watches -> ?tudent no match
+wise -> ?tudent no match
+wizard -> ?tudent no match
+wonderland -> ?tudent no match
+writes -> ?tudent no match
+
+Scan candidates for ?tudent
+student
+
+Check scan candidates against summary mappings
+
+student
+n -> s new
+s -> t agrees
+g -> u agrees
+j -> d agrees
+h -> e agrees
+z -> n agrees
+s -> t agrees
+PASS
+add n -> s
+
+choose student
+
+Decoded phrase
+student
+
+Answer: \boxed{student}

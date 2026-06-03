@@ -1,0 +1,148 @@
+Problem syn_tc_dp_alignment_0004
+Bucket: alignment
+Gold answer: found
+Note: strict_left_to_right_alignment
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+uhvtwj ohnuknd -> around creates
+dpbgnh -> silver
+Now, decrypt the following text: evtwj
+
+Solution:
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+b -> l
+d -> s
+g -> v
+h -> r
+j -> d
+k -> t
+n -> e
+o -> c
+p -> i
+t -> u
+u -> a
+v -> o
+w -> n
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+evtwj
+
+Decode target words from character mappings
+
+evtwj
+e -> ? unknown
+v -> o
+t -> u
+w -> n
+j -> d
+
+Training target:
+evtwj -> ?ound
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?ound
+above -> ?ound no match
+alice -> ?ound no match
+ancient -> ?ound no match
+around -> ?ound no match
+beyond -> ?ound no match
+bird -> ?ound no match
+book -> ?ound no match
+bright -> ?ound no match
+castle -> ?ound no match
+cat -> ?ound no match
+cave -> ?ound no match
+chases -> ?ound no match
+clever -> ?ound no match
+colorful -> ?ound no match
+creates -> ?ound no match
+crystal -> ?ound no match
+curious -> ?ound no match
+dark -> ?ound no match
+discovers -> ?ound no match
+door -> ?ound no match
+dragon -> ?ound no match
+draws -> ?ound no match
+dreams -> ?ound no match
+explores -> ?ound no match
+follows -> ?ound no match
+forest -> ?ound no match
+found -> ?ound match
+garden -> ?ound no match
+golden -> ?ound no match
+hatter -> ?ound no match
+hidden -> ?ound no match
+imagines -> ?ound no match
+in -> ?ound no match
+inside -> ?ound no match
+island -> ?ound no match
+key -> ?ound no match
+king -> ?ound no match
+knight -> ?ound no match
+library -> ?ound no match
+magical -> ?ound no match
+map -> ?ound no match
+message -> ?ound no match
+mirror -> ?ound no match
+mountain -> ?ound no match
+mouse -> ?ound no match
+mysterious -> ?ound no match
+near -> ?ound no match
+ocean -> ?ound no match
+palace -> ?ound no match
+potion -> ?ound no match
+princess -> ?ound no match
+puzzle -> ?ound no match
+queen -> ?ound no match
+rabbit -> ?ound no match
+reads -> ?ound no match
+school -> ?ound no match
+secret -> ?ound no match
+sees -> ?ound no match
+silver -> ?ound no match
+story -> ?ound no match
+strange -> ?ound no match
+student -> ?ound no match
+studies -> ?ound no match
+teacher -> ?ound no match
+the -> ?ound no match
+through -> ?ound no match
+tower -> ?ound no match
+treasure -> ?ound no match
+turtle -> ?ound no match
+under -> ?ound no match
+valley -> ?ound no match
+village -> ?ound no match
+watches -> ?ound no match
+wise -> ?ound no match
+wizard -> ?ound no match
+wonderland -> ?ound no match
+writes -> ?ound no match
+
+Scan candidates for ?ound
+found
+
+Check scan candidates against summary mappings
+
+found
+e -> f new
+v -> o agrees
+t -> u agrees
+w -> n agrees
+j -> d agrees
+PASS
+add e -> f
+
+choose found
+
+Decoded phrase
+found
+
+Answer: \boxed{found}

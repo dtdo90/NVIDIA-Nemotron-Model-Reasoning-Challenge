@@ -1,0 +1,65 @@
+Problem syn_tc_dp_copy_alignment_0013
+Bucket: copy_alignment
+Gold answer: mysterious
+Note: copy_exact_example_cipher_word
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+swbqljrhyb -> mysterious
+Now, decrypt the following text: swbqljrhyb
+
+Solution:
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+swbqljrhyb -> mysterious
+
+Training target:
+s -> m new
+w -> y new
+b -> s new
+q -> t new
+l -> e new
+j -> r new
+r -> i new
+h -> o new
+y -> u new
+b -> s agrees
+
+Summary character mappings
+b -> s
+h -> o
+j -> r
+l -> e
+q -> t
+r -> i
+s -> m
+w -> y
+y -> u
+
+Target text
+swbqljrhyb
+
+Decode target words from character mappings
+
+swbqljrhyb
+s -> m
+w -> y
+b -> s
+q -> t
+l -> e
+j -> r
+r -> i
+h -> o
+y -> u
+b -> s
+swbqljrhyb -> mysterious
+fully mapped
+
+choose mysterious
+
+Decoded phrase
+mysterious
+
+Answer: \boxed{mysterious}

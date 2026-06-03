@@ -1,0 +1,152 @@
+Problem syn_tc_dp_alignment_0025
+Bucket: alignment
+Gold answer: curious
+Note: strict_left_to_right_alignment
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+qoemzswcje rjddyz -> mysterious puzzle
+msznejsz -> treasure
+Now, decrypt the following text: pjswcje
+
+Solution:
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+c -> o
+d -> z
+e -> s
+j -> u
+m -> t
+n -> a
+o -> y
+q -> m
+r -> p
+s -> r
+w -> i
+y -> l
+z -> e
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+pjswcje
+
+Decode target words from character mappings
+
+pjswcje
+p -> ? unknown
+j -> u
+s -> r
+w -> i
+c -> o
+j -> u
+e -> s
+
+Training target:
+pjswcje -> ?urious
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?urious
+above -> ?urious no match
+alice -> ?urious no match
+ancient -> ?urious no match
+around -> ?urious no match
+beyond -> ?urious no match
+bird -> ?urious no match
+book -> ?urious no match
+bright -> ?urious no match
+castle -> ?urious no match
+cat -> ?urious no match
+cave -> ?urious no match
+chases -> ?urious no match
+clever -> ?urious no match
+colorful -> ?urious no match
+creates -> ?urious no match
+crystal -> ?urious no match
+curious -> ?urious match
+dark -> ?urious no match
+discovers -> ?urious no match
+door -> ?urious no match
+dragon -> ?urious no match
+draws -> ?urious no match
+dreams -> ?urious no match
+explores -> ?urious no match
+follows -> ?urious no match
+forest -> ?urious no match
+found -> ?urious no match
+garden -> ?urious no match
+golden -> ?urious no match
+hatter -> ?urious no match
+hidden -> ?urious no match
+imagines -> ?urious no match
+in -> ?urious no match
+inside -> ?urious no match
+island -> ?urious no match
+key -> ?urious no match
+king -> ?urious no match
+knight -> ?urious no match
+library -> ?urious no match
+magical -> ?urious no match
+map -> ?urious no match
+message -> ?urious no match
+mirror -> ?urious no match
+mountain -> ?urious no match
+mouse -> ?urious no match
+mysterious -> ?urious no match
+near -> ?urious no match
+ocean -> ?urious no match
+palace -> ?urious no match
+potion -> ?urious no match
+princess -> ?urious no match
+puzzle -> ?urious no match
+queen -> ?urious no match
+rabbit -> ?urious no match
+reads -> ?urious no match
+school -> ?urious no match
+secret -> ?urious no match
+sees -> ?urious no match
+silver -> ?urious no match
+story -> ?urious no match
+strange -> ?urious no match
+student -> ?urious no match
+studies -> ?urious no match
+teacher -> ?urious no match
+the -> ?urious no match
+through -> ?urious no match
+tower -> ?urious no match
+treasure -> ?urious no match
+turtle -> ?urious no match
+under -> ?urious no match
+valley -> ?urious no match
+village -> ?urious no match
+watches -> ?urious no match
+wise -> ?urious no match
+wizard -> ?urious no match
+wonderland -> ?urious no match
+writes -> ?urious no match
+
+Scan candidates for ?urious
+curious
+
+Check scan candidates against summary mappings
+
+curious
+p -> c new
+j -> u agrees
+s -> r agrees
+w -> i agrees
+c -> o agrees
+j -> u agrees
+e -> s agrees
+PASS
+add p -> c
+
+choose curious
+
+Decoded phrase
+curious
+
+Answer: \boxed{curious}

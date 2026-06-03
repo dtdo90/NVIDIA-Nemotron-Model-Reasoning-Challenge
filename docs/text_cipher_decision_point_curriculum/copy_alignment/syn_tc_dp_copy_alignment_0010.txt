@@ -1,0 +1,62 @@
+Problem syn_tc_dp_copy_alignment_0010
+Bucket: copy_alignment
+Gold answer: discovers
+Note: copy_exact_example_cipher_word
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+hroaijwdo -> discovers
+Now, decrypt the following text: hroaijwdo
+
+Solution:
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+hroaijwdo -> discovers
+
+Training target:
+h -> d new
+r -> i new
+o -> s new
+a -> c new
+i -> o new
+j -> v new
+w -> e new
+d -> r new
+o -> s agrees
+
+Summary character mappings
+a -> c
+d -> r
+h -> d
+i -> o
+j -> v
+o -> s
+r -> i
+w -> e
+
+Target text
+hroaijwdo
+
+Decode target words from character mappings
+
+hroaijwdo
+h -> d
+r -> i
+o -> s
+a -> c
+i -> o
+j -> v
+w -> e
+d -> r
+o -> s
+hroaijwdo -> discovers
+fully mapped
+
+choose discovers
+
+Decoded phrase
+discovers
+
+Answer: \boxed{discovers}

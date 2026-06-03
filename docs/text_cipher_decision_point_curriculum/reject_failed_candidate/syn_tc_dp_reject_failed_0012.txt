@@ -1,0 +1,155 @@
+Problem syn_tc_dp_reject_failed_0012
+Bucket: reject_failed_candidate
+Gold answer: bird
+Note: candidate_wise_must_fail_before_bird
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+glek mzevjk -> wise castle
+uzq -> map
+Now, decrypt the following text: flro
+
+Solution:
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+e -> s
+g -> w
+j -> l
+k -> e
+l -> i
+m -> c
+q -> p
+u -> m
+v -> t
+z -> a
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+flro
+
+Decode target words from character mappings
+
+flro
+f -> ? unknown
+l -> i
+r -> ? unknown
+o -> ? unknown
+
+Training target:
+flro -> ?i??
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?i??
+above -> ?i?? no match
+alice -> ?i?? no match
+ancient -> ?i?? no match
+around -> ?i?? no match
+beyond -> ?i?? no match
+bird -> ?i?? match
+book -> ?i?? no match
+bright -> ?i?? no match
+castle -> ?i?? no match
+cat -> ?i?? no match
+cave -> ?i?? no match
+chases -> ?i?? no match
+clever -> ?i?? no match
+colorful -> ?i?? no match
+creates -> ?i?? no match
+crystal -> ?i?? no match
+curious -> ?i?? no match
+dark -> ?i?? no match
+discovers -> ?i?? no match
+door -> ?i?? no match
+dragon -> ?i?? no match
+draws -> ?i?? no match
+dreams -> ?i?? no match
+explores -> ?i?? no match
+follows -> ?i?? no match
+forest -> ?i?? no match
+found -> ?i?? no match
+garden -> ?i?? no match
+golden -> ?i?? no match
+hatter -> ?i?? no match
+hidden -> ?i?? no match
+imagines -> ?i?? no match
+in -> ?i?? no match
+inside -> ?i?? no match
+island -> ?i?? no match
+key -> ?i?? no match
+king -> ?i?? match
+knight -> ?i?? no match
+library -> ?i?? no match
+magical -> ?i?? no match
+map -> ?i?? no match
+message -> ?i?? no match
+mirror -> ?i?? no match
+mountain -> ?i?? no match
+mouse -> ?i?? no match
+mysterious -> ?i?? no match
+near -> ?i?? no match
+ocean -> ?i?? no match
+palace -> ?i?? no match
+potion -> ?i?? no match
+princess -> ?i?? no match
+puzzle -> ?i?? no match
+queen -> ?i?? no match
+rabbit -> ?i?? no match
+reads -> ?i?? no match
+school -> ?i?? no match
+secret -> ?i?? no match
+sees -> ?i?? no match
+silver -> ?i?? no match
+story -> ?i?? no match
+strange -> ?i?? no match
+student -> ?i?? no match
+studies -> ?i?? no match
+teacher -> ?i?? no match
+the -> ?i?? no match
+through -> ?i?? no match
+tower -> ?i?? no match
+treasure -> ?i?? no match
+turtle -> ?i?? no match
+under -> ?i?? no match
+valley -> ?i?? no match
+village -> ?i?? no match
+watches -> ?i?? no match
+wise -> ?i?? match
+wizard -> ?i?? no match
+wonderland -> ?i?? no match
+writes -> ?i?? no match
+
+Scan candidates for ?i??
+bird, king, wise
+
+Check scan candidates against summary mappings
+
+wise
+f -> w conflicts
+g -> w already exists
+l -> i agrees
+r -> s conflicts
+e -> s already exists
+o -> e conflicts
+k -> e already exists
+FAIL
+
+bird
+f -> b new
+l -> i agrees
+r -> r new
+o -> d new
+PASS
+add f -> b
+add r -> r
+add o -> d
+
+choose bird
+
+Decoded phrase
+bird
+
+Answer: \boxed{bird}

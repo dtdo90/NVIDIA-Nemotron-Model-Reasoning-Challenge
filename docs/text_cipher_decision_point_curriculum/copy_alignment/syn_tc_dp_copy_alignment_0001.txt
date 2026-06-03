@@ -1,0 +1,56 @@
+Problem syn_tc_dp_copy_alignment_0001
+Bucket: copy_alignment
+Gold answer: curious
+Note: copy_exact_example_cipher_word
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+hqduiql -> curious
+Now, decrypt the following text: hqduiql
+
+Solution:
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+hqduiql -> curious
+
+Training target:
+h -> c new
+q -> u new
+d -> r new
+u -> i new
+i -> o new
+q -> u agrees
+l -> s new
+
+Summary character mappings
+d -> r
+h -> c
+i -> o
+l -> s
+q -> u
+u -> i
+
+Target text
+hqduiql
+
+Decode target words from character mappings
+
+hqduiql
+h -> c
+q -> u
+d -> r
+u -> i
+i -> o
+q -> u
+l -> s
+hqduiql -> curious
+fully mapped
+
+choose curious
+
+Decoded phrase
+curious
+
+Answer: \boxed{curious}

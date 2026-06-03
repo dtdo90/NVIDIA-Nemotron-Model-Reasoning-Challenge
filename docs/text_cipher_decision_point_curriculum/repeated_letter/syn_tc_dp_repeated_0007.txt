@@ -1,0 +1,150 @@
+Problem syn_tc_dp_repeated_0007
+Bucket: repeated_letter
+Gold answer: through
+Note: preserve_repeated_letter_pattern
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+aerhbu wvbo -> around king
+nvuugb -> hidden
+Now, decrypt the following text: pnerhon
+
+Solution:
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+a -> a
+b -> n
+e -> r
+g -> e
+h -> u
+n -> h
+o -> g
+r -> o
+u -> d
+v -> i
+w -> k
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+pnerhon
+
+Decode target words from character mappings
+
+pnerhon
+p -> ? unknown
+n -> h
+e -> r
+r -> o
+h -> u
+o -> g
+n -> h
+
+Training target:
+pnerhon -> ?hrough
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?hrough
+above -> ?hrough no match
+alice -> ?hrough no match
+ancient -> ?hrough no match
+around -> ?hrough no match
+beyond -> ?hrough no match
+bird -> ?hrough no match
+book -> ?hrough no match
+bright -> ?hrough no match
+castle -> ?hrough no match
+cat -> ?hrough no match
+cave -> ?hrough no match
+chases -> ?hrough no match
+clever -> ?hrough no match
+colorful -> ?hrough no match
+creates -> ?hrough no match
+crystal -> ?hrough no match
+curious -> ?hrough no match
+dark -> ?hrough no match
+discovers -> ?hrough no match
+door -> ?hrough no match
+dragon -> ?hrough no match
+draws -> ?hrough no match
+dreams -> ?hrough no match
+explores -> ?hrough no match
+follows -> ?hrough no match
+forest -> ?hrough no match
+found -> ?hrough no match
+garden -> ?hrough no match
+golden -> ?hrough no match
+hatter -> ?hrough no match
+hidden -> ?hrough no match
+imagines -> ?hrough no match
+in -> ?hrough no match
+inside -> ?hrough no match
+island -> ?hrough no match
+key -> ?hrough no match
+king -> ?hrough no match
+knight -> ?hrough no match
+library -> ?hrough no match
+magical -> ?hrough no match
+map -> ?hrough no match
+message -> ?hrough no match
+mirror -> ?hrough no match
+mountain -> ?hrough no match
+mouse -> ?hrough no match
+mysterious -> ?hrough no match
+near -> ?hrough no match
+ocean -> ?hrough no match
+palace -> ?hrough no match
+potion -> ?hrough no match
+princess -> ?hrough no match
+puzzle -> ?hrough no match
+queen -> ?hrough no match
+rabbit -> ?hrough no match
+reads -> ?hrough no match
+school -> ?hrough no match
+secret -> ?hrough no match
+sees -> ?hrough no match
+silver -> ?hrough no match
+story -> ?hrough no match
+strange -> ?hrough no match
+student -> ?hrough no match
+studies -> ?hrough no match
+teacher -> ?hrough no match
+the -> ?hrough no match
+through -> ?hrough match
+tower -> ?hrough no match
+treasure -> ?hrough no match
+turtle -> ?hrough no match
+under -> ?hrough no match
+valley -> ?hrough no match
+village -> ?hrough no match
+watches -> ?hrough no match
+wise -> ?hrough no match
+wizard -> ?hrough no match
+wonderland -> ?hrough no match
+writes -> ?hrough no match
+
+Scan candidates for ?hrough
+through
+
+Check scan candidates against summary mappings
+
+through
+p -> t new
+n -> h agrees
+e -> r agrees
+r -> o agrees
+h -> u agrees
+o -> g agrees
+n -> h agrees
+PASS
+add p -> t
+
+choose through
+
+Decoded phrase
+through
+
+Answer: \boxed{through}

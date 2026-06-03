@@ -1,6 +1,6 @@
 {
   "output_csv": "data/single_phase_training_clean/single_phase_sft.csv",
-  "total_rows": 18219,
+  "total_rows": 18470,
   "phase2_rows": 11356,
   "phase2_rows_after_replacing_bit": 9992,
   "removed_phase2_bit_rows": 1364,
@@ -52,19 +52,24 @@
     "huikang_real_bit_extra_trace": 238,
     "huikang_synthetic_matching": 4515,
     "numeric_equation_decision_point_curriculum": 900,
+    "numeric_equation_untrained_eval_only": 22,
+    "op_ab_guess_0134_correct": 13,
+    "op_ab_guess_0134_wrong": 151,
     "phase1_synthetic_direct_template": 216,
     "real": 7080,
     "single_phase_synthetic_direct_template": 325,
     "single_phase_synthetic_text_cipher_confusion": 200,
-    "synthetic": 3217
+    "symbol_transform_untrained_eval_only": 109,
+    "synthetic": 3217,
+    "text_cipher_decision_point_curriculum": 120
   },
   "category_counts": {
     "Bit Manipulation": 6117,
     "Gravity": 1597,
     "Numeral System": 1576,
-    "Numeric Equation Transformation Rules": 4741,
-    "Symbol Transform": 818,
-    "Text Cipher": 1776,
+    "Numeric Equation Transformation Rules": 4763,
+    "Symbol Transform": 927,
+    "Text Cipher": 1896,
     "Unit Conversion": 1594
   },
   "prompt_rewrite": {
@@ -76,13 +81,39 @@
   "removed_huikang_duplicate_bit_alternate_trace_note": "Rows with source_mode=synthetic in Bit Manipulation are -p0 alternate traces for real HuiKang bit problems with identical prompts/answers, so they are excluded to avoid duplicate bias and split leakage.",
   "single_phase_split_csv": "data/single_phase_training_clean/single_phase_splits_80_10_10.csv",
   "single_phase_split_counts": {
-    "eval_holdout": 853,
+    "eval_holdout": 1065,
     "grpo_holdout": 847,
-    "sft_train": 16519
+    "sft_train": 16558
   },
-  "single_phase_split_strategy": "80/10/10 stratified per question type by diagnostic_subtype and source_mode; rows marked split_policy=train_only or eval_eligible=false stay in sft_train; eval_holdout is the optional GRPO training bucket and grpo_holdout is final local eval",
+  "single_phase_split_strategy": "Honest 80/20 train/eval accounting: Gravity, Unit Conversion, Text Cipher, and Numeral System keep the existing split; Bit Manipulation splits HuiKang correct and wrong-answer real traces 80/20 while synthetic matching remains train-only; Numeric Equation keeps solved-trace splits and adds 20% of untrained official numeric rows to eval_holdout; Symbol Transform splits operator-absence guess traces 80/20 and adds 20% of untrained official symbol rows to eval_holdout. Additional honest eval rows go to eval_holdout, not grpo_holdout.",
   "prompt_format_counts": {
-    "competition_chat_template": 17319,
-    "raw_completion": 900
+    "competition_chat_template": 17450,
+    "raw_completion": 1020
+  },
+  "honest_eval_split_policy": {
+    "eval_fraction": 0.2,
+    "seed": 20260603,
+    "new_eval_only_source_modes": [
+      "numeric_equation_untrained_eval_only",
+      "symbol_transform_untrained_eval_only"
+    ],
+    "bit_wrong_answer_source_mode": "huikang_real_bit_extra_trace",
+    "symbol_wrong_answer_source_mode": "op_ab_guess_0134_wrong",
+    "symbol_correct_guess_source_mode": "op_ab_guess_0134_correct"
+  },
+  "added_text_cipher_decision_point_curriculum_rows": 120,
+  "text_cipher_decision_point_curriculum": {
+    "source_dir": "docs/text_cipher_decision_point_curriculum",
+    "source_mode": "text_cipher_decision_point_curriculum",
+    "prompt_format": "raw_completion",
+    "split_policy": "train_only",
+    "eval_eligible": false,
+    "append_answer_instruction": false,
+    "bucket_counts": {
+      "alignment": 40,
+      "copy_alignment": 15,
+      "reject_failed_candidate": 30,
+      "repeated_letter": 35
+    }
   }
 }

@@ -1,0 +1,151 @@
+Problem syn_tc_dp_reject_failed_0013
+Bucket: reject_failed_candidate
+Gold answer: cat
+Note: candidate_key_must_fail_before_cat
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+nrs xwiy -> key bird
+twgr -> wise
+Now, decrypt the following text: eqc
+
+Solution:
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+g -> s
+i -> r
+n -> k
+r -> e
+s -> y
+t -> w
+w -> i
+x -> b
+y -> d
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+eqc
+
+Decode target words from character mappings
+
+eqc
+e -> ? unknown
+q -> ? unknown
+c -> ? unknown
+
+Training target:
+eqc -> ???
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ???
+above -> ??? no match
+alice -> ??? no match
+ancient -> ??? no match
+around -> ??? no match
+beyond -> ??? no match
+bird -> ??? no match
+book -> ??? no match
+bright -> ??? no match
+castle -> ??? no match
+cat -> ??? match
+cave -> ??? no match
+chases -> ??? no match
+clever -> ??? no match
+colorful -> ??? no match
+creates -> ??? no match
+crystal -> ??? no match
+curious -> ??? no match
+dark -> ??? no match
+discovers -> ??? no match
+door -> ??? no match
+dragon -> ??? no match
+draws -> ??? no match
+dreams -> ??? no match
+explores -> ??? no match
+follows -> ??? no match
+forest -> ??? no match
+found -> ??? no match
+garden -> ??? no match
+golden -> ??? no match
+hatter -> ??? no match
+hidden -> ??? no match
+imagines -> ??? no match
+in -> ??? no match
+inside -> ??? no match
+island -> ??? no match
+key -> ??? match
+king -> ??? no match
+knight -> ??? no match
+library -> ??? no match
+magical -> ??? no match
+map -> ??? match
+message -> ??? no match
+mirror -> ??? no match
+mountain -> ??? no match
+mouse -> ??? no match
+mysterious -> ??? no match
+near -> ??? no match
+ocean -> ??? no match
+palace -> ??? no match
+potion -> ??? no match
+princess -> ??? no match
+puzzle -> ??? no match
+queen -> ??? no match
+rabbit -> ??? no match
+reads -> ??? no match
+school -> ??? no match
+secret -> ??? no match
+sees -> ??? no match
+silver -> ??? no match
+story -> ??? no match
+strange -> ??? no match
+student -> ??? no match
+studies -> ??? no match
+teacher -> ??? no match
+the -> ??? match
+through -> ??? no match
+tower -> ??? no match
+treasure -> ??? no match
+turtle -> ??? no match
+under -> ??? no match
+valley -> ??? no match
+village -> ??? no match
+watches -> ??? no match
+wise -> ??? no match
+wizard -> ??? no match
+wonderland -> ??? no match
+writes -> ??? no match
+
+Scan candidates for ???
+cat, key, map, the
+
+Check scan candidates against summary mappings
+
+key
+e -> k conflicts
+n -> k already exists
+q -> e conflicts
+r -> e already exists
+c -> y conflicts
+s -> y already exists
+FAIL
+
+cat
+e -> c new
+q -> a new
+c -> t new
+PASS
+add e -> c
+add q -> a
+add c -> t
+
+choose cat
+
+Decoded phrase
+cat
+
+Answer: \boxed{cat}

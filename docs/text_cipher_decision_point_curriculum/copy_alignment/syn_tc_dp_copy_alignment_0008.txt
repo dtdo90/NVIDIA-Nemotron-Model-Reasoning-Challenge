@@ -1,0 +1,54 @@
+Problem syn_tc_dp_copy_alignment_0008
+Bucket: copy_alignment
+Gold answer: beyond
+Note: copy_exact_example_cipher_word
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+qpkeos -> beyond
+Now, decrypt the following text: qpkeos
+
+Solution:
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+qpkeos -> beyond
+
+Training target:
+q -> b new
+p -> e new
+k -> y new
+e -> o new
+o -> n new
+s -> d new
+
+Summary character mappings
+e -> o
+k -> y
+o -> n
+p -> e
+q -> b
+s -> d
+
+Target text
+qpkeos
+
+Decode target words from character mappings
+
+qpkeos
+q -> b
+p -> e
+k -> y
+e -> o
+o -> n
+s -> d
+qpkeos -> beyond
+fully mapped
+
+choose beyond
+
+Decoded phrase
+beyond
+
+Answer: \boxed{beyond}

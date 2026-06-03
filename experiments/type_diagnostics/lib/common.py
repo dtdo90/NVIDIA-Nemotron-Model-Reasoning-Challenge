@@ -24,7 +24,6 @@ OUTPUT_DIR = WORKSPACE / "outputs"
 REPORT_DIR = WORKSPACE / "reports"
 SPLIT_NAMES = ("sft_train", "eval_holdout", "grpo_holdout")
 TRAIN_ONLY_SOURCE_MODES = {
-    "huikang_real_bit_extra_trace",
     "huikang_synthetic_matching",
     "phase1_synthetic_direct_template",
     "single_phase_synthetic_direct_template",
@@ -210,6 +209,10 @@ def template_pass(text: str) -> str | None:
 
 
 def classify_numeric_subtype(row: dict[str, str]) -> str:
+    source_mode = row.get("source_mode", "")
+    if source_mode == "numeric_equation_untrained_eval_only":
+        return "untrained_eval_only"
+
     key = source_key(row).lower()
     if key.startswith("synthetic/"):
         key = key.removeprefix("synthetic/")
@@ -251,6 +254,10 @@ def classify_numeric_subtype(row: dict[str, str]) -> str:
 
 
 def classify_symbol_subtype(row: dict[str, str]) -> str:
+    source_mode = row.get("source_mode", "")
+    if source_mode == "symbol_transform_untrained_eval_only":
+        return "untrained_eval_only"
+
     key = source_key(row).lower()
     text = f"{row.get('generated_cot', '')}\n{row.get('assistant_content', '')}"
     if "ba_dc" in key:
@@ -281,6 +288,9 @@ def classify_subtype(row: dict[str, str]) -> str:
         return classify_symbol_subtype(row)
     if category == "Bit Manipulation":
         return classify_bit_subtype(row)
+    if category == "Text Cipher" and row.get("source_mode") == "text_cipher_decision_point_curriculum":
+        bucket = row.get("huikang_status", "").strip()
+        return f"decision_point_{safe_label(bucket)}" if bucket else "decision_point"
     if category in {"Gravity", "Unit Conversion", "Numeral System", "Text Cipher"}:
         return "standard"
     return safe_label(category)

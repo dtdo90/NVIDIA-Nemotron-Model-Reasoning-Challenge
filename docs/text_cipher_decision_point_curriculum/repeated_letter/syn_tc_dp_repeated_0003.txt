@@ -1,0 +1,149 @@
+Problem syn_tc_dp_repeated_0003
+Bucket: repeated_letter
+Gold answer: valley
+Note: preserve_repeated_letter_pattern
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+ztqhb jbx -> alice key
+iafgbra -> student
+Now, decrypt the following text: wzttbx
+
+Solution:
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+a -> t
+b -> e
+f -> u
+g -> d
+h -> c
+i -> s
+j -> k
+q -> i
+r -> n
+t -> l
+x -> y
+z -> a
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+wzttbx
+
+Decode target words from character mappings
+
+wzttbx
+w -> ? unknown
+z -> a
+t -> l
+t -> l
+b -> e
+x -> y
+
+Training target:
+wzttbx -> ?alley
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?alley
+above -> ?alley no match
+alice -> ?alley no match
+ancient -> ?alley no match
+around -> ?alley no match
+beyond -> ?alley no match
+bird -> ?alley no match
+book -> ?alley no match
+bright -> ?alley no match
+castle -> ?alley no match
+cat -> ?alley no match
+cave -> ?alley no match
+chases -> ?alley no match
+clever -> ?alley no match
+colorful -> ?alley no match
+creates -> ?alley no match
+crystal -> ?alley no match
+curious -> ?alley no match
+dark -> ?alley no match
+discovers -> ?alley no match
+door -> ?alley no match
+dragon -> ?alley no match
+draws -> ?alley no match
+dreams -> ?alley no match
+explores -> ?alley no match
+follows -> ?alley no match
+forest -> ?alley no match
+found -> ?alley no match
+garden -> ?alley no match
+golden -> ?alley no match
+hatter -> ?alley no match
+hidden -> ?alley no match
+imagines -> ?alley no match
+in -> ?alley no match
+inside -> ?alley no match
+island -> ?alley no match
+key -> ?alley no match
+king -> ?alley no match
+knight -> ?alley no match
+library -> ?alley no match
+magical -> ?alley no match
+map -> ?alley no match
+message -> ?alley no match
+mirror -> ?alley no match
+mountain -> ?alley no match
+mouse -> ?alley no match
+mysterious -> ?alley no match
+near -> ?alley no match
+ocean -> ?alley no match
+palace -> ?alley no match
+potion -> ?alley no match
+princess -> ?alley no match
+puzzle -> ?alley no match
+queen -> ?alley no match
+rabbit -> ?alley no match
+reads -> ?alley no match
+school -> ?alley no match
+secret -> ?alley no match
+sees -> ?alley no match
+silver -> ?alley no match
+story -> ?alley no match
+strange -> ?alley no match
+student -> ?alley no match
+studies -> ?alley no match
+teacher -> ?alley no match
+the -> ?alley no match
+through -> ?alley no match
+tower -> ?alley no match
+treasure -> ?alley no match
+turtle -> ?alley no match
+under -> ?alley no match
+valley -> ?alley match
+village -> ?alley no match
+watches -> ?alley no match
+wise -> ?alley no match
+wizard -> ?alley no match
+wonderland -> ?alley no match
+writes -> ?alley no match
+
+Scan candidates for ?alley
+valley
+
+Check scan candidates against summary mappings
+
+valley
+w -> v new
+z -> a agrees
+t -> l agrees
+t -> l agrees
+b -> e agrees
+x -> y agrees
+PASS
+add w -> v
+
+choose valley
+
+Decoded phrase
+valley
+
+Answer: \boxed{valley}

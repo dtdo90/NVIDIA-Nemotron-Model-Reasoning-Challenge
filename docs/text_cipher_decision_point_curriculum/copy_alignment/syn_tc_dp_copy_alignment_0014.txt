@@ -1,0 +1,53 @@
+Problem syn_tc_dp_copy_alignment_0014
+Bucket: copy_alignment
+Gold answer: valley
+Note: copy_exact_example_cipher_word
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+jonnsg -> valley
+Now, decrypt the following text: jonnsg
+
+Solution:
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+jonnsg -> valley
+
+Training target:
+j -> v new
+o -> a new
+n -> l new
+n -> l agrees
+s -> e new
+g -> y new
+
+Summary character mappings
+g -> y
+j -> v
+n -> l
+o -> a
+s -> e
+
+Target text
+jonnsg
+
+Decode target words from character mappings
+
+jonnsg
+j -> v
+o -> a
+n -> l
+n -> l
+s -> e
+g -> y
+jonnsg -> valley
+fully mapped
+
+choose valley
+
+Decoded phrase
+valley
+
+Answer: \boxed{valley}

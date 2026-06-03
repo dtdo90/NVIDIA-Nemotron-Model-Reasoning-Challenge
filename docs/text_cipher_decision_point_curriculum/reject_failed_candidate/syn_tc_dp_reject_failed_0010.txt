@@ -1,0 +1,154 @@
+Problem syn_tc_dp_reject_failed_0010
+Bucket: reject_failed_candidate
+Gold answer: bird
+Note: candidate_dark_must_fail_before_bird
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+sbpd mztzdwxt -> near colorful
+izxeb -> mouse
+Now, decrypt the following text: yrdq
+
+Solution:
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+b -> e
+d -> r
+e -> s
+i -> m
+m -> c
+p -> a
+s -> n
+t -> l
+w -> f
+x -> u
+z -> o
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+yrdq
+
+Decode target words from character mappings
+
+yrdq
+y -> ? unknown
+r -> ? unknown
+d -> r
+q -> ? unknown
+
+Training target:
+yrdq -> ??r?
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ??r?
+above -> ??r? no match
+alice -> ??r? no match
+ancient -> ??r? no match
+around -> ??r? no match
+beyond -> ??r? no match
+bird -> ??r? match
+book -> ??r? no match
+bright -> ??r? no match
+castle -> ??r? no match
+cat -> ??r? no match
+cave -> ??r? no match
+chases -> ??r? no match
+clever -> ??r? no match
+colorful -> ??r? no match
+creates -> ??r? no match
+crystal -> ??r? no match
+curious -> ??r? no match
+dark -> ??r? match
+discovers -> ??r? no match
+door -> ??r? no match
+dragon -> ??r? no match
+draws -> ??r? no match
+dreams -> ??r? no match
+explores -> ??r? no match
+follows -> ??r? no match
+forest -> ??r? no match
+found -> ??r? no match
+garden -> ??r? no match
+golden -> ??r? no match
+hatter -> ??r? no match
+hidden -> ??r? no match
+imagines -> ??r? no match
+in -> ??r? no match
+inside -> ??r? no match
+island -> ??r? no match
+key -> ??r? no match
+king -> ??r? no match
+knight -> ??r? no match
+library -> ??r? no match
+magical -> ??r? no match
+map -> ??r? no match
+message -> ??r? no match
+mirror -> ??r? no match
+mountain -> ??r? no match
+mouse -> ??r? no match
+mysterious -> ??r? no match
+near -> ??r? no match
+ocean -> ??r? no match
+palace -> ??r? no match
+potion -> ??r? no match
+princess -> ??r? no match
+puzzle -> ??r? no match
+queen -> ??r? no match
+rabbit -> ??r? no match
+reads -> ??r? no match
+school -> ??r? no match
+secret -> ??r? no match
+sees -> ??r? no match
+silver -> ??r? no match
+story -> ??r? no match
+strange -> ??r? no match
+student -> ??r? no match
+studies -> ??r? no match
+teacher -> ??r? no match
+the -> ??r? no match
+through -> ??r? no match
+tower -> ??r? no match
+treasure -> ??r? no match
+turtle -> ??r? no match
+under -> ??r? no match
+valley -> ??r? no match
+village -> ??r? no match
+watches -> ??r? no match
+wise -> ??r? no match
+wizard -> ??r? no match
+wonderland -> ??r? no match
+writes -> ??r? no match
+
+Scan candidates for ??r?
+bird, dark
+
+Check scan candidates against summary mappings
+
+dark
+y -> d new
+r -> a conflicts
+p -> a already exists
+d -> r agrees
+q -> k new
+FAIL
+
+bird
+y -> b new
+r -> i new
+d -> r agrees
+q -> d new
+PASS
+add y -> b
+add r -> i
+add q -> d
+
+choose bird
+
+Decoded phrase
+bird
+
+Answer: \boxed{bird}

@@ -54,6 +54,11 @@ def parse_args(default_question_type: str | None = None) -> argparse.Namespace:
     else:
         parser.set_defaults(question_type=default_question_type)
     parser.add_argument("--data-dir", default=str(DATA_DIR))
+    parser.add_argument(
+        "--split-csv",
+        default=None,
+        help="Optional split CSV override. Defaults to the type dataset's splits_80_10_10.csv.",
+    )
     parser.add_argument("--output-dir", default=None)
     parser.add_argument("--model-path", default=default_model_path())
     parser.add_argument("--validate-only", action="store_true")
@@ -78,8 +83,11 @@ def parse_args(default_question_type: str | None = None) -> argparse.Namespace:
     return args
 
 
-def load_diagnostic_train_examples(paths) -> tuple[list, list[dict[str, str]], dict[str, str]]:
-    if not paths.train_csv.exists() or not paths.split_csv.exists():
+def load_diagnostic_train_examples(
+    paths,
+    split_csv: Path,
+) -> tuple[list, list[dict[str, str]], dict[str, str]]:
+    if not paths.train_csv.exists() or not split_csv.exists():
         raise SystemExit(
             f"Missing diagnostic data for {paths.slug}. Run:\n"
             f"  python3 experiments/type_diagnostics/prepare_type_datasets.py --question-type {paths.slug}"
@@ -87,8 +95,8 @@ def load_diagnostic_train_examples(paths) -> tuple[list, list[dict[str, str]], d
 
     assert_type_dataset_fresh(paths.slug, type_csv=paths.train_csv)
     rows, _ = read_csv_rows(paths.train_csv)
-    assignments = load_split_assignments(paths.split_csv)
-    validate_split_assignments(rows, assignments, split_csv=paths.split_csv)
+    assignments = load_split_assignments(split_csv)
+    validate_split_assignments(rows, assignments, split_csv=split_csv)
     train_ids = {
         row["id"]
         for row in select_rows_for_splits(rows, assignments, ["sft_train"])
@@ -124,7 +132,7 @@ def print_summary(args: argparse.Namespace, paths, train_examples, rows, assignm
         "category": QUESTION_TYPES[args.question_type]["category"],
         "output_dir": str(Path(args.output_dir).resolve()),
         "train_csv": str(paths.train_csv.resolve()),
-        "split_csv": str(paths.split_csv.resolve()),
+        "split_csv": str(Path(args.split_csv).resolve()),
         "all_rows": len(rows),
         "sft_train_rows": len(train_examples),
         "split_names": list(SPLIT_NAMES),
@@ -158,8 +166,10 @@ def print_summary(args: argparse.Namespace, paths, train_examples, rows, assignm
 def main(default_question_type: str | None = None) -> None:
     args = parse_args(default_question_type)
     paths = type_paths(args.question_type, data_dir=Path(args.data_dir))
+    split_csv = Path(args.split_csv) if args.split_csv else paths.split_csv
+    args.split_csv = str(split_csv)
     args.output_dir = args.output_dir or str(paths.output_dir)
-    train_examples, rows, assignments = load_diagnostic_train_examples(paths)
+    train_examples, rows, assignments = load_diagnostic_train_examples(paths, split_csv)
 
     if args.validate_only:
         print_summary(args, paths, train_examples, rows, assignments)
@@ -284,7 +294,7 @@ def main(default_question_type: str | None = None) -> None:
             "model_path": args.model_path,
             "adapter_dir": str(adapter_dir.resolve()),
             "train_csv": str(paths.train_csv.resolve()),
-            "split_csv": str(paths.split_csv.resolve()),
+            "split_csv": str(split_csv.resolve()),
             "sft_train_rows": len(train_examples),
             "all_rows": len(rows),
             "max_seq_len": args.max_seq_len,

@@ -1,0 +1,148 @@
+Problem syn_tc_dp_repeated_0016
+Bucket: repeated_letter
+Gold answer: turtle
+Note: preserve_repeated_letter_pattern
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+ktivsg prrj -> castle door
+ytjpgl -> garden
+Now, decrypt the following text: vajvsg
+
+Solution:
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+g -> e
+i -> s
+j -> r
+k -> c
+l -> n
+p -> d
+r -> o
+s -> l
+t -> a
+v -> t
+y -> g
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+vajvsg
+
+Decode target words from character mappings
+
+vajvsg
+v -> t
+a -> ? unknown
+j -> r
+v -> t
+s -> l
+g -> e
+
+Training target:
+vajvsg -> t?rtle
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match t?rtle
+above -> t?rtle no match
+alice -> t?rtle no match
+ancient -> t?rtle no match
+around -> t?rtle no match
+beyond -> t?rtle no match
+bird -> t?rtle no match
+book -> t?rtle no match
+bright -> t?rtle no match
+castle -> t?rtle no match
+cat -> t?rtle no match
+cave -> t?rtle no match
+chases -> t?rtle no match
+clever -> t?rtle no match
+colorful -> t?rtle no match
+creates -> t?rtle no match
+crystal -> t?rtle no match
+curious -> t?rtle no match
+dark -> t?rtle no match
+discovers -> t?rtle no match
+door -> t?rtle no match
+dragon -> t?rtle no match
+draws -> t?rtle no match
+dreams -> t?rtle no match
+explores -> t?rtle no match
+follows -> t?rtle no match
+forest -> t?rtle no match
+found -> t?rtle no match
+garden -> t?rtle no match
+golden -> t?rtle no match
+hatter -> t?rtle no match
+hidden -> t?rtle no match
+imagines -> t?rtle no match
+in -> t?rtle no match
+inside -> t?rtle no match
+island -> t?rtle no match
+key -> t?rtle no match
+king -> t?rtle no match
+knight -> t?rtle no match
+library -> t?rtle no match
+magical -> t?rtle no match
+map -> t?rtle no match
+message -> t?rtle no match
+mirror -> t?rtle no match
+mountain -> t?rtle no match
+mouse -> t?rtle no match
+mysterious -> t?rtle no match
+near -> t?rtle no match
+ocean -> t?rtle no match
+palace -> t?rtle no match
+potion -> t?rtle no match
+princess -> t?rtle no match
+puzzle -> t?rtle no match
+queen -> t?rtle no match
+rabbit -> t?rtle no match
+reads -> t?rtle no match
+school -> t?rtle no match
+secret -> t?rtle no match
+sees -> t?rtle no match
+silver -> t?rtle no match
+story -> t?rtle no match
+strange -> t?rtle no match
+student -> t?rtle no match
+studies -> t?rtle no match
+teacher -> t?rtle no match
+the -> t?rtle no match
+through -> t?rtle no match
+tower -> t?rtle no match
+treasure -> t?rtle no match
+turtle -> t?rtle match
+under -> t?rtle no match
+valley -> t?rtle no match
+village -> t?rtle no match
+watches -> t?rtle no match
+wise -> t?rtle no match
+wizard -> t?rtle no match
+wonderland -> t?rtle no match
+writes -> t?rtle no match
+
+Scan candidates for t?rtle
+turtle
+
+Check scan candidates against summary mappings
+
+turtle
+v -> t agrees
+a -> u new
+j -> r agrees
+v -> t agrees
+s -> l agrees
+g -> e agrees
+PASS
+add a -> u
+
+choose turtle
+
+Decoded phrase
+turtle
+
+Answer: \boxed{turtle}

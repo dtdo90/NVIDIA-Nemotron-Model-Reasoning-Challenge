@@ -1,0 +1,147 @@
+Problem syn_tc_dp_alignment_0008
+Bucket: alignment
+Gold answer: tower
+Note: strict_left_to_right_alignment
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+bvfdm lizzijt -> under follows
+uiiq -> book
+Now, decrypt the following text: nijdm
+
+Solution:
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+b -> u
+d -> e
+f -> d
+i -> o
+j -> w
+l -> f
+m -> r
+q -> k
+t -> s
+u -> b
+v -> n
+z -> l
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+nijdm
+
+Decode target words from character mappings
+
+nijdm
+n -> ? unknown
+i -> o
+j -> w
+d -> e
+m -> r
+
+Training target:
+nijdm -> ?ower
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?ower
+above -> ?ower no match
+alice -> ?ower no match
+ancient -> ?ower no match
+around -> ?ower no match
+beyond -> ?ower no match
+bird -> ?ower no match
+book -> ?ower no match
+bright -> ?ower no match
+castle -> ?ower no match
+cat -> ?ower no match
+cave -> ?ower no match
+chases -> ?ower no match
+clever -> ?ower no match
+colorful -> ?ower no match
+creates -> ?ower no match
+crystal -> ?ower no match
+curious -> ?ower no match
+dark -> ?ower no match
+discovers -> ?ower no match
+door -> ?ower no match
+dragon -> ?ower no match
+draws -> ?ower no match
+dreams -> ?ower no match
+explores -> ?ower no match
+follows -> ?ower no match
+forest -> ?ower no match
+found -> ?ower no match
+garden -> ?ower no match
+golden -> ?ower no match
+hatter -> ?ower no match
+hidden -> ?ower no match
+imagines -> ?ower no match
+in -> ?ower no match
+inside -> ?ower no match
+island -> ?ower no match
+key -> ?ower no match
+king -> ?ower no match
+knight -> ?ower no match
+library -> ?ower no match
+magical -> ?ower no match
+map -> ?ower no match
+message -> ?ower no match
+mirror -> ?ower no match
+mountain -> ?ower no match
+mouse -> ?ower no match
+mysterious -> ?ower no match
+near -> ?ower no match
+ocean -> ?ower no match
+palace -> ?ower no match
+potion -> ?ower no match
+princess -> ?ower no match
+puzzle -> ?ower no match
+queen -> ?ower no match
+rabbit -> ?ower no match
+reads -> ?ower no match
+school -> ?ower no match
+secret -> ?ower no match
+sees -> ?ower no match
+silver -> ?ower no match
+story -> ?ower no match
+strange -> ?ower no match
+student -> ?ower no match
+studies -> ?ower no match
+teacher -> ?ower no match
+the -> ?ower no match
+through -> ?ower no match
+tower -> ?ower match
+treasure -> ?ower no match
+turtle -> ?ower no match
+under -> ?ower no match
+valley -> ?ower no match
+village -> ?ower no match
+watches -> ?ower no match
+wise -> ?ower no match
+wizard -> ?ower no match
+wonderland -> ?ower no match
+writes -> ?ower no match
+
+Scan candidates for ?ower
+tower
+
+Check scan candidates against summary mappings
+
+tower
+n -> t new
+i -> o agrees
+j -> w agrees
+d -> e agrees
+m -> r agrees
+PASS
+add n -> t
+
+choose tower
+
+Decoded phrase
+tower
+
+Answer: \boxed{tower}
