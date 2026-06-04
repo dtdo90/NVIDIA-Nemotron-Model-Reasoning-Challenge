@@ -36,6 +36,9 @@ from train_sft_single_phase import (  # type: ignore
     make_min_lr_callback,
     make_sft_config,
     print_trainable_parameters,
+    rescue_adapter_after_train_error,
+    resolve_trainer_state_dir,
+    save_adapter_with_rescue,
     source_counts,
 )
 from nemotron_baseline.data import summarize_categories
@@ -60,6 +63,14 @@ def parse_args(default_question_type: str | None = None) -> argparse.Namespace:
         help="Optional split CSV override. Defaults to the type dataset's splits_80_10_10.csv.",
     )
     parser.add_argument("--output-dir", default=None)
+    parser.add_argument(
+        "--trainer-state-dir",
+        default=None,
+        help=(
+            "Directory for Trainer scratch state. Defaults to output-dir/trainer_state, "
+            "except Colab Google Drive runs use /content/nemotron_trainer_state."
+        ),
+    )
     parser.add_argument("--model-path", default=default_model_path())
     parser.add_argument("--validate-only", action="store_true")
     parser.add_argument("--per-device-train-batch-size", type=int, default=1)
@@ -131,6 +142,9 @@ def print_summary(args: argparse.Namespace, paths, train_examples, rows, assignm
         "question_type": args.question_type,
         "category": QUESTION_TYPES[args.question_type]["category"],
         "output_dir": str(Path(args.output_dir).resolve()),
+        "trainer_state_dir": str(
+            resolve_trainer_state_dir(Path(args.output_dir), args.trainer_state_dir).resolve()
+        ),
         "train_csv": str(paths.train_csv.resolve()),
         "split_csv": str(Path(args.split_csv).resolve()),
         "all_rows": len(rows),
@@ -163,12 +177,22 @@ def print_summary(args: argparse.Namespace, paths, train_examples, rows, assignm
     print(json.dumps(payload, indent=2, ensure_ascii=False))
 
 
+def default_output_dir_for_runtime(paths) -> Path:
+    try:
+        root = str(Path(paths.output_dir).resolve())
+    except OSError:
+        root = str(paths.output_dir)
+    if root.startswith("/content/drive/"):
+        return Path("/content/outputs/type_diagnostics") / paths.slug
+    return paths.output_dir
+
+
 def main(default_question_type: str | None = None) -> None:
     args = parse_args(default_question_type)
     paths = type_paths(args.question_type, data_dir=Path(args.data_dir))
     split_csv = Path(args.split_csv) if args.split_csv else paths.split_csv
     args.split_csv = str(split_csv)
-    args.output_dir = args.output_dir or str(paths.output_dir)
+    args.output_dir = args.output_dir or str(default_output_dir_for_runtime(paths))
     train_examples, rows, assignments = load_diagnostic_train_examples(paths, split_csv)
 
     if args.validate_only:
@@ -188,6 +212,9 @@ def main(default_question_type: str | None = None) -> None:
 
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
+    trainer_state_dir = resolve_trainer_state_dir(output_dir, args.trainer_state_dir)
+    trainer_state_dir.mkdir(parents=True, exist_ok=True)
+    print(f"Trainer state dir: {trainer_state_dir}")
 
     tokenizer = AutoTokenizer.from_pretrained(args.model_path, trust_remote_code=True)
     if tokenizer.pad_token is None:
@@ -226,7 +253,7 @@ def main(default_question_type: str | None = None) -> None:
 
     trainer_args = make_sft_config(
         TrainingArguments,
-        output_dir=str(output_dir / "trainer_state"),
+        output_dir=str(trainer_state_dir),
         per_device_train_batch_size=args.per_device_train_batch_size,
         gradient_accumulation_steps=args.gradient_accumulation_steps,
         num_train_epochs=1.0,
@@ -276,23 +303,30 @@ def main(default_question_type: str | None = None) -> None:
         f"learning_rate={args.learning_rate}, num_train_epochs=1.0, "
         f"balanced_accumulation={args.balanced_accumulation}"
     )
-    trainer.train()
+    expected_adapter_dir = output_dir / "adapter"
+    try:
+        trainer.train()
+    except OSError as exc:
+        rescue_adapter_after_train_error(trainer.model, expected_adapter_dir, exc)
+        raise
 
-    adapter_dir = output_dir / "adapter"
-    trainer.model.save_pretrained(adapter_dir)
+    adapter_dir = save_adapter_with_rescue(trainer.model, expected_adapter_dir)
     print(f"Diagnostic adapter saved to: {adapter_dir}")
     trainer.model = None
     del trainer
     del dataset
     clear_memory()
 
+    metadata_dir = output_dir if adapter_dir == expected_adapter_dir else adapter_dir.parent
     write_json(
-        output_dir / "run_config.json",
+        metadata_dir / "run_config.json",
         {
             "mode": "type_diagnostic_sft",
             "question_type": args.question_type,
             "model_path": args.model_path,
             "adapter_dir": str(adapter_dir.resolve()),
+            "expected_adapter_dir": str(expected_adapter_dir.resolve()),
+            "trainer_state_dir": str(trainer_state_dir.resolve()),
             "train_csv": str(paths.train_csv.resolve()),
             "split_csv": str(split_csv.resolve()),
             "sft_train_rows": len(train_examples),
@@ -320,7 +354,7 @@ def main(default_question_type: str | None = None) -> None:
         },
     )
     write_json(
-        output_dir / "dataset_summary.json",
+        metadata_dir / "dataset_summary.json",
         {
             "all_data_summary": summarize_rows(rows, assignments),
             "train_source_counts": source_counts(train_examples),

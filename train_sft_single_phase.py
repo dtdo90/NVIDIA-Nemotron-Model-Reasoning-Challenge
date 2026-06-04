@@ -11,6 +11,7 @@ import math
 import os
 import random
 import sys
+import tempfile
 import zipfile
 from collections import Counter
 from dataclasses import dataclass
@@ -93,6 +94,15 @@ def parse_args() -> argparse.Namespace:
         ),
     )
     parser.add_argument("--output-dir", default="outputs/sft_single_phase")
+    parser.add_argument(
+        "--trainer-state-dir",
+        default=None,
+        help=(
+            "Directory for Trainer scratch state. Defaults to output-dir/trainer_state, "
+            "except Colab Google Drive runs use /content/nemotron_trainer_state to "
+            "avoid Drive transport disconnects at the end of training."
+        ),
+    )
     parser.add_argument("--train-csv", default=str(SINGLE_PHASE_CSV))
     parser.add_argument("--split-csv", default=str(SINGLE_PHASE_SPLIT_CSV))
     parser.add_argument(
@@ -129,6 +139,61 @@ def parse_args() -> argparse.Namespace:
         help="Trainer optimizer.",
     )
     return parser.parse_args()
+
+
+def path_slug(path: Path) -> str:
+    try:
+        text = str(path.resolve())
+    except OSError:
+        text = str(path)
+    slug = "".join(ch if ch.isalnum() else "_" for ch in text).strip("_")
+    return slug[-160:] or "run"
+
+
+def resolve_trainer_state_dir(output_dir: Path, explicit_dir: str | None = None) -> Path:
+    if explicit_dir:
+        return Path(explicit_dir)
+    try:
+        resolved = str(output_dir.resolve())
+    except OSError:
+        resolved = str(output_dir)
+    if resolved.startswith("/content/drive/"):
+        return Path("/content/nemotron_trainer_state") / path_slug(output_dir)
+    return output_dir / "trainer_state"
+
+
+def local_rescue_adapter_dir(adapter_dir: Path) -> Path:
+    base = Path("/content/nemotron_rescue") if Path("/content").exists() else Path(tempfile.gettempdir()) / "nemotron_rescue"
+    return base / path_slug(adapter_dir.parent) / adapter_dir.name
+
+
+def save_adapter_with_rescue(model, adapter_dir: Path) -> Path:
+    try:
+        model.save_pretrained(adapter_dir)
+        return adapter_dir
+    except OSError as exc:
+        rescue_dir = local_rescue_adapter_dir(adapter_dir)
+        print(
+            f"WARNING: failed to save adapter to {adapter_dir}: {exc}\n"
+            f"Attempting local rescue save to: {rescue_dir}"
+        )
+        model.save_pretrained(rescue_dir)
+        print(f"Adapter rescue save succeeded: {rescue_dir}")
+        return rescue_dir
+
+
+def rescue_adapter_after_train_error(model, adapter_dir: Path, exc: OSError) -> None:
+    rescue_dir = local_rescue_adapter_dir(adapter_dir)
+    print(
+        f"WARNING: trainer.train() raised OSError after/while training: {exc}\n"
+        f"Attempting emergency adapter save to: {rescue_dir}"
+    )
+    try:
+        model.save_pretrained(rescue_dir)
+    except Exception as save_exc:
+        print(f"Emergency adapter save failed: {save_exc}")
+        return
+    print(f"Emergency adapter save succeeded: {rescue_dir}")
 
 
 def load_examples(path: Path) -> list[Example]:
@@ -612,6 +677,9 @@ def print_summary(
     summary = {
         "mode": "single_phase",
         "output_dir": str(Path(args.output_dir).resolve()),
+        "trainer_state_dir": str(
+            resolve_trainer_state_dir(Path(args.output_dir), args.trainer_state_dir).resolve()
+        ),
         "train_csv": str(Path(args.train_csv).resolve()),
         "split_csv": None if args.train_all else str(Path(args.split_csv).resolve()),
         "train_splits": ["ALL"] if args.train_all else args.train_splits,
@@ -672,6 +740,9 @@ def main() -> None:
 
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
+    trainer_state_dir = resolve_trainer_state_dir(output_dir, args.trainer_state_dir)
+    trainer_state_dir.mkdir(parents=True, exist_ok=True)
+    print(f"Trainer state dir: {trainer_state_dir}")
 
     tokenizer = AutoTokenizer.from_pretrained(args.model_path, trust_remote_code=True)
     if tokenizer.pad_token is None:
@@ -710,7 +781,7 @@ def main() -> None:
 
     trainer_args = make_sft_config(
         TrainingArguments,
-        output_dir=str(output_dir / "trainer_state"),
+        output_dir=str(trainer_state_dir),
         per_device_train_batch_size=args.per_device_train_batch_size,
         gradient_accumulation_steps=args.gradient_accumulation_steps,
         num_train_epochs=1.0,
@@ -759,24 +830,31 @@ def main() -> None:
         f"learning_rate={args.learning_rate}, "
         f"balanced_accumulation={args.balanced_accumulation}"
     )
-    trainer.train()
+    expected_adapter_dir = output_dir / "adapter"
+    try:
+        trainer.train()
+    except OSError as exc:
+        rescue_adapter_after_train_error(trainer.model, expected_adapter_dir, exc)
+        raise
 
-    adapter_dir = output_dir / "adapter"
-    trainer.model.save_pretrained(adapter_dir)
+    adapter_dir = save_adapter_with_rescue(trainer.model, expected_adapter_dir)
     print(f"Single-phase adapter saved to: {adapter_dir}")
     trainer.model = None
     del trainer
     del dataset
     clear_memory()
 
-    submission_path = output_dir / "submission.zip"
+    metadata_dir = output_dir if adapter_dir == expected_adapter_dir else adapter_dir.parent
+    submission_path = metadata_dir / "submission.zip"
     zip_adapter(adapter_dir, submission_path)
     write_json(
-        output_dir / "run_config.json",
+        metadata_dir / "run_config.json",
         {
             "mode": "single_phase",
             "model_path": args.model_path,
             "adapter_dir": str(adapter_dir.resolve()),
+            "expected_adapter_dir": str(expected_adapter_dir.resolve()),
+            "trainer_state_dir": str(trainer_state_dir.resolve()),
             "submission_zip": str(submission_path.resolve()),
             "train_csv": str(Path(args.train_csv).resolve()),
             "split_csv": None if args.train_all else str(Path(args.split_csv).resolve()),
@@ -812,7 +890,7 @@ def main() -> None:
         },
     )
     write_json(
-        output_dir / "dataset_summary.json",
+        metadata_dir / "dataset_summary.json",
         {
             "train_source_counts": source_counts(train_examples),
             "train_category_counts": summarize_categories(train_examples),
