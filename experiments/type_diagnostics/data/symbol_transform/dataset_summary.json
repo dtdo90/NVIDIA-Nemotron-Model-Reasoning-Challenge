@@ -5,45 +5,54 @@
   "train_csv": "/Users/taido/Desktop/Tai/NVIDIA Nemotron Model Reasoning/experiments/type_diagnostics/data/symbol_transform/symbol_transform.csv",
   "split_csv": "/Users/taido/Desktop/Tai/NVIDIA Nemotron Model Reasoning/experiments/type_diagnostics/data/symbol_transform/splits_80_10_10.csv",
   "seed": 42,
-  "total": 659,
+  "total": 884,
   "by_subtype": {
-    "ba_dc": 59,
+    "ba_dc": 11,
     "direct_template_template0134": 400,
-    "direct_template_template3401": 200
+    "direct_template_template3401": 200,
+    "operator_absence_template0134": 164,
+    "untrained_eval_only": 109
   },
   "by_source_mode": {
+    "op_ab_guess_0134_correct": 13,
+    "op_ab_guess_0134_wrong": 151,
     "phase1_synthetic_direct_template": 216,
-    "real": 118,
-    "single_phase_synthetic_direct_template": 325
+    "real": 70,
+    "single_phase_synthetic_direct_template": 325,
+    "symbol_transform_untrained_eval_only": 109
   },
   "by_eval_eligible": {
     "false": 541,
-    "true": 118
+    "true": 343
   },
   "by_split_policy": {
-    "auto": 118,
+    "auto": 234,
+    "eval_only": 109,
     "train_only": 541
   },
   "split_counts": {
-    "eval_holdout": 12,
-    "grpo_holdout": 12,
-    "sft_train": 635
+    "eval_holdout": 154,
+    "grpo_holdout": 11,
+    "sft_train": 719
   },
   "by_split_subtype": {
     "sft_train": {
-      "ba_dc": 47,
       "direct_template_template0134": 390,
-      "direct_template_template3401": 198
+      "direct_template_template3401": 198,
+      "operator_absence_template0134": 131
     },
     "eval_holdout": {
       "ba_dc": 6,
       "direct_template_template0134": 5,
-      "direct_template_template3401": 1
+      "direct_template_template3401": 1,
+      "operator_absence_template0134": 33,
+      "untrained_eval_only": 109
     },
     "grpo_holdout": {
-      "ba_dc": 6,
+      "ba_dc": 5,
       "direct_template_template0134": 5,
       "direct_template_template3401": 1
     }
-  }
+  },
+  "removed_symbol_transform_ba_dc_sft_train_note": "Symbol Transform BA_DC rows are retained only in eval_holdout/grpo_holdout; all BA_DC rows formerly assigned to sft_train were removed from active training."
 }

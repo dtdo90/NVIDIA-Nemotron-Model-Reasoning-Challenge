@@ -78,13 +78,13 @@
       "subtype_count": 51
     },
     "symbol_transform": {
-      "total": 659,
+      "total": 884,
       "split_counts": {
-        "eval_holdout": 12,
-        "grpo_holdout": 12,
-        "sft_train": 635
+        "eval_holdout": 154,
+        "grpo_holdout": 11,
+        "sft_train": 719
       },
-      "subtype_count": 3
+      "subtype_count": 5
     }
   },
   "categories": {

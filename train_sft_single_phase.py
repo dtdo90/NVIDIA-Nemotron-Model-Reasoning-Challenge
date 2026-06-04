@@ -515,6 +515,11 @@ def tokenize_masked_example(
     tokenized = tokenizer(full_text, add_special_tokens=False)
     input_ids = tokenized["input_ids"]
     attention_mask = tokenized["attention_mask"]
+    if input_ids[: len(prompt_ids)] != prompt_ids:
+        raise SystemExit(
+            f"id={example.id} has tokenizer boundary mismatch between prompt and completion; "
+            "refusing to build labels because prompt masking would be shifted"
+        )
     if len(input_ids) > max_seq_len:
         raise SystemExit(
             f"id={example.id} has {len(input_ids)} tokens, exceeding max_seq_len={max_seq_len}"

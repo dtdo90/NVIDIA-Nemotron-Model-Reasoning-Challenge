@@ -1,6 +1,6 @@
 {
   "output_csv": "data/single_phase_training_clean/single_phase_sft.csv",
-  "total_rows": 18470,
+  "total_rows": 18427,
   "phase2_rows": 11356,
   "phase2_rows_after_replacing_bit": 9992,
   "removed_phase2_bit_rows": 1364,
@@ -56,7 +56,7 @@
     "op_ab_guess_0134_correct": 13,
     "op_ab_guess_0134_wrong": 151,
     "phase1_synthetic_direct_template": 216,
-    "real": 7080,
+    "real": 7037,
     "single_phase_synthetic_direct_template": 325,
     "single_phase_synthetic_text_cipher_confusion": 200,
     "symbol_transform_untrained_eval_only": 109,
@@ -68,7 +68,7 @@
     "Gravity": 1597,
     "Numeral System": 1576,
     "Numeric Equation Transformation Rules": 4763,
-    "Symbol Transform": 927,
+    "Symbol Transform": 884,
     "Text Cipher": 1896,
     "Unit Conversion": 1594
   },
@@ -83,11 +83,11 @@
   "single_phase_split_counts": {
     "eval_holdout": 1065,
     "grpo_holdout": 847,
-    "sft_train": 16558
+    "sft_train": 16515
   },
   "single_phase_split_strategy": "Honest 80/20 train/eval accounting: Gravity, Unit Conversion, Text Cipher, and Numeral System keep the existing split; Bit Manipulation splits HuiKang correct and wrong-answer real traces 80/20 while synthetic matching remains train-only; Numeric Equation keeps solved-trace splits and adds 20% of untrained official numeric rows to eval_holdout; Symbol Transform splits operator-absence guess traces 80/20 and adds 20% of untrained official symbol rows to eval_holdout. Additional honest eval rows go to eval_holdout, not grpo_holdout.",
   "prompt_format_counts": {
-    "competition_chat_template": 17450,
+    "competition_chat_template": 17407,
     "raw_completion": 1020
   },
   "honest_eval_split_policy": {
@@ -115,5 +115,52 @@
       "reject_failed_candidate": 30,
       "repeated_letter": 35
     }
-  }
+  },
+  "removed_symbol_transform_ba_dc_sft_train_rows": 43,
+  "removed_symbol_transform_ba_dc_sft_train_ids": [
+    "0e009c6d",
+    "0e2d6796",
+    "0e375364",
+    "12734c90",
+    "1a28140b",
+    "226cbdf8",
+    "24750c4a",
+    "24b2d8eb",
+    "28827821",
+    "321ef6ba",
+    "52395e9a",
+    "60f55291",
+    "6848a4e8",
+    "6c7231ac",
+    "6dacf247",
+    "6e6c2ce8",
+    "7c6fce02",
+    "85dc976c",
+    "91a0e345",
+    "92135360",
+    "979071a0",
+    "9a19fc2d",
+    "9a4f2f47",
+    "9d20c8a7",
+    "9dae880f",
+    "a3da3c48",
+    "a88f9fe3",
+    "ae4aef23",
+    "af95c8aa",
+    "b391ffe1",
+    "b4eab219",
+    "b56d38be",
+    "cca882b8",
+    "d3d30b86",
+    "dadc24d7",
+    "db4f43ef",
+    "e4aeed67",
+    "e82ed6be",
+    "e9f8559a",
+    "ea04ed35",
+    "f01f112b",
+    "f297547e",
+    "ff86cd34"
+  ],
+  "removed_symbol_transform_ba_dc_note": "Removed only Symbol Transform BA_DC rows assigned to sft_train because the current methodology is weak; existing eval_holdout and grpo_holdout BA_DC rows remain unchanged for honest evaluation."
 }
