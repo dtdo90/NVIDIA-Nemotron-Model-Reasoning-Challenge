@@ -10,6 +10,7 @@ import json
 import math
 import os
 import random
+import shutil
 import sys
 import tempfile
 import zipfile
@@ -95,6 +96,15 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--output-dir", default="outputs/sft_single_phase")
     parser.add_argument(
+        "--mirror-output-dir",
+        default=None,
+        help=(
+            "Optional best-effort mirror directory for final artifacts. On Colab, "
+            "if --output-dir resolves under /content/drive, training saves locally "
+            "under /content/outputs first and mirrors back to this output dir by default."
+        ),
+    )
+    parser.add_argument(
         "--trainer-state-dir",
         default=None,
         help=(
@@ -162,9 +172,65 @@ def resolve_trainer_state_dir(output_dir: Path, explicit_dir: str | None = None)
     return output_dir / "trainer_state"
 
 
+def is_colab_drive_path(path: Path) -> bool:
+    try:
+        resolved = str(path.resolve())
+    except OSError:
+        resolved = str(path)
+    return resolved.startswith("/content/drive/")
+
+
+def local_output_dir_for_drive(output_dir: Path) -> Path:
+    name = output_dir.name or path_slug(output_dir)
+    return Path("/content/outputs") / name
+
+
+def paths_equal(left: Path, right: Path) -> bool:
+    try:
+        return left.resolve() == right.resolve()
+    except OSError:
+        return left == right
+
+
+def resolve_output_and_mirror_dirs(
+    requested_output_dir: Path,
+    explicit_mirror_dir: str | None = None,
+) -> tuple[Path, Path | None]:
+    mirror_dir = Path(explicit_mirror_dir) if explicit_mirror_dir else None
+    if is_colab_drive_path(requested_output_dir):
+        return local_output_dir_for_drive(requested_output_dir), mirror_dir or requested_output_dir
+    return requested_output_dir, mirror_dir
+
+
 def local_rescue_adapter_dir(adapter_dir: Path) -> Path:
     base = Path("/content/nemotron_rescue") if Path("/content").exists() else Path(tempfile.gettempdir()) / "nemotron_rescue"
     return base / path_slug(adapter_dir.parent) / adapter_dir.name
+
+
+def mirror_saved_outputs(source_dir: Path, mirror_dir: Path | None) -> Path | None:
+    if mirror_dir is None or paths_equal(source_dir, mirror_dir):
+        return None
+
+    print(f"Mirroring final artifacts to: {mirror_dir}")
+    try:
+        mirror_dir.mkdir(parents=True, exist_ok=True)
+        for name in ("adapter", "submission.zip", "run_config.json", "dataset_summary.json"):
+            source = source_dir / name
+            if not source.exists():
+                continue
+            destination = mirror_dir / name
+            if source.is_dir():
+                if destination.exists():
+                    shutil.rmtree(destination)
+                shutil.copytree(source, destination)
+            else:
+                shutil.copy2(source, destination)
+    except OSError as exc:
+        print(f"WARNING: failed to mirror final artifacts to {mirror_dir}: {exc}")
+        return None
+
+    print(f"Final artifacts mirrored to: {mirror_dir}")
+    return mirror_dir
 
 
 def save_adapter_with_rescue(model, adapter_dir: Path) -> Path:
@@ -679,11 +745,18 @@ def print_summary(
     assignments: dict[str, str] | None,
 ) -> None:
     train_source_counts = source_counts(train_examples)
+    output_dir, mirror_output_dir = resolve_output_and_mirror_dirs(
+        Path(args.output_dir),
+        args.mirror_output_dir,
+    )
     summary = {
         "mode": "single_phase",
-        "output_dir": str(Path(args.output_dir).resolve()),
+        "output_dir": str(output_dir.resolve()),
+        "mirror_output_dir": None
+        if mirror_output_dir is None
+        else str(mirror_output_dir.resolve()),
         "trainer_state_dir": str(
-            resolve_trainer_state_dir(Path(args.output_dir), args.trainer_state_dir).resolve()
+            resolve_trainer_state_dir(output_dir, args.trainer_state_dir).resolve()
         ),
         "train_csv": str(Path(args.train_csv).resolve()),
         "split_csv": None if args.train_all else str(Path(args.split_csv).resolve()),
@@ -743,7 +816,16 @@ def main() -> None:
     torch.backends.cuda.matmul.allow_tf32 = True
     torch.backends.cudnn.allow_tf32 = True
 
-    output_dir = Path(args.output_dir)
+    requested_output_dir = Path(args.output_dir)
+    output_dir, mirror_output_dir = resolve_output_and_mirror_dirs(
+        requested_output_dir,
+        args.mirror_output_dir,
+    )
+    if not paths_equal(output_dir, requested_output_dir):
+        print(
+            f"Using local output dir for training artifacts: {output_dir}\n"
+            f"Best-effort mirror output dir: {mirror_output_dir}"
+        )
     output_dir.mkdir(parents=True, exist_ok=True)
     trainer_state_dir = resolve_trainer_state_dir(output_dir, args.trainer_state_dir)
     trainer_state_dir.mkdir(parents=True, exist_ok=True)
@@ -859,6 +941,9 @@ def main() -> None:
             "model_path": args.model_path,
             "adapter_dir": str(adapter_dir.resolve()),
             "expected_adapter_dir": str(expected_adapter_dir.resolve()),
+            "mirror_output_dir": None
+            if mirror_output_dir is None
+            else str(mirror_output_dir.resolve()),
             "trainer_state_dir": str(trainer_state_dir.resolve()),
             "submission_zip": str(submission_path.resolve()),
             "train_csv": str(Path(args.train_csv).resolve()),
@@ -904,8 +989,11 @@ def main() -> None:
             "split_counts": split_counts(assignments),
         },
     )
+    mirrored_dir = mirror_saved_outputs(metadata_dir, mirror_output_dir)
     print(f"Single-phase rows: {len(train_examples)}")
     print(f"Final adapter saved to: {adapter_dir}")
+    if mirrored_dir is not None:
+        print(f"Final artifacts mirrored to: {mirrored_dir}")
     print(f"Submission zip: {submission_path}")
 
 

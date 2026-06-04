@@ -35,9 +35,12 @@ from train_sft_single_phase import (  # type: ignore
     make_balanced_trainer_cls,
     make_min_lr_callback,
     make_sft_config,
+    mirror_saved_outputs,
+    paths_equal,
     print_trainable_parameters,
     rescue_adapter_after_train_error,
     resolve_trainer_state_dir,
+    resolve_output_and_mirror_dirs,
     save_adapter_with_rescue,
     source_counts,
 )
@@ -63,6 +66,15 @@ def parse_args(default_question_type: str | None = None) -> argparse.Namespace:
         help="Optional split CSV override. Defaults to the type dataset's splits_80_10_10.csv.",
     )
     parser.add_argument("--output-dir", default=None)
+    parser.add_argument(
+        "--mirror-output-dir",
+        default=None,
+        help=(
+            "Optional best-effort mirror directory for final artifacts. On Colab, "
+            "default diagnostic output saves locally under /content/outputs first "
+            "and mirrors back to the repo output directory when it is on Drive."
+        ),
+    )
     parser.add_argument(
         "--trainer-state-dir",
         default=None,
@@ -137,13 +149,18 @@ def diagnostic_balance_groups(
 
 def print_summary(args: argparse.Namespace, paths, train_examples, rows, assignments) -> None:
     train_rows = select_rows_for_splits(rows, assignments, ["sft_train"])
+    output_dir = Path(args.output_dir)
+    mirror_output_dir = Path(args.mirror_output_dir) if args.mirror_output_dir else None
     payload = {
         "mode": "type_diagnostic_sft",
         "question_type": args.question_type,
         "category": QUESTION_TYPES[args.question_type]["category"],
-        "output_dir": str(Path(args.output_dir).resolve()),
+        "output_dir": str(output_dir.resolve()),
+        "mirror_output_dir": None
+        if mirror_output_dir is None
+        else str(mirror_output_dir.resolve()),
         "trainer_state_dir": str(
-            resolve_trainer_state_dir(Path(args.output_dir), args.trainer_state_dir).resolve()
+            resolve_trainer_state_dir(output_dir, args.trainer_state_dir).resolve()
         ),
         "train_csv": str(paths.train_csv.resolve()),
         "split_csv": str(Path(args.split_csv).resolve()),
@@ -177,14 +194,11 @@ def print_summary(args: argparse.Namespace, paths, train_examples, rows, assignm
     print(json.dumps(payload, indent=2, ensure_ascii=False))
 
 
-def default_output_dir_for_runtime(paths) -> Path:
-    try:
-        root = str(Path(paths.output_dir).resolve())
-    except OSError:
-        root = str(paths.output_dir)
-    if root.startswith("/content/drive/"):
-        return Path("/content/outputs/type_diagnostics") / paths.slug
-    return paths.output_dir
+def default_output_dirs_for_runtime(paths) -> tuple[Path, Path | None]:
+    output_dir, mirror_output_dir = resolve_output_and_mirror_dirs(paths.output_dir)
+    if mirror_output_dir is not None:
+        output_dir = Path("/content/outputs/type_diagnostics") / paths.slug
+    return output_dir, mirror_output_dir
 
 
 def main(default_question_type: str | None = None) -> None:
@@ -192,7 +206,15 @@ def main(default_question_type: str | None = None) -> None:
     paths = type_paths(args.question_type, data_dir=Path(args.data_dir))
     split_csv = Path(args.split_csv) if args.split_csv else paths.split_csv
     args.split_csv = str(split_csv)
-    args.output_dir = args.output_dir or str(default_output_dir_for_runtime(paths))
+    if args.output_dir is None:
+        output_dir, mirror_output_dir = default_output_dirs_for_runtime(paths)
+    else:
+        output_dir, mirror_output_dir = resolve_output_and_mirror_dirs(
+            Path(args.output_dir),
+            args.mirror_output_dir,
+        )
+    args.output_dir = str(output_dir)
+    args.mirror_output_dir = None if mirror_output_dir is None else str(mirror_output_dir)
     train_examples, rows, assignments = load_diagnostic_train_examples(paths, split_csv)
 
     if args.validate_only:
@@ -211,6 +233,12 @@ def main(default_question_type: str | None = None) -> None:
     torch.backends.cudnn.allow_tf32 = True
 
     output_dir = Path(args.output_dir)
+    mirror_output_dir = Path(args.mirror_output_dir) if args.mirror_output_dir else None
+    if mirror_output_dir is not None and not paths_equal(output_dir, mirror_output_dir):
+        print(
+            f"Using local output dir for training artifacts: {output_dir}\n"
+            f"Best-effort mirror output dir: {mirror_output_dir}"
+        )
     output_dir.mkdir(parents=True, exist_ok=True)
     trainer_state_dir = resolve_trainer_state_dir(output_dir, args.trainer_state_dir)
     trainer_state_dir.mkdir(parents=True, exist_ok=True)
@@ -326,6 +354,9 @@ def main(default_question_type: str | None = None) -> None:
             "model_path": args.model_path,
             "adapter_dir": str(adapter_dir.resolve()),
             "expected_adapter_dir": str(expected_adapter_dir.resolve()),
+            "mirror_output_dir": None
+            if mirror_output_dir is None
+            else str(mirror_output_dir.resolve()),
             "trainer_state_dir": str(trainer_state_dir.resolve()),
             "train_csv": str(paths.train_csv.resolve()),
             "split_csv": str(split_csv.resolve()),
@@ -364,8 +395,11 @@ def main(default_question_type: str | None = None) -> None:
             ),
         },
     )
+    mirrored_dir = mirror_saved_outputs(metadata_dir, mirror_output_dir)
     print(f"{args.question_type} SFT rows: {len(train_examples)}")
     print(f"Final adapter saved to: {adapter_dir}")
+    if mirrored_dir is not None:
+        print(f"Final artifacts mirrored to: {mirrored_dir}")
 
 
 if __name__ == "__main__":
