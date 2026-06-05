@@ -1,7 +1,7 @@
 {
   "question_type": "symbol_transform",
   "category": "Symbol Transform",
-  "source_csv": "/Users/taido/Desktop/Tai/NVIDIA Nemotron Model Reasoning/data/single_phase_training_clean/single_phase_sft.csv",
+  "source_csv": "/Users/taido/Desktop/Tai/NVIDIA Nemotron Model Reasoning/data/single_phase_training_clean/single_phase_sft_v2.csv",
   "train_csv": "/Users/taido/Desktop/Tai/NVIDIA Nemotron Model Reasoning/experiments/type_diagnostics/data/symbol_transform/symbol_transform.csv",
   "split_csv": "/Users/taido/Desktop/Tai/NVIDIA Nemotron Model Reasoning/experiments/type_diagnostics/data/symbol_transform/splits_80_10_10.csv",
   "seed": 42,
@@ -53,6 +53,5 @@
       "direct_template_template0134": 5,
       "direct_template_template3401": 1
     }
-  },
-  "removed_symbol_transform_ba_dc_sft_train_note": "Symbol Transform BA_DC rows are retained only in eval_holdout/grpo_holdout; all BA_DC rows formerly assigned to sft_train were removed from active training."
+  }
 }

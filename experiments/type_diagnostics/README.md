@@ -13,7 +13,7 @@ python3 experiments/type_diagnostics/prepare_type_datasets.py
 
 Each type is written under `experiments/type_diagnostics/data/{type}/`:
 
-- `{type}.csv`: rows copied from `data/single_phase_training_clean/single_phase_sft.csv`
+- `{type}.csv`: rows copied from `data/single_phase_training_clean/single_phase_sft_v2.csv`
 - `splits_80_10_10.csv`: `sft_train`, `eval_holdout`, and `grpo_holdout`
 - `dataset_summary.json`: subtype/source/split counts
 
@@ -41,6 +41,15 @@ python3 experiments/type_diagnostics/scripts/train_numeric_equation.py
 python3 experiments/type_diagnostics/scripts/train_symbol_transform.py
 ```
 
+Curriculum ablation wrappers for the two currently suspicious types:
+
+```bash
+python3 experiments/type_diagnostics/scripts/train_numeric_equation_with_curriculum.py
+python3 experiments/type_diagnostics/scripts/train_numeric_equation_without_curriculum.py
+python3 experiments/type_diagnostics/scripts/train_text_cipher_with_curriculum.py
+python3 experiments/type_diagnostics/scripts/train_text_cipher_without_curriculum.py
+```
+
 Default adapters are saved to:
 
 ```text
@@ -49,6 +58,14 @@ experiments/type_diagnostics/outputs/{type}/adapter
 
 Use `--validate-only` before training to inspect rows and subtype splits without
 loading the model.
+
+Use `--validate-tokenization` before curriculum ablations to catch tokenizer
+boundary shifts or over-cap rows before loading the model:
+
+```bash
+python3 experiments/type_diagnostics/scripts/train_numeric_equation_with_curriculum.py --validate-tokenization
+python3 experiments/type_diagnostics/scripts/train_text_cipher_with_curriculum.py --validate-tokenization
+```
 
 ## Evaluate One Type
 

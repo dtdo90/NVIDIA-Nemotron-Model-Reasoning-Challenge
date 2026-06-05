@@ -17,7 +17,7 @@ SRC = ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-DEFAULT_TRAIN_CSV = ROOT / "data/single_phase_training_clean/single_phase_sft.csv"
+DEFAULT_TRAIN_CSV = ROOT / "data/single_phase_training_clean/single_phase_sft_v2.csv"
 DEFAULT_SPLIT_CSV = ROOT / "data/single_phase_training_clean/single_phase_splits_80_10_10.csv"
 DEFAULT_SFT_ADAPTER_DIR = ROOT / "outputs/sft_single_phase/adapter"
 COMPETITION_MAX_TOKENS = 7680

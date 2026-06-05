@@ -43,6 +43,7 @@ from train_sft_single_phase import (  # type: ignore
     resolve_output_and_mirror_dirs,
     save_adapter_with_rescue,
     source_counts,
+    validate_tokenization_examples,
 )
 from nemotron_baseline.data import summarize_categories
 from nemotron_baseline.runtime import (
@@ -51,7 +52,12 @@ from nemotron_baseline.runtime import (
 )
 
 
-def parse_args(default_question_type: str | None = None) -> argparse.Namespace:
+def parse_args(
+    default_question_type: str | None = None,
+    *,
+    default_exclude_source_modes: list[str] | None = None,
+    default_output_suffix: str | None = None,
+) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Train one diagnostic LoRA adapter for a single question type."
     )
@@ -66,6 +72,7 @@ def parse_args(default_question_type: str | None = None) -> argparse.Namespace:
         help="Optional split CSV override. Defaults to the type dataset's splits_80_10_10.csv.",
     )
     parser.add_argument("--output-dir", default=None)
+    parser.add_argument("--output-suffix", default=default_output_suffix)
     parser.add_argument(
         "--mirror-output-dir",
         default=None,
@@ -85,6 +92,14 @@ def parse_args(default_question_type: str | None = None) -> argparse.Namespace:
     )
     parser.add_argument("--model-path", default=default_model_path())
     parser.add_argument("--validate-only", action="store_true")
+    parser.add_argument(
+        "--validate-tokenization",
+        action="store_true",
+        help=(
+            "Load only the tokenizer and dry-run exact prompt masking/tokenization "
+            "for selected sft_train rows."
+        ),
+    )
     parser.add_argument("--per-device-train-batch-size", type=int, default=1)
     parser.add_argument("--gradient-accumulation-steps", type=int, default=8)
     parser.add_argument("--learning-rate", type=float, default=2e-4)
@@ -101,6 +116,12 @@ def parse_args(default_question_type: str | None = None) -> argparse.Namespace:
     )
     parser.add_argument("--lora-dropout", type=float, default=0.0)
     parser.add_argument("--optim", default="adamw_torch")
+    parser.add_argument(
+        "--exclude-source-modes",
+        nargs="*",
+        default=list(default_exclude_source_modes or []),
+        help="Source modes to exclude from the sft_train examples only.",
+    )
     args = parser.parse_args()
     args.question_type = normalize_question_type(args.question_type)
     return args
@@ -109,6 +130,8 @@ def parse_args(default_question_type: str | None = None) -> argparse.Namespace:
 def load_diagnostic_train_examples(
     paths,
     split_csv: Path,
+    *,
+    exclude_source_modes: set[str] | None = None,
 ) -> tuple[list, list[dict[str, str]], dict[str, str]]:
     if not paths.train_csv.exists() or not split_csv.exists():
         raise SystemExit(
@@ -123,6 +146,7 @@ def load_diagnostic_train_examples(
     train_ids = {
         row["id"]
         for row in select_rows_for_splits(rows, assignments, ["sft_train"])
+        if row.get("source_mode", "unknown") not in (exclude_source_modes or set())
     }
     examples = [example for example in load_examples(paths.train_csv) if example.id in train_ids]
     if not examples:
@@ -148,7 +172,12 @@ def diagnostic_balance_groups(
 
 
 def print_summary(args: argparse.Namespace, paths, train_examples, rows, assignments) -> None:
-    train_rows = select_rows_for_splits(rows, assignments, ["sft_train"])
+    excluded = set(args.exclude_source_modes or [])
+    train_rows = [
+        row
+        for row in select_rows_for_splits(rows, assignments, ["sft_train"])
+        if row.get("source_mode", "unknown") not in excluded
+    ]
     output_dir = Path(args.output_dir)
     mirror_output_dir = Path(args.mirror_output_dir) if args.mirror_output_dir else None
     payload = {
@@ -166,6 +195,7 @@ def print_summary(args: argparse.Namespace, paths, train_examples, rows, assignm
         "split_csv": str(Path(args.split_csv).resolve()),
         "all_rows": len(rows),
         "sft_train_rows": len(train_examples),
+        "exclude_source_modes": sorted(excluded),
         "split_names": list(SPLIT_NAMES),
         "all_data_summary": summarize_rows(rows, assignments),
         "sft_train_summary": summarize_rows(train_rows),
@@ -189,7 +219,9 @@ def print_summary(args: argparse.Namespace, paths, train_examples, rows, assignm
         "effective_batch_size": args.per_device_train_batch_size * args.gradient_accumulation_steps,
         "optim": args.optim,
         "loss_masking": "assistant_only",
-        "prompt_format": "competition_chat_template",
+        "prompt_format_counts": dict(
+            sorted(Counter(example.prompt_format for example in train_examples).items())
+        ),
     }
     print(json.dumps(payload, indent=2, ensure_ascii=False))
 
@@ -201,13 +233,44 @@ def default_output_dirs_for_runtime(paths) -> tuple[Path, Path | None]:
     return output_dir, mirror_output_dir
 
 
-def main(default_question_type: str | None = None) -> None:
-    args = parse_args(default_question_type)
+def apply_output_suffix(
+    output_dir: Path,
+    mirror_output_dir: Path | None,
+    *,
+    slug: str,
+    suffix: str | None,
+) -> tuple[Path, Path | None]:
+    if not suffix:
+        return output_dir, mirror_output_dir
+    name = f"{slug}_{suffix}"
+    output_dir = output_dir.parent / name
+    if mirror_output_dir is not None:
+        mirror_output_dir = mirror_output_dir.parent / name
+    return output_dir, mirror_output_dir
+
+
+def main(
+    default_question_type: str | None = None,
+    *,
+    default_exclude_source_modes: list[str] | None = None,
+    default_output_suffix: str | None = None,
+) -> None:
+    args = parse_args(
+        default_question_type,
+        default_exclude_source_modes=default_exclude_source_modes,
+        default_output_suffix=default_output_suffix,
+    )
     paths = type_paths(args.question_type, data_dir=Path(args.data_dir))
     split_csv = Path(args.split_csv) if args.split_csv else paths.split_csv
     args.split_csv = str(split_csv)
     if args.output_dir is None:
         output_dir, mirror_output_dir = default_output_dirs_for_runtime(paths)
+        output_dir, mirror_output_dir = apply_output_suffix(
+            output_dir,
+            mirror_output_dir,
+            slug=paths.slug,
+            suffix=args.output_suffix,
+        )
     else:
         output_dir, mirror_output_dir = resolve_output_and_mirror_dirs(
             Path(args.output_dir),
@@ -215,10 +278,25 @@ def main(default_question_type: str | None = None) -> None:
         )
     args.output_dir = str(output_dir)
     args.mirror_output_dir = None if mirror_output_dir is None else str(mirror_output_dir)
-    train_examples, rows, assignments = load_diagnostic_train_examples(paths, split_csv)
+    excluded_source_modes = set(args.exclude_source_modes or [])
+    train_examples, rows, assignments = load_diagnostic_train_examples(
+        paths,
+        split_csv,
+        exclude_source_modes=excluded_source_modes,
+    )
 
     if args.validate_only:
         print_summary(args, paths, train_examples, rows, assignments)
+        return
+
+    if args.validate_tokenization:
+        from transformers import AutoTokenizer  # type: ignore
+
+        tokenizer = AutoTokenizer.from_pretrained(args.model_path, trust_remote_code=True)
+        if tokenizer.pad_token is None:
+            tokenizer.pad_token = tokenizer.eos_token
+        tokenizer.padding_side = "right"
+        validate_tokenization_examples(tokenizer, train_examples, max_seq_len=args.max_seq_len)
         return
 
     disable_transformers_vision_imports()
@@ -362,6 +440,7 @@ def main(default_question_type: str | None = None) -> None:
             "split_csv": str(split_csv.resolve()),
             "sft_train_rows": len(train_examples),
             "all_rows": len(rows),
+            "exclude_source_modes": sorted(excluded_source_modes),
             "max_seq_len": args.max_seq_len,
             "learning_rate": args.learning_rate,
             "num_train_epochs": 1.0,
@@ -381,7 +460,9 @@ def main(default_question_type: str | None = None) -> None:
             "gradient_accumulation_steps": args.gradient_accumulation_steps,
             "effective_batch_size": args.per_device_train_batch_size * args.gradient_accumulation_steps,
             "loss_masking": "assistant_only",
-            "prompt_format": "competition_chat_template",
+            "prompt_format_counts": dict(
+                sorted(Counter(example.prompt_format for example in train_examples).items())
+            ),
         },
     )
     write_json(
@@ -391,7 +472,13 @@ def main(default_question_type: str | None = None) -> None:
             "train_source_counts": source_counts(train_examples),
             "train_category_counts": summarize_categories(train_examples),
             "sft_train_subtypes": dict(
-                sorted(Counter(row["diagnostic_subtype"] for row in select_rows_for_splits(rows, assignments, ["sft_train"])).items())
+                sorted(
+                    Counter(
+                        row["diagnostic_subtype"]
+                        for row in select_rows_for_splits(rows, assignments, ["sft_train"])
+                        if row.get("source_mode", "unknown") not in excluded_source_modes
+                    ).items()
+                )
             ),
         },
     )

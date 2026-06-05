@@ -16,7 +16,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 
-DEFAULT_CSV = Path("data/single_phase_training_clean/single_phase_sft.csv")
+DEFAULT_CSV = Path("data/single_phase_training_clean/single_phase_sft_v2.csv")
 DEFAULT_OUT_DIR = Path("data/single_phase_training_clean/exported_traces")
 DEFAULT_MANIFEST = Path("data/single_phase_training_clean/trace_manifest_from_csv.csv")
 

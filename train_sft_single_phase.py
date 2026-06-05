@@ -23,7 +23,7 @@ SRC = ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-SINGLE_PHASE_CSV = ROOT / "data/single_phase_training_clean/single_phase_sft.csv"
+SINGLE_PHASE_CSV = ROOT / "data/single_phase_training_clean/single_phase_sft_v2.csv"
 SINGLE_PHASE_SPLIT_CSV = ROOT / "data/single_phase_training_clean/single_phase_splits_80_10_10.csv"
 HF_MODEL_PATH = "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16"
 KAGGLE_MODEL_PATH = Path("/kaggle/input/models/metric/nemotron-3-nano-30b-a3b-bf16/transformers/default/1")
@@ -127,6 +127,15 @@ def parse_args() -> argparse.Namespace:
         help="Ignore --split-csv and train on every row in --train-csv.",
     )
     parser.add_argument("--validate-only", action="store_true")
+    parser.add_argument(
+        "--validate-tokenization",
+        action="store_true",
+        help=(
+            "Load only the tokenizer and dry-run exact prompt masking/tokenization "
+            "for the selected train rows. Fails before training on boundary or "
+            "max_seq_len problems."
+        ),
+    )
     parser.add_argument("--per-device-train-batch-size", type=int, default=1)
     parser.add_argument("--gradient-accumulation-steps", type=int, default=8)
     parser.add_argument("--learning-rate", type=float, default=2e-4)
@@ -543,6 +552,34 @@ def completion_after_generation_prompt(prompt_text: str, assistant_content: str)
     return assistant_content
 
 
+def decision_point_prompt_text(tokenizer, example: Example) -> tuple[str, str]:
+    """Build HuiKang-style decision-point curriculum masking.
+
+    The chat template opens the assistant turn with ``<think>\n``. We then
+    append the already-known partial trace to the prompt side so loss is only
+    applied to the remaining continuation.
+    """
+
+    partial_trace = example.generated_cot.rstrip()
+    completion_text = example.assistant_content.lstrip()
+    if not partial_trace:
+        raise SystemExit(f"id={example.id} has no decision-point partial trace")
+    if not completion_text:
+        raise SystemExit(f"id={example.id} has no decision-point completion content")
+
+    prompt_text = build_competition_prompt(
+        tokenizer,
+        example.prompt,
+        append_answer_instruction=example.append_answer_instruction,
+    )
+    if not prompt_text.rstrip().endswith("<think>"):
+        raise SystemExit(
+            f"id={example.id} decision-point prompt did not end with the template-opened <think>"
+        )
+    prompt_text += partial_trace + "\n"
+    return prompt_text, completion_text
+
+
 def tokenize_masked_example(
     tokenizer,
     example: Example,
@@ -556,6 +593,8 @@ def tokenize_masked_example(
         completion_text = (example.assistant_content or example.generated_cot).lstrip()
         if not completion_text:
             raise SystemExit(f"id={example.id} has no raw completion content")
+    elif example.prompt_format == "decision_point_chat_template":
+        prompt_text, completion_text = decision_point_prompt_text(tokenizer, example)
     elif example.prompt_format == "competition_chat_template":
         prompt_text = build_competition_prompt(
             tokenizer,
@@ -609,6 +648,53 @@ def build_dataset(dataset_cls, tokenizer, examples: list[Example], *, max_seq_le
     for example in examples:
         rows.append(tokenize_masked_example(tokenizer, example, max_seq_len=max_seq_len))
     return dataset_cls.from_list(rows)
+
+
+def validate_tokenization_examples(tokenizer, examples: list[Example], *, max_seq_len: int) -> None:
+    rows: list[dict[str, object]] = []
+    failures: list[dict[str, str]] = []
+    for example in examples:
+        try:
+            tokenized = tokenize_masked_example(tokenizer, example, max_seq_len=max_seq_len)
+        except SystemExit as exc:
+            failures.append(
+                {
+                    "id": example.id,
+                    "category": example.category,
+                    "source_mode": example.source_mode,
+                    "prompt_format": example.prompt_format,
+                    "error": str(exc),
+                }
+            )
+            continue
+        rows.append(
+            {
+                "id": example.id,
+                "category": example.category,
+                "source_mode": example.source_mode,
+                "prompt_format": example.prompt_format,
+                "prompt_tokens": tokenized["prompt_tokens"],
+                "completion_tokens": tokenized["completion_tokens"],
+                "total_tokens": tokenized["total_tokens"],
+            }
+        )
+
+    top_longest = sorted(rows, key=lambda row: int(row["total_tokens"]), reverse=True)[:20]
+    summary = {
+        "mode": "tokenization_validation",
+        "rows_checked": len(examples),
+        "rows_ok": len(rows),
+        "failures": len(failures),
+        "max_seq_len": max_seq_len,
+        "prompt_format_counts": dict(
+            sorted(Counter(example.prompt_format for example in examples).items())
+        ),
+        "top_longest": top_longest,
+        "failure_samples": failures[:20],
+    }
+    print(json.dumps(summary, indent=2, ensure_ascii=False))
+    if failures:
+        raise SystemExit(f"Tokenization validation failed for {len(failures)} rows")
 
 
 class MaskedCausalLMDataCollator:
@@ -803,6 +889,16 @@ def main() -> None:
     )
     if args.validate_only:
         print_summary(args, train_examples, all_examples, assignments)
+        return
+
+    if args.validate_tokenization:
+        from transformers import AutoTokenizer  # type: ignore
+
+        tokenizer = AutoTokenizer.from_pretrained(args.model_path, trust_remote_code=True)
+        if tokenizer.pad_token is None:
+            tokenizer.pad_token = tokenizer.eos_token
+        tokenizer.padding_side = "right"
+        validate_tokenization_examples(tokenizer, train_examples, max_seq_len=args.max_seq_len)
         return
 
     disable_transformers_vision_imports()

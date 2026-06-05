@@ -12,17 +12,21 @@ Core files:
 
 1. `data/train.csv`: original competition train set
 2. `data/test.csv`: original competition test set
-3. `data/single_phase_training_clean/single_phase_sft.csv`: active SFT corpus
+3. `data/single_phase_training_clean/single_phase_sft_v2.csv`: active SFT corpus
 4. `data/single_phase_training_clean/single_phase_splits_80_10_10.csv`: canonical SFT/GRPO/eval split
 5. `data/single_phase_training_clean/manifest.json`: source counts and split metadata
 6. `experiments/type_diagnostics/data/global_splits_80_10_10.csv`: same split assignment, generated from the per-type diagnostics
 
+`single_phase_sft_v1.csv` is retained as the previous raw-curriculum snapshot.
+In `single_phase_sft_v2.csv`, decision-point curriculum rows use the Nemotron
+chat template to open `<think>` and mask the partial trace on the prompt side.
+
 Current validated single-phase counts:
 
-1. Full SFT corpus: `17160` rows
-2. SFT training bucket, named `sft_train`: `15459` rows
-3. Optional GRPO train bucket, named `eval_holdout`: `853` rows
-4. Final local eval bucket, named `grpo_holdout`: `848` rows
+1. Full SFT corpus: `18427` rows
+2. SFT training bucket, named `sft_train`: `16581` rows
+3. Optional GRPO train bucket, named `eval_holdout`: `997` rows
+4. Final local eval bucket, named `grpo_holdout`: `849` rows
 
 The single-phase corpus contains real traces plus selected synthetic curriculum
 rows. Synthetic curriculum rows are also train-only. The two holdout buckets are drawn
@@ -107,6 +111,12 @@ Validate data wiring without loading the model:
 python3 train_sft_single_phase.py --validate-only
 ```
 
+Validate exact tokenizer masking and token caps without loading the model:
+
+```bash
+python3 train_sft_single_phase.py --validate-tokenization
+```
+
 To intentionally train on every row, bypassing holdouts:
 
 ```bash
@@ -151,7 +161,7 @@ Evaluate the eval_holdout bucket (10% data):
 
 ```bash
 python3 infer_eval.py \
-  --train-csv data/single_phase_training_clean/single_phase_sft.csv \
+  --train-csv data/single_phase_training_clean/single_phase_sft_v2.csv \
   --adapter-dir outputs/sft_single_phase/adapter \
   --split-csv data/single_phase_training_clean/single_phase_splits_80_10_10.csv \
   --eval-splits eval_holdout
@@ -161,7 +171,7 @@ Evaluate both held-out buckets (20% data):
 
 ```bash
 python3 infer_eval.py \
-  --train-csv data/single_phase_training_clean/single_phase_sft.csv \
+  --train-csv data/single_phase_training_clean/single_phase_sft_v2.csv \
   --adapter-dir outputs/sft_single_phase/adapter \
   --split-csv data/single_phase_training_clean/single_phase_splits_80_10_10.csv \
   --eval-splits grpo_holdout eval_holdout
@@ -197,6 +207,23 @@ python3 experiments/type_diagnostics/scripts/train_numeric_equation.py \
   --per-device-train-batch-size 1 \
   --gradient-accumulation-steps 8 \
   --balanced-accumulation
+```
+
+Numeric equation and text-cipher curriculum ablations:
+
+```bash
+python3 experiments/type_diagnostics/scripts/train_numeric_equation_with_curriculum.py
+python3 experiments/type_diagnostics/scripts/train_numeric_equation_without_curriculum.py
+python3 experiments/type_diagnostics/scripts/train_text_cipher_with_curriculum.py
+python3 experiments/type_diagnostics/scripts/train_text_cipher_without_curriculum.py
+```
+
+Before running a curriculum ablation, dry-run the exact tokenizer boundary and
+token cap check:
+
+```bash
+python3 experiments/type_diagnostics/scripts/train_numeric_equation_with_curriculum.py --validate-tokenization
+python3 experiments/type_diagnostics/scripts/train_text_cipher_with_curriculum.py --validate-tokenization
 ```
 
 Evaluate one question type on its held-out `eval_holdout` split:

@@ -1,5 +1,5 @@
 {
-  "output_csv": "data/single_phase_training_clean/single_phase_sft.csv",
+  "output_csv": "data/single_phase_training_clean/single_phase_sft_v2.csv",
   "total_rows": 18427,
   "phase2_rows": 11356,
   "phase2_rows_after_replacing_bit": 9992,
@@ -81,11 +81,11 @@
   "removed_huikang_duplicate_bit_alternate_trace_note": "Rows with source_mode=synthetic in Bit Manipulation are -p0 alternate traces for real HuiKang bit problems with identical prompts/answers, so they are excluded to avoid duplicate bias and split leakage.",
   "single_phase_split_csv": "data/single_phase_training_clean/single_phase_splits_80_10_10.csv",
   "single_phase_split_counts": {
-    "eval_holdout": 1065,
-    "grpo_holdout": 847,
-    "sft_train": 16515
+    "eval_holdout": 997,
+    "grpo_holdout": 849,
+    "sft_train": 16581
   },
-  "single_phase_split_strategy": "Honest 80/20 train/eval accounting: Gravity, Unit Conversion, Text Cipher, and Numeral System keep the existing split; Bit Manipulation splits HuiKang correct and wrong-answer real traces 80/20 while synthetic matching remains train-only; Numeric Equation keeps solved-trace splits and adds 20% of untrained official numeric rows to eval_holdout; Symbol Transform splits operator-absence guess traces 80/20 and adds 20% of untrained official symbol rows to eval_holdout. Additional honest eval rows go to eval_holdout, not grpo_holdout.",
+  "single_phase_split_strategy": "80/10/10 stratified per question type by diagnostic_subtype and source_mode; rows marked split_policy=train_only or eval_eligible=false stay in sft_train; eval_holdout is the optional GRPO training bucket and grpo_holdout is final local eval",
   "prompt_format_counts": {
     "competition_chat_template": 17407,
     "raw_completion": 1020

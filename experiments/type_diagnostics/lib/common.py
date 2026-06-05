@@ -18,7 +18,7 @@ if str(ROOT) not in sys.path:
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-SOURCE_CSV = ROOT / "data/single_phase_training_clean/single_phase_sft.csv"
+SOURCE_CSV = ROOT / "data/single_phase_training_clean/single_phase_sft_v2.csv"
 DATA_DIR = WORKSPACE / "data"
 OUTPUT_DIR = WORKSPACE / "outputs"
 REPORT_DIR = WORKSPACE / "reports"
@@ -212,6 +212,16 @@ def classify_numeric_subtype(row: dict[str, str]) -> str:
     source_mode = row.get("source_mode", "")
     if source_mode == "numeric_equation_untrained_eval_only":
         return "untrained_eval_only"
+    if source_mode == "numeric_equation_decision_point_curriculum":
+        parts = source_parts(row.get("source", ""))
+        marker = "numeric_equation_decision_point_curriculum"
+        if marker in parts:
+            index = parts.index(marker)
+            if index + 1 < len(parts):
+                return f"decision_point_{safe_label(parts[index + 1])}"
+        row_id = row.get("id", "")
+        bucket = re.sub(r"_\d+$", "", row_id.removeprefix("syn_ne_dp_"))
+        return f"decision_point_{safe_label(bucket)}" if bucket else "decision_point"
 
     key = source_key(row).lower()
     if key.startswith("synthetic/"):

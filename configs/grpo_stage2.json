@@ -1,5 +1,5 @@
 {
-  "train_csv": "data/single_phase_training_clean/single_phase_sft.csv",
+  "train_csv": "data/single_phase_training_clean/single_phase_sft_v2.csv",
   "split_csv": "data/single_phase_training_clean/single_phase_splits_80_10_10.csv",
   "train_splits": [
     "eval_holdout"
