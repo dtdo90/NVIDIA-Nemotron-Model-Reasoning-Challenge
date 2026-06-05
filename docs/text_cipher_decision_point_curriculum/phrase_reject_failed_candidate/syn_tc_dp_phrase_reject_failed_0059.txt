@@ -1,0 +1,385 @@
+Problem syn_tc_dp_phrase_reject_failed_0059
+Bucket: phrase_reject_failed_candidate
+Gold answer: book cat mouse watches
+Note: phrase_candidate_conflict_rejection
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+ljgdwmj lwokwj -> student secret
+xm -> in
+ljyks tciiws -> story valley
+Now, decrypt the following text: ryyq ocj hyglw acjofwl
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+c -> a
+d -> d
+g -> u
+i -> l
+j -> t
+k -> r
+l -> s
+m -> n
+o -> c
+s -> y
+t -> v
+w -> e
+x -> i
+y -> o
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+ryyq ocj hyglw acjofwl
+
+Decode target words from character mappings
+
+ryyq
+r -> ? unknown
+y -> o
+y -> o
+q -> ? unknown
+
+Training target:
+ryyq -> ?oo?
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?oo?
+above -> ?oo? no match
+alice -> ?oo? no match
+ancient -> ?oo? no match
+around -> ?oo? no match
+beyond -> ?oo? no match
+bird -> ?oo? no match
+book -> ?oo? match
+bright -> ?oo? no match
+castle -> ?oo? no match
+cat -> ?oo? no match
+cave -> ?oo? no match
+chases -> ?oo? no match
+clever -> ?oo? no match
+colorful -> ?oo? no match
+creates -> ?oo? no match
+crystal -> ?oo? no match
+curious -> ?oo? no match
+dark -> ?oo? no match
+discovers -> ?oo? no match
+door -> ?oo? match
+dragon -> ?oo? no match
+draws -> ?oo? no match
+dreams -> ?oo? no match
+explores -> ?oo? no match
+follows -> ?oo? no match
+forest -> ?oo? no match
+found -> ?oo? no match
+garden -> ?oo? no match
+golden -> ?oo? no match
+hatter -> ?oo? no match
+hidden -> ?oo? no match
+imagines -> ?oo? no match
+in -> ?oo? no match
+inside -> ?oo? no match
+island -> ?oo? no match
+key -> ?oo? no match
+king -> ?oo? no match
+knight -> ?oo? no match
+library -> ?oo? no match
+magical -> ?oo? no match
+map -> ?oo? no match
+message -> ?oo? no match
+mirror -> ?oo? no match
+mountain -> ?oo? no match
+mouse -> ?oo? no match
+mysterious -> ?oo? no match
+near -> ?oo? no match
+ocean -> ?oo? no match
+palace -> ?oo? no match
+potion -> ?oo? no match
+princess -> ?oo? no match
+puzzle -> ?oo? no match
+queen -> ?oo? no match
+rabbit -> ?oo? no match
+reads -> ?oo? no match
+school -> ?oo? no match
+secret -> ?oo? no match
+sees -> ?oo? no match
+silver -> ?oo? no match
+story -> ?oo? no match
+strange -> ?oo? no match
+student -> ?oo? no match
+studies -> ?oo? no match
+teacher -> ?oo? no match
+the -> ?oo? no match
+through -> ?oo? no match
+tower -> ?oo? no match
+treasure -> ?oo? no match
+turtle -> ?oo? no match
+under -> ?oo? no match
+valley -> ?oo? no match
+village -> ?oo? no match
+watches -> ?oo? no match
+wise -> ?oo? no match
+wizard -> ?oo? no match
+wonderland -> ?oo? no match
+writes -> ?oo? no match
+
+Scan candidates for ?oo?
+book, door
+
+Check scan candidates against summary mappings
+
+door
+r -> d conflicts
+d -> d already exists
+y -> o agrees
+y -> o agrees
+q -> r conflicts
+k -> r already exists
+FAIL
+
+book
+r -> b new
+y -> o agrees
+y -> o agrees
+q -> k new
+PASS
+add r -> b
+add q -> k
+
+choose book
+
+ocj
+o -> c
+c -> a
+j -> t
+ocj -> cat
+fully mapped
+
+choose cat
+
+hyglw
+h -> ? unknown
+y -> o
+g -> u
+l -> s
+w -> e
+hyglw -> ?ouse
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?ouse
+above -> ?ouse no match
+alice -> ?ouse no match
+ancient -> ?ouse no match
+around -> ?ouse no match
+beyond -> ?ouse no match
+bird -> ?ouse no match
+book -> ?ouse no match
+bright -> ?ouse no match
+castle -> ?ouse no match
+cat -> ?ouse no match
+cave -> ?ouse no match
+chases -> ?ouse no match
+clever -> ?ouse no match
+colorful -> ?ouse no match
+creates -> ?ouse no match
+crystal -> ?ouse no match
+curious -> ?ouse no match
+dark -> ?ouse no match
+discovers -> ?ouse no match
+door -> ?ouse no match
+dragon -> ?ouse no match
+draws -> ?ouse no match
+dreams -> ?ouse no match
+explores -> ?ouse no match
+follows -> ?ouse no match
+forest -> ?ouse no match
+found -> ?ouse no match
+garden -> ?ouse no match
+golden -> ?ouse no match
+hatter -> ?ouse no match
+hidden -> ?ouse no match
+imagines -> ?ouse no match
+in -> ?ouse no match
+inside -> ?ouse no match
+island -> ?ouse no match
+key -> ?ouse no match
+king -> ?ouse no match
+knight -> ?ouse no match
+library -> ?ouse no match
+magical -> ?ouse no match
+map -> ?ouse no match
+message -> ?ouse no match
+mirror -> ?ouse no match
+mountain -> ?ouse no match
+mouse -> ?ouse match
+mysterious -> ?ouse no match
+near -> ?ouse no match
+ocean -> ?ouse no match
+palace -> ?ouse no match
+potion -> ?ouse no match
+princess -> ?ouse no match
+puzzle -> ?ouse no match
+queen -> ?ouse no match
+rabbit -> ?ouse no match
+reads -> ?ouse no match
+school -> ?ouse no match
+secret -> ?ouse no match
+sees -> ?ouse no match
+silver -> ?ouse no match
+story -> ?ouse no match
+strange -> ?ouse no match
+student -> ?ouse no match
+studies -> ?ouse no match
+teacher -> ?ouse no match
+the -> ?ouse no match
+through -> ?ouse no match
+tower -> ?ouse no match
+treasure -> ?ouse no match
+turtle -> ?ouse no match
+under -> ?ouse no match
+valley -> ?ouse no match
+village -> ?ouse no match
+watches -> ?ouse no match
+wise -> ?ouse no match
+wizard -> ?ouse no match
+wonderland -> ?ouse no match
+writes -> ?ouse no match
+
+Scan candidates for ?ouse
+mouse
+
+Check scan candidates against summary mappings
+
+mouse
+h -> m new
+y -> o agrees
+g -> u agrees
+l -> s agrees
+w -> e agrees
+PASS
+add h -> m
+
+choose mouse
+
+acjofwl
+a -> ? unknown
+c -> a
+j -> t
+o -> c
+f -> ? unknown
+w -> e
+l -> s
+acjofwl -> ?atc?es
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?atc?es
+above -> ?atc?es no match
+alice -> ?atc?es no match
+ancient -> ?atc?es no match
+around -> ?atc?es no match
+beyond -> ?atc?es no match
+bird -> ?atc?es no match
+book -> ?atc?es no match
+bright -> ?atc?es no match
+castle -> ?atc?es no match
+cat -> ?atc?es no match
+cave -> ?atc?es no match
+chases -> ?atc?es no match
+clever -> ?atc?es no match
+colorful -> ?atc?es no match
+creates -> ?atc?es no match
+crystal -> ?atc?es no match
+curious -> ?atc?es no match
+dark -> ?atc?es no match
+discovers -> ?atc?es no match
+door -> ?atc?es no match
+dragon -> ?atc?es no match
+draws -> ?atc?es no match
+dreams -> ?atc?es no match
+explores -> ?atc?es no match
+follows -> ?atc?es no match
+forest -> ?atc?es no match
+found -> ?atc?es no match
+garden -> ?atc?es no match
+golden -> ?atc?es no match
+hatter -> ?atc?es no match
+hidden -> ?atc?es no match
+imagines -> ?atc?es no match
+in -> ?atc?es no match
+inside -> ?atc?es no match
+island -> ?atc?es no match
+key -> ?atc?es no match
+king -> ?atc?es no match
+knight -> ?atc?es no match
+library -> ?atc?es no match
+magical -> ?atc?es no match
+map -> ?atc?es no match
+message -> ?atc?es no match
+mirror -> ?atc?es no match
+mountain -> ?atc?es no match
+mouse -> ?atc?es no match
+mysterious -> ?atc?es no match
+near -> ?atc?es no match
+ocean -> ?atc?es no match
+palace -> ?atc?es no match
+potion -> ?atc?es no match
+princess -> ?atc?es no match
+puzzle -> ?atc?es no match
+queen -> ?atc?es no match
+rabbit -> ?atc?es no match
+reads -> ?atc?es no match
+school -> ?atc?es no match
+secret -> ?atc?es no match
+sees -> ?atc?es no match
+silver -> ?atc?es no match
+story -> ?atc?es no match
+strange -> ?atc?es no match
+student -> ?atc?es no match
+studies -> ?atc?es no match
+teacher -> ?atc?es no match
+the -> ?atc?es no match
+through -> ?atc?es no match
+tower -> ?atc?es no match
+treasure -> ?atc?es no match
+turtle -> ?atc?es no match
+under -> ?atc?es no match
+valley -> ?atc?es no match
+village -> ?atc?es no match
+watches -> ?atc?es match
+wise -> ?atc?es no match
+wizard -> ?atc?es no match
+wonderland -> ?atc?es no match
+writes -> ?atc?es no match
+
+Scan candidates for ?atc?es
+watches
+
+Check scan candidates against summary mappings
+
+watches
+a -> w new
+c -> a agrees
+j -> t agrees
+o -> c agrees
+f -> h new
+w -> e agrees
+l -> s agrees
+PASS
+add a -> w
+add f -> h
+
+choose watches
+
+Decoded phrase
+book cat mouse watches
+
+Answer: \boxed{book cat mouse watches}
+</think>
+\boxed{book cat mouse watches}

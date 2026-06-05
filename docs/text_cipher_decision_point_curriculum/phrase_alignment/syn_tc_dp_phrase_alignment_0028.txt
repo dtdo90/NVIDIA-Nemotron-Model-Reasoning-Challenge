@@ -1,0 +1,259 @@
+Problem syn_tc_dp_phrase_alignment_0028
+Bucket: phrase_alignment
+Gold answer: school above
+Note: phrase_strict_left_to_right_alignment
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+flnlyi -> palace
+fhkjhe -> potion
+milaw -> reads
+Now, decrypt the following text: wyqhhn lghbi
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+a -> d
+e -> n
+f -> p
+h -> o
+i -> e
+j -> i
+k -> t
+l -> a
+m -> r
+n -> l
+w -> s
+y -> c
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+wyqhhn lghbi
+
+Decode target words from character mappings
+
+wyqhhn
+w -> s
+y -> c
+q -> ? unknown
+h -> o
+h -> o
+n -> l
+
+Training target:
+wyqhhn -> sc?ool
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match sc?ool
+above -> sc?ool no match
+alice -> sc?ool no match
+ancient -> sc?ool no match
+around -> sc?ool no match
+beyond -> sc?ool no match
+bird -> sc?ool no match
+book -> sc?ool no match
+bright -> sc?ool no match
+castle -> sc?ool no match
+cat -> sc?ool no match
+cave -> sc?ool no match
+chases -> sc?ool no match
+clever -> sc?ool no match
+colorful -> sc?ool no match
+creates -> sc?ool no match
+crystal -> sc?ool no match
+curious -> sc?ool no match
+dark -> sc?ool no match
+discovers -> sc?ool no match
+door -> sc?ool no match
+dragon -> sc?ool no match
+draws -> sc?ool no match
+dreams -> sc?ool no match
+explores -> sc?ool no match
+follows -> sc?ool no match
+forest -> sc?ool no match
+found -> sc?ool no match
+garden -> sc?ool no match
+golden -> sc?ool no match
+hatter -> sc?ool no match
+hidden -> sc?ool no match
+imagines -> sc?ool no match
+in -> sc?ool no match
+inside -> sc?ool no match
+island -> sc?ool no match
+key -> sc?ool no match
+king -> sc?ool no match
+knight -> sc?ool no match
+library -> sc?ool no match
+magical -> sc?ool no match
+map -> sc?ool no match
+message -> sc?ool no match
+mirror -> sc?ool no match
+mountain -> sc?ool no match
+mouse -> sc?ool no match
+mysterious -> sc?ool no match
+near -> sc?ool no match
+ocean -> sc?ool no match
+palace -> sc?ool no match
+potion -> sc?ool no match
+princess -> sc?ool no match
+puzzle -> sc?ool no match
+queen -> sc?ool no match
+rabbit -> sc?ool no match
+reads -> sc?ool no match
+school -> sc?ool match
+secret -> sc?ool no match
+sees -> sc?ool no match
+silver -> sc?ool no match
+story -> sc?ool no match
+strange -> sc?ool no match
+student -> sc?ool no match
+studies -> sc?ool no match
+teacher -> sc?ool no match
+the -> sc?ool no match
+through -> sc?ool no match
+tower -> sc?ool no match
+treasure -> sc?ool no match
+turtle -> sc?ool no match
+under -> sc?ool no match
+valley -> sc?ool no match
+village -> sc?ool no match
+watches -> sc?ool no match
+wise -> sc?ool no match
+wizard -> sc?ool no match
+wonderland -> sc?ool no match
+writes -> sc?ool no match
+
+Scan candidates for sc?ool
+school
+
+Check scan candidates against summary mappings
+
+school
+w -> s agrees
+y -> c agrees
+q -> h new
+h -> o agrees
+h -> o agrees
+n -> l agrees
+PASS
+add q -> h
+
+choose school
+
+lghbi
+l -> a
+g -> ? unknown
+h -> o
+b -> ? unknown
+i -> e
+lghbi -> a?o?e
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match a?o?e
+above -> a?o?e match
+alice -> a?o?e no match
+ancient -> a?o?e no match
+around -> a?o?e no match
+beyond -> a?o?e no match
+bird -> a?o?e no match
+book -> a?o?e no match
+bright -> a?o?e no match
+castle -> a?o?e no match
+cat -> a?o?e no match
+cave -> a?o?e no match
+chases -> a?o?e no match
+clever -> a?o?e no match
+colorful -> a?o?e no match
+creates -> a?o?e no match
+crystal -> a?o?e no match
+curious -> a?o?e no match
+dark -> a?o?e no match
+discovers -> a?o?e no match
+door -> a?o?e no match
+dragon -> a?o?e no match
+draws -> a?o?e no match
+dreams -> a?o?e no match
+explores -> a?o?e no match
+follows -> a?o?e no match
+forest -> a?o?e no match
+found -> a?o?e no match
+garden -> a?o?e no match
+golden -> a?o?e no match
+hatter -> a?o?e no match
+hidden -> a?o?e no match
+imagines -> a?o?e no match
+in -> a?o?e no match
+inside -> a?o?e no match
+island -> a?o?e no match
+key -> a?o?e no match
+king -> a?o?e no match
+knight -> a?o?e no match
+library -> a?o?e no match
+magical -> a?o?e no match
+map -> a?o?e no match
+message -> a?o?e no match
+mirror -> a?o?e no match
+mountain -> a?o?e no match
+mouse -> a?o?e no match
+mysterious -> a?o?e no match
+near -> a?o?e no match
+ocean -> a?o?e no match
+palace -> a?o?e no match
+potion -> a?o?e no match
+princess -> a?o?e no match
+puzzle -> a?o?e no match
+queen -> a?o?e no match
+rabbit -> a?o?e no match
+reads -> a?o?e no match
+school -> a?o?e no match
+secret -> a?o?e no match
+sees -> a?o?e no match
+silver -> a?o?e no match
+story -> a?o?e no match
+strange -> a?o?e no match
+student -> a?o?e no match
+studies -> a?o?e no match
+teacher -> a?o?e no match
+the -> a?o?e no match
+through -> a?o?e no match
+tower -> a?o?e no match
+treasure -> a?o?e no match
+turtle -> a?o?e no match
+under -> a?o?e no match
+valley -> a?o?e no match
+village -> a?o?e no match
+watches -> a?o?e no match
+wise -> a?o?e no match
+wizard -> a?o?e no match
+wonderland -> a?o?e no match
+writes -> a?o?e no match
+
+Scan candidates for a?o?e
+above
+
+Check scan candidates against summary mappings
+
+above
+l -> a agrees
+g -> b new
+h -> o agrees
+b -> v new
+i -> e agrees
+PASS
+add g -> b
+add b -> v
+
+choose above
+
+Decoded phrase
+school above
+
+Answer: \boxed{school above}
+</think>
+\boxed{school above}

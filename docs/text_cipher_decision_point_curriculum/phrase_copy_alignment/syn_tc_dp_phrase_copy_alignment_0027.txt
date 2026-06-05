@@ -1,0 +1,104 @@
+Problem syn_tc_dp_phrase_copy_alignment_0027
+Bucket: phrase_copy_alignment
+Gold answer: puzzle tower studies
+Note: phrase_copy_exact_example_cipher_phrase
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+mqxxdg rtegp vrqywgv -> puzzle tower studies
+Now, decrypt the following text: mqxxdg rtegp vrqywgv
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+mqxxdg rtegp vrqywgv -> puzzle tower studies
+
+Training target:
+mqxxdg -> puzzle
+m -> p new
+q -> u new
+x -> z new
+x -> z agrees
+d -> l new
+g -> e new
+
+rtegp -> tower
+r -> t new
+t -> o new
+e -> w new
+g -> e agrees
+p -> r new
+
+vrqywgv -> studies
+v -> s new
+r -> t agrees
+q -> u agrees
+y -> d new
+w -> i new
+g -> e agrees
+v -> s agrees
+
+Summary character mappings
+d -> l
+e -> w
+g -> e
+m -> p
+p -> r
+q -> u
+r -> t
+t -> o
+v -> s
+w -> i
+x -> z
+y -> d
+
+Target text
+mqxxdg rtegp vrqywgv
+
+Decode target words from character mappings
+
+mqxxdg
+m -> p
+q -> u
+x -> z
+x -> z
+d -> l
+g -> e
+mqxxdg -> puzzle
+fully mapped
+
+choose puzzle
+
+rtegp
+r -> t
+t -> o
+e -> w
+g -> e
+p -> r
+rtegp -> tower
+fully mapped
+
+choose tower
+
+vrqywgv
+v -> s
+r -> t
+q -> u
+y -> d
+w -> i
+g -> e
+v -> s
+vrqywgv -> studies
+fully mapped
+
+choose studies
+
+Decoded phrase
+puzzle tower studies
+
+Answer: \boxed{puzzle tower studies}
+</think>
+\boxed{puzzle tower studies}

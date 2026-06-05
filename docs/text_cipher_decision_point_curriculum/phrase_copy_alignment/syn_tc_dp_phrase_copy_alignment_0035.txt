@@ -1,0 +1,146 @@
+Problem syn_tc_dp_phrase_copy_alignment_0035
+Bucket: phrase_copy_alignment
+Gold answer: ancient story cave discovers queen
+Note: phrase_copy_exact_example_cipher_phrase
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+nczwrcx txuvd zner lwtzuervt qmrrc -> ancient story cave discovers queen
+Now, decrypt the following text: nczwrcx txuvd zner lwtzuervt qmrrc
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+nczwrcx txuvd zner lwtzuervt qmrrc -> ancient story cave discovers queen
+
+Training target:
+nczwrcx -> ancient
+n -> a new
+c -> n new
+z -> c new
+w -> i new
+r -> e new
+c -> n agrees
+x -> t new
+
+txuvd -> story
+t -> s new
+x -> t agrees
+u -> o new
+v -> r new
+d -> y new
+
+zner -> cave
+z -> c agrees
+n -> a agrees
+e -> v new
+r -> e agrees
+
+lwtzuervt -> discovers
+l -> d new
+w -> i agrees
+t -> s agrees
+z -> c agrees
+u -> o agrees
+e -> v agrees
+r -> e agrees
+v -> r agrees
+t -> s agrees
+
+qmrrc -> queen
+q -> q new
+m -> u new
+r -> e agrees
+r -> e agrees
+c -> n agrees
+
+Summary character mappings
+c -> n
+d -> y
+e -> v
+l -> d
+m -> u
+n -> a
+q -> q
+r -> e
+t -> s
+u -> o
+v -> r
+w -> i
+x -> t
+z -> c
+
+Target text
+nczwrcx txuvd zner lwtzuervt qmrrc
+
+Decode target words from character mappings
+
+nczwrcx
+n -> a
+c -> n
+z -> c
+w -> i
+r -> e
+c -> n
+x -> t
+nczwrcx -> ancient
+fully mapped
+
+choose ancient
+
+txuvd
+t -> s
+x -> t
+u -> o
+v -> r
+d -> y
+txuvd -> story
+fully mapped
+
+choose story
+
+zner
+z -> c
+n -> a
+e -> v
+r -> e
+zner -> cave
+fully mapped
+
+choose cave
+
+lwtzuervt
+l -> d
+w -> i
+t -> s
+z -> c
+u -> o
+e -> v
+r -> e
+v -> r
+t -> s
+lwtzuervt -> discovers
+fully mapped
+
+choose discovers
+
+qmrrc
+q -> q
+m -> u
+r -> e
+r -> e
+c -> n
+qmrrc -> queen
+fully mapped
+
+choose queen
+
+Decoded phrase
+ancient story cave discovers queen
+
+Answer: \boxed{ancient story cave discovers queen}
+</think>
+\boxed{ancient story cave discovers queen}

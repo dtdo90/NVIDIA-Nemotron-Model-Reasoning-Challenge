@@ -1,0 +1,129 @@
+Problem syn_tc_dp_phrase_copy_alignment_0021
+Bucket: phrase_copy_alignment
+Gold answer: island forest through mirror
+Note: phrase_copy_exact_example_cipher_phrase
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+glfkdj pnbrli izbnxoz tgbbnb -> island forest through mirror
+Now, decrypt the following text: glfkdj pnbrli izbnxoz tgbbnb
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+glfkdj pnbrli izbnxoz tgbbnb -> island forest through mirror
+
+Training target:
+glfkdj -> island
+g -> i new
+l -> s new
+f -> l new
+k -> a new
+d -> n new
+j -> d new
+
+pnbrli -> forest
+p -> f new
+n -> o new
+b -> r new
+r -> e new
+l -> s agrees
+i -> t new
+
+izbnxoz -> through
+i -> t agrees
+z -> h new
+b -> r agrees
+n -> o agrees
+x -> u new
+o -> g new
+z -> h agrees
+
+tgbbnb -> mirror
+t -> m new
+g -> i agrees
+b -> r agrees
+b -> r agrees
+n -> o agrees
+b -> r agrees
+
+Summary character mappings
+b -> r
+d -> n
+f -> l
+g -> i
+i -> t
+j -> d
+k -> a
+l -> s
+n -> o
+o -> g
+p -> f
+r -> e
+t -> m
+x -> u
+z -> h
+
+Target text
+glfkdj pnbrli izbnxoz tgbbnb
+
+Decode target words from character mappings
+
+glfkdj
+g -> i
+l -> s
+f -> l
+k -> a
+d -> n
+j -> d
+glfkdj -> island
+fully mapped
+
+choose island
+
+pnbrli
+p -> f
+n -> o
+b -> r
+r -> e
+l -> s
+i -> t
+pnbrli -> forest
+fully mapped
+
+choose forest
+
+izbnxoz
+i -> t
+z -> h
+b -> r
+n -> o
+x -> u
+o -> g
+z -> h
+izbnxoz -> through
+fully mapped
+
+choose through
+
+tgbbnb
+t -> m
+g -> i
+b -> r
+b -> r
+n -> o
+b -> r
+tgbbnb -> mirror
+fully mapped
+
+choose mirror
+
+Decoded phrase
+island forest through mirror
+
+Answer: \boxed{island forest through mirror}
+</think>
+\boxed{island forest through mirror}

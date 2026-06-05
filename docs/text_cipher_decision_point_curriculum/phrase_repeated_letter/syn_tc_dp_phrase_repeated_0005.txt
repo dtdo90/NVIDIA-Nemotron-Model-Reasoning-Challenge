@@ -1,0 +1,180 @@
+Problem syn_tc_dp_phrase_repeated_0005
+Bucket: phrase_repeated_letter
+Gold answer: mountain wonderland
+Note: phrase_preserve_repeated_letter_pattern
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+eoot qcsqmf -> book turtle
+qojfs zsagqim -> tower crystal
+jpdisw -> wizard
+qfizkfs -> teacher
+Now, decrypt the following text: bocnqipn jonwfsminw
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+a -> y
+c -> u
+d -> z
+e -> b
+f -> e
+g -> s
+i -> a
+j -> w
+k -> h
+m -> l
+o -> o
+p -> i
+q -> t
+s -> r
+t -> k
+w -> d
+z -> c
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+bocnqipn jonwfsminw
+
+Decode target words from character mappings
+
+bocnqipn
+b -> ? unknown
+o -> o
+c -> u
+n -> ? unknown
+q -> t
+i -> a
+p -> i
+n -> ? unknown
+
+Training target:
+bocnqipn -> ?ou?tai?
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?ou?tai?
+above -> ?ou?tai? no match
+alice -> ?ou?tai? no match
+ancient -> ?ou?tai? no match
+around -> ?ou?tai? no match
+beyond -> ?ou?tai? no match
+bird -> ?ou?tai? no match
+book -> ?ou?tai? no match
+bright -> ?ou?tai? no match
+castle -> ?ou?tai? no match
+cat -> ?ou?tai? no match
+cave -> ?ou?tai? no match
+chases -> ?ou?tai? no match
+clever -> ?ou?tai? no match
+colorful -> ?ou?tai? no match
+creates -> ?ou?tai? no match
+crystal -> ?ou?tai? no match
+curious -> ?ou?tai? no match
+dark -> ?ou?tai? no match
+discovers -> ?ou?tai? no match
+door -> ?ou?tai? no match
+dragon -> ?ou?tai? no match
+draws -> ?ou?tai? no match
+dreams -> ?ou?tai? no match
+explores -> ?ou?tai? no match
+follows -> ?ou?tai? no match
+forest -> ?ou?tai? no match
+found -> ?ou?tai? no match
+garden -> ?ou?tai? no match
+golden -> ?ou?tai? no match
+hatter -> ?ou?tai? no match
+hidden -> ?ou?tai? no match
+imagines -> ?ou?tai? no match
+in -> ?ou?tai? no match
+inside -> ?ou?tai? no match
+island -> ?ou?tai? no match
+key -> ?ou?tai? no match
+king -> ?ou?tai? no match
+knight -> ?ou?tai? no match
+library -> ?ou?tai? no match
+magical -> ?ou?tai? no match
+map -> ?ou?tai? no match
+message -> ?ou?tai? no match
+mirror -> ?ou?tai? no match
+mountain -> ?ou?tai? match
+mouse -> ?ou?tai? no match
+mysterious -> ?ou?tai? no match
+near -> ?ou?tai? no match
+ocean -> ?ou?tai? no match
+palace -> ?ou?tai? no match
+potion -> ?ou?tai? no match
+princess -> ?ou?tai? no match
+puzzle -> ?ou?tai? no match
+queen -> ?ou?tai? no match
+rabbit -> ?ou?tai? no match
+reads -> ?ou?tai? no match
+school -> ?ou?tai? no match
+secret -> ?ou?tai? no match
+sees -> ?ou?tai? no match
+silver -> ?ou?tai? no match
+story -> ?ou?tai? no match
+strange -> ?ou?tai? no match
+student -> ?ou?tai? no match
+studies -> ?ou?tai? no match
+teacher -> ?ou?tai? no match
+the -> ?ou?tai? no match
+through -> ?ou?tai? no match
+tower -> ?ou?tai? no match
+treasure -> ?ou?tai? no match
+turtle -> ?ou?tai? no match
+under -> ?ou?tai? no match
+valley -> ?ou?tai? no match
+village -> ?ou?tai? no match
+watches -> ?ou?tai? no match
+wise -> ?ou?tai? no match
+wizard -> ?ou?tai? no match
+wonderland -> ?ou?tai? no match
+writes -> ?ou?tai? no match
+
+Scan candidates for ?ou?tai?
+mountain
+
+Check scan candidates against summary mappings
+
+mountain
+b -> m new
+o -> o agrees
+c -> u agrees
+n -> n new
+q -> t agrees
+i -> a agrees
+p -> i agrees
+n -> n new
+PASS
+add b -> m
+add n -> n
+
+choose mountain
+
+jonwfsminw
+j -> w
+o -> o
+n -> n
+w -> d
+f -> e
+s -> r
+m -> l
+i -> a
+n -> n
+w -> d
+jonwfsminw -> wonderland
+fully mapped
+
+choose wonderland
+
+Decoded phrase
+mountain wonderland
+
+Answer: \boxed{mountain wonderland}
+</think>
+\boxed{mountain wonderland}

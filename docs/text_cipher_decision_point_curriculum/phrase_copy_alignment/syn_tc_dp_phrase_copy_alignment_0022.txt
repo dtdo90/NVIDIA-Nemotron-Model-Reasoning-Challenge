@@ -1,0 +1,117 @@
+Problem syn_tc_dp_phrase_copy_alignment_0022
+Bucket: phrase_copy_alignment
+Gold answer: beyond above story reads
+Note: phrase_copy_exact_example_cipher_phrase
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+wrimfy lwmjr pomai arlyp -> beyond above story reads
+Now, decrypt the following text: wrimfy lwmjr pomai arlyp
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+wrimfy lwmjr pomai arlyp -> beyond above story reads
+
+Training target:
+wrimfy -> beyond
+w -> b new
+r -> e new
+i -> y new
+m -> o new
+f -> n new
+y -> d new
+
+lwmjr -> above
+l -> a new
+w -> b agrees
+m -> o agrees
+j -> v new
+r -> e agrees
+
+pomai -> story
+p -> s new
+o -> t new
+m -> o agrees
+a -> r new
+i -> y agrees
+
+arlyp -> reads
+a -> r agrees
+r -> e agrees
+l -> a agrees
+y -> d agrees
+p -> s agrees
+
+Summary character mappings
+a -> r
+f -> n
+i -> y
+j -> v
+l -> a
+m -> o
+o -> t
+p -> s
+r -> e
+w -> b
+y -> d
+
+Target text
+wrimfy lwmjr pomai arlyp
+
+Decode target words from character mappings
+
+wrimfy
+w -> b
+r -> e
+i -> y
+m -> o
+f -> n
+y -> d
+wrimfy -> beyond
+fully mapped
+
+choose beyond
+
+lwmjr
+l -> a
+w -> b
+m -> o
+j -> v
+r -> e
+lwmjr -> above
+fully mapped
+
+choose above
+
+pomai
+p -> s
+o -> t
+m -> o
+a -> r
+i -> y
+pomai -> story
+fully mapped
+
+choose story
+
+arlyp
+a -> r
+r -> e
+l -> a
+y -> d
+p -> s
+arlyp -> reads
+fully mapped
+
+choose reads
+
+Decoded phrase
+beyond above story reads
+
+Answer: \boxed{beyond above story reads}
+</think>
+\boxed{beyond above story reads}

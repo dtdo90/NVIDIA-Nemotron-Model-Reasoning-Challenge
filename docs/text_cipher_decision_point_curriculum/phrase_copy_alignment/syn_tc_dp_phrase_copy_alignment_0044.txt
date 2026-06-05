@@ -1,0 +1,72 @@
+Problem syn_tc_dp_phrase_copy_alignment_0044
+Bucket: phrase_copy_alignment
+Gold answer: palace cat
+Note: phrase_copy_exact_example_cipher_phrase
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+zmnmew emi -> palace cat
+Now, decrypt the following text: zmnmew emi
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+zmnmew emi -> palace cat
+
+Training target:
+zmnmew -> palace
+z -> p new
+m -> a new
+n -> l new
+m -> a agrees
+e -> c new
+w -> e new
+
+emi -> cat
+e -> c agrees
+m -> a agrees
+i -> t new
+
+Summary character mappings
+e -> c
+i -> t
+m -> a
+n -> l
+w -> e
+z -> p
+
+Target text
+zmnmew emi
+
+Decode target words from character mappings
+
+zmnmew
+z -> p
+m -> a
+n -> l
+m -> a
+e -> c
+w -> e
+zmnmew -> palace
+fully mapped
+
+choose palace
+
+emi
+e -> c
+m -> a
+i -> t
+emi -> cat
+fully mapped
+
+choose cat
+
+Decoded phrase
+palace cat
+
+Answer: \boxed{palace cat}
+</think>
+\boxed{palace cat}

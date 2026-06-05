@@ -1,0 +1,77 @@
+Problem syn_tc_dp_phrase_copy_alignment_0024
+Bucket: phrase_copy_alignment
+Gold answer: hatter tower
+Note: phrase_copy_exact_example_cipher_phrase
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+pnjjfe jzyfe -> hatter tower
+Now, decrypt the following text: pnjjfe jzyfe
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+pnjjfe jzyfe -> hatter tower
+
+Training target:
+pnjjfe -> hatter
+p -> h new
+n -> a new
+j -> t new
+j -> t agrees
+f -> e new
+e -> r new
+
+jzyfe -> tower
+j -> t agrees
+z -> o new
+y -> w new
+f -> e agrees
+e -> r agrees
+
+Summary character mappings
+e -> r
+f -> e
+j -> t
+n -> a
+p -> h
+y -> w
+z -> o
+
+Target text
+pnjjfe jzyfe
+
+Decode target words from character mappings
+
+pnjjfe
+p -> h
+n -> a
+j -> t
+j -> t
+f -> e
+e -> r
+pnjjfe -> hatter
+fully mapped
+
+choose hatter
+
+jzyfe
+j -> t
+z -> o
+y -> w
+f -> e
+e -> r
+jzyfe -> tower
+fully mapped
+
+choose tower
+
+Decoded phrase
+hatter tower
+
+Answer: \boxed{hatter tower}
+</think>
+\boxed{hatter tower}

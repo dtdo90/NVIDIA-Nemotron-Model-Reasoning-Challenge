@@ -1,0 +1,125 @@
+Problem syn_tc_dp_phrase_copy_alignment_0008
+Bucket: phrase_copy_alignment
+Gold answer: castle hatter through hatter
+Note: phrase_copy_exact_example_cipher_phrase
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+dzsypc lzyyck ylkguel lzyyck -> castle hatter through hatter
+Now, decrypt the following text: dzsypc lzyyck ylkguel lzyyck
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+dzsypc lzyyck ylkguel lzyyck -> castle hatter through hatter
+
+Training target:
+dzsypc -> castle
+d -> c new
+z -> a new
+s -> s new
+y -> t new
+p -> l new
+c -> e new
+
+lzyyck -> hatter
+l -> h new
+z -> a agrees
+y -> t agrees
+y -> t agrees
+c -> e agrees
+k -> r new
+
+ylkguel -> through
+y -> t agrees
+l -> h agrees
+k -> r agrees
+g -> o new
+u -> u new
+e -> g new
+l -> h agrees
+
+lzyyck -> hatter
+l -> h agrees
+z -> a agrees
+y -> t agrees
+y -> t agrees
+c -> e agrees
+k -> r agrees
+
+Summary character mappings
+c -> e
+d -> c
+e -> g
+g -> o
+k -> r
+l -> h
+p -> l
+s -> s
+u -> u
+y -> t
+z -> a
+
+Target text
+dzsypc lzyyck ylkguel lzyyck
+
+Decode target words from character mappings
+
+dzsypc
+d -> c
+z -> a
+s -> s
+y -> t
+p -> l
+c -> e
+dzsypc -> castle
+fully mapped
+
+choose castle
+
+lzyyck
+l -> h
+z -> a
+y -> t
+y -> t
+c -> e
+k -> r
+lzyyck -> hatter
+fully mapped
+
+choose hatter
+
+ylkguel
+y -> t
+l -> h
+k -> r
+g -> o
+u -> u
+e -> g
+l -> h
+ylkguel -> through
+fully mapped
+
+choose through
+
+lzyyck
+l -> h
+z -> a
+y -> t
+y -> t
+c -> e
+k -> r
+lzyyck -> hatter
+fully mapped
+
+choose hatter
+
+Decoded phrase
+castle hatter through hatter
+
+Answer: \boxed{castle hatter through hatter}
+</think>
+\boxed{castle hatter through hatter}

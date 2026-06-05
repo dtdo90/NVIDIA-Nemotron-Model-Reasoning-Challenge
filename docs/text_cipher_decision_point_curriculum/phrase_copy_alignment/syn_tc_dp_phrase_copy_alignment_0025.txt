@@ -1,0 +1,111 @@
+Problem syn_tc_dp_phrase_copy_alignment_0025
+Bucket: phrase_copy_alignment
+Gold answer: mountain follows inside
+Note: phrase_copy_exact_example_cipher_phrase
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+znovajcv mnllnts cvscex -> mountain follows inside
+Now, decrypt the following text: znovajcv mnllnts cvscex
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+znovajcv mnllnts cvscex -> mountain follows inside
+
+Training target:
+znovajcv -> mountain
+z -> m new
+n -> o new
+o -> u new
+v -> n new
+a -> t new
+j -> a new
+c -> i new
+v -> n agrees
+
+mnllnts -> follows
+m -> f new
+n -> o agrees
+l -> l new
+l -> l agrees
+n -> o agrees
+t -> w new
+s -> s new
+
+cvscex -> inside
+c -> i agrees
+v -> n agrees
+s -> s agrees
+c -> i agrees
+e -> d new
+x -> e new
+
+Summary character mappings
+a -> t
+c -> i
+e -> d
+j -> a
+l -> l
+m -> f
+n -> o
+o -> u
+s -> s
+t -> w
+v -> n
+x -> e
+z -> m
+
+Target text
+znovajcv mnllnts cvscex
+
+Decode target words from character mappings
+
+znovajcv
+z -> m
+n -> o
+o -> u
+v -> n
+a -> t
+j -> a
+c -> i
+v -> n
+znovajcv -> mountain
+fully mapped
+
+choose mountain
+
+mnllnts
+m -> f
+n -> o
+l -> l
+l -> l
+n -> o
+t -> w
+s -> s
+mnllnts -> follows
+fully mapped
+
+choose follows
+
+cvscex
+c -> i
+v -> n
+s -> s
+c -> i
+e -> d
+x -> e
+cvscex -> inside
+fully mapped
+
+choose inside
+
+Decoded phrase
+mountain follows inside
+
+Answer: \boxed{mountain follows inside}
+</think>
+\boxed{mountain follows inside}

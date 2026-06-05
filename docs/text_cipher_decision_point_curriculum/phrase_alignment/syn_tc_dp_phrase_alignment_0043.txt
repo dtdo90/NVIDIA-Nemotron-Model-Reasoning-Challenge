@@ -1,0 +1,193 @@
+Problem syn_tc_dp_phrase_alignment_0043
+Bucket: phrase_alignment
+Gold answer: dragon chases door school
+Note: phrase_strict_left_to_right_alignment
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+jpvhpe yrllpf -> secret valley
+wrevupj -> watches
+eup euhmxdu -> the through
+sro ureeph -> map hatter
+Now, decrypt the following text: ihrdmk vurjpj immh jvumml
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+d -> g
+e -> t
+f -> y
+h -> r
+j -> s
+l -> l
+m -> o
+o -> p
+p -> e
+r -> a
+s -> m
+u -> h
+v -> c
+w -> w
+x -> u
+y -> v
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+ihrdmk vurjpj immh jvumml
+
+Decode target words from character mappings
+
+ihrdmk
+i -> ? unknown
+h -> r
+r -> a
+d -> g
+m -> o
+k -> ? unknown
+
+Training target:
+ihrdmk -> ?rago?
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?rago?
+above -> ?rago? no match
+alice -> ?rago? no match
+ancient -> ?rago? no match
+around -> ?rago? no match
+beyond -> ?rago? no match
+bird -> ?rago? no match
+book -> ?rago? no match
+bright -> ?rago? no match
+castle -> ?rago? no match
+cat -> ?rago? no match
+cave -> ?rago? no match
+chases -> ?rago? no match
+clever -> ?rago? no match
+colorful -> ?rago? no match
+creates -> ?rago? no match
+crystal -> ?rago? no match
+curious -> ?rago? no match
+dark -> ?rago? no match
+discovers -> ?rago? no match
+door -> ?rago? no match
+dragon -> ?rago? match
+draws -> ?rago? no match
+dreams -> ?rago? no match
+explores -> ?rago? no match
+follows -> ?rago? no match
+forest -> ?rago? no match
+found -> ?rago? no match
+garden -> ?rago? no match
+golden -> ?rago? no match
+hatter -> ?rago? no match
+hidden -> ?rago? no match
+imagines -> ?rago? no match
+in -> ?rago? no match
+inside -> ?rago? no match
+island -> ?rago? no match
+key -> ?rago? no match
+king -> ?rago? no match
+knight -> ?rago? no match
+library -> ?rago? no match
+magical -> ?rago? no match
+map -> ?rago? no match
+message -> ?rago? no match
+mirror -> ?rago? no match
+mountain -> ?rago? no match
+mouse -> ?rago? no match
+mysterious -> ?rago? no match
+near -> ?rago? no match
+ocean -> ?rago? no match
+palace -> ?rago? no match
+potion -> ?rago? no match
+princess -> ?rago? no match
+puzzle -> ?rago? no match
+queen -> ?rago? no match
+rabbit -> ?rago? no match
+reads -> ?rago? no match
+school -> ?rago? no match
+secret -> ?rago? no match
+sees -> ?rago? no match
+silver -> ?rago? no match
+story -> ?rago? no match
+strange -> ?rago? no match
+student -> ?rago? no match
+studies -> ?rago? no match
+teacher -> ?rago? no match
+the -> ?rago? no match
+through -> ?rago? no match
+tower -> ?rago? no match
+treasure -> ?rago? no match
+turtle -> ?rago? no match
+under -> ?rago? no match
+valley -> ?rago? no match
+village -> ?rago? no match
+watches -> ?rago? no match
+wise -> ?rago? no match
+wizard -> ?rago? no match
+wonderland -> ?rago? no match
+writes -> ?rago? no match
+
+Scan candidates for ?rago?
+dragon
+
+Check scan candidates against summary mappings
+
+dragon
+i -> d new
+h -> r agrees
+r -> a agrees
+d -> g agrees
+m -> o agrees
+k -> n new
+PASS
+add i -> d
+add k -> n
+
+choose dragon
+
+vurjpj
+v -> c
+u -> h
+r -> a
+j -> s
+p -> e
+j -> s
+vurjpj -> chases
+fully mapped
+
+choose chases
+
+immh
+i -> d
+m -> o
+m -> o
+h -> r
+immh -> door
+fully mapped
+
+choose door
+
+jvumml
+j -> s
+v -> c
+u -> h
+m -> o
+m -> o
+l -> l
+jvumml -> school
+fully mapped
+
+choose school
+
+Decoded phrase
+dragon chases door school
+
+Answer: \boxed{dragon chases door school}
+</think>
+\boxed{dragon chases door school}

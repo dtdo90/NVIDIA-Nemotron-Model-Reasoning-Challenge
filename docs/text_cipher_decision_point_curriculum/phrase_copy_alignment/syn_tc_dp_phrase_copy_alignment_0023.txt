@@ -1,0 +1,88 @@
+Problem syn_tc_dp_phrase_copy_alignment_0023
+Bucket: phrase_copy_alignment
+Gold answer: wonderland found
+Note: phrase_copy_exact_example_cipher_phrase
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+qjlfgidalf xjnlf -> wonderland found
+Now, decrypt the following text: qjlfgidalf xjnlf
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+qjlfgidalf xjnlf -> wonderland found
+
+Training target:
+qjlfgidalf -> wonderland
+q -> w new
+j -> o new
+l -> n new
+f -> d new
+g -> e new
+i -> r new
+d -> l new
+a -> a new
+l -> n agrees
+f -> d agrees
+
+xjnlf -> found
+x -> f new
+j -> o agrees
+n -> u new
+l -> n agrees
+f -> d agrees
+
+Summary character mappings
+a -> a
+d -> l
+f -> d
+g -> e
+i -> r
+j -> o
+l -> n
+n -> u
+q -> w
+x -> f
+
+Target text
+qjlfgidalf xjnlf
+
+Decode target words from character mappings
+
+qjlfgidalf
+q -> w
+j -> o
+l -> n
+f -> d
+g -> e
+i -> r
+d -> l
+a -> a
+l -> n
+f -> d
+qjlfgidalf -> wonderland
+fully mapped
+
+choose wonderland
+
+xjnlf
+x -> f
+j -> o
+n -> u
+l -> n
+f -> d
+xjnlf -> found
+fully mapped
+
+choose found
+
+Decoded phrase
+wonderland found
+
+Answer: \boxed{wonderland found}
+</think>
+\boxed{wonderland found}

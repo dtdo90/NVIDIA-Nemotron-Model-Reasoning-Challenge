@@ -1,0 +1,397 @@
+Problem syn_tc_dp_phrase_reject_failed_0051
+Bucket: phrase_reject_failed_candidate
+Gold answer: book mysterious tower knight
+Note: phrase_candidate_conflict_rejection
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+nwhewr slmwe -> secret under
+eizzvr rwihpwe -> rabbit teacher
+lwie uvyyicw -> near village
+hewirwn vdicvlwn -> creates imagines
+Now, decrypt the following text: zqqx dgnrwevqsn rqkwe xlvcpr
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+c -> g
+d -> m
+e -> r
+h -> c
+i -> a
+l -> n
+m -> d
+n -> s
+p -> h
+r -> t
+s -> u
+u -> v
+v -> i
+w -> e
+y -> l
+z -> b
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+zqqx dgnrwevqsn rqkwe xlvcpr
+
+Decode target words from character mappings
+
+zqqx
+z -> b
+q -> ? unknown
+q -> ? unknown
+x -> ? unknown
+
+Training target:
+zqqx -> b???
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match b???
+above -> b??? no match
+alice -> b??? no match
+ancient -> b??? no match
+around -> b??? no match
+beyond -> b??? no match
+bird -> b??? match
+book -> b??? match
+bright -> b??? no match
+castle -> b??? no match
+cat -> b??? no match
+cave -> b??? no match
+chases -> b??? no match
+clever -> b??? no match
+colorful -> b??? no match
+creates -> b??? no match
+crystal -> b??? no match
+curious -> b??? no match
+dark -> b??? no match
+discovers -> b??? no match
+door -> b??? no match
+dragon -> b??? no match
+draws -> b??? no match
+dreams -> b??? no match
+explores -> b??? no match
+follows -> b??? no match
+forest -> b??? no match
+found -> b??? no match
+garden -> b??? no match
+golden -> b??? no match
+hatter -> b??? no match
+hidden -> b??? no match
+imagines -> b??? no match
+in -> b??? no match
+inside -> b??? no match
+island -> b??? no match
+key -> b??? no match
+king -> b??? no match
+knight -> b??? no match
+library -> b??? no match
+magical -> b??? no match
+map -> b??? no match
+message -> b??? no match
+mirror -> b??? no match
+mountain -> b??? no match
+mouse -> b??? no match
+mysterious -> b??? no match
+near -> b??? no match
+ocean -> b??? no match
+palace -> b??? no match
+potion -> b??? no match
+princess -> b??? no match
+puzzle -> b??? no match
+queen -> b??? no match
+rabbit -> b??? no match
+reads -> b??? no match
+school -> b??? no match
+secret -> b??? no match
+sees -> b??? no match
+silver -> b??? no match
+story -> b??? no match
+strange -> b??? no match
+student -> b??? no match
+studies -> b??? no match
+teacher -> b??? no match
+the -> b??? no match
+through -> b??? no match
+tower -> b??? no match
+treasure -> b??? no match
+turtle -> b??? no match
+under -> b??? no match
+valley -> b??? no match
+village -> b??? no match
+watches -> b??? no match
+wise -> b??? no match
+wizard -> b??? no match
+wonderland -> b??? no match
+writes -> b??? no match
+
+Scan candidates for b???
+bird, book
+
+Check scan candidates against summary mappings
+
+bird
+z -> b agrees
+q -> i conflicts
+v -> i already exists
+q -> r conflicts
+e -> r already exists
+x -> d conflicts
+m -> d already exists
+FAIL
+
+book
+z -> b agrees
+q -> o new
+q -> o new
+x -> k new
+PASS
+add q -> o
+add x -> k
+
+choose book
+
+dgnrwevqsn
+d -> m
+g -> ? unknown
+n -> s
+r -> t
+w -> e
+e -> r
+v -> i
+q -> o
+s -> u
+n -> s
+dgnrwevqsn -> m?sterious
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match m?sterious
+above -> m?sterious no match
+alice -> m?sterious no match
+ancient -> m?sterious no match
+around -> m?sterious no match
+beyond -> m?sterious no match
+bird -> m?sterious no match
+book -> m?sterious no match
+bright -> m?sterious no match
+castle -> m?sterious no match
+cat -> m?sterious no match
+cave -> m?sterious no match
+chases -> m?sterious no match
+clever -> m?sterious no match
+colorful -> m?sterious no match
+creates -> m?sterious no match
+crystal -> m?sterious no match
+curious -> m?sterious no match
+dark -> m?sterious no match
+discovers -> m?sterious no match
+door -> m?sterious no match
+dragon -> m?sterious no match
+draws -> m?sterious no match
+dreams -> m?sterious no match
+explores -> m?sterious no match
+follows -> m?sterious no match
+forest -> m?sterious no match
+found -> m?sterious no match
+garden -> m?sterious no match
+golden -> m?sterious no match
+hatter -> m?sterious no match
+hidden -> m?sterious no match
+imagines -> m?sterious no match
+in -> m?sterious no match
+inside -> m?sterious no match
+island -> m?sterious no match
+key -> m?sterious no match
+king -> m?sterious no match
+knight -> m?sterious no match
+library -> m?sterious no match
+magical -> m?sterious no match
+map -> m?sterious no match
+message -> m?sterious no match
+mirror -> m?sterious no match
+mountain -> m?sterious no match
+mouse -> m?sterious no match
+mysterious -> m?sterious match
+near -> m?sterious no match
+ocean -> m?sterious no match
+palace -> m?sterious no match
+potion -> m?sterious no match
+princess -> m?sterious no match
+puzzle -> m?sterious no match
+queen -> m?sterious no match
+rabbit -> m?sterious no match
+reads -> m?sterious no match
+school -> m?sterious no match
+secret -> m?sterious no match
+sees -> m?sterious no match
+silver -> m?sterious no match
+story -> m?sterious no match
+strange -> m?sterious no match
+student -> m?sterious no match
+studies -> m?sterious no match
+teacher -> m?sterious no match
+the -> m?sterious no match
+through -> m?sterious no match
+tower -> m?sterious no match
+treasure -> m?sterious no match
+turtle -> m?sterious no match
+under -> m?sterious no match
+valley -> m?sterious no match
+village -> m?sterious no match
+watches -> m?sterious no match
+wise -> m?sterious no match
+wizard -> m?sterious no match
+wonderland -> m?sterious no match
+writes -> m?sterious no match
+
+Scan candidates for m?sterious
+mysterious
+
+Check scan candidates against summary mappings
+
+mysterious
+d -> m agrees
+g -> y new
+n -> s agrees
+r -> t agrees
+w -> e agrees
+e -> r agrees
+v -> i agrees
+q -> o agrees
+s -> u agrees
+n -> s agrees
+PASS
+add g -> y
+
+choose mysterious
+
+rqkwe
+r -> t
+q -> o
+k -> ? unknown
+w -> e
+e -> r
+rqkwe -> to?er
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match to?er
+above -> to?er no match
+alice -> to?er no match
+ancient -> to?er no match
+around -> to?er no match
+beyond -> to?er no match
+bird -> to?er no match
+book -> to?er no match
+bright -> to?er no match
+castle -> to?er no match
+cat -> to?er no match
+cave -> to?er no match
+chases -> to?er no match
+clever -> to?er no match
+colorful -> to?er no match
+creates -> to?er no match
+crystal -> to?er no match
+curious -> to?er no match
+dark -> to?er no match
+discovers -> to?er no match
+door -> to?er no match
+dragon -> to?er no match
+draws -> to?er no match
+dreams -> to?er no match
+explores -> to?er no match
+follows -> to?er no match
+forest -> to?er no match
+found -> to?er no match
+garden -> to?er no match
+golden -> to?er no match
+hatter -> to?er no match
+hidden -> to?er no match
+imagines -> to?er no match
+in -> to?er no match
+inside -> to?er no match
+island -> to?er no match
+key -> to?er no match
+king -> to?er no match
+knight -> to?er no match
+library -> to?er no match
+magical -> to?er no match
+map -> to?er no match
+message -> to?er no match
+mirror -> to?er no match
+mountain -> to?er no match
+mouse -> to?er no match
+mysterious -> to?er no match
+near -> to?er no match
+ocean -> to?er no match
+palace -> to?er no match
+potion -> to?er no match
+princess -> to?er no match
+puzzle -> to?er no match
+queen -> to?er no match
+rabbit -> to?er no match
+reads -> to?er no match
+school -> to?er no match
+secret -> to?er no match
+sees -> to?er no match
+silver -> to?er no match
+story -> to?er no match
+strange -> to?er no match
+student -> to?er no match
+studies -> to?er no match
+teacher -> to?er no match
+the -> to?er no match
+through -> to?er no match
+tower -> to?er match
+treasure -> to?er no match
+turtle -> to?er no match
+under -> to?er no match
+valley -> to?er no match
+village -> to?er no match
+watches -> to?er no match
+wise -> to?er no match
+wizard -> to?er no match
+wonderland -> to?er no match
+writes -> to?er no match
+
+Scan candidates for to?er
+tower
+
+Check scan candidates against summary mappings
+
+tower
+r -> t agrees
+q -> o agrees
+k -> w new
+w -> e agrees
+e -> r agrees
+PASS
+add k -> w
+
+choose tower
+
+xlvcpr
+x -> k
+l -> n
+v -> i
+c -> g
+p -> h
+r -> t
+xlvcpr -> knight
+fully mapped
+
+choose knight
+
+Decoded phrase
+book mysterious tower knight
+
+Answer: \boxed{book mysterious tower knight}
+</think>
+\boxed{book mysterious tower knight}

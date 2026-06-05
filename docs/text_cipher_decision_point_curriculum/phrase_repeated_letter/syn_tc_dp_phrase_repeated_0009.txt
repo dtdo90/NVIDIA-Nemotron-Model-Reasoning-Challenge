@@ -1,0 +1,210 @@
+Problem syn_tc_dp_phrase_repeated_0009
+Bucket: phrase_repeated_letter
+Gold answer: potion mirror student creates dragon
+Note: phrase_preserve_repeated_letter_pattern
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+asccw zjrh -> queen dark
+vlppjbc zrcjxk -> village dreams
+olkc npcvcr -> wise clever
+nje -> cat
+Now, decrypt the following text: dqelqw xlrrqr keszcwe nrcjeck zrjbqw
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+a -> q
+b -> g
+c -> e
+e -> t
+h -> k
+j -> a
+k -> s
+l -> i
+n -> c
+o -> w
+p -> l
+r -> r
+s -> u
+v -> v
+w -> n
+x -> m
+z -> d
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+dqelqw xlrrqr keszcwe nrcjeck zrjbqw
+
+Decode target words from character mappings
+
+dqelqw
+d -> ? unknown
+q -> ? unknown
+e -> t
+l -> i
+q -> ? unknown
+w -> n
+
+Training target:
+dqelqw -> ??ti?n
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ??ti?n
+above -> ??ti?n no match
+alice -> ??ti?n no match
+ancient -> ??ti?n no match
+around -> ??ti?n no match
+beyond -> ??ti?n no match
+bird -> ??ti?n no match
+book -> ??ti?n no match
+bright -> ??ti?n no match
+castle -> ??ti?n no match
+cat -> ??ti?n no match
+cave -> ??ti?n no match
+chases -> ??ti?n no match
+clever -> ??ti?n no match
+colorful -> ??ti?n no match
+creates -> ??ti?n no match
+crystal -> ??ti?n no match
+curious -> ??ti?n no match
+dark -> ??ti?n no match
+discovers -> ??ti?n no match
+door -> ??ti?n no match
+dragon -> ??ti?n no match
+draws -> ??ti?n no match
+dreams -> ??ti?n no match
+explores -> ??ti?n no match
+follows -> ??ti?n no match
+forest -> ??ti?n no match
+found -> ??ti?n no match
+garden -> ??ti?n no match
+golden -> ??ti?n no match
+hatter -> ??ti?n no match
+hidden -> ??ti?n no match
+imagines -> ??ti?n no match
+in -> ??ti?n no match
+inside -> ??ti?n no match
+island -> ??ti?n no match
+key -> ??ti?n no match
+king -> ??ti?n no match
+knight -> ??ti?n no match
+library -> ??ti?n no match
+magical -> ??ti?n no match
+map -> ??ti?n no match
+message -> ??ti?n no match
+mirror -> ??ti?n no match
+mountain -> ??ti?n no match
+mouse -> ??ti?n no match
+mysterious -> ??ti?n no match
+near -> ??ti?n no match
+ocean -> ??ti?n no match
+palace -> ??ti?n no match
+potion -> ??ti?n match
+princess -> ??ti?n no match
+puzzle -> ??ti?n no match
+queen -> ??ti?n no match
+rabbit -> ??ti?n no match
+reads -> ??ti?n no match
+school -> ??ti?n no match
+secret -> ??ti?n no match
+sees -> ??ti?n no match
+silver -> ??ti?n no match
+story -> ??ti?n no match
+strange -> ??ti?n no match
+student -> ??ti?n no match
+studies -> ??ti?n no match
+teacher -> ??ti?n no match
+the -> ??ti?n no match
+through -> ??ti?n no match
+tower -> ??ti?n no match
+treasure -> ??ti?n no match
+turtle -> ??ti?n no match
+under -> ??ti?n no match
+valley -> ??ti?n no match
+village -> ??ti?n no match
+watches -> ??ti?n no match
+wise -> ??ti?n no match
+wizard -> ??ti?n no match
+wonderland -> ??ti?n no match
+writes -> ??ti?n no match
+
+Scan candidates for ??ti?n
+potion
+
+Check scan candidates against summary mappings
+
+potion
+d -> p new
+q -> o new
+e -> t agrees
+l -> i agrees
+q -> o new
+w -> n agrees
+PASS
+add d -> p
+add q -> o
+
+choose potion
+
+xlrrqr
+x -> m
+l -> i
+r -> r
+r -> r
+q -> o
+r -> r
+xlrrqr -> mirror
+fully mapped
+
+choose mirror
+
+keszcwe
+k -> s
+e -> t
+s -> u
+z -> d
+c -> e
+w -> n
+e -> t
+keszcwe -> student
+fully mapped
+
+choose student
+
+nrcjeck
+n -> c
+r -> r
+c -> e
+j -> a
+e -> t
+c -> e
+k -> s
+nrcjeck -> creates
+fully mapped
+
+choose creates
+
+zrjbqw
+z -> d
+r -> r
+j -> a
+b -> g
+q -> o
+w -> n
+zrjbqw -> dragon
+fully mapped
+
+choose dragon
+
+Decoded phrase
+potion mirror student creates dragon
+
+Answer: \boxed{potion mirror student creates dragon}
+</think>
+\boxed{potion mirror student creates dragon}

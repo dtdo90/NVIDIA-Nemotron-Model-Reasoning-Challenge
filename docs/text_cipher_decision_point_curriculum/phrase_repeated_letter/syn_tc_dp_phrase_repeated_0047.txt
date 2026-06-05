@@ -1,0 +1,182 @@
+Problem syn_tc_dp_phrase_repeated_0047
+Bucket: phrase_repeated_letter
+Gold answer: rabbit mountain ocean
+Note: phrase_preserve_repeated_letter_pattern
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+eyrtjl -> knight
+qsl loksvxok -> cat treasure
+qxorcxv -> curious
+rfstrykv fzvlkorcxv -> imagines mysterious
+Now, decrypt the following text: osddrl fcxylsry cqksy
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+c -> o
+e -> k
+f -> m
+j -> h
+k -> e
+l -> t
+o -> r
+q -> c
+r -> i
+s -> a
+t -> g
+v -> s
+x -> u
+y -> n
+z -> y
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+osddrl fcxylsry cqksy
+
+Decode target words from character mappings
+
+osddrl
+o -> r
+s -> a
+d -> ? unknown
+d -> ? unknown
+r -> i
+l -> t
+
+Training target:
+osddrl -> ra??it
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ra??it
+above -> ra??it no match
+alice -> ra??it no match
+ancient -> ra??it no match
+around -> ra??it no match
+beyond -> ra??it no match
+bird -> ra??it no match
+book -> ra??it no match
+bright -> ra??it no match
+castle -> ra??it no match
+cat -> ra??it no match
+cave -> ra??it no match
+chases -> ra??it no match
+clever -> ra??it no match
+colorful -> ra??it no match
+creates -> ra??it no match
+crystal -> ra??it no match
+curious -> ra??it no match
+dark -> ra??it no match
+discovers -> ra??it no match
+door -> ra??it no match
+dragon -> ra??it no match
+draws -> ra??it no match
+dreams -> ra??it no match
+explores -> ra??it no match
+follows -> ra??it no match
+forest -> ra??it no match
+found -> ra??it no match
+garden -> ra??it no match
+golden -> ra??it no match
+hatter -> ra??it no match
+hidden -> ra??it no match
+imagines -> ra??it no match
+in -> ra??it no match
+inside -> ra??it no match
+island -> ra??it no match
+key -> ra??it no match
+king -> ra??it no match
+knight -> ra??it no match
+library -> ra??it no match
+magical -> ra??it no match
+map -> ra??it no match
+message -> ra??it no match
+mirror -> ra??it no match
+mountain -> ra??it no match
+mouse -> ra??it no match
+mysterious -> ra??it no match
+near -> ra??it no match
+ocean -> ra??it no match
+palace -> ra??it no match
+potion -> ra??it no match
+princess -> ra??it no match
+puzzle -> ra??it no match
+queen -> ra??it no match
+rabbit -> ra??it match
+reads -> ra??it no match
+school -> ra??it no match
+secret -> ra??it no match
+sees -> ra??it no match
+silver -> ra??it no match
+story -> ra??it no match
+strange -> ra??it no match
+student -> ra??it no match
+studies -> ra??it no match
+teacher -> ra??it no match
+the -> ra??it no match
+through -> ra??it no match
+tower -> ra??it no match
+treasure -> ra??it no match
+turtle -> ra??it no match
+under -> ra??it no match
+valley -> ra??it no match
+village -> ra??it no match
+watches -> ra??it no match
+wise -> ra??it no match
+wizard -> ra??it no match
+wonderland -> ra??it no match
+writes -> ra??it no match
+
+Scan candidates for ra??it
+rabbit
+
+Check scan candidates against summary mappings
+
+rabbit
+o -> r agrees
+s -> a agrees
+d -> b new
+d -> b new
+r -> i agrees
+l -> t agrees
+PASS
+add d -> b
+
+choose rabbit
+
+fcxylsry
+f -> m
+c -> o
+x -> u
+y -> n
+l -> t
+s -> a
+r -> i
+y -> n
+fcxylsry -> mountain
+fully mapped
+
+choose mountain
+
+cqksy
+c -> o
+q -> c
+k -> e
+s -> a
+y -> n
+cqksy -> ocean
+fully mapped
+
+choose ocean
+
+Decoded phrase
+rabbit mountain ocean
+
+Answer: \boxed{rabbit mountain ocean}
+</think>
+\boxed{rabbit mountain ocean}

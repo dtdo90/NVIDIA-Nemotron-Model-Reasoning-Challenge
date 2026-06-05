@@ -1,0 +1,80 @@
+Problem syn_tc_dp_phrase_copy_alignment_0037
+Bucket: phrase_copy_alignment
+Gold answer: turtle forest
+Note: phrase_copy_exact_example_cipher_phrase
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+qfnqib hvnbjq -> turtle forest
+Now, decrypt the following text: qfnqib hvnbjq
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+qfnqib hvnbjq -> turtle forest
+
+Training target:
+qfnqib -> turtle
+q -> t new
+f -> u new
+n -> r new
+q -> t agrees
+i -> l new
+b -> e new
+
+hvnbjq -> forest
+h -> f new
+v -> o new
+n -> r agrees
+b -> e agrees
+j -> s new
+q -> t agrees
+
+Summary character mappings
+b -> e
+f -> u
+h -> f
+i -> l
+j -> s
+n -> r
+q -> t
+v -> o
+
+Target text
+qfnqib hvnbjq
+
+Decode target words from character mappings
+
+qfnqib
+q -> t
+f -> u
+n -> r
+q -> t
+i -> l
+b -> e
+qfnqib -> turtle
+fully mapped
+
+choose turtle
+
+hvnbjq
+h -> f
+v -> o
+n -> r
+b -> e
+j -> s
+q -> t
+hvnbjq -> forest
+fully mapped
+
+choose forest
+
+Decoded phrase
+turtle forest
+
+Answer: \boxed{turtle forest}
+</think>
+\boxed{turtle forest}

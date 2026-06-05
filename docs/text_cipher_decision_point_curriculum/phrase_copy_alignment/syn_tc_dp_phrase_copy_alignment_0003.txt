@@ -1,0 +1,99 @@
+Problem syn_tc_dp_phrase_copy_alignment_0003
+Bucket: phrase_copy_alignment
+Gold answer: potion silver wise
+Note: phrase_copy_exact_example_cipher_phrase
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+mjxtjd atbghz rtah -> potion silver wise
+Now, decrypt the following text: mjxtjd atbghz rtah
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+mjxtjd atbghz rtah -> potion silver wise
+
+Training target:
+mjxtjd -> potion
+m -> p new
+j -> o new
+x -> t new
+t -> i new
+j -> o agrees
+d -> n new
+
+atbghz -> silver
+a -> s new
+t -> i agrees
+b -> l new
+g -> v new
+h -> e new
+z -> r new
+
+rtah -> wise
+r -> w new
+t -> i agrees
+a -> s agrees
+h -> e agrees
+
+Summary character mappings
+a -> s
+b -> l
+d -> n
+g -> v
+h -> e
+j -> o
+m -> p
+r -> w
+t -> i
+x -> t
+z -> r
+
+Target text
+mjxtjd atbghz rtah
+
+Decode target words from character mappings
+
+mjxtjd
+m -> p
+j -> o
+x -> t
+t -> i
+j -> o
+d -> n
+mjxtjd -> potion
+fully mapped
+
+choose potion
+
+atbghz
+a -> s
+t -> i
+b -> l
+g -> v
+h -> e
+z -> r
+atbghz -> silver
+fully mapped
+
+choose silver
+
+rtah
+r -> w
+t -> i
+a -> s
+h -> e
+rtah -> wise
+fully mapped
+
+choose wise
+
+Decoded phrase
+potion silver wise
+
+Answer: \boxed{potion silver wise}
+</think>
+\boxed{potion silver wise}

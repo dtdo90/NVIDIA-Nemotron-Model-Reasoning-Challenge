@@ -1,0 +1,129 @@
+Problem syn_tc_dp_phrase_copy_alignment_0010
+Bucket: phrase_copy_alignment
+Gold answer: king discovers garden message
+Note: phrase_copy_exact_example_cipher_phrase
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+qbuf jbwkhcsyw fgyjsu zswwgfs -> king discovers garden message
+Now, decrypt the following text: qbuf jbwkhcsyw fgyjsu zswwgfs
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+qbuf jbwkhcsyw fgyjsu zswwgfs -> king discovers garden message
+
+Training target:
+qbuf -> king
+q -> k new
+b -> i new
+u -> n new
+f -> g new
+
+jbwkhcsyw -> discovers
+j -> d new
+b -> i agrees
+w -> s new
+k -> c new
+h -> o new
+c -> v new
+s -> e new
+y -> r new
+w -> s agrees
+
+fgyjsu -> garden
+f -> g agrees
+g -> a new
+y -> r agrees
+j -> d agrees
+s -> e agrees
+u -> n agrees
+
+zswwgfs -> message
+z -> m new
+s -> e agrees
+w -> s agrees
+w -> s agrees
+g -> a agrees
+f -> g agrees
+s -> e agrees
+
+Summary character mappings
+b -> i
+c -> v
+f -> g
+g -> a
+h -> o
+j -> d
+k -> c
+q -> k
+s -> e
+u -> n
+w -> s
+y -> r
+z -> m
+
+Target text
+qbuf jbwkhcsyw fgyjsu zswwgfs
+
+Decode target words from character mappings
+
+qbuf
+q -> k
+b -> i
+u -> n
+f -> g
+qbuf -> king
+fully mapped
+
+choose king
+
+jbwkhcsyw
+j -> d
+b -> i
+w -> s
+k -> c
+h -> o
+c -> v
+s -> e
+y -> r
+w -> s
+jbwkhcsyw -> discovers
+fully mapped
+
+choose discovers
+
+fgyjsu
+f -> g
+g -> a
+y -> r
+j -> d
+s -> e
+u -> n
+fgyjsu -> garden
+fully mapped
+
+choose garden
+
+zswwgfs
+z -> m
+s -> e
+w -> s
+w -> s
+g -> a
+f -> g
+s -> e
+zswwgfs -> message
+fully mapped
+
+choose message
+
+Decoded phrase
+king discovers garden message
+
+Answer: \boxed{king discovers garden message}
+</think>
+\boxed{king discovers garden message}

@@ -1,0 +1,128 @@
+Problem syn_tc_dp_phrase_copy_alignment_0036
+Bucket: phrase_copy_alignment
+Gold answer: colorful draws wise princess
+Note: phrase_copy_exact_example_cipher_phrase
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+nwvwuepv oujst sgti zuglnitt -> colorful draws wise princess
+Now, decrypt the following text: nwvwuepv oujst sgti zuglnitt
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+nwvwuepv oujst sgti zuglnitt -> colorful draws wise princess
+
+Training target:
+nwvwuepv -> colorful
+n -> c new
+w -> o new
+v -> l new
+w -> o agrees
+u -> r new
+e -> f new
+p -> u new
+v -> l agrees
+
+oujst -> draws
+o -> d new
+u -> r agrees
+j -> a new
+s -> w new
+t -> s new
+
+sgti -> wise
+s -> w agrees
+g -> i new
+t -> s agrees
+i -> e new
+
+zuglnitt -> princess
+z -> p new
+u -> r agrees
+g -> i agrees
+l -> n new
+n -> c agrees
+i -> e agrees
+t -> s agrees
+t -> s agrees
+
+Summary character mappings
+e -> f
+g -> i
+i -> e
+j -> a
+l -> n
+n -> c
+o -> d
+p -> u
+s -> w
+t -> s
+u -> r
+v -> l
+w -> o
+z -> p
+
+Target text
+nwvwuepv oujst sgti zuglnitt
+
+Decode target words from character mappings
+
+nwvwuepv
+n -> c
+w -> o
+v -> l
+w -> o
+u -> r
+e -> f
+p -> u
+v -> l
+nwvwuepv -> colorful
+fully mapped
+
+choose colorful
+
+oujst
+o -> d
+u -> r
+j -> a
+s -> w
+t -> s
+oujst -> draws
+fully mapped
+
+choose draws
+
+sgti
+s -> w
+g -> i
+t -> s
+i -> e
+sgti -> wise
+fully mapped
+
+choose wise
+
+zuglnitt
+z -> p
+u -> r
+g -> i
+l -> n
+n -> c
+i -> e
+t -> s
+t -> s
+zuglnitt -> princess
+fully mapped
+
+choose princess
+
+Decoded phrase
+colorful draws wise princess
+
+Answer: \boxed{colorful draws wise princess}
+</think>
+\boxed{colorful draws wise princess}

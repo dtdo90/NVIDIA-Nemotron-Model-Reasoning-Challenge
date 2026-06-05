@@ -1,0 +1,77 @@
+Problem syn_tc_dp_phrase_copy_alignment_0000
+Bucket: phrase_copy_alignment
+Gold answer: watches map
+Note: phrase_copy_exact_example_cipher_phrase
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+rqdbmfo lqs -> watches map
+Now, decrypt the following text: rqdbmfo lqs
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+rqdbmfo lqs -> watches map
+
+Training target:
+rqdbmfo -> watches
+r -> w new
+q -> a new
+d -> t new
+b -> c new
+m -> h new
+f -> e new
+o -> s new
+
+lqs -> map
+l -> m new
+q -> a agrees
+s -> p new
+
+Summary character mappings
+b -> c
+d -> t
+f -> e
+l -> m
+m -> h
+o -> s
+q -> a
+r -> w
+s -> p
+
+Target text
+rqdbmfo lqs
+
+Decode target words from character mappings
+
+rqdbmfo
+r -> w
+q -> a
+d -> t
+b -> c
+m -> h
+f -> e
+o -> s
+rqdbmfo -> watches
+fully mapped
+
+choose watches
+
+lqs
+l -> m
+q -> a
+s -> p
+lqs -> map
+fully mapped
+
+choose map
+
+Decoded phrase
+watches map
+
+Answer: \boxed{watches map}
+</think>
+\boxed{watches map}

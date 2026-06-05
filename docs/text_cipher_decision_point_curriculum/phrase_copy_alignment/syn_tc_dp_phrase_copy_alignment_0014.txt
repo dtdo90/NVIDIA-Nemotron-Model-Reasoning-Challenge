@@ -1,0 +1,143 @@
+Problem syn_tc_dp_phrase_copy_alignment_0014
+Bucket: phrase_copy_alignment
+Gold answer: garden princess dark forest cave
+Note: phrase_copy_exact_example_cipher_phrase
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+chtkzx wtlxgzmm khto petzmr ghyz -> garden princess dark forest cave
+Now, decrypt the following text: chtkzx wtlxgzmm khto petzmr ghyz
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+chtkzx wtlxgzmm khto petzmr ghyz -> garden princess dark forest cave
+
+Training target:
+chtkzx -> garden
+c -> g new
+h -> a new
+t -> r new
+k -> d new
+z -> e new
+x -> n new
+
+wtlxgzmm -> princess
+w -> p new
+t -> r agrees
+l -> i new
+x -> n agrees
+g -> c new
+z -> e agrees
+m -> s new
+m -> s agrees
+
+khto -> dark
+k -> d agrees
+h -> a agrees
+t -> r agrees
+o -> k new
+
+petzmr -> forest
+p -> f new
+e -> o new
+t -> r agrees
+z -> e agrees
+m -> s agrees
+r -> t new
+
+ghyz -> cave
+g -> c agrees
+h -> a agrees
+y -> v new
+z -> e agrees
+
+Summary character mappings
+c -> g
+e -> o
+g -> c
+h -> a
+k -> d
+l -> i
+m -> s
+o -> k
+p -> f
+r -> t
+t -> r
+w -> p
+x -> n
+y -> v
+z -> e
+
+Target text
+chtkzx wtlxgzmm khto petzmr ghyz
+
+Decode target words from character mappings
+
+chtkzx
+c -> g
+h -> a
+t -> r
+k -> d
+z -> e
+x -> n
+chtkzx -> garden
+fully mapped
+
+choose garden
+
+wtlxgzmm
+w -> p
+t -> r
+l -> i
+x -> n
+g -> c
+z -> e
+m -> s
+m -> s
+wtlxgzmm -> princess
+fully mapped
+
+choose princess
+
+khto
+k -> d
+h -> a
+t -> r
+o -> k
+khto -> dark
+fully mapped
+
+choose dark
+
+petzmr
+p -> f
+e -> o
+t -> r
+z -> e
+m -> s
+r -> t
+petzmr -> forest
+fully mapped
+
+choose forest
+
+ghyz
+g -> c
+h -> a
+y -> v
+z -> e
+ghyz -> cave
+fully mapped
+
+choose cave
+
+Decoded phrase
+garden princess dark forest cave
+
+Answer: \boxed{garden princess dark forest cave}
+</think>
+\boxed{garden princess dark forest cave}

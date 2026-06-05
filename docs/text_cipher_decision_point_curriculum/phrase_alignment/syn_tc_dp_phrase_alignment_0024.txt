@@ -1,0 +1,268 @@
+Problem syn_tc_dp_phrase_alignment_0024
+Bucket: phrase_alignment
+Gold answer: library teacher
+Note: phrase_strict_left_to_right_alignment
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+tybmkl oxybwxd -> bright curious
+fypmwa -> dragon
+ypttbl -> rabbit
+spmbopc dokwwc -> magical school
+Now, decrypt the following text: cbtypyi lrpokry
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+a -> n
+b -> i
+c -> l
+d -> s
+f -> d
+k -> h
+l -> t
+m -> g
+o -> c
+p -> a
+s -> m
+t -> b
+w -> o
+x -> u
+y -> r
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+cbtypyi lrpokry
+
+Decode target words from character mappings
+
+cbtypyi
+c -> l
+b -> i
+t -> b
+y -> r
+p -> a
+y -> r
+i -> ? unknown
+
+Training target:
+cbtypyi -> librar?
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match librar?
+above -> librar? no match
+alice -> librar? no match
+ancient -> librar? no match
+around -> librar? no match
+beyond -> librar? no match
+bird -> librar? no match
+book -> librar? no match
+bright -> librar? no match
+castle -> librar? no match
+cat -> librar? no match
+cave -> librar? no match
+chases -> librar? no match
+clever -> librar? no match
+colorful -> librar? no match
+creates -> librar? no match
+crystal -> librar? no match
+curious -> librar? no match
+dark -> librar? no match
+discovers -> librar? no match
+door -> librar? no match
+dragon -> librar? no match
+draws -> librar? no match
+dreams -> librar? no match
+explores -> librar? no match
+follows -> librar? no match
+forest -> librar? no match
+found -> librar? no match
+garden -> librar? no match
+golden -> librar? no match
+hatter -> librar? no match
+hidden -> librar? no match
+imagines -> librar? no match
+in -> librar? no match
+inside -> librar? no match
+island -> librar? no match
+key -> librar? no match
+king -> librar? no match
+knight -> librar? no match
+library -> librar? match
+magical -> librar? no match
+map -> librar? no match
+message -> librar? no match
+mirror -> librar? no match
+mountain -> librar? no match
+mouse -> librar? no match
+mysterious -> librar? no match
+near -> librar? no match
+ocean -> librar? no match
+palace -> librar? no match
+potion -> librar? no match
+princess -> librar? no match
+puzzle -> librar? no match
+queen -> librar? no match
+rabbit -> librar? no match
+reads -> librar? no match
+school -> librar? no match
+secret -> librar? no match
+sees -> librar? no match
+silver -> librar? no match
+story -> librar? no match
+strange -> librar? no match
+student -> librar? no match
+studies -> librar? no match
+teacher -> librar? no match
+the -> librar? no match
+through -> librar? no match
+tower -> librar? no match
+treasure -> librar? no match
+turtle -> librar? no match
+under -> librar? no match
+valley -> librar? no match
+village -> librar? no match
+watches -> librar? no match
+wise -> librar? no match
+wizard -> librar? no match
+wonderland -> librar? no match
+writes -> librar? no match
+
+Scan candidates for librar?
+library
+
+Check scan candidates against summary mappings
+
+library
+c -> l agrees
+b -> i agrees
+t -> b agrees
+y -> r agrees
+p -> a agrees
+y -> r agrees
+i -> y new
+PASS
+add i -> y
+
+choose library
+
+lrpokry
+l -> t
+r -> ? unknown
+p -> a
+o -> c
+k -> h
+r -> ? unknown
+y -> r
+lrpokry -> t?ach?r
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match t?ach?r
+above -> t?ach?r no match
+alice -> t?ach?r no match
+ancient -> t?ach?r no match
+around -> t?ach?r no match
+beyond -> t?ach?r no match
+bird -> t?ach?r no match
+book -> t?ach?r no match
+bright -> t?ach?r no match
+castle -> t?ach?r no match
+cat -> t?ach?r no match
+cave -> t?ach?r no match
+chases -> t?ach?r no match
+clever -> t?ach?r no match
+colorful -> t?ach?r no match
+creates -> t?ach?r no match
+crystal -> t?ach?r no match
+curious -> t?ach?r no match
+dark -> t?ach?r no match
+discovers -> t?ach?r no match
+door -> t?ach?r no match
+dragon -> t?ach?r no match
+draws -> t?ach?r no match
+dreams -> t?ach?r no match
+explores -> t?ach?r no match
+follows -> t?ach?r no match
+forest -> t?ach?r no match
+found -> t?ach?r no match
+garden -> t?ach?r no match
+golden -> t?ach?r no match
+hatter -> t?ach?r no match
+hidden -> t?ach?r no match
+imagines -> t?ach?r no match
+in -> t?ach?r no match
+inside -> t?ach?r no match
+island -> t?ach?r no match
+key -> t?ach?r no match
+king -> t?ach?r no match
+knight -> t?ach?r no match
+library -> t?ach?r no match
+magical -> t?ach?r no match
+map -> t?ach?r no match
+message -> t?ach?r no match
+mirror -> t?ach?r no match
+mountain -> t?ach?r no match
+mouse -> t?ach?r no match
+mysterious -> t?ach?r no match
+near -> t?ach?r no match
+ocean -> t?ach?r no match
+palace -> t?ach?r no match
+potion -> t?ach?r no match
+princess -> t?ach?r no match
+puzzle -> t?ach?r no match
+queen -> t?ach?r no match
+rabbit -> t?ach?r no match
+reads -> t?ach?r no match
+school -> t?ach?r no match
+secret -> t?ach?r no match
+sees -> t?ach?r no match
+silver -> t?ach?r no match
+story -> t?ach?r no match
+strange -> t?ach?r no match
+student -> t?ach?r no match
+studies -> t?ach?r no match
+teacher -> t?ach?r match
+the -> t?ach?r no match
+through -> t?ach?r no match
+tower -> t?ach?r no match
+treasure -> t?ach?r no match
+turtle -> t?ach?r no match
+under -> t?ach?r no match
+valley -> t?ach?r no match
+village -> t?ach?r no match
+watches -> t?ach?r no match
+wise -> t?ach?r no match
+wizard -> t?ach?r no match
+wonderland -> t?ach?r no match
+writes -> t?ach?r no match
+
+Scan candidates for t?ach?r
+teacher
+
+Check scan candidates against summary mappings
+
+teacher
+l -> t agrees
+r -> e new
+p -> a agrees
+o -> c agrees
+k -> h agrees
+r -> e new
+y -> r agrees
+PASS
+add r -> e
+
+choose teacher
+
+Decoded phrase
+library teacher
+
+Answer: \boxed{library teacher}
+</think>
+\boxed{library teacher}

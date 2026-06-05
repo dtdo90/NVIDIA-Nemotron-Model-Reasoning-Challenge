@@ -1,0 +1,101 @@
+Problem syn_tc_dp_phrase_copy_alignment_0018
+Bucket: phrase_copy_alignment
+Gold answer: around teacher dark
+Note: phrase_copy_exact_example_cipher_phrase
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+bofcar hjbdxjo rbol -> around teacher dark
+Now, decrypt the following text: bofcar hjbdxjo rbol
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+bofcar hjbdxjo rbol -> around teacher dark
+
+Training target:
+bofcar -> around
+b -> a new
+o -> r new
+f -> o new
+c -> u new
+a -> n new
+r -> d new
+
+hjbdxjo -> teacher
+h -> t new
+j -> e new
+b -> a agrees
+d -> c new
+x -> h new
+j -> e agrees
+o -> r agrees
+
+rbol -> dark
+r -> d agrees
+b -> a agrees
+o -> r agrees
+l -> k new
+
+Summary character mappings
+a -> n
+b -> a
+c -> u
+d -> c
+f -> o
+h -> t
+j -> e
+l -> k
+o -> r
+r -> d
+x -> h
+
+Target text
+bofcar hjbdxjo rbol
+
+Decode target words from character mappings
+
+bofcar
+b -> a
+o -> r
+f -> o
+c -> u
+a -> n
+r -> d
+bofcar -> around
+fully mapped
+
+choose around
+
+hjbdxjo
+h -> t
+j -> e
+b -> a
+d -> c
+x -> h
+j -> e
+o -> r
+hjbdxjo -> teacher
+fully mapped
+
+choose teacher
+
+rbol
+r -> d
+b -> a
+o -> r
+l -> k
+rbol -> dark
+fully mapped
+
+choose dark
+
+Decoded phrase
+around teacher dark
+
+Answer: \boxed{around teacher dark}
+</think>
+\boxed{around teacher dark}

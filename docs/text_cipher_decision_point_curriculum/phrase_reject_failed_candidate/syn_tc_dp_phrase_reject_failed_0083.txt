@@ -1,0 +1,296 @@
+Problem syn_tc_dp_phrase_reject_failed_0083
+Bucket: phrase_reject_failed_candidate
+Gold answer: map garden key near door
+Note: phrase_candidate_conflict_rejection
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+cgbpwezubp peungb -> wonderland dragon
+tgewfx -> forest
+ywvgbp -> beyond
+uygkw crfw -> above wise
+lewuxwf lufxzw -> creates castle
+Now, decrypt the following text: suq nuepwb iwv bwue pgge
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+b -> n
+c -> w
+e -> r
+f -> s
+g -> o
+k -> v
+l -> c
+n -> g
+p -> d
+r -> i
+t -> f
+u -> a
+v -> y
+w -> e
+x -> t
+y -> b
+z -> l
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+suq nuepwb iwv bwue pgge
+
+Decode target words from character mappings
+
+suq
+s -> ? unknown
+u -> a
+q -> ? unknown
+
+Training target:
+suq -> ?a?
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?a?
+above -> ?a? no match
+alice -> ?a? no match
+ancient -> ?a? no match
+around -> ?a? no match
+beyond -> ?a? no match
+bird -> ?a? no match
+book -> ?a? no match
+bright -> ?a? no match
+castle -> ?a? no match
+cat -> ?a? match
+cave -> ?a? no match
+chases -> ?a? no match
+clever -> ?a? no match
+colorful -> ?a? no match
+creates -> ?a? no match
+crystal -> ?a? no match
+curious -> ?a? no match
+dark -> ?a? no match
+discovers -> ?a? no match
+door -> ?a? no match
+dragon -> ?a? no match
+draws -> ?a? no match
+dreams -> ?a? no match
+explores -> ?a? no match
+follows -> ?a? no match
+forest -> ?a? no match
+found -> ?a? no match
+garden -> ?a? no match
+golden -> ?a? no match
+hatter -> ?a? no match
+hidden -> ?a? no match
+imagines -> ?a? no match
+in -> ?a? no match
+inside -> ?a? no match
+island -> ?a? no match
+key -> ?a? no match
+king -> ?a? no match
+knight -> ?a? no match
+library -> ?a? no match
+magical -> ?a? no match
+map -> ?a? match
+message -> ?a? no match
+mirror -> ?a? no match
+mountain -> ?a? no match
+mouse -> ?a? no match
+mysterious -> ?a? no match
+near -> ?a? no match
+ocean -> ?a? no match
+palace -> ?a? no match
+potion -> ?a? no match
+princess -> ?a? no match
+puzzle -> ?a? no match
+queen -> ?a? no match
+rabbit -> ?a? no match
+reads -> ?a? no match
+school -> ?a? no match
+secret -> ?a? no match
+sees -> ?a? no match
+silver -> ?a? no match
+story -> ?a? no match
+strange -> ?a? no match
+student -> ?a? no match
+studies -> ?a? no match
+teacher -> ?a? no match
+the -> ?a? no match
+through -> ?a? no match
+tower -> ?a? no match
+treasure -> ?a? no match
+turtle -> ?a? no match
+under -> ?a? no match
+valley -> ?a? no match
+village -> ?a? no match
+watches -> ?a? no match
+wise -> ?a? no match
+wizard -> ?a? no match
+wonderland -> ?a? no match
+writes -> ?a? no match
+
+Scan candidates for ?a?
+cat, map
+
+Check scan candidates against summary mappings
+
+cat
+s -> c conflicts
+l -> c already exists
+u -> a agrees
+q -> t conflicts
+x -> t already exists
+FAIL
+
+map
+s -> m new
+u -> a agrees
+q -> p new
+PASS
+add s -> m
+add q -> p
+
+choose map
+
+nuepwb
+n -> g
+u -> a
+e -> r
+p -> d
+w -> e
+b -> n
+nuepwb -> garden
+fully mapped
+
+choose garden
+
+iwv
+i -> ? unknown
+w -> e
+v -> y
+iwv -> ?ey
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?ey
+above -> ?ey no match
+alice -> ?ey no match
+ancient -> ?ey no match
+around -> ?ey no match
+beyond -> ?ey no match
+bird -> ?ey no match
+book -> ?ey no match
+bright -> ?ey no match
+castle -> ?ey no match
+cat -> ?ey no match
+cave -> ?ey no match
+chases -> ?ey no match
+clever -> ?ey no match
+colorful -> ?ey no match
+creates -> ?ey no match
+crystal -> ?ey no match
+curious -> ?ey no match
+dark -> ?ey no match
+discovers -> ?ey no match
+door -> ?ey no match
+dragon -> ?ey no match
+draws -> ?ey no match
+dreams -> ?ey no match
+explores -> ?ey no match
+follows -> ?ey no match
+forest -> ?ey no match
+found -> ?ey no match
+garden -> ?ey no match
+golden -> ?ey no match
+hatter -> ?ey no match
+hidden -> ?ey no match
+imagines -> ?ey no match
+in -> ?ey no match
+inside -> ?ey no match
+island -> ?ey no match
+key -> ?ey match
+king -> ?ey no match
+knight -> ?ey no match
+library -> ?ey no match
+magical -> ?ey no match
+map -> ?ey no match
+message -> ?ey no match
+mirror -> ?ey no match
+mountain -> ?ey no match
+mouse -> ?ey no match
+mysterious -> ?ey no match
+near -> ?ey no match
+ocean -> ?ey no match
+palace -> ?ey no match
+potion -> ?ey no match
+princess -> ?ey no match
+puzzle -> ?ey no match
+queen -> ?ey no match
+rabbit -> ?ey no match
+reads -> ?ey no match
+school -> ?ey no match
+secret -> ?ey no match
+sees -> ?ey no match
+silver -> ?ey no match
+story -> ?ey no match
+strange -> ?ey no match
+student -> ?ey no match
+studies -> ?ey no match
+teacher -> ?ey no match
+the -> ?ey no match
+through -> ?ey no match
+tower -> ?ey no match
+treasure -> ?ey no match
+turtle -> ?ey no match
+under -> ?ey no match
+valley -> ?ey no match
+village -> ?ey no match
+watches -> ?ey no match
+wise -> ?ey no match
+wizard -> ?ey no match
+wonderland -> ?ey no match
+writes -> ?ey no match
+
+Scan candidates for ?ey
+key
+
+Check scan candidates against summary mappings
+
+key
+i -> k new
+w -> e agrees
+v -> y agrees
+PASS
+add i -> k
+
+choose key
+
+bwue
+b -> n
+w -> e
+u -> a
+e -> r
+bwue -> near
+fully mapped
+
+choose near
+
+pgge
+p -> d
+g -> o
+g -> o
+e -> r
+pgge -> door
+fully mapped
+
+choose door
+
+Decoded phrase
+map garden key near door
+
+Answer: \boxed{map garden key near door}
+</think>
+\boxed{map garden key near door}

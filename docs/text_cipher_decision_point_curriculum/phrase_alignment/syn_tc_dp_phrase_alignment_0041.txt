@@ -1,0 +1,190 @@
+Problem syn_tc_dp_phrase_alignment_0041
+Bucket: phrase_alignment
+Gold answer: explores draws colorful
+Note: phrase_strict_left_to_right_alignment
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+ztpyasr zotbdoy -> crystal curious
+lsjbzsr rbntstp -> magical library
+jdrgiw -> golden
+qdrrdcy liyysji -> follows message
+Now, decrypt the following text: ifkrdtiy gtscy zdrdtqor
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+a -> t
+b -> i
+c -> w
+d -> o
+g -> d
+i -> e
+j -> g
+l -> m
+n -> b
+o -> u
+p -> y
+q -> f
+r -> l
+s -> a
+t -> r
+w -> n
+y -> s
+z -> c
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+ifkrdtiy gtscy zdrdtqor
+
+Decode target words from character mappings
+
+ifkrdtiy
+i -> e
+f -> ? unknown
+k -> ? unknown
+r -> l
+d -> o
+t -> r
+i -> e
+y -> s
+
+Training target:
+ifkrdtiy -> e??lores
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match e??lores
+above -> e??lores no match
+alice -> e??lores no match
+ancient -> e??lores no match
+around -> e??lores no match
+beyond -> e??lores no match
+bird -> e??lores no match
+book -> e??lores no match
+bright -> e??lores no match
+castle -> e??lores no match
+cat -> e??lores no match
+cave -> e??lores no match
+chases -> e??lores no match
+clever -> e??lores no match
+colorful -> e??lores no match
+creates -> e??lores no match
+crystal -> e??lores no match
+curious -> e??lores no match
+dark -> e??lores no match
+discovers -> e??lores no match
+door -> e??lores no match
+dragon -> e??lores no match
+draws -> e??lores no match
+dreams -> e??lores no match
+explores -> e??lores match
+follows -> e??lores no match
+forest -> e??lores no match
+found -> e??lores no match
+garden -> e??lores no match
+golden -> e??lores no match
+hatter -> e??lores no match
+hidden -> e??lores no match
+imagines -> e??lores no match
+in -> e??lores no match
+inside -> e??lores no match
+island -> e??lores no match
+key -> e??lores no match
+king -> e??lores no match
+knight -> e??lores no match
+library -> e??lores no match
+magical -> e??lores no match
+map -> e??lores no match
+message -> e??lores no match
+mirror -> e??lores no match
+mountain -> e??lores no match
+mouse -> e??lores no match
+mysterious -> e??lores no match
+near -> e??lores no match
+ocean -> e??lores no match
+palace -> e??lores no match
+potion -> e??lores no match
+princess -> e??lores no match
+puzzle -> e??lores no match
+queen -> e??lores no match
+rabbit -> e??lores no match
+reads -> e??lores no match
+school -> e??lores no match
+secret -> e??lores no match
+sees -> e??lores no match
+silver -> e??lores no match
+story -> e??lores no match
+strange -> e??lores no match
+student -> e??lores no match
+studies -> e??lores no match
+teacher -> e??lores no match
+the -> e??lores no match
+through -> e??lores no match
+tower -> e??lores no match
+treasure -> e??lores no match
+turtle -> e??lores no match
+under -> e??lores no match
+valley -> e??lores no match
+village -> e??lores no match
+watches -> e??lores no match
+wise -> e??lores no match
+wizard -> e??lores no match
+wonderland -> e??lores no match
+writes -> e??lores no match
+
+Scan candidates for e??lores
+explores
+
+Check scan candidates against summary mappings
+
+explores
+i -> e agrees
+f -> x new
+k -> p new
+r -> l agrees
+d -> o agrees
+t -> r agrees
+i -> e agrees
+y -> s agrees
+PASS
+add f -> x
+add k -> p
+
+choose explores
+
+gtscy
+g -> d
+t -> r
+s -> a
+c -> w
+y -> s
+gtscy -> draws
+fully mapped
+
+choose draws
+
+zdrdtqor
+z -> c
+d -> o
+r -> l
+d -> o
+t -> r
+q -> f
+o -> u
+r -> l
+zdrdtqor -> colorful
+fully mapped
+
+choose colorful
+
+Decoded phrase
+explores draws colorful
+
+Answer: \boxed{explores draws colorful}
+</think>
+\boxed{explores draws colorful}

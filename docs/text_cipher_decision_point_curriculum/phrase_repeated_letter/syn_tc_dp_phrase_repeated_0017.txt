@@ -1,0 +1,373 @@
+Problem syn_tc_dp_phrase_repeated_0017
+Bucket: phrase_repeated_letter
+Gold answer: student creates mirror
+Note: phrase_preserve_repeated_letter_pattern
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+gjkjva oammjsa -> palace message
+fojsfqam -> imagines
+nar maam -> key sees
+Now, decrypt the following text: mwelaqw vpajwam ofppyp
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+a -> e
+f -> i
+g -> p
+j -> a
+k -> l
+m -> s
+n -> k
+o -> m
+q -> n
+r -> y
+s -> g
+v -> c
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+mwelaqw vpajwam ofppyp
+
+Decode target words from character mappings
+
+mwelaqw
+m -> s
+w -> ? unknown
+e -> ? unknown
+l -> ? unknown
+a -> e
+q -> n
+w -> ? unknown
+
+Training target:
+mwelaqw -> s???en?
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match s???en?
+above -> s???en? no match
+alice -> s???en? no match
+ancient -> s???en? no match
+around -> s???en? no match
+beyond -> s???en? no match
+bird -> s???en? no match
+book -> s???en? no match
+bright -> s???en? no match
+castle -> s???en? no match
+cat -> s???en? no match
+cave -> s???en? no match
+chases -> s???en? no match
+clever -> s???en? no match
+colorful -> s???en? no match
+creates -> s???en? no match
+crystal -> s???en? no match
+curious -> s???en? no match
+dark -> s???en? no match
+discovers -> s???en? no match
+door -> s???en? no match
+dragon -> s???en? no match
+draws -> s???en? no match
+dreams -> s???en? no match
+explores -> s???en? no match
+follows -> s???en? no match
+forest -> s???en? no match
+found -> s???en? no match
+garden -> s???en? no match
+golden -> s???en? no match
+hatter -> s???en? no match
+hidden -> s???en? no match
+imagines -> s???en? no match
+in -> s???en? no match
+inside -> s???en? no match
+island -> s???en? no match
+key -> s???en? no match
+king -> s???en? no match
+knight -> s???en? no match
+library -> s???en? no match
+magical -> s???en? no match
+map -> s???en? no match
+message -> s???en? no match
+mirror -> s???en? no match
+mountain -> s???en? no match
+mouse -> s???en? no match
+mysterious -> s???en? no match
+near -> s???en? no match
+ocean -> s???en? no match
+palace -> s???en? no match
+potion -> s???en? no match
+princess -> s???en? no match
+puzzle -> s???en? no match
+queen -> s???en? no match
+rabbit -> s???en? no match
+reads -> s???en? no match
+school -> s???en? no match
+secret -> s???en? no match
+sees -> s???en? no match
+silver -> s???en? no match
+story -> s???en? no match
+strange -> s???en? no match
+student -> s???en? match
+studies -> s???en? no match
+teacher -> s???en? no match
+the -> s???en? no match
+through -> s???en? no match
+tower -> s???en? no match
+treasure -> s???en? no match
+turtle -> s???en? no match
+under -> s???en? no match
+valley -> s???en? no match
+village -> s???en? no match
+watches -> s???en? no match
+wise -> s???en? no match
+wizard -> s???en? no match
+wonderland -> s???en? no match
+writes -> s???en? no match
+
+Scan candidates for s???en?
+student
+
+Check scan candidates against summary mappings
+
+student
+m -> s agrees
+w -> t new
+e -> u new
+l -> d new
+a -> e agrees
+q -> n agrees
+w -> t new
+PASS
+add w -> t
+add e -> u
+add l -> d
+
+choose student
+
+vpajwam
+v -> c
+p -> ? unknown
+a -> e
+j -> a
+w -> t
+a -> e
+m -> s
+vpajwam -> c?eates
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match c?eates
+above -> c?eates no match
+alice -> c?eates no match
+ancient -> c?eates no match
+around -> c?eates no match
+beyond -> c?eates no match
+bird -> c?eates no match
+book -> c?eates no match
+bright -> c?eates no match
+castle -> c?eates no match
+cat -> c?eates no match
+cave -> c?eates no match
+chases -> c?eates no match
+clever -> c?eates no match
+colorful -> c?eates no match
+creates -> c?eates match
+crystal -> c?eates no match
+curious -> c?eates no match
+dark -> c?eates no match
+discovers -> c?eates no match
+door -> c?eates no match
+dragon -> c?eates no match
+draws -> c?eates no match
+dreams -> c?eates no match
+explores -> c?eates no match
+follows -> c?eates no match
+forest -> c?eates no match
+found -> c?eates no match
+garden -> c?eates no match
+golden -> c?eates no match
+hatter -> c?eates no match
+hidden -> c?eates no match
+imagines -> c?eates no match
+in -> c?eates no match
+inside -> c?eates no match
+island -> c?eates no match
+key -> c?eates no match
+king -> c?eates no match
+knight -> c?eates no match
+library -> c?eates no match
+magical -> c?eates no match
+map -> c?eates no match
+message -> c?eates no match
+mirror -> c?eates no match
+mountain -> c?eates no match
+mouse -> c?eates no match
+mysterious -> c?eates no match
+near -> c?eates no match
+ocean -> c?eates no match
+palace -> c?eates no match
+potion -> c?eates no match
+princess -> c?eates no match
+puzzle -> c?eates no match
+queen -> c?eates no match
+rabbit -> c?eates no match
+reads -> c?eates no match
+school -> c?eates no match
+secret -> c?eates no match
+sees -> c?eates no match
+silver -> c?eates no match
+story -> c?eates no match
+strange -> c?eates no match
+student -> c?eates no match
+studies -> c?eates no match
+teacher -> c?eates no match
+the -> c?eates no match
+through -> c?eates no match
+tower -> c?eates no match
+treasure -> c?eates no match
+turtle -> c?eates no match
+under -> c?eates no match
+valley -> c?eates no match
+village -> c?eates no match
+watches -> c?eates no match
+wise -> c?eates no match
+wizard -> c?eates no match
+wonderland -> c?eates no match
+writes -> c?eates no match
+
+Scan candidates for c?eates
+creates
+
+Check scan candidates against summary mappings
+
+creates
+v -> c agrees
+p -> r new
+a -> e agrees
+j -> a agrees
+w -> t agrees
+a -> e agrees
+m -> s agrees
+PASS
+add p -> r
+
+choose creates
+
+ofppyp
+o -> m
+f -> i
+p -> r
+p -> r
+y -> ? unknown
+p -> r
+ofppyp -> mirr?r
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match mirr?r
+above -> mirr?r no match
+alice -> mirr?r no match
+ancient -> mirr?r no match
+around -> mirr?r no match
+beyond -> mirr?r no match
+bird -> mirr?r no match
+book -> mirr?r no match
+bright -> mirr?r no match
+castle -> mirr?r no match
+cat -> mirr?r no match
+cave -> mirr?r no match
+chases -> mirr?r no match
+clever -> mirr?r no match
+colorful -> mirr?r no match
+creates -> mirr?r no match
+crystal -> mirr?r no match
+curious -> mirr?r no match
+dark -> mirr?r no match
+discovers -> mirr?r no match
+door -> mirr?r no match
+dragon -> mirr?r no match
+draws -> mirr?r no match
+dreams -> mirr?r no match
+explores -> mirr?r no match
+follows -> mirr?r no match
+forest -> mirr?r no match
+found -> mirr?r no match
+garden -> mirr?r no match
+golden -> mirr?r no match
+hatter -> mirr?r no match
+hidden -> mirr?r no match
+imagines -> mirr?r no match
+in -> mirr?r no match
+inside -> mirr?r no match
+island -> mirr?r no match
+key -> mirr?r no match
+king -> mirr?r no match
+knight -> mirr?r no match
+library -> mirr?r no match
+magical -> mirr?r no match
+map -> mirr?r no match
+message -> mirr?r no match
+mirror -> mirr?r match
+mountain -> mirr?r no match
+mouse -> mirr?r no match
+mysterious -> mirr?r no match
+near -> mirr?r no match
+ocean -> mirr?r no match
+palace -> mirr?r no match
+potion -> mirr?r no match
+princess -> mirr?r no match
+puzzle -> mirr?r no match
+queen -> mirr?r no match
+rabbit -> mirr?r no match
+reads -> mirr?r no match
+school -> mirr?r no match
+secret -> mirr?r no match
+sees -> mirr?r no match
+silver -> mirr?r no match
+story -> mirr?r no match
+strange -> mirr?r no match
+student -> mirr?r no match
+studies -> mirr?r no match
+teacher -> mirr?r no match
+the -> mirr?r no match
+through -> mirr?r no match
+tower -> mirr?r no match
+treasure -> mirr?r no match
+turtle -> mirr?r no match
+under -> mirr?r no match
+valley -> mirr?r no match
+village -> mirr?r no match
+watches -> mirr?r no match
+wise -> mirr?r no match
+wizard -> mirr?r no match
+wonderland -> mirr?r no match
+writes -> mirr?r no match
+
+Scan candidates for mirr?r
+mirror
+
+Check scan candidates against summary mappings
+
+mirror
+o -> m agrees
+f -> i agrees
+p -> r agrees
+p -> r agrees
+y -> o new
+p -> r agrees
+PASS
+add y -> o
+
+choose mirror
+
+Decoded phrase
+student creates mirror
+
+Answer: \boxed{student creates mirror}
+</think>
+\boxed{student creates mirror}

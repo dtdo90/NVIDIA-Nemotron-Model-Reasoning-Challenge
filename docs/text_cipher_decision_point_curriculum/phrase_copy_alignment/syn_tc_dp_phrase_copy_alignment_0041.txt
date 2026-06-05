@@ -1,0 +1,80 @@
+Problem syn_tc_dp_phrase_copy_alignment_0041
+Bucket: phrase_copy_alignment
+Gold answer: imagines king
+Note: phrase_copy_exact_example_cipher_phrase
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+uctvudok qudv -> imagines king
+Now, decrypt the following text: uctvudok qudv
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+uctvudok qudv -> imagines king
+
+Training target:
+uctvudok -> imagines
+u -> i new
+c -> m new
+t -> a new
+v -> g new
+u -> i agrees
+d -> n new
+o -> e new
+k -> s new
+
+qudv -> king
+q -> k new
+u -> i agrees
+d -> n agrees
+v -> g agrees
+
+Summary character mappings
+c -> m
+d -> n
+k -> s
+o -> e
+q -> k
+t -> a
+u -> i
+v -> g
+
+Target text
+uctvudok qudv
+
+Decode target words from character mappings
+
+uctvudok
+u -> i
+c -> m
+t -> a
+v -> g
+u -> i
+d -> n
+o -> e
+k -> s
+uctvudok -> imagines
+fully mapped
+
+choose imagines
+
+qudv
+q -> k
+u -> i
+d -> n
+v -> g
+qudv -> king
+fully mapped
+
+choose king
+
+Decoded phrase
+imagines king
+
+Answer: \boxed{imagines king}
+</think>
+\boxed{imagines king}

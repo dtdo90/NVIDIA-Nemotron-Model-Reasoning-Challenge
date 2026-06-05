@@ -1,0 +1,310 @@
+Problem syn_tc_dp_phrase_reject_failed_0055
+Bucket: phrase_reject_failed_candidate
+Gold answer: knight bright garden golden door
+Note: phrase_candidate_conflict_rejection
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+vrdqtg zes -> silver map
+vtigtu argm -> secret bird
+vrdqtg -> silver
+vrdqtg -> silver
+Now, decrypt the following text: ojrylu agrylu yegmtj ybdmtj mbbg
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+a -> b
+d -> l
+e -> a
+g -> r
+i -> c
+m -> d
+q -> v
+r -> i
+s -> p
+t -> e
+u -> t
+v -> s
+z -> m
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+ojrylu agrylu yegmtj ybdmtj mbbg
+
+Decode target words from character mappings
+
+ojrylu
+o -> ? unknown
+j -> ? unknown
+r -> i
+y -> ? unknown
+l -> ? unknown
+u -> t
+
+Training target:
+ojrylu -> ??i??t
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ??i??t
+above -> ??i??t no match
+alice -> ??i??t no match
+ancient -> ??i??t no match
+around -> ??i??t no match
+beyond -> ??i??t no match
+bird -> ??i??t no match
+book -> ??i??t no match
+bright -> ??i??t match
+castle -> ??i??t no match
+cat -> ??i??t no match
+cave -> ??i??t no match
+chases -> ??i??t no match
+clever -> ??i??t no match
+colorful -> ??i??t no match
+creates -> ??i??t no match
+crystal -> ??i??t no match
+curious -> ??i??t no match
+dark -> ??i??t no match
+discovers -> ??i??t no match
+door -> ??i??t no match
+dragon -> ??i??t no match
+draws -> ??i??t no match
+dreams -> ??i??t no match
+explores -> ??i??t no match
+follows -> ??i??t no match
+forest -> ??i??t no match
+found -> ??i??t no match
+garden -> ??i??t no match
+golden -> ??i??t no match
+hatter -> ??i??t no match
+hidden -> ??i??t no match
+imagines -> ??i??t no match
+in -> ??i??t no match
+inside -> ??i??t no match
+island -> ??i??t no match
+key -> ??i??t no match
+king -> ??i??t no match
+knight -> ??i??t match
+library -> ??i??t no match
+magical -> ??i??t no match
+map -> ??i??t no match
+message -> ??i??t no match
+mirror -> ??i??t no match
+mountain -> ??i??t no match
+mouse -> ??i??t no match
+mysterious -> ??i??t no match
+near -> ??i??t no match
+ocean -> ??i??t no match
+palace -> ??i??t no match
+potion -> ??i??t no match
+princess -> ??i??t no match
+puzzle -> ??i??t no match
+queen -> ??i??t no match
+rabbit -> ??i??t no match
+reads -> ??i??t no match
+school -> ??i??t no match
+secret -> ??i??t no match
+sees -> ??i??t no match
+silver -> ??i??t no match
+story -> ??i??t no match
+strange -> ??i??t no match
+student -> ??i??t no match
+studies -> ??i??t no match
+teacher -> ??i??t no match
+the -> ??i??t no match
+through -> ??i??t no match
+tower -> ??i??t no match
+treasure -> ??i??t no match
+turtle -> ??i??t no match
+under -> ??i??t no match
+valley -> ??i??t no match
+village -> ??i??t no match
+watches -> ??i??t no match
+wise -> ??i??t no match
+wizard -> ??i??t no match
+wonderland -> ??i??t no match
+writes -> ??i??t no match
+
+Scan candidates for ??i??t
+bright, knight
+
+Check scan candidates against summary mappings
+
+bright
+o -> b conflicts
+a -> b already exists
+j -> r conflicts
+g -> r already exists
+r -> i agrees
+y -> g new
+l -> h new
+u -> t agrees
+FAIL
+
+knight
+o -> k new
+j -> n new
+r -> i agrees
+y -> g new
+l -> h new
+u -> t agrees
+PASS
+add o -> k
+add j -> n
+add y -> g
+add l -> h
+
+choose knight
+
+agrylu
+a -> b
+g -> r
+r -> i
+y -> g
+l -> h
+u -> t
+agrylu -> bright
+fully mapped
+
+choose bright
+
+yegmtj
+y -> g
+e -> a
+g -> r
+m -> d
+t -> e
+j -> n
+yegmtj -> garden
+fully mapped
+
+choose garden
+
+ybdmtj
+y -> g
+b -> ? unknown
+d -> l
+m -> d
+t -> e
+j -> n
+ybdmtj -> g?lden
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match g?lden
+above -> g?lden no match
+alice -> g?lden no match
+ancient -> g?lden no match
+around -> g?lden no match
+beyond -> g?lden no match
+bird -> g?lden no match
+book -> g?lden no match
+bright -> g?lden no match
+castle -> g?lden no match
+cat -> g?lden no match
+cave -> g?lden no match
+chases -> g?lden no match
+clever -> g?lden no match
+colorful -> g?lden no match
+creates -> g?lden no match
+crystal -> g?lden no match
+curious -> g?lden no match
+dark -> g?lden no match
+discovers -> g?lden no match
+door -> g?lden no match
+dragon -> g?lden no match
+draws -> g?lden no match
+dreams -> g?lden no match
+explores -> g?lden no match
+follows -> g?lden no match
+forest -> g?lden no match
+found -> g?lden no match
+garden -> g?lden no match
+golden -> g?lden match
+hatter -> g?lden no match
+hidden -> g?lden no match
+imagines -> g?lden no match
+in -> g?lden no match
+inside -> g?lden no match
+island -> g?lden no match
+key -> g?lden no match
+king -> g?lden no match
+knight -> g?lden no match
+library -> g?lden no match
+magical -> g?lden no match
+map -> g?lden no match
+message -> g?lden no match
+mirror -> g?lden no match
+mountain -> g?lden no match
+mouse -> g?lden no match
+mysterious -> g?lden no match
+near -> g?lden no match
+ocean -> g?lden no match
+palace -> g?lden no match
+potion -> g?lden no match
+princess -> g?lden no match
+puzzle -> g?lden no match
+queen -> g?lden no match
+rabbit -> g?lden no match
+reads -> g?lden no match
+school -> g?lden no match
+secret -> g?lden no match
+sees -> g?lden no match
+silver -> g?lden no match
+story -> g?lden no match
+strange -> g?lden no match
+student -> g?lden no match
+studies -> g?lden no match
+teacher -> g?lden no match
+the -> g?lden no match
+through -> g?lden no match
+tower -> g?lden no match
+treasure -> g?lden no match
+turtle -> g?lden no match
+under -> g?lden no match
+valley -> g?lden no match
+village -> g?lden no match
+watches -> g?lden no match
+wise -> g?lden no match
+wizard -> g?lden no match
+wonderland -> g?lden no match
+writes -> g?lden no match
+
+Scan candidates for g?lden
+golden
+
+Check scan candidates against summary mappings
+
+golden
+y -> g agrees
+b -> o new
+d -> l agrees
+m -> d agrees
+t -> e agrees
+j -> n agrees
+PASS
+add b -> o
+
+choose golden
+
+mbbg
+m -> d
+b -> o
+b -> o
+g -> r
+mbbg -> door
+fully mapped
+
+choose door
+
+Decoded phrase
+knight bright garden golden door
+
+Answer: \boxed{knight bright garden golden door}
+</think>
+\boxed{knight bright garden golden door}

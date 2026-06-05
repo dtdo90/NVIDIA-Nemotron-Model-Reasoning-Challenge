@@ -1,0 +1,83 @@
+Problem syn_tc_dp_phrase_copy_alignment_0029
+Bucket: phrase_copy_alignment
+Gold answer: around through
+Note: phrase_copy_exact_example_cipher_phrase
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+luyaem gxuyavx -> around through
+Now, decrypt the following text: luyaem gxuyavx
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+luyaem gxuyavx -> around through
+
+Training target:
+luyaem -> around
+l -> a new
+u -> r new
+y -> o new
+a -> u new
+e -> n new
+m -> d new
+
+gxuyavx -> through
+g -> t new
+x -> h new
+u -> r agrees
+y -> o agrees
+a -> u agrees
+v -> g new
+x -> h agrees
+
+Summary character mappings
+a -> u
+e -> n
+g -> t
+l -> a
+m -> d
+u -> r
+v -> g
+x -> h
+y -> o
+
+Target text
+luyaem gxuyavx
+
+Decode target words from character mappings
+
+luyaem
+l -> a
+u -> r
+y -> o
+a -> u
+e -> n
+m -> d
+luyaem -> around
+fully mapped
+
+choose around
+
+gxuyavx
+g -> t
+x -> h
+u -> r
+y -> o
+a -> u
+v -> g
+x -> h
+gxuyavx -> through
+fully mapped
+
+choose through
+
+Decoded phrase
+around through
+
+Answer: \boxed{around through}
+</think>
+\boxed{around through}

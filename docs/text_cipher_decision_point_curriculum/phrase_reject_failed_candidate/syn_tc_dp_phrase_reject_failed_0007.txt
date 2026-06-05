@@ -1,0 +1,206 @@
+Problem syn_tc_dp_phrase_reject_failed_0007
+Bucket: phrase_reject_failed_candidate
+Gold answer: golden dreams mountain
+Note: phrase_candidate_conflict_rejection
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+qzo dk -> cat in
+knzh uhzpy -> near draws
+phdony -> writes
+hnzuy -> reads
+szr fkunh -> map under
+Now, decrypt the following text: mctunk uhnzsy scfkozdk
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+d -> i
+f -> u
+h -> r
+k -> n
+n -> e
+o -> t
+p -> w
+q -> c
+r -> p
+s -> m
+u -> d
+y -> s
+z -> a
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+mctunk uhnzsy scfkozdk
+
+Decode target words from character mappings
+
+mctunk
+m -> ? unknown
+c -> ? unknown
+t -> ? unknown
+u -> d
+n -> e
+k -> n
+
+Training target:
+mctunk -> ???den
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ???den
+above -> ???den no match
+alice -> ???den no match
+ancient -> ???den no match
+around -> ???den no match
+beyond -> ???den no match
+bird -> ???den no match
+book -> ???den no match
+bright -> ???den no match
+castle -> ???den no match
+cat -> ???den no match
+cave -> ???den no match
+chases -> ???den no match
+clever -> ???den no match
+colorful -> ???den no match
+creates -> ???den no match
+crystal -> ???den no match
+curious -> ???den no match
+dark -> ???den no match
+discovers -> ???den no match
+door -> ???den no match
+dragon -> ???den no match
+draws -> ???den no match
+dreams -> ???den no match
+explores -> ???den no match
+follows -> ???den no match
+forest -> ???den no match
+found -> ???den no match
+garden -> ???den match
+golden -> ???den match
+hatter -> ???den no match
+hidden -> ???den match
+imagines -> ???den no match
+in -> ???den no match
+inside -> ???den no match
+island -> ???den no match
+key -> ???den no match
+king -> ???den no match
+knight -> ???den no match
+library -> ???den no match
+magical -> ???den no match
+map -> ???den no match
+message -> ???den no match
+mirror -> ???den no match
+mountain -> ???den no match
+mouse -> ???den no match
+mysterious -> ???den no match
+near -> ???den no match
+ocean -> ???den no match
+palace -> ???den no match
+potion -> ???den no match
+princess -> ???den no match
+puzzle -> ???den no match
+queen -> ???den no match
+rabbit -> ???den no match
+reads -> ???den no match
+school -> ???den no match
+secret -> ???den no match
+sees -> ???den no match
+silver -> ???den no match
+story -> ???den no match
+strange -> ???den no match
+student -> ???den no match
+studies -> ???den no match
+teacher -> ???den no match
+the -> ???den no match
+through -> ???den no match
+tower -> ???den no match
+treasure -> ???den no match
+turtle -> ???den no match
+under -> ???den no match
+valley -> ???den no match
+village -> ???den no match
+watches -> ???den no match
+wise -> ???den no match
+wizard -> ???den no match
+wonderland -> ???den no match
+writes -> ???den no match
+
+Scan candidates for ???den
+garden, golden, hidden
+
+Check scan candidates against summary mappings
+
+garden
+m -> g new
+c -> a conflicts
+z -> a already exists
+t -> r conflicts
+h -> r already exists
+u -> d agrees
+n -> e agrees
+k -> n agrees
+FAIL
+
+hidden
+m -> h new
+c -> i conflicts
+d -> i already exists
+t -> d conflicts
+u -> d already exists
+u -> d agrees
+n -> e agrees
+k -> n agrees
+FAIL
+
+golden
+m -> g new
+c -> o new
+t -> l new
+u -> d agrees
+n -> e agrees
+k -> n agrees
+PASS
+add m -> g
+add c -> o
+add t -> l
+
+choose golden
+
+uhnzsy
+u -> d
+h -> r
+n -> e
+z -> a
+s -> m
+y -> s
+uhnzsy -> dreams
+fully mapped
+
+choose dreams
+
+scfkozdk
+s -> m
+c -> o
+f -> u
+k -> n
+o -> t
+z -> a
+d -> i
+k -> n
+scfkozdk -> mountain
+fully mapped
+
+choose mountain
+
+Decoded phrase
+golden dreams mountain
+
+Answer: \boxed{golden dreams mountain}
+</think>
+\boxed{golden dreams mountain}

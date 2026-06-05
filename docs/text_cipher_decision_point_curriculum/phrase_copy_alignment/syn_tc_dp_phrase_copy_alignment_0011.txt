@@ -1,0 +1,74 @@
+Problem syn_tc_dp_phrase_copy_alignment_0011
+Bucket: phrase_copy_alignment
+Gold answer: above bird
+Note: phrase_copy_exact_example_cipher_phrase
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+gpabn pfoy -> above bird
+Now, decrypt the following text: gpabn pfoy
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+gpabn pfoy -> above bird
+
+Training target:
+gpabn -> above
+g -> a new
+p -> b new
+a -> o new
+b -> v new
+n -> e new
+
+pfoy -> bird
+p -> b agrees
+f -> i new
+o -> r new
+y -> d new
+
+Summary character mappings
+a -> o
+b -> v
+f -> i
+g -> a
+n -> e
+o -> r
+p -> b
+y -> d
+
+Target text
+gpabn pfoy
+
+Decode target words from character mappings
+
+gpabn
+g -> a
+p -> b
+a -> o
+b -> v
+n -> e
+gpabn -> above
+fully mapped
+
+choose above
+
+pfoy
+p -> b
+f -> i
+o -> r
+y -> d
+pfoy -> bird
+fully mapped
+
+choose bird
+
+Decoded phrase
+above bird
+
+Answer: \boxed{above bird}
+</think>
+\boxed{above bird}

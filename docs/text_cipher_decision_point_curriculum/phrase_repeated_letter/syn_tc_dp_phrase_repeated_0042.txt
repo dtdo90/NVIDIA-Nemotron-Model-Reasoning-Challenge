@@ -1,0 +1,301 @@
+Problem syn_tc_dp_phrase_repeated_0042
+Bucket: phrase_repeated_letter
+Gold answer: puzzle village door curious palace
+Note: phrase_preserve_repeated_letter_pattern
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+bwjqx -> under
+jcoeyvqxo -> discovers
+izaenqo -> watches
+Now, decrypt the following text: ubrrfq vcffzhq jyyx ebxcybo uzfzeq
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+a -> t
+b -> u
+c -> i
+e -> c
+i -> w
+j -> d
+n -> h
+o -> s
+q -> e
+v -> v
+w -> n
+x -> r
+y -> o
+z -> a
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+ubrrfq vcffzhq jyyx ebxcybo uzfzeq
+
+Decode target words from character mappings
+
+ubrrfq
+u -> ? unknown
+b -> u
+r -> ? unknown
+r -> ? unknown
+f -> ? unknown
+q -> e
+
+Training target:
+ubrrfq -> ?u???e
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?u???e
+above -> ?u???e no match
+alice -> ?u???e no match
+ancient -> ?u???e no match
+around -> ?u???e no match
+beyond -> ?u???e no match
+bird -> ?u???e no match
+book -> ?u???e no match
+bright -> ?u???e no match
+castle -> ?u???e no match
+cat -> ?u???e no match
+cave -> ?u???e no match
+chases -> ?u???e no match
+clever -> ?u???e no match
+colorful -> ?u???e no match
+creates -> ?u???e no match
+crystal -> ?u???e no match
+curious -> ?u???e no match
+dark -> ?u???e no match
+discovers -> ?u???e no match
+door -> ?u???e no match
+dragon -> ?u???e no match
+draws -> ?u???e no match
+dreams -> ?u???e no match
+explores -> ?u???e no match
+follows -> ?u???e no match
+forest -> ?u???e no match
+found -> ?u???e no match
+garden -> ?u???e no match
+golden -> ?u???e no match
+hatter -> ?u???e no match
+hidden -> ?u???e no match
+imagines -> ?u???e no match
+in -> ?u???e no match
+inside -> ?u???e no match
+island -> ?u???e no match
+key -> ?u???e no match
+king -> ?u???e no match
+knight -> ?u???e no match
+library -> ?u???e no match
+magical -> ?u???e no match
+map -> ?u???e no match
+message -> ?u???e no match
+mirror -> ?u???e no match
+mountain -> ?u???e no match
+mouse -> ?u???e no match
+mysterious -> ?u???e no match
+near -> ?u???e no match
+ocean -> ?u???e no match
+palace -> ?u???e no match
+potion -> ?u???e no match
+princess -> ?u???e no match
+puzzle -> ?u???e match
+queen -> ?u???e no match
+rabbit -> ?u???e no match
+reads -> ?u???e no match
+school -> ?u???e no match
+secret -> ?u???e no match
+sees -> ?u???e no match
+silver -> ?u???e no match
+story -> ?u???e no match
+strange -> ?u???e no match
+student -> ?u???e no match
+studies -> ?u???e no match
+teacher -> ?u???e no match
+the -> ?u???e no match
+through -> ?u???e no match
+tower -> ?u???e no match
+treasure -> ?u???e no match
+turtle -> ?u???e match
+under -> ?u???e no match
+valley -> ?u???e no match
+village -> ?u???e no match
+watches -> ?u???e no match
+wise -> ?u???e no match
+wizard -> ?u???e no match
+wonderland -> ?u???e no match
+writes -> ?u???e no match
+
+Scan candidates for ?u???e
+puzzle, turtle
+
+Check scan candidates against summary mappings
+
+puzzle
+u -> p new
+b -> u agrees
+r -> z new
+r -> z new
+f -> l new
+q -> e agrees
+PASS
+add u -> p
+add r -> z
+add f -> l
+
+choose puzzle
+
+vcffzhq
+v -> v
+c -> i
+f -> l
+f -> l
+z -> a
+h -> ? unknown
+q -> e
+vcffzhq -> villa?e
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match villa?e
+above -> villa?e no match
+alice -> villa?e no match
+ancient -> villa?e no match
+around -> villa?e no match
+beyond -> villa?e no match
+bird -> villa?e no match
+book -> villa?e no match
+bright -> villa?e no match
+castle -> villa?e no match
+cat -> villa?e no match
+cave -> villa?e no match
+chases -> villa?e no match
+clever -> villa?e no match
+colorful -> villa?e no match
+creates -> villa?e no match
+crystal -> villa?e no match
+curious -> villa?e no match
+dark -> villa?e no match
+discovers -> villa?e no match
+door -> villa?e no match
+dragon -> villa?e no match
+draws -> villa?e no match
+dreams -> villa?e no match
+explores -> villa?e no match
+follows -> villa?e no match
+forest -> villa?e no match
+found -> villa?e no match
+garden -> villa?e no match
+golden -> villa?e no match
+hatter -> villa?e no match
+hidden -> villa?e no match
+imagines -> villa?e no match
+in -> villa?e no match
+inside -> villa?e no match
+island -> villa?e no match
+key -> villa?e no match
+king -> villa?e no match
+knight -> villa?e no match
+library -> villa?e no match
+magical -> villa?e no match
+map -> villa?e no match
+message -> villa?e no match
+mirror -> villa?e no match
+mountain -> villa?e no match
+mouse -> villa?e no match
+mysterious -> villa?e no match
+near -> villa?e no match
+ocean -> villa?e no match
+palace -> villa?e no match
+potion -> villa?e no match
+princess -> villa?e no match
+puzzle -> villa?e no match
+queen -> villa?e no match
+rabbit -> villa?e no match
+reads -> villa?e no match
+school -> villa?e no match
+secret -> villa?e no match
+sees -> villa?e no match
+silver -> villa?e no match
+story -> villa?e no match
+strange -> villa?e no match
+student -> villa?e no match
+studies -> villa?e no match
+teacher -> villa?e no match
+the -> villa?e no match
+through -> villa?e no match
+tower -> villa?e no match
+treasure -> villa?e no match
+turtle -> villa?e no match
+under -> villa?e no match
+valley -> villa?e no match
+village -> villa?e match
+watches -> villa?e no match
+wise -> villa?e no match
+wizard -> villa?e no match
+wonderland -> villa?e no match
+writes -> villa?e no match
+
+Scan candidates for villa?e
+village
+
+Check scan candidates against summary mappings
+
+village
+v -> v agrees
+c -> i agrees
+f -> l agrees
+f -> l agrees
+z -> a agrees
+h -> g new
+q -> e agrees
+PASS
+add h -> g
+
+choose village
+
+jyyx
+j -> d
+y -> o
+y -> o
+x -> r
+jyyx -> door
+fully mapped
+
+choose door
+
+ebxcybo
+e -> c
+b -> u
+x -> r
+c -> i
+y -> o
+b -> u
+o -> s
+ebxcybo -> curious
+fully mapped
+
+choose curious
+
+uzfzeq
+u -> p
+z -> a
+f -> l
+z -> a
+e -> c
+q -> e
+uzfzeq -> palace
+fully mapped
+
+choose palace
+
+Decoded phrase
+puzzle village door curious palace
+
+Answer: \boxed{puzzle village door curious palace}
+</think>
+\boxed{puzzle village door curious palace}

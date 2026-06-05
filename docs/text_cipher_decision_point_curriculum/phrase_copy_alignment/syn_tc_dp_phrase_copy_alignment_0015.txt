@@ -1,0 +1,123 @@
+Problem syn_tc_dp_phrase_copy_alignment_0015
+Bucket: phrase_copy_alignment
+Gold answer: dragon hidden school under
+Note: phrase_copy_exact_example_cipher_phrase
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+uxhisz yluucz tdyssv kzucx -> dragon hidden school under
+Now, decrypt the following text: uxhisz yluucz tdyssv kzucx
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+uxhisz yluucz tdyssv kzucx -> dragon hidden school under
+
+Training target:
+uxhisz -> dragon
+u -> d new
+x -> r new
+h -> a new
+i -> g new
+s -> o new
+z -> n new
+
+yluucz -> hidden
+y -> h new
+l -> i new
+u -> d agrees
+u -> d agrees
+c -> e new
+z -> n agrees
+
+tdyssv -> school
+t -> s new
+d -> c new
+y -> h agrees
+s -> o agrees
+s -> o agrees
+v -> l new
+
+kzucx -> under
+k -> u new
+z -> n agrees
+u -> d agrees
+c -> e agrees
+x -> r agrees
+
+Summary character mappings
+c -> e
+d -> c
+h -> a
+i -> g
+k -> u
+l -> i
+s -> o
+t -> s
+u -> d
+v -> l
+x -> r
+y -> h
+z -> n
+
+Target text
+uxhisz yluucz tdyssv kzucx
+
+Decode target words from character mappings
+
+uxhisz
+u -> d
+x -> r
+h -> a
+i -> g
+s -> o
+z -> n
+uxhisz -> dragon
+fully mapped
+
+choose dragon
+
+yluucz
+y -> h
+l -> i
+u -> d
+u -> d
+c -> e
+z -> n
+yluucz -> hidden
+fully mapped
+
+choose hidden
+
+tdyssv
+t -> s
+d -> c
+y -> h
+s -> o
+s -> o
+v -> l
+tdyssv -> school
+fully mapped
+
+choose school
+
+kzucx
+k -> u
+z -> n
+u -> d
+c -> e
+x -> r
+kzucx -> under
+fully mapped
+
+choose under
+
+Decoded phrase
+dragon hidden school under
+
+Answer: \boxed{dragon hidden school under}
+</think>
+\boxed{dragon hidden school under}

@@ -1,0 +1,269 @@
+Problem syn_tc_dp_phrase_reject_failed_0063
+Bucket: phrase_reject_failed_candidate
+Gold answer: book cave wise hatter
+Note: phrase_candidate_conflict_rejection
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+rcvvtyo dcxxos -> village hidden
+ytgxos ltkidou -> garden watches
+kpgkvo rcvvtyo -> turtle village
+Now, decrypt the following text: ehhf itro lcuo dtkkog
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+c -> i
+d -> h
+g -> r
+i -> c
+k -> t
+l -> w
+o -> e
+p -> u
+r -> v
+s -> n
+t -> a
+u -> s
+v -> l
+x -> d
+y -> g
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+ehhf itro lcuo dtkkog
+
+Decode target words from character mappings
+
+ehhf
+e -> ? unknown
+h -> ? unknown
+h -> ? unknown
+f -> ? unknown
+
+Training target:
+ehhf -> ????
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ????
+above -> ???? no match
+alice -> ???? no match
+ancient -> ???? no match
+around -> ???? no match
+beyond -> ???? no match
+bird -> ???? match
+book -> ???? match
+bright -> ???? no match
+castle -> ???? no match
+cat -> ???? no match
+cave -> ???? match
+chases -> ???? no match
+clever -> ???? no match
+colorful -> ???? no match
+creates -> ???? no match
+crystal -> ???? no match
+curious -> ???? no match
+dark -> ???? match
+discovers -> ???? no match
+door -> ???? match
+dragon -> ???? no match
+draws -> ???? no match
+dreams -> ???? no match
+explores -> ???? no match
+follows -> ???? no match
+forest -> ???? no match
+found -> ???? no match
+garden -> ???? no match
+golden -> ???? no match
+hatter -> ???? no match
+hidden -> ???? no match
+imagines -> ???? no match
+in -> ???? no match
+inside -> ???? no match
+island -> ???? no match
+key -> ???? no match
+king -> ???? match
+knight -> ???? no match
+library -> ???? no match
+magical -> ???? no match
+map -> ???? no match
+message -> ???? no match
+mirror -> ???? no match
+mountain -> ???? no match
+mouse -> ???? no match
+mysterious -> ???? no match
+near -> ???? match
+ocean -> ???? no match
+palace -> ???? no match
+potion -> ???? no match
+princess -> ???? no match
+puzzle -> ???? no match
+queen -> ???? no match
+rabbit -> ???? no match
+reads -> ???? no match
+school -> ???? no match
+secret -> ???? no match
+sees -> ???? match
+silver -> ???? no match
+story -> ???? no match
+strange -> ???? no match
+student -> ???? no match
+studies -> ???? no match
+teacher -> ???? no match
+the -> ???? no match
+through -> ???? no match
+tower -> ???? no match
+treasure -> ???? no match
+turtle -> ???? no match
+under -> ???? no match
+valley -> ???? no match
+village -> ???? no match
+watches -> ???? no match
+wise -> ???? match
+wizard -> ???? no match
+wonderland -> ???? no match
+writes -> ???? no match
+
+Scan candidates for ????
+bird, book, cave, dark, door, king, near, sees, wise
+
+Check scan candidates against summary mappings
+
+bird
+e -> b new
+h -> i conflicts
+c -> i already exists
+h -> r conflicts
+g -> r already exists
+f -> d conflicts
+x -> d already exists
+FAIL
+
+cave
+e -> c conflicts
+i -> c already exists
+h -> a conflicts
+t -> a already exists
+h -> v conflicts
+r -> v already exists
+f -> e conflicts
+o -> e already exists
+FAIL
+
+dark
+e -> d conflicts
+x -> d already exists
+h -> a conflicts
+t -> a already exists
+h -> r conflicts
+g -> r already exists
+f -> k new
+FAIL
+
+door
+e -> d conflicts
+x -> d already exists
+h -> o new
+h -> o new
+f -> r conflicts
+g -> r already exists
+FAIL
+
+king
+e -> k new
+h -> i conflicts
+c -> i already exists
+h -> n conflicts
+s -> n already exists
+f -> g conflicts
+y -> g already exists
+FAIL
+
+near
+e -> n conflicts
+s -> n already exists
+h -> e conflicts
+o -> e already exists
+h -> a conflicts
+t -> a already exists
+f -> r conflicts
+g -> r already exists
+FAIL
+
+sees
+e -> s conflicts
+u -> s already exists
+h -> e conflicts
+o -> e already exists
+h -> e conflicts
+o -> e already exists
+f -> s conflicts
+u -> s already exists
+FAIL
+
+wise
+e -> w conflicts
+l -> w already exists
+h -> i conflicts
+c -> i already exists
+h -> s conflicts
+u -> s already exists
+f -> e conflicts
+o -> e already exists
+FAIL
+
+book
+e -> b new
+h -> o new
+h -> o new
+f -> k new
+PASS
+add e -> b
+add h -> o
+add f -> k
+
+choose book
+
+itro
+i -> c
+t -> a
+r -> v
+o -> e
+itro -> cave
+fully mapped
+
+choose cave
+
+lcuo
+l -> w
+c -> i
+u -> s
+o -> e
+lcuo -> wise
+fully mapped
+
+choose wise
+
+dtkkog
+d -> h
+t -> a
+k -> t
+k -> t
+o -> e
+g -> r
+dtkkog -> hatter
+fully mapped
+
+choose hatter
+
+Decoded phrase
+book cave wise hatter
+
+Answer: \boxed{book cave wise hatter}
+</think>
+\boxed{book cave wise hatter}

@@ -1,0 +1,273 @@
+Problem syn_tc_dp_phrase_reject_failed_0006
+Bucket: phrase_reject_failed_candidate
+Gold answer: book treasure
+Note: phrase_candidate_conflict_rejection
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+mikplf -> garden
+yhiwlw -> chases
+vkjmhg jwrifp -> bright island
+gliyhlk -> teacher
+Now, decrypt the following text: vzzq gkliwakl
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+f -> n
+g -> t
+h -> h
+i -> a
+j -> i
+k -> r
+l -> e
+m -> g
+p -> d
+r -> l
+v -> b
+w -> s
+y -> c
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+vzzq gkliwakl
+
+Decode target words from character mappings
+
+vzzq
+v -> b
+z -> ? unknown
+z -> ? unknown
+q -> ? unknown
+
+Training target:
+vzzq -> b???
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match b???
+above -> b??? no match
+alice -> b??? no match
+ancient -> b??? no match
+around -> b??? no match
+beyond -> b??? no match
+bird -> b??? match
+book -> b??? match
+bright -> b??? no match
+castle -> b??? no match
+cat -> b??? no match
+cave -> b??? no match
+chases -> b??? no match
+clever -> b??? no match
+colorful -> b??? no match
+creates -> b??? no match
+crystal -> b??? no match
+curious -> b??? no match
+dark -> b??? no match
+discovers -> b??? no match
+door -> b??? no match
+dragon -> b??? no match
+draws -> b??? no match
+dreams -> b??? no match
+explores -> b??? no match
+follows -> b??? no match
+forest -> b??? no match
+found -> b??? no match
+garden -> b??? no match
+golden -> b??? no match
+hatter -> b??? no match
+hidden -> b??? no match
+imagines -> b??? no match
+in -> b??? no match
+inside -> b??? no match
+island -> b??? no match
+key -> b??? no match
+king -> b??? no match
+knight -> b??? no match
+library -> b??? no match
+magical -> b??? no match
+map -> b??? no match
+message -> b??? no match
+mirror -> b??? no match
+mountain -> b??? no match
+mouse -> b??? no match
+mysterious -> b??? no match
+near -> b??? no match
+ocean -> b??? no match
+palace -> b??? no match
+potion -> b??? no match
+princess -> b??? no match
+puzzle -> b??? no match
+queen -> b??? no match
+rabbit -> b??? no match
+reads -> b??? no match
+school -> b??? no match
+secret -> b??? no match
+sees -> b??? no match
+silver -> b??? no match
+story -> b??? no match
+strange -> b??? no match
+student -> b??? no match
+studies -> b??? no match
+teacher -> b??? no match
+the -> b??? no match
+through -> b??? no match
+tower -> b??? no match
+treasure -> b??? no match
+turtle -> b??? no match
+under -> b??? no match
+valley -> b??? no match
+village -> b??? no match
+watches -> b??? no match
+wise -> b??? no match
+wizard -> b??? no match
+wonderland -> b??? no match
+writes -> b??? no match
+
+Scan candidates for b???
+bird, book
+
+Check scan candidates against summary mappings
+
+bird
+v -> b agrees
+z -> i conflicts
+j -> i already exists
+z -> r conflicts
+k -> r already exists
+q -> d conflicts
+p -> d already exists
+FAIL
+
+book
+v -> b agrees
+z -> o new
+z -> o new
+q -> k new
+PASS
+add z -> o
+add q -> k
+
+choose book
+
+gkliwakl
+g -> t
+k -> r
+l -> e
+i -> a
+w -> s
+a -> ? unknown
+k -> r
+l -> e
+gkliwakl -> treas?re
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match treas?re
+above -> treas?re no match
+alice -> treas?re no match
+ancient -> treas?re no match
+around -> treas?re no match
+beyond -> treas?re no match
+bird -> treas?re no match
+book -> treas?re no match
+bright -> treas?re no match
+castle -> treas?re no match
+cat -> treas?re no match
+cave -> treas?re no match
+chases -> treas?re no match
+clever -> treas?re no match
+colorful -> treas?re no match
+creates -> treas?re no match
+crystal -> treas?re no match
+curious -> treas?re no match
+dark -> treas?re no match
+discovers -> treas?re no match
+door -> treas?re no match
+dragon -> treas?re no match
+draws -> treas?re no match
+dreams -> treas?re no match
+explores -> treas?re no match
+follows -> treas?re no match
+forest -> treas?re no match
+found -> treas?re no match
+garden -> treas?re no match
+golden -> treas?re no match
+hatter -> treas?re no match
+hidden -> treas?re no match
+imagines -> treas?re no match
+in -> treas?re no match
+inside -> treas?re no match
+island -> treas?re no match
+key -> treas?re no match
+king -> treas?re no match
+knight -> treas?re no match
+library -> treas?re no match
+magical -> treas?re no match
+map -> treas?re no match
+message -> treas?re no match
+mirror -> treas?re no match
+mountain -> treas?re no match
+mouse -> treas?re no match
+mysterious -> treas?re no match
+near -> treas?re no match
+ocean -> treas?re no match
+palace -> treas?re no match
+potion -> treas?re no match
+princess -> treas?re no match
+puzzle -> treas?re no match
+queen -> treas?re no match
+rabbit -> treas?re no match
+reads -> treas?re no match
+school -> treas?re no match
+secret -> treas?re no match
+sees -> treas?re no match
+silver -> treas?re no match
+story -> treas?re no match
+strange -> treas?re no match
+student -> treas?re no match
+studies -> treas?re no match
+teacher -> treas?re no match
+the -> treas?re no match
+through -> treas?re no match
+tower -> treas?re no match
+treasure -> treas?re match
+turtle -> treas?re no match
+under -> treas?re no match
+valley -> treas?re no match
+village -> treas?re no match
+watches -> treas?re no match
+wise -> treas?re no match
+wizard -> treas?re no match
+wonderland -> treas?re no match
+writes -> treas?re no match
+
+Scan candidates for treas?re
+treasure
+
+Check scan candidates against summary mappings
+
+treasure
+g -> t agrees
+k -> r agrees
+l -> e agrees
+i -> a agrees
+w -> s agrees
+a -> u new
+k -> r agrees
+l -> e agrees
+PASS
+add a -> u
+
+choose treasure
+
+Decoded phrase
+book treasure
+
+Answer: \boxed{book treasure}
+</think>
+\boxed{book treasure}

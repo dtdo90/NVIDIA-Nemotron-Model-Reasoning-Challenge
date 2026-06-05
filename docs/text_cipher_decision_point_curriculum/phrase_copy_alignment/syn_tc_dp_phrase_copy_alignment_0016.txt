@@ -1,0 +1,159 @@
+Problem syn_tc_dp_phrase_copy_alignment_0016
+Bucket: phrase_copy_alignment
+Gold answer: explores around discovers dragon village
+Note: phrase_copy_exact_example_cipher_phrase
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+calvwxcy uxwoeg gdyhwtcxy gxurwe tdvvurc -> explores around discovers dragon village
+Now, decrypt the following text: calvwxcy uxwoeg gdyhwtcxy gxurwe tdvvurc
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+calvwxcy uxwoeg gdyhwtcxy gxurwe tdvvurc -> explores around discovers dragon village
+
+Training target:
+calvwxcy -> explores
+c -> e new
+a -> x new
+l -> p new
+v -> l new
+w -> o new
+x -> r new
+c -> e agrees
+y -> s new
+
+uxwoeg -> around
+u -> a new
+x -> r agrees
+w -> o agrees
+o -> u new
+e -> n new
+g -> d new
+
+gdyhwtcxy -> discovers
+g -> d agrees
+d -> i new
+y -> s agrees
+h -> c new
+w -> o agrees
+t -> v new
+c -> e agrees
+x -> r agrees
+y -> s agrees
+
+gxurwe -> dragon
+g -> d agrees
+x -> r agrees
+u -> a agrees
+r -> g new
+w -> o agrees
+e -> n agrees
+
+tdvvurc -> village
+t -> v agrees
+d -> i agrees
+v -> l agrees
+v -> l agrees
+u -> a agrees
+r -> g agrees
+c -> e agrees
+
+Summary character mappings
+a -> x
+c -> e
+d -> i
+e -> n
+g -> d
+h -> c
+l -> p
+o -> u
+r -> g
+t -> v
+u -> a
+v -> l
+w -> o
+x -> r
+y -> s
+
+Target text
+calvwxcy uxwoeg gdyhwtcxy gxurwe tdvvurc
+
+Decode target words from character mappings
+
+calvwxcy
+c -> e
+a -> x
+l -> p
+v -> l
+w -> o
+x -> r
+c -> e
+y -> s
+calvwxcy -> explores
+fully mapped
+
+choose explores
+
+uxwoeg
+u -> a
+x -> r
+w -> o
+o -> u
+e -> n
+g -> d
+uxwoeg -> around
+fully mapped
+
+choose around
+
+gdyhwtcxy
+g -> d
+d -> i
+y -> s
+h -> c
+w -> o
+t -> v
+c -> e
+x -> r
+y -> s
+gdyhwtcxy -> discovers
+fully mapped
+
+choose discovers
+
+gxurwe
+g -> d
+x -> r
+u -> a
+r -> g
+w -> o
+e -> n
+gxurwe -> dragon
+fully mapped
+
+choose dragon
+
+tdvvurc
+t -> v
+d -> i
+v -> l
+v -> l
+u -> a
+r -> g
+c -> e
+tdvvurc -> village
+fully mapped
+
+choose village
+
+Decoded phrase
+explores around discovers dragon village
+
+Answer: \boxed{explores around discovers dragon village}
+</think>
+\boxed{explores around discovers dragon village}

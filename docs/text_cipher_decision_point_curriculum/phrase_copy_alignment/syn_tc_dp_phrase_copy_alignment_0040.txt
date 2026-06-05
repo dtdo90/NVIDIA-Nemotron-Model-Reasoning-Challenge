@@ -1,0 +1,101 @@
+Problem syn_tc_dp_phrase_copy_alignment_0040
+Bucket: phrase_copy_alignment
+Gold answer: mirror wise strange
+Note: phrase_copy_exact_example_cipher_phrase
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+bgzziz ygsp suzlvkp -> mirror wise strange
+Now, decrypt the following text: bgzziz ygsp suzlvkp
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+bgzziz ygsp suzlvkp -> mirror wise strange
+
+Training target:
+bgzziz -> mirror
+b -> m new
+g -> i new
+z -> r new
+z -> r agrees
+i -> o new
+z -> r agrees
+
+ygsp -> wise
+y -> w new
+g -> i agrees
+s -> s new
+p -> e new
+
+suzlvkp -> strange
+s -> s agrees
+u -> t new
+z -> r agrees
+l -> a new
+v -> n new
+k -> g new
+p -> e agrees
+
+Summary character mappings
+b -> m
+g -> i
+i -> o
+k -> g
+l -> a
+p -> e
+s -> s
+u -> t
+v -> n
+y -> w
+z -> r
+
+Target text
+bgzziz ygsp suzlvkp
+
+Decode target words from character mappings
+
+bgzziz
+b -> m
+g -> i
+z -> r
+z -> r
+i -> o
+z -> r
+bgzziz -> mirror
+fully mapped
+
+choose mirror
+
+ygsp
+y -> w
+g -> i
+s -> s
+p -> e
+ygsp -> wise
+fully mapped
+
+choose wise
+
+suzlvkp
+s -> s
+u -> t
+z -> r
+l -> a
+v -> n
+k -> g
+p -> e
+suzlvkp -> strange
+fully mapped
+
+choose strange
+
+Decoded phrase
+mirror wise strange
+
+Answer: \boxed{mirror wise strange}
+</think>
+\boxed{mirror wise strange}

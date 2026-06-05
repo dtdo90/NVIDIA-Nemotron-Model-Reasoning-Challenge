@@ -1,0 +1,77 @@
+Problem syn_tc_dp_phrase_copy_alignment_0012
+Bucket: phrase_copy_alignment
+Gold answer: chases bird
+Note: phrase_copy_exact_example_cipher_phrase
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+bvtkpk qlzx -> chases bird
+Now, decrypt the following text: bvtkpk qlzx
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+bvtkpk qlzx -> chases bird
+
+Training target:
+bvtkpk -> chases
+b -> c new
+v -> h new
+t -> a new
+k -> s new
+p -> e new
+k -> s agrees
+
+qlzx -> bird
+q -> b new
+l -> i new
+z -> r new
+x -> d new
+
+Summary character mappings
+b -> c
+k -> s
+l -> i
+p -> e
+q -> b
+t -> a
+v -> h
+x -> d
+z -> r
+
+Target text
+bvtkpk qlzx
+
+Decode target words from character mappings
+
+bvtkpk
+b -> c
+v -> h
+t -> a
+k -> s
+p -> e
+k -> s
+bvtkpk -> chases
+fully mapped
+
+choose chases
+
+qlzx
+q -> b
+l -> i
+z -> r
+x -> d
+qlzx -> bird
+fully mapped
+
+choose bird
+
+Decoded phrase
+chases bird
+
+Answer: \boxed{chases bird}
+</think>
+\boxed{chases bird}

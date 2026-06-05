@@ -1,0 +1,264 @@
+Problem syn_tc_dp_phrase_reject_failed_0027
+Bucket: phrase_reject_failed_candidate
+Gold answer: map potion
+Note: phrase_candidate_conflict_rejection
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+tpvvsab -> village
+wlesyab -> strange
+oebslbw -> creates
+ovbtbe lnb -> clever the
+Now, decrypt the following text: dsz zklpky
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+a -> g
+b -> e
+e -> r
+l -> t
+n -> h
+o -> c
+p -> i
+s -> a
+t -> v
+v -> l
+w -> s
+y -> n
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+dsz zklpky
+
+Decode target words from character mappings
+
+dsz
+d -> ? unknown
+s -> a
+z -> ? unknown
+
+Training target:
+dsz -> ?a?
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?a?
+above -> ?a? no match
+alice -> ?a? no match
+ancient -> ?a? no match
+around -> ?a? no match
+beyond -> ?a? no match
+bird -> ?a? no match
+book -> ?a? no match
+bright -> ?a? no match
+castle -> ?a? no match
+cat -> ?a? match
+cave -> ?a? no match
+chases -> ?a? no match
+clever -> ?a? no match
+colorful -> ?a? no match
+creates -> ?a? no match
+crystal -> ?a? no match
+curious -> ?a? no match
+dark -> ?a? no match
+discovers -> ?a? no match
+door -> ?a? no match
+dragon -> ?a? no match
+draws -> ?a? no match
+dreams -> ?a? no match
+explores -> ?a? no match
+follows -> ?a? no match
+forest -> ?a? no match
+found -> ?a? no match
+garden -> ?a? no match
+golden -> ?a? no match
+hatter -> ?a? no match
+hidden -> ?a? no match
+imagines -> ?a? no match
+in -> ?a? no match
+inside -> ?a? no match
+island -> ?a? no match
+key -> ?a? no match
+king -> ?a? no match
+knight -> ?a? no match
+library -> ?a? no match
+magical -> ?a? no match
+map -> ?a? match
+message -> ?a? no match
+mirror -> ?a? no match
+mountain -> ?a? no match
+mouse -> ?a? no match
+mysterious -> ?a? no match
+near -> ?a? no match
+ocean -> ?a? no match
+palace -> ?a? no match
+potion -> ?a? no match
+princess -> ?a? no match
+puzzle -> ?a? no match
+queen -> ?a? no match
+rabbit -> ?a? no match
+reads -> ?a? no match
+school -> ?a? no match
+secret -> ?a? no match
+sees -> ?a? no match
+silver -> ?a? no match
+story -> ?a? no match
+strange -> ?a? no match
+student -> ?a? no match
+studies -> ?a? no match
+teacher -> ?a? no match
+the -> ?a? no match
+through -> ?a? no match
+tower -> ?a? no match
+treasure -> ?a? no match
+turtle -> ?a? no match
+under -> ?a? no match
+valley -> ?a? no match
+village -> ?a? no match
+watches -> ?a? no match
+wise -> ?a? no match
+wizard -> ?a? no match
+wonderland -> ?a? no match
+writes -> ?a? no match
+
+Scan candidates for ?a?
+cat, map
+
+Check scan candidates against summary mappings
+
+cat
+d -> c conflicts
+o -> c already exists
+s -> a agrees
+z -> t conflicts
+l -> t already exists
+FAIL
+
+map
+d -> m new
+s -> a agrees
+z -> p new
+PASS
+add d -> m
+add z -> p
+
+choose map
+
+zklpky
+z -> p
+k -> ? unknown
+l -> t
+p -> i
+k -> ? unknown
+y -> n
+zklpky -> p?ti?n
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match p?ti?n
+above -> p?ti?n no match
+alice -> p?ti?n no match
+ancient -> p?ti?n no match
+around -> p?ti?n no match
+beyond -> p?ti?n no match
+bird -> p?ti?n no match
+book -> p?ti?n no match
+bright -> p?ti?n no match
+castle -> p?ti?n no match
+cat -> p?ti?n no match
+cave -> p?ti?n no match
+chases -> p?ti?n no match
+clever -> p?ti?n no match
+colorful -> p?ti?n no match
+creates -> p?ti?n no match
+crystal -> p?ti?n no match
+curious -> p?ti?n no match
+dark -> p?ti?n no match
+discovers -> p?ti?n no match
+door -> p?ti?n no match
+dragon -> p?ti?n no match
+draws -> p?ti?n no match
+dreams -> p?ti?n no match
+explores -> p?ti?n no match
+follows -> p?ti?n no match
+forest -> p?ti?n no match
+found -> p?ti?n no match
+garden -> p?ti?n no match
+golden -> p?ti?n no match
+hatter -> p?ti?n no match
+hidden -> p?ti?n no match
+imagines -> p?ti?n no match
+in -> p?ti?n no match
+inside -> p?ti?n no match
+island -> p?ti?n no match
+key -> p?ti?n no match
+king -> p?ti?n no match
+knight -> p?ti?n no match
+library -> p?ti?n no match
+magical -> p?ti?n no match
+map -> p?ti?n no match
+message -> p?ti?n no match
+mirror -> p?ti?n no match
+mountain -> p?ti?n no match
+mouse -> p?ti?n no match
+mysterious -> p?ti?n no match
+near -> p?ti?n no match
+ocean -> p?ti?n no match
+palace -> p?ti?n no match
+potion -> p?ti?n match
+princess -> p?ti?n no match
+puzzle -> p?ti?n no match
+queen -> p?ti?n no match
+rabbit -> p?ti?n no match
+reads -> p?ti?n no match
+school -> p?ti?n no match
+secret -> p?ti?n no match
+sees -> p?ti?n no match
+silver -> p?ti?n no match
+story -> p?ti?n no match
+strange -> p?ti?n no match
+student -> p?ti?n no match
+studies -> p?ti?n no match
+teacher -> p?ti?n no match
+the -> p?ti?n no match
+through -> p?ti?n no match
+tower -> p?ti?n no match
+treasure -> p?ti?n no match
+turtle -> p?ti?n no match
+under -> p?ti?n no match
+valley -> p?ti?n no match
+village -> p?ti?n no match
+watches -> p?ti?n no match
+wise -> p?ti?n no match
+wizard -> p?ti?n no match
+wonderland -> p?ti?n no match
+writes -> p?ti?n no match
+
+Scan candidates for p?ti?n
+potion
+
+Check scan candidates against summary mappings
+
+potion
+z -> p agrees
+k -> o new
+l -> t agrees
+p -> i agrees
+k -> o new
+y -> n agrees
+PASS
+add k -> o
+
+choose potion
+
+Decoded phrase
+map potion
+
+Answer: \boxed{map potion}
+</think>
+\boxed{map potion}

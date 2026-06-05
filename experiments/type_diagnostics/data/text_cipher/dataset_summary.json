@@ -5,10 +5,14 @@
   "train_csv": "/Users/taido/Desktop/Tai/NVIDIA Nemotron Model Reasoning/experiments/type_diagnostics/data/text_cipher/text_cipher.csv",
   "split_csv": "/Users/taido/Desktop/Tai/NVIDIA Nemotron Model Reasoning/experiments/type_diagnostics/data/text_cipher/splits_80_10_10.csv",
   "seed": 42,
-  "total": 1896,
+  "total": 2136,
   "by_subtype": {
     "decision_point_alignment": 40,
     "decision_point_copy_alignment": 15,
+    "decision_point_phrase_alignment": 50,
+    "decision_point_phrase_copy_alignment": 45,
+    "decision_point_phrase_reject_failed_candidate": 90,
+    "decision_point_phrase_repeated_letter": 55,
     "decision_point_reject_failed_candidate": 30,
     "decision_point_repeated_letter": 35,
     "standard": 1776
@@ -16,25 +20,29 @@
   "by_source_mode": {
     "real": 1576,
     "single_phase_synthetic_text_cipher_confusion": 200,
-    "text_cipher_decision_point_curriculum": 120
+    "text_cipher_decision_point_curriculum": 360
   },
   "by_eval_eligible": {
-    "false": 320,
+    "false": 560,
     "true": 1576
   },
   "by_split_policy": {
     "auto": 1576,
-    "train_only": 320
+    "train_only": 560
   },
   "split_counts": {
     "eval_holdout": 158,
     "grpo_holdout": 158,
-    "sft_train": 1580
+    "sft_train": 1820
   },
   "by_split_subtype": {
     "sft_train": {
       "decision_point_alignment": 40,
       "decision_point_copy_alignment": 15,
+      "decision_point_phrase_alignment": 50,
+      "decision_point_phrase_copy_alignment": 45,
+      "decision_point_phrase_reject_failed_candidate": 90,
+      "decision_point_phrase_repeated_letter": 55,
       "decision_point_reject_failed_candidate": 30,
       "decision_point_repeated_letter": 35,
       "standard": 1460

@@ -1,0 +1,97 @@
+Problem syn_tc_dp_phrase_copy_alignment_0006
+Bucket: phrase_copy_alignment
+Gold answer: tower alice reads
+Note: phrase_copy_exact_example_cipher_phrase
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+ctbne kairn enkmx -> tower alice reads
+Now, decrypt the following text: ctbne kairn enkmx
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+ctbne kairn enkmx -> tower alice reads
+
+Training target:
+ctbne -> tower
+c -> t new
+t -> o new
+b -> w new
+n -> e new
+e -> r new
+
+kairn -> alice
+k -> a new
+a -> l new
+i -> i new
+r -> c new
+n -> e agrees
+
+enkmx -> reads
+e -> r agrees
+n -> e agrees
+k -> a agrees
+m -> d new
+x -> s new
+
+Summary character mappings
+a -> l
+b -> w
+c -> t
+e -> r
+i -> i
+k -> a
+m -> d
+n -> e
+r -> c
+t -> o
+x -> s
+
+Target text
+ctbne kairn enkmx
+
+Decode target words from character mappings
+
+ctbne
+c -> t
+t -> o
+b -> w
+n -> e
+e -> r
+ctbne -> tower
+fully mapped
+
+choose tower
+
+kairn
+k -> a
+a -> l
+i -> i
+r -> c
+n -> e
+kairn -> alice
+fully mapped
+
+choose alice
+
+enkmx
+e -> r
+n -> e
+k -> a
+m -> d
+x -> s
+enkmx -> reads
+fully mapped
+
+choose reads
+
+Decoded phrase
+tower alice reads
+
+Answer: \boxed{tower alice reads}
+</think>
+\boxed{tower alice reads}

@@ -1,0 +1,194 @@
+Problem syn_tc_dp_phrase_reject_failed_0086
+Bucket: phrase_reject_failed_candidate
+Gold answer: found hatter
+Note: phrase_candidate_conflict_rejection
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+kis ldaxjxs -> key library
+fxdbih cjw -> writes map
+hdlgix hutool -> silver school
+Now, decrypt the following text: roypm tjbbix
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+a -> b
+b -> t
+c -> m
+d -> i
+f -> w
+g -> v
+h -> s
+i -> e
+j -> a
+k -> k
+l -> l
+o -> o
+s -> y
+t -> h
+u -> c
+w -> p
+x -> r
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+roypm tjbbix
+
+Decode target words from character mappings
+
+roypm
+r -> ? unknown
+o -> o
+y -> ? unknown
+p -> ? unknown
+m -> ? unknown
+
+Training target:
+roypm -> ?o???
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?o???
+above -> ?o??? no match
+alice -> ?o??? no match
+ancient -> ?o??? no match
+around -> ?o??? no match
+beyond -> ?o??? no match
+bird -> ?o??? no match
+book -> ?o??? no match
+bright -> ?o??? no match
+castle -> ?o??? no match
+cat -> ?o??? no match
+cave -> ?o??? no match
+chases -> ?o??? no match
+clever -> ?o??? no match
+colorful -> ?o??? no match
+creates -> ?o??? no match
+crystal -> ?o??? no match
+curious -> ?o??? no match
+dark -> ?o??? no match
+discovers -> ?o??? no match
+door -> ?o??? no match
+dragon -> ?o??? no match
+draws -> ?o??? no match
+dreams -> ?o??? no match
+explores -> ?o??? no match
+follows -> ?o??? no match
+forest -> ?o??? no match
+found -> ?o??? match
+garden -> ?o??? no match
+golden -> ?o??? no match
+hatter -> ?o??? no match
+hidden -> ?o??? no match
+imagines -> ?o??? no match
+in -> ?o??? no match
+inside -> ?o??? no match
+island -> ?o??? no match
+key -> ?o??? no match
+king -> ?o??? no match
+knight -> ?o??? no match
+library -> ?o??? no match
+magical -> ?o??? no match
+map -> ?o??? no match
+message -> ?o??? no match
+mirror -> ?o??? no match
+mountain -> ?o??? no match
+mouse -> ?o??? match
+mysterious -> ?o??? no match
+near -> ?o??? no match
+ocean -> ?o??? no match
+palace -> ?o??? no match
+potion -> ?o??? no match
+princess -> ?o??? no match
+puzzle -> ?o??? no match
+queen -> ?o??? no match
+rabbit -> ?o??? no match
+reads -> ?o??? no match
+school -> ?o??? no match
+secret -> ?o??? no match
+sees -> ?o??? no match
+silver -> ?o??? no match
+story -> ?o??? no match
+strange -> ?o??? no match
+student -> ?o??? no match
+studies -> ?o??? no match
+teacher -> ?o??? no match
+the -> ?o??? no match
+through -> ?o??? no match
+tower -> ?o??? match
+treasure -> ?o??? no match
+turtle -> ?o??? no match
+under -> ?o??? no match
+valley -> ?o??? no match
+village -> ?o??? no match
+watches -> ?o??? no match
+wise -> ?o??? no match
+wizard -> ?o??? no match
+wonderland -> ?o??? no match
+writes -> ?o??? no match
+
+Scan candidates for ?o???
+found, mouse, tower
+
+Check scan candidates against summary mappings
+
+mouse
+r -> m conflicts
+c -> m already exists
+o -> o agrees
+y -> u new
+p -> s conflicts
+h -> s already exists
+m -> e conflicts
+i -> e already exists
+FAIL
+
+tower
+r -> t conflicts
+b -> t already exists
+o -> o agrees
+y -> w conflicts
+f -> w already exists
+p -> e conflicts
+i -> e already exists
+m -> r conflicts
+x -> r already exists
+FAIL
+
+found
+r -> f new
+o -> o agrees
+y -> u new
+p -> n new
+m -> d new
+PASS
+add r -> f
+add y -> u
+add p -> n
+add m -> d
+
+choose found
+
+tjbbix
+t -> h
+j -> a
+b -> t
+b -> t
+i -> e
+x -> r
+tjbbix -> hatter
+fully mapped
+
+choose hatter
+
+Decoded phrase
+found hatter
+
+Answer: \boxed{found hatter}
+</think>
+\boxed{found hatter}

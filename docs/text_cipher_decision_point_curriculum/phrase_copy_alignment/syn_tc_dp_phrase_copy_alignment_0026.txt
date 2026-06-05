@@ -1,0 +1,148 @@
+Problem syn_tc_dp_phrase_copy_alignment_0026
+Bucket: phrase_copy_alignment
+Gold answer: follows explores beyond secret the
+Note: phrase_copy_exact_example_cipher_phrase
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+qkeekau zorekdzu fzbkil uzhdzc cnz -> follows explores beyond secret the
+Now, decrypt the following text: qkeekau zorekdzu fzbkil uzhdzc cnz
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+qkeekau zorekdzu fzbkil uzhdzc cnz -> follows explores beyond secret the
+
+Training target:
+qkeekau -> follows
+q -> f new
+k -> o new
+e -> l new
+e -> l agrees
+k -> o agrees
+a -> w new
+u -> s new
+
+zorekdzu -> explores
+z -> e new
+o -> x new
+r -> p new
+e -> l agrees
+k -> o agrees
+d -> r new
+z -> e agrees
+u -> s agrees
+
+fzbkil -> beyond
+f -> b new
+z -> e agrees
+b -> y new
+k -> o agrees
+i -> n new
+l -> d new
+
+uzhdzc -> secret
+u -> s agrees
+z -> e agrees
+h -> c new
+d -> r agrees
+z -> e agrees
+c -> t new
+
+cnz -> the
+c -> t agrees
+n -> h new
+z -> e agrees
+
+Summary character mappings
+a -> w
+b -> y
+c -> t
+d -> r
+e -> l
+f -> b
+h -> c
+i -> n
+k -> o
+l -> d
+n -> h
+o -> x
+q -> f
+r -> p
+u -> s
+z -> e
+
+Target text
+qkeekau zorekdzu fzbkil uzhdzc cnz
+
+Decode target words from character mappings
+
+qkeekau
+q -> f
+k -> o
+e -> l
+e -> l
+k -> o
+a -> w
+u -> s
+qkeekau -> follows
+fully mapped
+
+choose follows
+
+zorekdzu
+z -> e
+o -> x
+r -> p
+e -> l
+k -> o
+d -> r
+z -> e
+u -> s
+zorekdzu -> explores
+fully mapped
+
+choose explores
+
+fzbkil
+f -> b
+z -> e
+b -> y
+k -> o
+i -> n
+l -> d
+fzbkil -> beyond
+fully mapped
+
+choose beyond
+
+uzhdzc
+u -> s
+z -> e
+h -> c
+d -> r
+z -> e
+c -> t
+uzhdzc -> secret
+fully mapped
+
+choose secret
+
+cnz
+c -> t
+n -> h
+z -> e
+cnz -> the
+fully mapped
+
+choose the
+
+Decoded phrase
+follows explores beyond secret the
+
+Answer: \boxed{follows explores beyond secret the}
+</think>
+\boxed{follows explores beyond secret the}

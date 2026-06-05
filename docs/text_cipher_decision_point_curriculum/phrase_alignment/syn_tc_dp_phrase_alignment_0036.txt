@@ -1,0 +1,181 @@
+Problem syn_tc_dp_phrase_alignment_0036
+Bucket: phrase_alignment
+Gold answer: queen cat imagines
+Note: phrase_strict_left_to_right_alignment
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+ctozhty -> magical
+tjaki wditnvdi -> above treasure
+qareidytre -> wonderland
+jigare -> beyond
+Now, decrypt the following text: uviir htw zctozrin
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+a -> o
+c -> m
+d -> r
+e -> d
+g -> y
+h -> c
+i -> e
+j -> b
+k -> v
+n -> s
+o -> g
+q -> w
+r -> n
+t -> a
+v -> u
+w -> t
+y -> l
+z -> i
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+uviir htw zctozrin
+
+Decode target words from character mappings
+
+uviir
+u -> ? unknown
+v -> u
+i -> e
+i -> e
+r -> n
+
+Training target:
+uviir -> ?ueen
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?ueen
+above -> ?ueen no match
+alice -> ?ueen no match
+ancient -> ?ueen no match
+around -> ?ueen no match
+beyond -> ?ueen no match
+bird -> ?ueen no match
+book -> ?ueen no match
+bright -> ?ueen no match
+castle -> ?ueen no match
+cat -> ?ueen no match
+cave -> ?ueen no match
+chases -> ?ueen no match
+clever -> ?ueen no match
+colorful -> ?ueen no match
+creates -> ?ueen no match
+crystal -> ?ueen no match
+curious -> ?ueen no match
+dark -> ?ueen no match
+discovers -> ?ueen no match
+door -> ?ueen no match
+dragon -> ?ueen no match
+draws -> ?ueen no match
+dreams -> ?ueen no match
+explores -> ?ueen no match
+follows -> ?ueen no match
+forest -> ?ueen no match
+found -> ?ueen no match
+garden -> ?ueen no match
+golden -> ?ueen no match
+hatter -> ?ueen no match
+hidden -> ?ueen no match
+imagines -> ?ueen no match
+in -> ?ueen no match
+inside -> ?ueen no match
+island -> ?ueen no match
+key -> ?ueen no match
+king -> ?ueen no match
+knight -> ?ueen no match
+library -> ?ueen no match
+magical -> ?ueen no match
+map -> ?ueen no match
+message -> ?ueen no match
+mirror -> ?ueen no match
+mountain -> ?ueen no match
+mouse -> ?ueen no match
+mysterious -> ?ueen no match
+near -> ?ueen no match
+ocean -> ?ueen no match
+palace -> ?ueen no match
+potion -> ?ueen no match
+princess -> ?ueen no match
+puzzle -> ?ueen no match
+queen -> ?ueen match
+rabbit -> ?ueen no match
+reads -> ?ueen no match
+school -> ?ueen no match
+secret -> ?ueen no match
+sees -> ?ueen no match
+silver -> ?ueen no match
+story -> ?ueen no match
+strange -> ?ueen no match
+student -> ?ueen no match
+studies -> ?ueen no match
+teacher -> ?ueen no match
+the -> ?ueen no match
+through -> ?ueen no match
+tower -> ?ueen no match
+treasure -> ?ueen no match
+turtle -> ?ueen no match
+under -> ?ueen no match
+valley -> ?ueen no match
+village -> ?ueen no match
+watches -> ?ueen no match
+wise -> ?ueen no match
+wizard -> ?ueen no match
+wonderland -> ?ueen no match
+writes -> ?ueen no match
+
+Scan candidates for ?ueen
+queen
+
+Check scan candidates against summary mappings
+
+queen
+u -> q new
+v -> u agrees
+i -> e agrees
+i -> e agrees
+r -> n agrees
+PASS
+add u -> q
+
+choose queen
+
+htw
+h -> c
+t -> a
+w -> t
+htw -> cat
+fully mapped
+
+choose cat
+
+zctozrin
+z -> i
+c -> m
+t -> a
+o -> g
+z -> i
+r -> n
+i -> e
+n -> s
+zctozrin -> imagines
+fully mapped
+
+choose imagines
+
+Decoded phrase
+queen cat imagines
+
+Answer: \boxed{queen cat imagines}
+</think>
+\boxed{queen cat imagines}

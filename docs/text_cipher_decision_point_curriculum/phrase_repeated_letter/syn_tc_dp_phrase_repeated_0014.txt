@@ -1,0 +1,188 @@
+Problem syn_tc_dp_phrase_repeated_0014
+Bucket: phrase_repeated_letter
+Gold answer: puzzle golden
+Note: phrase_preserve_repeated_letter_pattern
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+lamxcms kmssxjm -> creates message
+hvsm novjuc -> wise knight
+yxan -> dark
+lrmgma -> clever
+scqab yaxhs -> story draws
+Now, decrypt the following text: ewzzrm jqrymo
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+a -> r
+b -> y
+c -> t
+g -> v
+h -> w
+j -> g
+k -> m
+l -> c
+m -> e
+n -> k
+o -> n
+q -> o
+r -> l
+s -> s
+u -> h
+v -> i
+x -> a
+y -> d
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+ewzzrm jqrymo
+
+Decode target words from character mappings
+
+ewzzrm
+e -> ? unknown
+w -> ? unknown
+z -> ? unknown
+z -> ? unknown
+r -> l
+m -> e
+
+Training target:
+ewzzrm -> ????le
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ????le
+above -> ????le no match
+alice -> ????le no match
+ancient -> ????le no match
+around -> ????le no match
+beyond -> ????le no match
+bird -> ????le no match
+book -> ????le no match
+bright -> ????le no match
+castle -> ????le match
+cat -> ????le no match
+cave -> ????le no match
+chases -> ????le no match
+clever -> ????le no match
+colorful -> ????le no match
+creates -> ????le no match
+crystal -> ????le no match
+curious -> ????le no match
+dark -> ????le no match
+discovers -> ????le no match
+door -> ????le no match
+dragon -> ????le no match
+draws -> ????le no match
+dreams -> ????le no match
+explores -> ????le no match
+follows -> ????le no match
+forest -> ????le no match
+found -> ????le no match
+garden -> ????le no match
+golden -> ????le no match
+hatter -> ????le no match
+hidden -> ????le no match
+imagines -> ????le no match
+in -> ????le no match
+inside -> ????le no match
+island -> ????le no match
+key -> ????le no match
+king -> ????le no match
+knight -> ????le no match
+library -> ????le no match
+magical -> ????le no match
+map -> ????le no match
+message -> ????le no match
+mirror -> ????le no match
+mountain -> ????le no match
+mouse -> ????le no match
+mysterious -> ????le no match
+near -> ????le no match
+ocean -> ????le no match
+palace -> ????le no match
+potion -> ????le no match
+princess -> ????le no match
+puzzle -> ????le match
+queen -> ????le no match
+rabbit -> ????le no match
+reads -> ????le no match
+school -> ????le no match
+secret -> ????le no match
+sees -> ????le no match
+silver -> ????le no match
+story -> ????le no match
+strange -> ????le no match
+student -> ????le no match
+studies -> ????le no match
+teacher -> ????le no match
+the -> ????le no match
+through -> ????le no match
+tower -> ????le no match
+treasure -> ????le no match
+turtle -> ????le match
+under -> ????le no match
+valley -> ????le no match
+village -> ????le no match
+watches -> ????le no match
+wise -> ????le no match
+wizard -> ????le no match
+wonderland -> ????le no match
+writes -> ????le no match
+
+Scan candidates for ????le
+castle, puzzle, turtle
+
+Check scan candidates against summary mappings
+
+castle
+e -> c conflicts
+l -> c already exists
+w -> a conflicts
+x -> a already exists
+z -> s conflicts
+s -> s already exists
+z -> t conflicts
+c -> t already exists
+r -> l agrees
+m -> e agrees
+FAIL
+
+puzzle
+e -> p new
+w -> u new
+z -> z new
+z -> z new
+r -> l agrees
+m -> e agrees
+PASS
+add e -> p
+add w -> u
+add z -> z
+
+choose puzzle
+
+jqrymo
+j -> g
+q -> o
+r -> l
+y -> d
+m -> e
+o -> n
+jqrymo -> golden
+fully mapped
+
+choose golden
+
+Decoded phrase
+puzzle golden
+
+Answer: \boxed{puzzle golden}
+</think>
+\boxed{puzzle golden}

@@ -1,0 +1,120 @@
+Problem syn_tc_dp_phrase_copy_alignment_0038
+Bucket: phrase_copy_alignment
+Gold answer: imagines hidden book sees
+Note: phrase_copy_exact_example_cipher_phrase
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+gzyugjml hgddmj evvt lmml -> imagines hidden book sees
+Now, decrypt the following text: gzyugjml hgddmj evvt lmml
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+gzyugjml hgddmj evvt lmml -> imagines hidden book sees
+
+Training target:
+gzyugjml -> imagines
+g -> i new
+z -> m new
+y -> a new
+u -> g new
+g -> i agrees
+j -> n new
+m -> e new
+l -> s new
+
+hgddmj -> hidden
+h -> h new
+g -> i agrees
+d -> d new
+d -> d agrees
+m -> e agrees
+j -> n agrees
+
+evvt -> book
+e -> b new
+v -> o new
+v -> o agrees
+t -> k new
+
+lmml -> sees
+l -> s agrees
+m -> e agrees
+m -> e agrees
+l -> s agrees
+
+Summary character mappings
+d -> d
+e -> b
+g -> i
+h -> h
+j -> n
+l -> s
+m -> e
+t -> k
+u -> g
+v -> o
+y -> a
+z -> m
+
+Target text
+gzyugjml hgddmj evvt lmml
+
+Decode target words from character mappings
+
+gzyugjml
+g -> i
+z -> m
+y -> a
+u -> g
+g -> i
+j -> n
+m -> e
+l -> s
+gzyugjml -> imagines
+fully mapped
+
+choose imagines
+
+hgddmj
+h -> h
+g -> i
+d -> d
+d -> d
+m -> e
+j -> n
+hgddmj -> hidden
+fully mapped
+
+choose hidden
+
+evvt
+e -> b
+v -> o
+v -> o
+t -> k
+evvt -> book
+fully mapped
+
+choose book
+
+lmml
+l -> s
+m -> e
+m -> e
+l -> s
+lmml -> sees
+fully mapped
+
+choose sees
+
+Decoded phrase
+imagines hidden book sees
+
+Answer: \boxed{imagines hidden book sees}
+</think>
+\boxed{imagines hidden book sees}

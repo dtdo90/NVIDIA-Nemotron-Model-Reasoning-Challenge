@@ -1,0 +1,120 @@
+Problem syn_tc_dp_phrase_copy_alignment_0031
+Bucket: phrase_copy_alignment
+Gold answer: under follows queen tower
+Note: phrase_copy_exact_example_cipher_phrase
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+uaehw bkggkfn ouhha jkfhw -> under follows queen tower
+Now, decrypt the following text: uaehw bkggkfn ouhha jkfhw
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+uaehw bkggkfn ouhha jkfhw -> under follows queen tower
+
+Training target:
+uaehw -> under
+u -> u new
+a -> n new
+e -> d new
+h -> e new
+w -> r new
+
+bkggkfn -> follows
+b -> f new
+k -> o new
+g -> l new
+g -> l agrees
+k -> o agrees
+f -> w new
+n -> s new
+
+ouhha -> queen
+o -> q new
+u -> u agrees
+h -> e agrees
+h -> e agrees
+a -> n agrees
+
+jkfhw -> tower
+j -> t new
+k -> o agrees
+f -> w agrees
+h -> e agrees
+w -> r agrees
+
+Summary character mappings
+a -> n
+b -> f
+e -> d
+f -> w
+g -> l
+h -> e
+j -> t
+k -> o
+n -> s
+o -> q
+u -> u
+w -> r
+
+Target text
+uaehw bkggkfn ouhha jkfhw
+
+Decode target words from character mappings
+
+uaehw
+u -> u
+a -> n
+e -> d
+h -> e
+w -> r
+uaehw -> under
+fully mapped
+
+choose under
+
+bkggkfn
+b -> f
+k -> o
+g -> l
+g -> l
+k -> o
+f -> w
+n -> s
+bkggkfn -> follows
+fully mapped
+
+choose follows
+
+ouhha
+o -> q
+u -> u
+h -> e
+h -> e
+a -> n
+ouhha -> queen
+fully mapped
+
+choose queen
+
+jkfhw
+j -> t
+k -> o
+f -> w
+h -> e
+w -> r
+jkfhw -> tower
+fully mapped
+
+choose tower
+
+Decoded phrase
+under follows queen tower
+
+Answer: \boxed{under follows queen tower}
+</think>
+\boxed{under follows queen tower}

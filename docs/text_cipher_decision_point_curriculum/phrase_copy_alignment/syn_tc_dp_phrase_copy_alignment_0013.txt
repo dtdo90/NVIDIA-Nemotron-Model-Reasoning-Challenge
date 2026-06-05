@@ -1,0 +1,101 @@
+Problem syn_tc_dp_phrase_copy_alignment_0013
+Bucket: phrase_copy_alignment
+Gold answer: puzzle ocean valley
+Note: phrase_copy_exact_example_cipher_phrase
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+wvttyd ipder geyydb -> puzzle ocean valley
+Now, decrypt the following text: wvttyd ipder geyydb
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+wvttyd ipder geyydb -> puzzle ocean valley
+
+Training target:
+wvttyd -> puzzle
+w -> p new
+v -> u new
+t -> z new
+t -> z agrees
+y -> l new
+d -> e new
+
+ipder -> ocean
+i -> o new
+p -> c new
+d -> e agrees
+e -> a new
+r -> n new
+
+geyydb -> valley
+g -> v new
+e -> a agrees
+y -> l agrees
+y -> l agrees
+d -> e agrees
+b -> y new
+
+Summary character mappings
+b -> y
+d -> e
+e -> a
+g -> v
+i -> o
+p -> c
+r -> n
+t -> z
+v -> u
+w -> p
+y -> l
+
+Target text
+wvttyd ipder geyydb
+
+Decode target words from character mappings
+
+wvttyd
+w -> p
+v -> u
+t -> z
+t -> z
+y -> l
+d -> e
+wvttyd -> puzzle
+fully mapped
+
+choose puzzle
+
+ipder
+i -> o
+p -> c
+d -> e
+e -> a
+r -> n
+ipder -> ocean
+fully mapped
+
+choose ocean
+
+geyydb
+g -> v
+e -> a
+y -> l
+y -> l
+d -> e
+b -> y
+geyydb -> valley
+fully mapped
+
+choose valley
+
+Decoded phrase
+puzzle ocean valley
+
+Answer: \boxed{puzzle ocean valley}
+</think>
+\boxed{puzzle ocean valley}

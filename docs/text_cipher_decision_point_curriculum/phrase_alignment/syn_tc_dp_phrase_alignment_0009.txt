@@ -1,0 +1,276 @@
+Problem syn_tc_dp_phrase_alignment_0009
+Bucket: phrase_alignment
+Gold answer: dark in alice mirror
+Note: phrase_strict_left_to_right_alignment
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+iwtqbordtq -> wonderland
+qodewt -> dragon
+xwmtjdpt psrdtq -> mountain island
+Now, decrypt the following text: qdoz pt drpnb xpoowo
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+b -> e
+d -> a
+e -> g
+i -> w
+j -> t
+m -> u
+o -> r
+p -> i
+q -> d
+r -> l
+s -> s
+t -> n
+w -> o
+x -> m
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+qdoz pt drpnb xpoowo
+
+Decode target words from character mappings
+
+qdoz
+q -> d
+d -> a
+o -> r
+z -> ? unknown
+
+Training target:
+qdoz -> dar?
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match dar?
+above -> dar? no match
+alice -> dar? no match
+ancient -> dar? no match
+around -> dar? no match
+beyond -> dar? no match
+bird -> dar? no match
+book -> dar? no match
+bright -> dar? no match
+castle -> dar? no match
+cat -> dar? no match
+cave -> dar? no match
+chases -> dar? no match
+clever -> dar? no match
+colorful -> dar? no match
+creates -> dar? no match
+crystal -> dar? no match
+curious -> dar? no match
+dark -> dar? match
+discovers -> dar? no match
+door -> dar? no match
+dragon -> dar? no match
+draws -> dar? no match
+dreams -> dar? no match
+explores -> dar? no match
+follows -> dar? no match
+forest -> dar? no match
+found -> dar? no match
+garden -> dar? no match
+golden -> dar? no match
+hatter -> dar? no match
+hidden -> dar? no match
+imagines -> dar? no match
+in -> dar? no match
+inside -> dar? no match
+island -> dar? no match
+key -> dar? no match
+king -> dar? no match
+knight -> dar? no match
+library -> dar? no match
+magical -> dar? no match
+map -> dar? no match
+message -> dar? no match
+mirror -> dar? no match
+mountain -> dar? no match
+mouse -> dar? no match
+mysterious -> dar? no match
+near -> dar? no match
+ocean -> dar? no match
+palace -> dar? no match
+potion -> dar? no match
+princess -> dar? no match
+puzzle -> dar? no match
+queen -> dar? no match
+rabbit -> dar? no match
+reads -> dar? no match
+school -> dar? no match
+secret -> dar? no match
+sees -> dar? no match
+silver -> dar? no match
+story -> dar? no match
+strange -> dar? no match
+student -> dar? no match
+studies -> dar? no match
+teacher -> dar? no match
+the -> dar? no match
+through -> dar? no match
+tower -> dar? no match
+treasure -> dar? no match
+turtle -> dar? no match
+under -> dar? no match
+valley -> dar? no match
+village -> dar? no match
+watches -> dar? no match
+wise -> dar? no match
+wizard -> dar? no match
+wonderland -> dar? no match
+writes -> dar? no match
+
+Scan candidates for dar?
+dark
+
+Check scan candidates against summary mappings
+
+dark
+q -> d agrees
+d -> a agrees
+o -> r agrees
+z -> k new
+PASS
+add z -> k
+
+choose dark
+
+pt
+p -> i
+t -> n
+pt -> in
+fully mapped
+
+choose in
+
+drpnb
+d -> a
+r -> l
+p -> i
+n -> ? unknown
+b -> e
+drpnb -> ali?e
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ali?e
+above -> ali?e no match
+alice -> ali?e match
+ancient -> ali?e no match
+around -> ali?e no match
+beyond -> ali?e no match
+bird -> ali?e no match
+book -> ali?e no match
+bright -> ali?e no match
+castle -> ali?e no match
+cat -> ali?e no match
+cave -> ali?e no match
+chases -> ali?e no match
+clever -> ali?e no match
+colorful -> ali?e no match
+creates -> ali?e no match
+crystal -> ali?e no match
+curious -> ali?e no match
+dark -> ali?e no match
+discovers -> ali?e no match
+door -> ali?e no match
+dragon -> ali?e no match
+draws -> ali?e no match
+dreams -> ali?e no match
+explores -> ali?e no match
+follows -> ali?e no match
+forest -> ali?e no match
+found -> ali?e no match
+garden -> ali?e no match
+golden -> ali?e no match
+hatter -> ali?e no match
+hidden -> ali?e no match
+imagines -> ali?e no match
+in -> ali?e no match
+inside -> ali?e no match
+island -> ali?e no match
+key -> ali?e no match
+king -> ali?e no match
+knight -> ali?e no match
+library -> ali?e no match
+magical -> ali?e no match
+map -> ali?e no match
+message -> ali?e no match
+mirror -> ali?e no match
+mountain -> ali?e no match
+mouse -> ali?e no match
+mysterious -> ali?e no match
+near -> ali?e no match
+ocean -> ali?e no match
+palace -> ali?e no match
+potion -> ali?e no match
+princess -> ali?e no match
+puzzle -> ali?e no match
+queen -> ali?e no match
+rabbit -> ali?e no match
+reads -> ali?e no match
+school -> ali?e no match
+secret -> ali?e no match
+sees -> ali?e no match
+silver -> ali?e no match
+story -> ali?e no match
+strange -> ali?e no match
+student -> ali?e no match
+studies -> ali?e no match
+teacher -> ali?e no match
+the -> ali?e no match
+through -> ali?e no match
+tower -> ali?e no match
+treasure -> ali?e no match
+turtle -> ali?e no match
+under -> ali?e no match
+valley -> ali?e no match
+village -> ali?e no match
+watches -> ali?e no match
+wise -> ali?e no match
+wizard -> ali?e no match
+wonderland -> ali?e no match
+writes -> ali?e no match
+
+Scan candidates for ali?e
+alice
+
+Check scan candidates against summary mappings
+
+alice
+d -> a agrees
+r -> l agrees
+p -> i agrees
+n -> c new
+b -> e agrees
+PASS
+add n -> c
+
+choose alice
+
+xpoowo
+x -> m
+p -> i
+o -> r
+o -> r
+w -> o
+o -> r
+xpoowo -> mirror
+fully mapped
+
+choose mirror
+
+Decoded phrase
+dark in alice mirror
+
+Answer: \boxed{dark in alice mirror}
+</think>
+\boxed{dark in alice mirror}

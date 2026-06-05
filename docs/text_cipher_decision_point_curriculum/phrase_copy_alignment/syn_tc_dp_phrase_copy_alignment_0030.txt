@@ -1,0 +1,97 @@
+Problem syn_tc_dp_phrase_copy_alignment_0030
+Bucket: phrase_copy_alignment
+Gold answer: under draws alice
+Note: phrase_copy_exact_example_cipher_phrase
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+xfwuo wojrs jaypu -> under draws alice
+Now, decrypt the following text: xfwuo wojrs jaypu
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+xfwuo wojrs jaypu -> under draws alice
+
+Training target:
+xfwuo -> under
+x -> u new
+f -> n new
+w -> d new
+u -> e new
+o -> r new
+
+wojrs -> draws
+w -> d agrees
+o -> r agrees
+j -> a new
+r -> w new
+s -> s new
+
+jaypu -> alice
+j -> a agrees
+a -> l new
+y -> i new
+p -> c new
+u -> e agrees
+
+Summary character mappings
+a -> l
+f -> n
+j -> a
+o -> r
+p -> c
+r -> w
+s -> s
+u -> e
+w -> d
+x -> u
+y -> i
+
+Target text
+xfwuo wojrs jaypu
+
+Decode target words from character mappings
+
+xfwuo
+x -> u
+f -> n
+w -> d
+u -> e
+o -> r
+xfwuo -> under
+fully mapped
+
+choose under
+
+wojrs
+w -> d
+o -> r
+j -> a
+r -> w
+s -> s
+wojrs -> draws
+fully mapped
+
+choose draws
+
+jaypu
+j -> a
+a -> l
+y -> i
+p -> c
+u -> e
+jaypu -> alice
+fully mapped
+
+choose alice
+
+Decoded phrase
+under draws alice
+
+Answer: \boxed{under draws alice}
+</think>
+\boxed{under draws alice}

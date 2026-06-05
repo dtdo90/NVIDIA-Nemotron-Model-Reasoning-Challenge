@@ -1,0 +1,184 @@
+Problem syn_tc_dp_phrase_reject_failed_0078
+Bucket: phrase_reject_failed_candidate
+Gold answer: knight imagines
+Note: phrase_candidate_conflict_rejection
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+kcwzpd iczkqdw -> castle watches
+rsciw tvssys -> draws mirror
+ecppdb pvuscsb -> valley library
+Now, decrypt the following text: lfvgqz vtcgvfdw
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+b -> y
+c -> a
+d -> e
+e -> v
+i -> w
+k -> c
+p -> l
+q -> h
+r -> d
+s -> r
+t -> m
+u -> b
+v -> i
+w -> s
+y -> o
+z -> t
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+lfvgqz vtcgvfdw
+
+Decode target words from character mappings
+
+lfvgqz
+l -> ? unknown
+f -> ? unknown
+v -> i
+g -> ? unknown
+q -> h
+z -> t
+
+Training target:
+lfvgqz -> ??i?ht
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ??i?ht
+above -> ??i?ht no match
+alice -> ??i?ht no match
+ancient -> ??i?ht no match
+around -> ??i?ht no match
+beyond -> ??i?ht no match
+bird -> ??i?ht no match
+book -> ??i?ht no match
+bright -> ??i?ht match
+castle -> ??i?ht no match
+cat -> ??i?ht no match
+cave -> ??i?ht no match
+chases -> ??i?ht no match
+clever -> ??i?ht no match
+colorful -> ??i?ht no match
+creates -> ??i?ht no match
+crystal -> ??i?ht no match
+curious -> ??i?ht no match
+dark -> ??i?ht no match
+discovers -> ??i?ht no match
+door -> ??i?ht no match
+dragon -> ??i?ht no match
+draws -> ??i?ht no match
+dreams -> ??i?ht no match
+explores -> ??i?ht no match
+follows -> ??i?ht no match
+forest -> ??i?ht no match
+found -> ??i?ht no match
+garden -> ??i?ht no match
+golden -> ??i?ht no match
+hatter -> ??i?ht no match
+hidden -> ??i?ht no match
+imagines -> ??i?ht no match
+in -> ??i?ht no match
+inside -> ??i?ht no match
+island -> ??i?ht no match
+key -> ??i?ht no match
+king -> ??i?ht no match
+knight -> ??i?ht match
+library -> ??i?ht no match
+magical -> ??i?ht no match
+map -> ??i?ht no match
+message -> ??i?ht no match
+mirror -> ??i?ht no match
+mountain -> ??i?ht no match
+mouse -> ??i?ht no match
+mysterious -> ??i?ht no match
+near -> ??i?ht no match
+ocean -> ??i?ht no match
+palace -> ??i?ht no match
+potion -> ??i?ht no match
+princess -> ??i?ht no match
+puzzle -> ??i?ht no match
+queen -> ??i?ht no match
+rabbit -> ??i?ht no match
+reads -> ??i?ht no match
+school -> ??i?ht no match
+secret -> ??i?ht no match
+sees -> ??i?ht no match
+silver -> ??i?ht no match
+story -> ??i?ht no match
+strange -> ??i?ht no match
+student -> ??i?ht no match
+studies -> ??i?ht no match
+teacher -> ??i?ht no match
+the -> ??i?ht no match
+through -> ??i?ht no match
+tower -> ??i?ht no match
+treasure -> ??i?ht no match
+turtle -> ??i?ht no match
+under -> ??i?ht no match
+valley -> ??i?ht no match
+village -> ??i?ht no match
+watches -> ??i?ht no match
+wise -> ??i?ht no match
+wizard -> ??i?ht no match
+wonderland -> ??i?ht no match
+writes -> ??i?ht no match
+
+Scan candidates for ??i?ht
+bright, knight
+
+Check scan candidates against summary mappings
+
+bright
+l -> b conflicts
+u -> b already exists
+f -> r conflicts
+s -> r already exists
+v -> i agrees
+g -> g new
+q -> h agrees
+z -> t agrees
+FAIL
+
+knight
+l -> k new
+f -> n new
+v -> i agrees
+g -> g new
+q -> h agrees
+z -> t agrees
+PASS
+add l -> k
+add f -> n
+add g -> g
+
+choose knight
+
+vtcgvfdw
+v -> i
+t -> m
+c -> a
+g -> g
+v -> i
+f -> n
+d -> e
+w -> s
+vtcgvfdw -> imagines
+fully mapped
+
+choose imagines
+
+Decoded phrase
+knight imagines
+
+Answer: \boxed{knight imagines}
+</think>
+\boxed{knight imagines}

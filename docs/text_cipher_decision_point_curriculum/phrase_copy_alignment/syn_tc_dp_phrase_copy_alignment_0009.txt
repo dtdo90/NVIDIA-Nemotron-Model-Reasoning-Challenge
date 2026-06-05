@@ -1,0 +1,80 @@
+Problem syn_tc_dp_phrase_copy_alignment_0009
+Bucket: phrase_copy_alignment
+Gold answer: near princess
+Note: phrase_copy_exact_example_cipher_phrase
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+onav yvjohnqq -> near princess
+Now, decrypt the following text: onav yvjohnqq
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+onav yvjohnqq -> near princess
+
+Training target:
+onav -> near
+o -> n new
+n -> e new
+a -> a new
+v -> r new
+
+yvjohnqq -> princess
+y -> p new
+v -> r agrees
+j -> i new
+o -> n agrees
+h -> c new
+n -> e agrees
+q -> s new
+q -> s agrees
+
+Summary character mappings
+a -> a
+h -> c
+j -> i
+n -> e
+o -> n
+q -> s
+v -> r
+y -> p
+
+Target text
+onav yvjohnqq
+
+Decode target words from character mappings
+
+onav
+o -> n
+n -> e
+a -> a
+v -> r
+onav -> near
+fully mapped
+
+choose near
+
+yvjohnqq
+y -> p
+v -> r
+j -> i
+o -> n
+h -> c
+n -> e
+q -> s
+q -> s
+yvjohnqq -> princess
+fully mapped
+
+choose princess
+
+Decoded phrase
+near princess
+
+Answer: \boxed{near princess}
+</think>
+\boxed{near princess}

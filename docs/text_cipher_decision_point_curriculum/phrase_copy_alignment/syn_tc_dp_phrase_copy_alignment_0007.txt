@@ -1,0 +1,155 @@
+Problem syn_tc_dp_phrase_copy_alignment_0007
+Bucket: phrase_copy_alignment
+Gold answer: story creates studies wonderland queen
+Note: phrase_copy_exact_example_cipher_phrase
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+wmdlb plcnmcw wmqfxcw edhfclanhf jqcch -> story creates studies wonderland queen
+Now, decrypt the following text: wmdlb plcnmcw wmqfxcw edhfclanhf jqcch
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+wmdlb plcnmcw wmqfxcw edhfclanhf jqcch -> story creates studies wonderland queen
+
+Training target:
+wmdlb -> story
+w -> s new
+m -> t new
+d -> o new
+l -> r new
+b -> y new
+
+plcnmcw -> creates
+p -> c new
+l -> r agrees
+c -> e new
+n -> a new
+m -> t agrees
+c -> e agrees
+w -> s agrees
+
+wmqfxcw -> studies
+w -> s agrees
+m -> t agrees
+q -> u new
+f -> d new
+x -> i new
+c -> e agrees
+w -> s agrees
+
+edhfclanhf -> wonderland
+e -> w new
+d -> o agrees
+h -> n new
+f -> d agrees
+c -> e agrees
+l -> r agrees
+a -> l new
+n -> a agrees
+h -> n agrees
+f -> d agrees
+
+jqcch -> queen
+j -> q new
+q -> u agrees
+c -> e agrees
+c -> e agrees
+h -> n agrees
+
+Summary character mappings
+a -> l
+b -> y
+c -> e
+d -> o
+e -> w
+f -> d
+h -> n
+j -> q
+l -> r
+m -> t
+n -> a
+p -> c
+q -> u
+w -> s
+x -> i
+
+Target text
+wmdlb plcnmcw wmqfxcw edhfclanhf jqcch
+
+Decode target words from character mappings
+
+wmdlb
+w -> s
+m -> t
+d -> o
+l -> r
+b -> y
+wmdlb -> story
+fully mapped
+
+choose story
+
+plcnmcw
+p -> c
+l -> r
+c -> e
+n -> a
+m -> t
+c -> e
+w -> s
+plcnmcw -> creates
+fully mapped
+
+choose creates
+
+wmqfxcw
+w -> s
+m -> t
+q -> u
+f -> d
+x -> i
+c -> e
+w -> s
+wmqfxcw -> studies
+fully mapped
+
+choose studies
+
+edhfclanhf
+e -> w
+d -> o
+h -> n
+f -> d
+c -> e
+l -> r
+a -> l
+n -> a
+h -> n
+f -> d
+edhfclanhf -> wonderland
+fully mapped
+
+choose wonderland
+
+jqcch
+j -> q
+q -> u
+c -> e
+c -> e
+h -> n
+jqcch -> queen
+fully mapped
+
+choose queen
+
+Decoded phrase
+story creates studies wonderland queen
+
+Answer: \boxed{story creates studies wonderland queen}
+</think>
+\boxed{story creates studies wonderland queen}

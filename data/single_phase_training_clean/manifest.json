@@ -1,6 +1,6 @@
 {
   "output_csv": "data/single_phase_training_clean/single_phase_sft_v2.csv",
-  "total_rows": 18427,
+  "total_rows": 18667,
   "phase2_rows": 11356,
   "phase2_rows_after_replacing_bit": 9992,
   "removed_phase2_bit_rows": 1364,
@@ -61,7 +61,7 @@
     "single_phase_synthetic_text_cipher_confusion": 200,
     "symbol_transform_untrained_eval_only": 109,
     "synthetic": 3217,
-    "text_cipher_decision_point_curriculum": 120
+    "text_cipher_decision_point_curriculum": 360
   },
   "category_counts": {
     "Bit Manipulation": 6117,
@@ -69,7 +69,7 @@
     "Numeral System": 1576,
     "Numeric Equation Transformation Rules": 4763,
     "Symbol Transform": 884,
-    "Text Cipher": 1896,
+    "Text Cipher": 2136,
     "Unit Conversion": 1594
   },
   "prompt_rewrite": {
@@ -81,14 +81,15 @@
   "removed_huikang_duplicate_bit_alternate_trace_note": "Rows with source_mode=synthetic in Bit Manipulation are -p0 alternate traces for real HuiKang bit problems with identical prompts/answers, so they are excluded to avoid duplicate bias and split leakage.",
   "single_phase_split_csv": "data/single_phase_training_clean/single_phase_splits_80_10_10.csv",
   "single_phase_split_counts": {
-    "eval_holdout": 997,
-    "grpo_holdout": 849,
-    "sft_train": 16581
+    "eval_holdout": 973,
+    "grpo_holdout": 771,
+    "sft_train": 16809,
+    "unused": 114
   },
-  "single_phase_split_strategy": "80/10/10 stratified per question type by diagnostic_subtype and source_mode; rows marked split_policy=train_only or eval_eligible=false stay in sft_train; eval_holdout is the optional GRPO training bucket and grpo_holdout is final local eval",
+  "single_phase_split_strategy": "80/10/10 stratified per question type by diagnostic_subtype and source_mode; rows marked train-only stay in sft_train; rows marked unused are excluded from SFT and validation; symbol/numeric use an honest eval_holdout reassignment for weak or unsolved families",
   "prompt_format_counts": {
     "competition_chat_template": 17407,
-    "raw_completion": 1020
+    "decision_point_chat_template": 1260
   },
   "honest_eval_split_policy": {
     "eval_fraction": 0.2,
@@ -101,19 +102,30 @@
     "symbol_wrong_answer_source_mode": "op_ab_guess_0134_wrong",
     "symbol_correct_guess_source_mode": "op_ab_guess_0134_correct"
   },
-  "added_text_cipher_decision_point_curriculum_rows": 120,
+  "added_text_cipher_decision_point_curriculum_rows": 360,
   "text_cipher_decision_point_curriculum": {
     "source_dir": "docs/text_cipher_decision_point_curriculum",
     "source_mode": "text_cipher_decision_point_curriculum",
-    "prompt_format": "raw_completion",
+    "prompt_format": "decision_point_chat_template",
     "split_policy": "train_only",
     "eval_eligible": false,
     "append_answer_instruction": false,
     "bucket_counts": {
       "alignment": 40,
       "copy_alignment": 15,
+      "phrase_alignment": 50,
+      "phrase_copy_alignment": 45,
+      "phrase_reject_failed_candidate": 90,
+      "phrase_repeated_letter": 55,
       "reject_failed_candidate": 30,
       "repeated_letter": 35
+    },
+    "word_count_distribution": {
+      "1": 120,
+      "2": 61,
+      "3": 59,
+      "4": 80,
+      "5": 40
     }
   },
   "removed_symbol_transform_ba_dc_sft_train_rows": 43,
@@ -162,5 +174,35 @@
     "f297547e",
     "ff86cd34"
   ],
-  "removed_symbol_transform_ba_dc_note": "Removed only Symbol Transform BA_DC rows assigned to sft_train because the current methodology is weak; existing eval_holdout and grpo_holdout BA_DC rows remain unchanged for honest evaluation."
+  "removed_symbol_transform_ba_dc_note": "Removed only Symbol Transform BA_DC rows assigned to sft_train because the current methodology is weak; existing eval_holdout and grpo_holdout BA_DC rows remain unchanged for honest evaluation.",
+  "honest_validation_reassignment": {
+    "seed": 20260605,
+    "eval_split": "eval_holdout",
+    "symbol_transform": {
+      "direct_template_real_eval": 12,
+      "operator_absence_correct_eval": 3,
+      "operator_absence_wrong_eval": 30,
+      "others_eval_total": 24,
+      "ba_dc_kept_eval": 11,
+      "untrained_eval_only_eval": 13,
+      "note": "all real ba_dc symbol rows remain in eval_holdout to keep noisy ba_dc traces out of sft_train"
+    },
+    "numeric_equation": {
+      "real_eval": 129,
+      "untrained_eval_only_eval": 4,
+      "note": "20 percent sampled per real diagnostic subtype plus 20 percent untrained eval-only"
+    }
+  },
+  "symbol_transform_unused_training_rows": {
+    "count": 96,
+    "source_mode": "symbol_transform_untrained_eval_only",
+    "reason": "answer-only same-operator symbol rows are outside the approved direct-template/operator-absence training buckets",
+    "split": "unused"
+  },
+  "numeric_equation_unused_training_rows": {
+    "count": 18,
+    "source_mode": "numeric_equation_untrained_eval_only",
+    "reason": "answer-only unsolved numeric rows are outside the approved trace-supervised training buckets",
+    "split": "unused"
+  }
 }

@@ -1,0 +1,299 @@
+Problem syn_tc_dp_phrase_alignment_0003
+Bucket: phrase_alignment
+Gold answer: colorful around the map garden
+Note: phrase_strict_left_to_right_alignment
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+kwerg hgjagc -> above secret
+nksojkd -> magical
+nghhksg qakfh -> message draws
+hcmqgzc hggh -> student sees
+tecoez -> potion
+Now, decrypt the following text: jedeaumd kaemzq cpg nkt skaqgz
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+a -> r
+c -> t
+d -> l
+e -> o
+f -> w
+g -> e
+h -> s
+j -> c
+k -> a
+m -> u
+n -> m
+o -> i
+q -> d
+r -> v
+s -> g
+t -> p
+w -> b
+z -> n
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+jedeaumd kaemzq cpg nkt skaqgz
+
+Decode target words from character mappings
+
+jedeaumd
+j -> c
+e -> o
+d -> l
+e -> o
+a -> r
+u -> ? unknown
+m -> u
+d -> l
+
+Training target:
+jedeaumd -> color?ul
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match color?ul
+above -> color?ul no match
+alice -> color?ul no match
+ancient -> color?ul no match
+around -> color?ul no match
+beyond -> color?ul no match
+bird -> color?ul no match
+book -> color?ul no match
+bright -> color?ul no match
+castle -> color?ul no match
+cat -> color?ul no match
+cave -> color?ul no match
+chases -> color?ul no match
+clever -> color?ul no match
+colorful -> color?ul match
+creates -> color?ul no match
+crystal -> color?ul no match
+curious -> color?ul no match
+dark -> color?ul no match
+discovers -> color?ul no match
+door -> color?ul no match
+dragon -> color?ul no match
+draws -> color?ul no match
+dreams -> color?ul no match
+explores -> color?ul no match
+follows -> color?ul no match
+forest -> color?ul no match
+found -> color?ul no match
+garden -> color?ul no match
+golden -> color?ul no match
+hatter -> color?ul no match
+hidden -> color?ul no match
+imagines -> color?ul no match
+in -> color?ul no match
+inside -> color?ul no match
+island -> color?ul no match
+key -> color?ul no match
+king -> color?ul no match
+knight -> color?ul no match
+library -> color?ul no match
+magical -> color?ul no match
+map -> color?ul no match
+message -> color?ul no match
+mirror -> color?ul no match
+mountain -> color?ul no match
+mouse -> color?ul no match
+mysterious -> color?ul no match
+near -> color?ul no match
+ocean -> color?ul no match
+palace -> color?ul no match
+potion -> color?ul no match
+princess -> color?ul no match
+puzzle -> color?ul no match
+queen -> color?ul no match
+rabbit -> color?ul no match
+reads -> color?ul no match
+school -> color?ul no match
+secret -> color?ul no match
+sees -> color?ul no match
+silver -> color?ul no match
+story -> color?ul no match
+strange -> color?ul no match
+student -> color?ul no match
+studies -> color?ul no match
+teacher -> color?ul no match
+the -> color?ul no match
+through -> color?ul no match
+tower -> color?ul no match
+treasure -> color?ul no match
+turtle -> color?ul no match
+under -> color?ul no match
+valley -> color?ul no match
+village -> color?ul no match
+watches -> color?ul no match
+wise -> color?ul no match
+wizard -> color?ul no match
+wonderland -> color?ul no match
+writes -> color?ul no match
+
+Scan candidates for color?ul
+colorful
+
+Check scan candidates against summary mappings
+
+colorful
+j -> c agrees
+e -> o agrees
+d -> l agrees
+e -> o agrees
+a -> r agrees
+u -> f new
+m -> u agrees
+d -> l agrees
+PASS
+add u -> f
+
+choose colorful
+
+kaemzq
+k -> a
+a -> r
+e -> o
+m -> u
+z -> n
+q -> d
+kaemzq -> around
+fully mapped
+
+choose around
+
+cpg
+c -> t
+p -> ? unknown
+g -> e
+cpg -> t?e
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match t?e
+above -> t?e no match
+alice -> t?e no match
+ancient -> t?e no match
+around -> t?e no match
+beyond -> t?e no match
+bird -> t?e no match
+book -> t?e no match
+bright -> t?e no match
+castle -> t?e no match
+cat -> t?e no match
+cave -> t?e no match
+chases -> t?e no match
+clever -> t?e no match
+colorful -> t?e no match
+creates -> t?e no match
+crystal -> t?e no match
+curious -> t?e no match
+dark -> t?e no match
+discovers -> t?e no match
+door -> t?e no match
+dragon -> t?e no match
+draws -> t?e no match
+dreams -> t?e no match
+explores -> t?e no match
+follows -> t?e no match
+forest -> t?e no match
+found -> t?e no match
+garden -> t?e no match
+golden -> t?e no match
+hatter -> t?e no match
+hidden -> t?e no match
+imagines -> t?e no match
+in -> t?e no match
+inside -> t?e no match
+island -> t?e no match
+key -> t?e no match
+king -> t?e no match
+knight -> t?e no match
+library -> t?e no match
+magical -> t?e no match
+map -> t?e no match
+message -> t?e no match
+mirror -> t?e no match
+mountain -> t?e no match
+mouse -> t?e no match
+mysterious -> t?e no match
+near -> t?e no match
+ocean -> t?e no match
+palace -> t?e no match
+potion -> t?e no match
+princess -> t?e no match
+puzzle -> t?e no match
+queen -> t?e no match
+rabbit -> t?e no match
+reads -> t?e no match
+school -> t?e no match
+secret -> t?e no match
+sees -> t?e no match
+silver -> t?e no match
+story -> t?e no match
+strange -> t?e no match
+student -> t?e no match
+studies -> t?e no match
+teacher -> t?e no match
+the -> t?e match
+through -> t?e no match
+tower -> t?e no match
+treasure -> t?e no match
+turtle -> t?e no match
+under -> t?e no match
+valley -> t?e no match
+village -> t?e no match
+watches -> t?e no match
+wise -> t?e no match
+wizard -> t?e no match
+wonderland -> t?e no match
+writes -> t?e no match
+
+Scan candidates for t?e
+the
+
+Check scan candidates against summary mappings
+
+the
+c -> t agrees
+p -> h new
+g -> e agrees
+PASS
+add p -> h
+
+choose the
+
+nkt
+n -> m
+k -> a
+t -> p
+nkt -> map
+fully mapped
+
+choose map
+
+skaqgz
+s -> g
+k -> a
+a -> r
+q -> d
+g -> e
+z -> n
+skaqgz -> garden
+fully mapped
+
+choose garden
+
+Decoded phrase
+colorful around the map garden
+
+Answer: \boxed{colorful around the map garden}
+</think>
+\boxed{colorful around the map garden}

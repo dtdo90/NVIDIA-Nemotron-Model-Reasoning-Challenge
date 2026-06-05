@@ -1,0 +1,261 @@
+Problem syn_tc_dp_phrase_alignment_0048
+Bucket: phrase_alignment
+Gold answer: bright ocean
+Note: phrase_strict_left_to_right_alignment
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+zhmkfx -> dreams
+anhjpnx gkyacmx -> curious watches
+fkujako -> magical
+Now, decrypt the following text: ihjucy pamkw
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+a -> c
+c -> h
+f -> m
+g -> w
+h -> r
+j -> i
+k -> a
+m -> e
+n -> u
+o -> l
+p -> o
+u -> g
+x -> s
+y -> t
+z -> d
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+ihjucy pamkw
+
+Decode target words from character mappings
+
+ihjucy
+i -> ? unknown
+h -> r
+j -> i
+u -> g
+c -> h
+y -> t
+
+Training target:
+ihjucy -> ?right
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?right
+above -> ?right no match
+alice -> ?right no match
+ancient -> ?right no match
+around -> ?right no match
+beyond -> ?right no match
+bird -> ?right no match
+book -> ?right no match
+bright -> ?right match
+castle -> ?right no match
+cat -> ?right no match
+cave -> ?right no match
+chases -> ?right no match
+clever -> ?right no match
+colorful -> ?right no match
+creates -> ?right no match
+crystal -> ?right no match
+curious -> ?right no match
+dark -> ?right no match
+discovers -> ?right no match
+door -> ?right no match
+dragon -> ?right no match
+draws -> ?right no match
+dreams -> ?right no match
+explores -> ?right no match
+follows -> ?right no match
+forest -> ?right no match
+found -> ?right no match
+garden -> ?right no match
+golden -> ?right no match
+hatter -> ?right no match
+hidden -> ?right no match
+imagines -> ?right no match
+in -> ?right no match
+inside -> ?right no match
+island -> ?right no match
+key -> ?right no match
+king -> ?right no match
+knight -> ?right no match
+library -> ?right no match
+magical -> ?right no match
+map -> ?right no match
+message -> ?right no match
+mirror -> ?right no match
+mountain -> ?right no match
+mouse -> ?right no match
+mysterious -> ?right no match
+near -> ?right no match
+ocean -> ?right no match
+palace -> ?right no match
+potion -> ?right no match
+princess -> ?right no match
+puzzle -> ?right no match
+queen -> ?right no match
+rabbit -> ?right no match
+reads -> ?right no match
+school -> ?right no match
+secret -> ?right no match
+sees -> ?right no match
+silver -> ?right no match
+story -> ?right no match
+strange -> ?right no match
+student -> ?right no match
+studies -> ?right no match
+teacher -> ?right no match
+the -> ?right no match
+through -> ?right no match
+tower -> ?right no match
+treasure -> ?right no match
+turtle -> ?right no match
+under -> ?right no match
+valley -> ?right no match
+village -> ?right no match
+watches -> ?right no match
+wise -> ?right no match
+wizard -> ?right no match
+wonderland -> ?right no match
+writes -> ?right no match
+
+Scan candidates for ?right
+bright
+
+Check scan candidates against summary mappings
+
+bright
+i -> b new
+h -> r agrees
+j -> i agrees
+u -> g agrees
+c -> h agrees
+y -> t agrees
+PASS
+add i -> b
+
+choose bright
+
+pamkw
+p -> o
+a -> c
+m -> e
+k -> a
+w -> ? unknown
+pamkw -> ocea?
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ocea?
+above -> ocea? no match
+alice -> ocea? no match
+ancient -> ocea? no match
+around -> ocea? no match
+beyond -> ocea? no match
+bird -> ocea? no match
+book -> ocea? no match
+bright -> ocea? no match
+castle -> ocea? no match
+cat -> ocea? no match
+cave -> ocea? no match
+chases -> ocea? no match
+clever -> ocea? no match
+colorful -> ocea? no match
+creates -> ocea? no match
+crystal -> ocea? no match
+curious -> ocea? no match
+dark -> ocea? no match
+discovers -> ocea? no match
+door -> ocea? no match
+dragon -> ocea? no match
+draws -> ocea? no match
+dreams -> ocea? no match
+explores -> ocea? no match
+follows -> ocea? no match
+forest -> ocea? no match
+found -> ocea? no match
+garden -> ocea? no match
+golden -> ocea? no match
+hatter -> ocea? no match
+hidden -> ocea? no match
+imagines -> ocea? no match
+in -> ocea? no match
+inside -> ocea? no match
+island -> ocea? no match
+key -> ocea? no match
+king -> ocea? no match
+knight -> ocea? no match
+library -> ocea? no match
+magical -> ocea? no match
+map -> ocea? no match
+message -> ocea? no match
+mirror -> ocea? no match
+mountain -> ocea? no match
+mouse -> ocea? no match
+mysterious -> ocea? no match
+near -> ocea? no match
+ocean -> ocea? match
+palace -> ocea? no match
+potion -> ocea? no match
+princess -> ocea? no match
+puzzle -> ocea? no match
+queen -> ocea? no match
+rabbit -> ocea? no match
+reads -> ocea? no match
+school -> ocea? no match
+secret -> ocea? no match
+sees -> ocea? no match
+silver -> ocea? no match
+story -> ocea? no match
+strange -> ocea? no match
+student -> ocea? no match
+studies -> ocea? no match
+teacher -> ocea? no match
+the -> ocea? no match
+through -> ocea? no match
+tower -> ocea? no match
+treasure -> ocea? no match
+turtle -> ocea? no match
+under -> ocea? no match
+valley -> ocea? no match
+village -> ocea? no match
+watches -> ocea? no match
+wise -> ocea? no match
+wizard -> ocea? no match
+wonderland -> ocea? no match
+writes -> ocea? no match
+
+Scan candidates for ocea?
+ocean
+
+Check scan candidates against summary mappings
+
+ocean
+p -> o agrees
+a -> c agrees
+m -> e agrees
+k -> a agrees
+w -> n new
+PASS
+add w -> n
+
+choose ocean
+
+Decoded phrase
+bright ocean
+
+Answer: \boxed{bright ocean}
+</think>
+\boxed{bright ocean}

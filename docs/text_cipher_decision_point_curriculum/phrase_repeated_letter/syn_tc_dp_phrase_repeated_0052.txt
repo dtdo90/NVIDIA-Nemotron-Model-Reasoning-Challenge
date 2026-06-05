@@ -1,0 +1,174 @@
+Problem syn_tc_dp_phrase_repeated_0052
+Bucket: phrase_repeated_letter
+Gold answer: curious turtle
+Note: phrase_preserve_repeated_letter_pattern
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+ioaows -> palace
+msrrojs -> message
+oanws qynjgx -> alice bright
+qsthul -> beyond
+nraoul yoqqnx -> island rabbit
+Now, decrypt the following text: wkynhkr xkyxas
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+a -> l
+g -> h
+h -> o
+i -> p
+j -> g
+l -> d
+m -> m
+n -> i
+o -> a
+q -> b
+r -> s
+s -> e
+t -> y
+u -> n
+w -> c
+x -> t
+y -> r
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+wkynhkr xkyxas
+
+Decode target words from character mappings
+
+wkynhkr
+w -> c
+k -> ? unknown
+y -> r
+n -> i
+h -> o
+k -> ? unknown
+r -> s
+
+Training target:
+wkynhkr -> c?rio?s
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match c?rio?s
+above -> c?rio?s no match
+alice -> c?rio?s no match
+ancient -> c?rio?s no match
+around -> c?rio?s no match
+beyond -> c?rio?s no match
+bird -> c?rio?s no match
+book -> c?rio?s no match
+bright -> c?rio?s no match
+castle -> c?rio?s no match
+cat -> c?rio?s no match
+cave -> c?rio?s no match
+chases -> c?rio?s no match
+clever -> c?rio?s no match
+colorful -> c?rio?s no match
+creates -> c?rio?s no match
+crystal -> c?rio?s no match
+curious -> c?rio?s match
+dark -> c?rio?s no match
+discovers -> c?rio?s no match
+door -> c?rio?s no match
+dragon -> c?rio?s no match
+draws -> c?rio?s no match
+dreams -> c?rio?s no match
+explores -> c?rio?s no match
+follows -> c?rio?s no match
+forest -> c?rio?s no match
+found -> c?rio?s no match
+garden -> c?rio?s no match
+golden -> c?rio?s no match
+hatter -> c?rio?s no match
+hidden -> c?rio?s no match
+imagines -> c?rio?s no match
+in -> c?rio?s no match
+inside -> c?rio?s no match
+island -> c?rio?s no match
+key -> c?rio?s no match
+king -> c?rio?s no match
+knight -> c?rio?s no match
+library -> c?rio?s no match
+magical -> c?rio?s no match
+map -> c?rio?s no match
+message -> c?rio?s no match
+mirror -> c?rio?s no match
+mountain -> c?rio?s no match
+mouse -> c?rio?s no match
+mysterious -> c?rio?s no match
+near -> c?rio?s no match
+ocean -> c?rio?s no match
+palace -> c?rio?s no match
+potion -> c?rio?s no match
+princess -> c?rio?s no match
+puzzle -> c?rio?s no match
+queen -> c?rio?s no match
+rabbit -> c?rio?s no match
+reads -> c?rio?s no match
+school -> c?rio?s no match
+secret -> c?rio?s no match
+sees -> c?rio?s no match
+silver -> c?rio?s no match
+story -> c?rio?s no match
+strange -> c?rio?s no match
+student -> c?rio?s no match
+studies -> c?rio?s no match
+teacher -> c?rio?s no match
+the -> c?rio?s no match
+through -> c?rio?s no match
+tower -> c?rio?s no match
+treasure -> c?rio?s no match
+turtle -> c?rio?s no match
+under -> c?rio?s no match
+valley -> c?rio?s no match
+village -> c?rio?s no match
+watches -> c?rio?s no match
+wise -> c?rio?s no match
+wizard -> c?rio?s no match
+wonderland -> c?rio?s no match
+writes -> c?rio?s no match
+
+Scan candidates for c?rio?s
+curious
+
+Check scan candidates against summary mappings
+
+curious
+w -> c agrees
+k -> u new
+y -> r agrees
+n -> i agrees
+h -> o agrees
+k -> u new
+r -> s agrees
+PASS
+add k -> u
+
+choose curious
+
+xkyxas
+x -> t
+k -> u
+y -> r
+x -> t
+a -> l
+s -> e
+xkyxas -> turtle
+fully mapped
+
+choose turtle
+
+Decoded phrase
+curious turtle
+
+Answer: \boxed{curious turtle}
+</think>
+\boxed{curious turtle}

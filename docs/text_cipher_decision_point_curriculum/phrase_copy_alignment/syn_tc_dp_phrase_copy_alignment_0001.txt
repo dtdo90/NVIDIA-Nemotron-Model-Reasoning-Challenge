@@ -1,0 +1,100 @@
+Problem syn_tc_dp_phrase_copy_alignment_0001
+Bucket: phrase_copy_alignment
+Gold answer: garden under island
+Note: phrase_copy_exact_example_cipher_phrase
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+usekjh chkje nrbshk -> garden under island
+Now, decrypt the following text: usekjh chkje nrbshk
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+usekjh chkje nrbshk -> garden under island
+
+Training target:
+usekjh -> garden
+u -> g new
+s -> a new
+e -> r new
+k -> d new
+j -> e new
+h -> n new
+
+chkje -> under
+c -> u new
+h -> n agrees
+k -> d agrees
+j -> e agrees
+e -> r agrees
+
+nrbshk -> island
+n -> i new
+r -> s new
+b -> l new
+s -> a agrees
+h -> n agrees
+k -> d agrees
+
+Summary character mappings
+b -> l
+c -> u
+e -> r
+h -> n
+j -> e
+k -> d
+n -> i
+r -> s
+s -> a
+u -> g
+
+Target text
+usekjh chkje nrbshk
+
+Decode target words from character mappings
+
+usekjh
+u -> g
+s -> a
+e -> r
+k -> d
+j -> e
+h -> n
+usekjh -> garden
+fully mapped
+
+choose garden
+
+chkje
+c -> u
+h -> n
+k -> d
+j -> e
+e -> r
+chkje -> under
+fully mapped
+
+choose under
+
+nrbshk
+n -> i
+r -> s
+b -> l
+s -> a
+h -> n
+k -> d
+nrbshk -> island
+fully mapped
+
+choose island
+
+Decoded phrase
+garden under island
+
+Answer: \boxed{garden under island}
+</think>
+\boxed{garden under island}

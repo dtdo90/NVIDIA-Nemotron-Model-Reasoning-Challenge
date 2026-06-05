@@ -1,0 +1,140 @@
+Problem syn_tc_dp_phrase_copy_alignment_0032
+Bucket: phrase_copy_alignment
+Gold answer: curious king dreams key palace
+Note: phrase_copy_exact_example_cipher_phrase
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+vceqkcj xqfz pethsj xtg dhmhvt -> curious king dreams key palace
+Now, decrypt the following text: vceqkcj xqfz pethsj xtg dhmhvt
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+vceqkcj xqfz pethsj xtg dhmhvt -> curious king dreams key palace
+
+Training target:
+vceqkcj -> curious
+v -> c new
+c -> u new
+e -> r new
+q -> i new
+k -> o new
+c -> u agrees
+j -> s new
+
+xqfz -> king
+x -> k new
+q -> i agrees
+f -> n new
+z -> g new
+
+pethsj -> dreams
+p -> d new
+e -> r agrees
+t -> e new
+h -> a new
+s -> m new
+j -> s agrees
+
+xtg -> key
+x -> k agrees
+t -> e agrees
+g -> y new
+
+dhmhvt -> palace
+d -> p new
+h -> a agrees
+m -> l new
+h -> a agrees
+v -> c agrees
+t -> e agrees
+
+Summary character mappings
+c -> u
+d -> p
+e -> r
+f -> n
+g -> y
+h -> a
+j -> s
+k -> o
+m -> l
+p -> d
+q -> i
+s -> m
+t -> e
+v -> c
+x -> k
+z -> g
+
+Target text
+vceqkcj xqfz pethsj xtg dhmhvt
+
+Decode target words from character mappings
+
+vceqkcj
+v -> c
+c -> u
+e -> r
+q -> i
+k -> o
+c -> u
+j -> s
+vceqkcj -> curious
+fully mapped
+
+choose curious
+
+xqfz
+x -> k
+q -> i
+f -> n
+z -> g
+xqfz -> king
+fully mapped
+
+choose king
+
+pethsj
+p -> d
+e -> r
+t -> e
+h -> a
+s -> m
+j -> s
+pethsj -> dreams
+fully mapped
+
+choose dreams
+
+xtg
+x -> k
+t -> e
+g -> y
+xtg -> key
+fully mapped
+
+choose key
+
+dhmhvt
+d -> p
+h -> a
+m -> l
+h -> a
+v -> c
+t -> e
+dhmhvt -> palace
+fully mapped
+
+choose palace
+
+Decoded phrase
+curious king dreams key palace
+
+Answer: \boxed{curious king dreams key palace}
+</think>
+\boxed{curious king dreams key palace}

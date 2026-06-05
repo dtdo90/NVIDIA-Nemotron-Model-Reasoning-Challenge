@@ -1,0 +1,132 @@
+Problem syn_tc_dp_phrase_copy_alignment_0033
+Bucket: phrase_copy_alignment
+Gold answer: garden mysterious writes story
+Note: phrase_copy_exact_example_cipher_phrase
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+dqzyeh vobiezngkb rznieb bigzo -> garden mysterious writes story
+Now, decrypt the following text: dqzyeh vobiezngkb rznieb bigzo
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+dqzyeh vobiezngkb rznieb bigzo -> garden mysterious writes story
+
+Training target:
+dqzyeh -> garden
+d -> g new
+q -> a new
+z -> r new
+y -> d new
+e -> e new
+h -> n new
+
+vobiezngkb -> mysterious
+v -> m new
+o -> y new
+b -> s new
+i -> t new
+e -> e agrees
+z -> r agrees
+n -> i new
+g -> o new
+k -> u new
+b -> s agrees
+
+rznieb -> writes
+r -> w new
+z -> r agrees
+n -> i agrees
+i -> t agrees
+e -> e agrees
+b -> s agrees
+
+bigzo -> story
+b -> s agrees
+i -> t agrees
+g -> o agrees
+z -> r agrees
+o -> y agrees
+
+Summary character mappings
+b -> s
+d -> g
+e -> e
+g -> o
+h -> n
+i -> t
+k -> u
+n -> i
+o -> y
+q -> a
+r -> w
+v -> m
+y -> d
+z -> r
+
+Target text
+dqzyeh vobiezngkb rznieb bigzo
+
+Decode target words from character mappings
+
+dqzyeh
+d -> g
+q -> a
+z -> r
+y -> d
+e -> e
+h -> n
+dqzyeh -> garden
+fully mapped
+
+choose garden
+
+vobiezngkb
+v -> m
+o -> y
+b -> s
+i -> t
+e -> e
+z -> r
+n -> i
+g -> o
+k -> u
+b -> s
+vobiezngkb -> mysterious
+fully mapped
+
+choose mysterious
+
+rznieb
+r -> w
+z -> r
+n -> i
+i -> t
+e -> e
+b -> s
+rznieb -> writes
+fully mapped
+
+choose writes
+
+bigzo
+b -> s
+i -> t
+g -> o
+z -> r
+o -> y
+bigzo -> story
+fully mapped
+
+choose story
+
+Decoded phrase
+garden mysterious writes story
+
+Answer: \boxed{garden mysterious writes story}
+</think>
+\boxed{garden mysterious writes story}

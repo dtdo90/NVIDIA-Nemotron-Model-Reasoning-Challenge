@@ -1,0 +1,277 @@
+Problem syn_tc_dp_phrase_reject_failed_0036
+Bucket: phrase_reject_failed_candidate
+Gold answer: bird bright
+Note: phrase_candidate_conflict_rejection
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+uavvdop -> village
+eps -> key
+zdoabdv nbpdy -> magical ocean
+Now, decrypt the following text: garh graokm
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+a -> i
+b -> c
+d -> a
+e -> k
+n -> o
+o -> g
+p -> e
+s -> y
+u -> v
+v -> l
+y -> n
+z -> m
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+garh graokm
+
+Decode target words from character mappings
+
+garh
+g -> ? unknown
+a -> i
+r -> ? unknown
+h -> ? unknown
+
+Training target:
+garh -> ?i??
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?i??
+above -> ?i?? no match
+alice -> ?i?? no match
+ancient -> ?i?? no match
+around -> ?i?? no match
+beyond -> ?i?? no match
+bird -> ?i?? match
+book -> ?i?? no match
+bright -> ?i?? no match
+castle -> ?i?? no match
+cat -> ?i?? no match
+cave -> ?i?? no match
+chases -> ?i?? no match
+clever -> ?i?? no match
+colorful -> ?i?? no match
+creates -> ?i?? no match
+crystal -> ?i?? no match
+curious -> ?i?? no match
+dark -> ?i?? no match
+discovers -> ?i?? no match
+door -> ?i?? no match
+dragon -> ?i?? no match
+draws -> ?i?? no match
+dreams -> ?i?? no match
+explores -> ?i?? no match
+follows -> ?i?? no match
+forest -> ?i?? no match
+found -> ?i?? no match
+garden -> ?i?? no match
+golden -> ?i?? no match
+hatter -> ?i?? no match
+hidden -> ?i?? no match
+imagines -> ?i?? no match
+in -> ?i?? no match
+inside -> ?i?? no match
+island -> ?i?? no match
+key -> ?i?? no match
+king -> ?i?? match
+knight -> ?i?? no match
+library -> ?i?? no match
+magical -> ?i?? no match
+map -> ?i?? no match
+message -> ?i?? no match
+mirror -> ?i?? no match
+mountain -> ?i?? no match
+mouse -> ?i?? no match
+mysterious -> ?i?? no match
+near -> ?i?? no match
+ocean -> ?i?? no match
+palace -> ?i?? no match
+potion -> ?i?? no match
+princess -> ?i?? no match
+puzzle -> ?i?? no match
+queen -> ?i?? no match
+rabbit -> ?i?? no match
+reads -> ?i?? no match
+school -> ?i?? no match
+secret -> ?i?? no match
+sees -> ?i?? no match
+silver -> ?i?? no match
+story -> ?i?? no match
+strange -> ?i?? no match
+student -> ?i?? no match
+studies -> ?i?? no match
+teacher -> ?i?? no match
+the -> ?i?? no match
+through -> ?i?? no match
+tower -> ?i?? no match
+treasure -> ?i?? no match
+turtle -> ?i?? no match
+under -> ?i?? no match
+valley -> ?i?? no match
+village -> ?i?? no match
+watches -> ?i?? no match
+wise -> ?i?? match
+wizard -> ?i?? no match
+wonderland -> ?i?? no match
+writes -> ?i?? no match
+
+Scan candidates for ?i??
+bird, king, wise
+
+Check scan candidates against summary mappings
+
+king
+g -> k conflicts
+e -> k already exists
+a -> i agrees
+r -> n conflicts
+y -> n already exists
+h -> g conflicts
+o -> g already exists
+FAIL
+
+wise
+g -> w new
+a -> i agrees
+r -> s new
+h -> e conflicts
+p -> e already exists
+FAIL
+
+bird
+g -> b new
+a -> i agrees
+r -> r new
+h -> d new
+PASS
+add g -> b
+add r -> r
+add h -> d
+
+choose bird
+
+graokm
+g -> b
+r -> r
+a -> i
+o -> g
+k -> ? unknown
+m -> ? unknown
+graokm -> brig??
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match brig??
+above -> brig?? no match
+alice -> brig?? no match
+ancient -> brig?? no match
+around -> brig?? no match
+beyond -> brig?? no match
+bird -> brig?? no match
+book -> brig?? no match
+bright -> brig?? match
+castle -> brig?? no match
+cat -> brig?? no match
+cave -> brig?? no match
+chases -> brig?? no match
+clever -> brig?? no match
+colorful -> brig?? no match
+creates -> brig?? no match
+crystal -> brig?? no match
+curious -> brig?? no match
+dark -> brig?? no match
+discovers -> brig?? no match
+door -> brig?? no match
+dragon -> brig?? no match
+draws -> brig?? no match
+dreams -> brig?? no match
+explores -> brig?? no match
+follows -> brig?? no match
+forest -> brig?? no match
+found -> brig?? no match
+garden -> brig?? no match
+golden -> brig?? no match
+hatter -> brig?? no match
+hidden -> brig?? no match
+imagines -> brig?? no match
+in -> brig?? no match
+inside -> brig?? no match
+island -> brig?? no match
+key -> brig?? no match
+king -> brig?? no match
+knight -> brig?? no match
+library -> brig?? no match
+magical -> brig?? no match
+map -> brig?? no match
+message -> brig?? no match
+mirror -> brig?? no match
+mountain -> brig?? no match
+mouse -> brig?? no match
+mysterious -> brig?? no match
+near -> brig?? no match
+ocean -> brig?? no match
+palace -> brig?? no match
+potion -> brig?? no match
+princess -> brig?? no match
+puzzle -> brig?? no match
+queen -> brig?? no match
+rabbit -> brig?? no match
+reads -> brig?? no match
+school -> brig?? no match
+secret -> brig?? no match
+sees -> brig?? no match
+silver -> brig?? no match
+story -> brig?? no match
+strange -> brig?? no match
+student -> brig?? no match
+studies -> brig?? no match
+teacher -> brig?? no match
+the -> brig?? no match
+through -> brig?? no match
+tower -> brig?? no match
+treasure -> brig?? no match
+turtle -> brig?? no match
+under -> brig?? no match
+valley -> brig?? no match
+village -> brig?? no match
+watches -> brig?? no match
+wise -> brig?? no match
+wizard -> brig?? no match
+wonderland -> brig?? no match
+writes -> brig?? no match
+
+Scan candidates for brig??
+bright
+
+Check scan candidates against summary mappings
+
+bright
+g -> b agrees
+r -> r agrees
+a -> i agrees
+o -> g agrees
+k -> h new
+m -> t new
+PASS
+add k -> h
+add m -> t
+
+choose bright
+
+Decoded phrase
+bird bright
+
+Answer: \boxed{bird bright}
+</think>
+\boxed{bird bright}

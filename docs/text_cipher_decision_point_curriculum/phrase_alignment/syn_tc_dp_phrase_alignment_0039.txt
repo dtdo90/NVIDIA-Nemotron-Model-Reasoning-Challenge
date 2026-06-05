@@ -1,0 +1,265 @@
+Problem syn_tc_dp_phrase_alignment_0039
+Bucket: phrase_alignment
+Gold answer: follows under
+Note: phrase_strict_left_to_right_alignment
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+tpwdwz agzziz -> clever mirror
+vgzs tkyuwu -> bird chases
+gupyms ucizl -> island story
+Now, decrypt the following text: rippinu qmswz
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+a -> m
+c -> t
+d -> v
+g -> i
+i -> o
+k -> h
+l -> y
+m -> n
+p -> l
+s -> d
+t -> c
+u -> s
+v -> b
+w -> e
+y -> a
+z -> r
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+rippinu qmswz
+
+Decode target words from character mappings
+
+rippinu
+r -> ? unknown
+i -> o
+p -> l
+p -> l
+i -> o
+n -> ? unknown
+u -> s
+
+Training target:
+rippinu -> ?ollo?s
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?ollo?s
+above -> ?ollo?s no match
+alice -> ?ollo?s no match
+ancient -> ?ollo?s no match
+around -> ?ollo?s no match
+beyond -> ?ollo?s no match
+bird -> ?ollo?s no match
+book -> ?ollo?s no match
+bright -> ?ollo?s no match
+castle -> ?ollo?s no match
+cat -> ?ollo?s no match
+cave -> ?ollo?s no match
+chases -> ?ollo?s no match
+clever -> ?ollo?s no match
+colorful -> ?ollo?s no match
+creates -> ?ollo?s no match
+crystal -> ?ollo?s no match
+curious -> ?ollo?s no match
+dark -> ?ollo?s no match
+discovers -> ?ollo?s no match
+door -> ?ollo?s no match
+dragon -> ?ollo?s no match
+draws -> ?ollo?s no match
+dreams -> ?ollo?s no match
+explores -> ?ollo?s no match
+follows -> ?ollo?s match
+forest -> ?ollo?s no match
+found -> ?ollo?s no match
+garden -> ?ollo?s no match
+golden -> ?ollo?s no match
+hatter -> ?ollo?s no match
+hidden -> ?ollo?s no match
+imagines -> ?ollo?s no match
+in -> ?ollo?s no match
+inside -> ?ollo?s no match
+island -> ?ollo?s no match
+key -> ?ollo?s no match
+king -> ?ollo?s no match
+knight -> ?ollo?s no match
+library -> ?ollo?s no match
+magical -> ?ollo?s no match
+map -> ?ollo?s no match
+message -> ?ollo?s no match
+mirror -> ?ollo?s no match
+mountain -> ?ollo?s no match
+mouse -> ?ollo?s no match
+mysterious -> ?ollo?s no match
+near -> ?ollo?s no match
+ocean -> ?ollo?s no match
+palace -> ?ollo?s no match
+potion -> ?ollo?s no match
+princess -> ?ollo?s no match
+puzzle -> ?ollo?s no match
+queen -> ?ollo?s no match
+rabbit -> ?ollo?s no match
+reads -> ?ollo?s no match
+school -> ?ollo?s no match
+secret -> ?ollo?s no match
+sees -> ?ollo?s no match
+silver -> ?ollo?s no match
+story -> ?ollo?s no match
+strange -> ?ollo?s no match
+student -> ?ollo?s no match
+studies -> ?ollo?s no match
+teacher -> ?ollo?s no match
+the -> ?ollo?s no match
+through -> ?ollo?s no match
+tower -> ?ollo?s no match
+treasure -> ?ollo?s no match
+turtle -> ?ollo?s no match
+under -> ?ollo?s no match
+valley -> ?ollo?s no match
+village -> ?ollo?s no match
+watches -> ?ollo?s no match
+wise -> ?ollo?s no match
+wizard -> ?ollo?s no match
+wonderland -> ?ollo?s no match
+writes -> ?ollo?s no match
+
+Scan candidates for ?ollo?s
+follows
+
+Check scan candidates against summary mappings
+
+follows
+r -> f new
+i -> o agrees
+p -> l agrees
+p -> l agrees
+i -> o agrees
+n -> w new
+u -> s agrees
+PASS
+add r -> f
+add n -> w
+
+choose follows
+
+qmswz
+q -> ? unknown
+m -> n
+s -> d
+w -> e
+z -> r
+qmswz -> ?nder
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?nder
+above -> ?nder no match
+alice -> ?nder no match
+ancient -> ?nder no match
+around -> ?nder no match
+beyond -> ?nder no match
+bird -> ?nder no match
+book -> ?nder no match
+bright -> ?nder no match
+castle -> ?nder no match
+cat -> ?nder no match
+cave -> ?nder no match
+chases -> ?nder no match
+clever -> ?nder no match
+colorful -> ?nder no match
+creates -> ?nder no match
+crystal -> ?nder no match
+curious -> ?nder no match
+dark -> ?nder no match
+discovers -> ?nder no match
+door -> ?nder no match
+dragon -> ?nder no match
+draws -> ?nder no match
+dreams -> ?nder no match
+explores -> ?nder no match
+follows -> ?nder no match
+forest -> ?nder no match
+found -> ?nder no match
+garden -> ?nder no match
+golden -> ?nder no match
+hatter -> ?nder no match
+hidden -> ?nder no match
+imagines -> ?nder no match
+in -> ?nder no match
+inside -> ?nder no match
+island -> ?nder no match
+key -> ?nder no match
+king -> ?nder no match
+knight -> ?nder no match
+library -> ?nder no match
+magical -> ?nder no match
+map -> ?nder no match
+message -> ?nder no match
+mirror -> ?nder no match
+mountain -> ?nder no match
+mouse -> ?nder no match
+mysterious -> ?nder no match
+near -> ?nder no match
+ocean -> ?nder no match
+palace -> ?nder no match
+potion -> ?nder no match
+princess -> ?nder no match
+puzzle -> ?nder no match
+queen -> ?nder no match
+rabbit -> ?nder no match
+reads -> ?nder no match
+school -> ?nder no match
+secret -> ?nder no match
+sees -> ?nder no match
+silver -> ?nder no match
+story -> ?nder no match
+strange -> ?nder no match
+student -> ?nder no match
+studies -> ?nder no match
+teacher -> ?nder no match
+the -> ?nder no match
+through -> ?nder no match
+tower -> ?nder no match
+treasure -> ?nder no match
+turtle -> ?nder no match
+under -> ?nder match
+valley -> ?nder no match
+village -> ?nder no match
+watches -> ?nder no match
+wise -> ?nder no match
+wizard -> ?nder no match
+wonderland -> ?nder no match
+writes -> ?nder no match
+
+Scan candidates for ?nder
+under
+
+Check scan candidates against summary mappings
+
+under
+q -> u new
+m -> n agrees
+s -> d agrees
+w -> e agrees
+z -> r agrees
+PASS
+add q -> u
+
+choose under
+
+Decoded phrase
+follows under
+
+Answer: \boxed{follows under}
+</think>
+\boxed{follows under}

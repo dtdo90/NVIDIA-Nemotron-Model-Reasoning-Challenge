@@ -1,0 +1,175 @@
+Problem syn_tc_dp_phrase_reject_failed_0016
+Bucket: phrase_reject_failed_candidate
+Gold answer: book writes
+Note: phrase_candidate_conflict_rejection
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+xlscgjh -> watches
+wuhwnj -> inside
+cls -> cat
+euwdgs -> knight
+hsoludj -> strange
+Now, decrypt the following text: mbbe xowsjh
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+c -> c
+d -> g
+e -> k
+g -> h
+h -> s
+j -> e
+l -> a
+n -> d
+o -> r
+s -> t
+u -> n
+w -> i
+x -> w
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+mbbe xowsjh
+
+Decode target words from character mappings
+
+mbbe
+m -> ? unknown
+b -> ? unknown
+b -> ? unknown
+e -> k
+
+Training target:
+mbbe -> ???k
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ???k
+above -> ???k no match
+alice -> ???k no match
+ancient -> ???k no match
+around -> ???k no match
+beyond -> ???k no match
+bird -> ???k no match
+book -> ???k match
+bright -> ???k no match
+castle -> ???k no match
+cat -> ???k no match
+cave -> ???k no match
+chases -> ???k no match
+clever -> ???k no match
+colorful -> ???k no match
+creates -> ???k no match
+crystal -> ???k no match
+curious -> ???k no match
+dark -> ???k match
+discovers -> ???k no match
+door -> ???k no match
+dragon -> ???k no match
+draws -> ???k no match
+dreams -> ???k no match
+explores -> ???k no match
+follows -> ???k no match
+forest -> ???k no match
+found -> ???k no match
+garden -> ???k no match
+golden -> ???k no match
+hatter -> ???k no match
+hidden -> ???k no match
+imagines -> ???k no match
+in -> ???k no match
+inside -> ???k no match
+island -> ???k no match
+key -> ???k no match
+king -> ???k no match
+knight -> ???k no match
+library -> ???k no match
+magical -> ???k no match
+map -> ???k no match
+message -> ???k no match
+mirror -> ???k no match
+mountain -> ???k no match
+mouse -> ???k no match
+mysterious -> ???k no match
+near -> ???k no match
+ocean -> ???k no match
+palace -> ???k no match
+potion -> ???k no match
+princess -> ???k no match
+puzzle -> ???k no match
+queen -> ???k no match
+rabbit -> ???k no match
+reads -> ???k no match
+school -> ???k no match
+secret -> ???k no match
+sees -> ???k no match
+silver -> ???k no match
+story -> ???k no match
+strange -> ???k no match
+student -> ???k no match
+studies -> ???k no match
+teacher -> ???k no match
+the -> ???k no match
+through -> ???k no match
+tower -> ???k no match
+treasure -> ???k no match
+turtle -> ???k no match
+under -> ???k no match
+valley -> ???k no match
+village -> ???k no match
+watches -> ???k no match
+wise -> ???k no match
+wizard -> ???k no match
+wonderland -> ???k no match
+writes -> ???k no match
+
+Scan candidates for ???k
+book, dark
+
+Check scan candidates against summary mappings
+
+dark
+m -> d conflicts
+n -> d already exists
+b -> a conflicts
+l -> a already exists
+b -> r conflicts
+o -> r already exists
+e -> k agrees
+FAIL
+
+book
+m -> b new
+b -> o new
+b -> o new
+e -> k agrees
+PASS
+add m -> b
+add b -> o
+
+choose book
+
+xowsjh
+x -> w
+o -> r
+w -> i
+s -> t
+j -> e
+h -> s
+xowsjh -> writes
+fully mapped
+
+choose writes
+
+Decoded phrase
+book writes
+
+Answer: \boxed{book writes}
+</think>
+\boxed{book writes}

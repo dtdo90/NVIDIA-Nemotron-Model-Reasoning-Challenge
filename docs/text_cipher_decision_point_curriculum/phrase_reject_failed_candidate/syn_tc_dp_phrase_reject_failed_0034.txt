@@ -1,0 +1,263 @@
+Problem syn_tc_dp_phrase_reject_failed_0034
+Bucket: phrase_reject_failed_candidate
+Gold answer: cat watches
+Note: phrase_candidate_conflict_rejection
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+ynfpw -> mouse
+fkqwi -> under
+ankqwiubkq -> wonderland
+Now, decrypt the following text: mbe abemowp
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+a -> w
+b -> a
+f -> u
+i -> r
+k -> n
+n -> o
+p -> s
+q -> d
+u -> l
+w -> e
+y -> m
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+mbe abemowp
+
+Decode target words from character mappings
+
+mbe
+m -> ? unknown
+b -> a
+e -> ? unknown
+
+Training target:
+mbe -> ?a?
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?a?
+above -> ?a? no match
+alice -> ?a? no match
+ancient -> ?a? no match
+around -> ?a? no match
+beyond -> ?a? no match
+bird -> ?a? no match
+book -> ?a? no match
+bright -> ?a? no match
+castle -> ?a? no match
+cat -> ?a? match
+cave -> ?a? no match
+chases -> ?a? no match
+clever -> ?a? no match
+colorful -> ?a? no match
+creates -> ?a? no match
+crystal -> ?a? no match
+curious -> ?a? no match
+dark -> ?a? no match
+discovers -> ?a? no match
+door -> ?a? no match
+dragon -> ?a? no match
+draws -> ?a? no match
+dreams -> ?a? no match
+explores -> ?a? no match
+follows -> ?a? no match
+forest -> ?a? no match
+found -> ?a? no match
+garden -> ?a? no match
+golden -> ?a? no match
+hatter -> ?a? no match
+hidden -> ?a? no match
+imagines -> ?a? no match
+in -> ?a? no match
+inside -> ?a? no match
+island -> ?a? no match
+key -> ?a? no match
+king -> ?a? no match
+knight -> ?a? no match
+library -> ?a? no match
+magical -> ?a? no match
+map -> ?a? match
+message -> ?a? no match
+mirror -> ?a? no match
+mountain -> ?a? no match
+mouse -> ?a? no match
+mysterious -> ?a? no match
+near -> ?a? no match
+ocean -> ?a? no match
+palace -> ?a? no match
+potion -> ?a? no match
+princess -> ?a? no match
+puzzle -> ?a? no match
+queen -> ?a? no match
+rabbit -> ?a? no match
+reads -> ?a? no match
+school -> ?a? no match
+secret -> ?a? no match
+sees -> ?a? no match
+silver -> ?a? no match
+story -> ?a? no match
+strange -> ?a? no match
+student -> ?a? no match
+studies -> ?a? no match
+teacher -> ?a? no match
+the -> ?a? no match
+through -> ?a? no match
+tower -> ?a? no match
+treasure -> ?a? no match
+turtle -> ?a? no match
+under -> ?a? no match
+valley -> ?a? no match
+village -> ?a? no match
+watches -> ?a? no match
+wise -> ?a? no match
+wizard -> ?a? no match
+wonderland -> ?a? no match
+writes -> ?a? no match
+
+Scan candidates for ?a?
+cat, map
+
+Check scan candidates against summary mappings
+
+map
+m -> m conflicts
+y -> m already exists
+b -> a agrees
+e -> p new
+FAIL
+
+cat
+m -> c new
+b -> a agrees
+e -> t new
+PASS
+add m -> c
+add e -> t
+
+choose cat
+
+abemowp
+a -> w
+b -> a
+e -> t
+m -> c
+o -> ? unknown
+w -> e
+p -> s
+abemowp -> watc?es
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match watc?es
+above -> watc?es no match
+alice -> watc?es no match
+ancient -> watc?es no match
+around -> watc?es no match
+beyond -> watc?es no match
+bird -> watc?es no match
+book -> watc?es no match
+bright -> watc?es no match
+castle -> watc?es no match
+cat -> watc?es no match
+cave -> watc?es no match
+chases -> watc?es no match
+clever -> watc?es no match
+colorful -> watc?es no match
+creates -> watc?es no match
+crystal -> watc?es no match
+curious -> watc?es no match
+dark -> watc?es no match
+discovers -> watc?es no match
+door -> watc?es no match
+dragon -> watc?es no match
+draws -> watc?es no match
+dreams -> watc?es no match
+explores -> watc?es no match
+follows -> watc?es no match
+forest -> watc?es no match
+found -> watc?es no match
+garden -> watc?es no match
+golden -> watc?es no match
+hatter -> watc?es no match
+hidden -> watc?es no match
+imagines -> watc?es no match
+in -> watc?es no match
+inside -> watc?es no match
+island -> watc?es no match
+key -> watc?es no match
+king -> watc?es no match
+knight -> watc?es no match
+library -> watc?es no match
+magical -> watc?es no match
+map -> watc?es no match
+message -> watc?es no match
+mirror -> watc?es no match
+mountain -> watc?es no match
+mouse -> watc?es no match
+mysterious -> watc?es no match
+near -> watc?es no match
+ocean -> watc?es no match
+palace -> watc?es no match
+potion -> watc?es no match
+princess -> watc?es no match
+puzzle -> watc?es no match
+queen -> watc?es no match
+rabbit -> watc?es no match
+reads -> watc?es no match
+school -> watc?es no match
+secret -> watc?es no match
+sees -> watc?es no match
+silver -> watc?es no match
+story -> watc?es no match
+strange -> watc?es no match
+student -> watc?es no match
+studies -> watc?es no match
+teacher -> watc?es no match
+the -> watc?es no match
+through -> watc?es no match
+tower -> watc?es no match
+treasure -> watc?es no match
+turtle -> watc?es no match
+under -> watc?es no match
+valley -> watc?es no match
+village -> watc?es no match
+watches -> watc?es match
+wise -> watc?es no match
+wizard -> watc?es no match
+wonderland -> watc?es no match
+writes -> watc?es no match
+
+Scan candidates for watc?es
+watches
+
+Check scan candidates against summary mappings
+
+watches
+a -> w agrees
+b -> a agrees
+e -> t agrees
+m -> c agrees
+o -> h new
+w -> e agrees
+p -> s agrees
+PASS
+add o -> h
+
+choose watches
+
+Decoded phrase
+cat watches
+
+Answer: \boxed{cat watches}
+</think>
+\boxed{cat watches}

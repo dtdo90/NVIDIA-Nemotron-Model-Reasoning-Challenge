@@ -1,0 +1,79 @@
+Problem syn_tc_dp_phrase_copy_alignment_0028
+Bucket: phrase_copy_alignment
+Gold answer: castle palace
+Note: phrase_copy_exact_example_cipher_phrase
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+arflmt ermrat -> castle palace
+Now, decrypt the following text: arflmt ermrat
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+arflmt ermrat -> castle palace
+
+Training target:
+arflmt -> castle
+a -> c new
+r -> a new
+f -> s new
+l -> t new
+m -> l new
+t -> e new
+
+ermrat -> palace
+e -> p new
+r -> a agrees
+m -> l agrees
+r -> a agrees
+a -> c agrees
+t -> e agrees
+
+Summary character mappings
+a -> c
+e -> p
+f -> s
+l -> t
+m -> l
+r -> a
+t -> e
+
+Target text
+arflmt ermrat
+
+Decode target words from character mappings
+
+arflmt
+a -> c
+r -> a
+f -> s
+l -> t
+m -> l
+t -> e
+arflmt -> castle
+fully mapped
+
+choose castle
+
+ermrat
+e -> p
+r -> a
+m -> l
+r -> a
+a -> c
+t -> e
+ermrat -> palace
+fully mapped
+
+choose palace
+
+Decoded phrase
+castle palace
+
+Answer: \boxed{castle palace}
+</think>
+\boxed{castle palace}

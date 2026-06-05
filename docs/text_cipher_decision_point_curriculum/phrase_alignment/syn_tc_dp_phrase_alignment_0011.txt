@@ -1,0 +1,365 @@
+Problem syn_tc_dp_phrase_alignment_0011
+Bucket: phrase_alignment
+Gold answer: dragon cave valley
+Note: phrase_strict_left_to_right_alignment
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+fttx -> door
+rakkbw -> puzzle
+rakkbw -> puzzle
+cwyx haxetaq -> near curious
+Now, decrypt the following text: fxyptc hyuw uybbwd
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+a -> u
+b -> l
+c -> n
+e -> i
+f -> d
+h -> c
+k -> z
+q -> s
+r -> p
+t -> o
+w -> e
+x -> r
+y -> a
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+fxyptc hyuw uybbwd
+
+Decode target words from character mappings
+
+fxyptc
+f -> d
+x -> r
+y -> a
+p -> ? unknown
+t -> o
+c -> n
+
+Training target:
+fxyptc -> dra?on
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match dra?on
+above -> dra?on no match
+alice -> dra?on no match
+ancient -> dra?on no match
+around -> dra?on no match
+beyond -> dra?on no match
+bird -> dra?on no match
+book -> dra?on no match
+bright -> dra?on no match
+castle -> dra?on no match
+cat -> dra?on no match
+cave -> dra?on no match
+chases -> dra?on no match
+clever -> dra?on no match
+colorful -> dra?on no match
+creates -> dra?on no match
+crystal -> dra?on no match
+curious -> dra?on no match
+dark -> dra?on no match
+discovers -> dra?on no match
+door -> dra?on no match
+dragon -> dra?on match
+draws -> dra?on no match
+dreams -> dra?on no match
+explores -> dra?on no match
+follows -> dra?on no match
+forest -> dra?on no match
+found -> dra?on no match
+garden -> dra?on no match
+golden -> dra?on no match
+hatter -> dra?on no match
+hidden -> dra?on no match
+imagines -> dra?on no match
+in -> dra?on no match
+inside -> dra?on no match
+island -> dra?on no match
+key -> dra?on no match
+king -> dra?on no match
+knight -> dra?on no match
+library -> dra?on no match
+magical -> dra?on no match
+map -> dra?on no match
+message -> dra?on no match
+mirror -> dra?on no match
+mountain -> dra?on no match
+mouse -> dra?on no match
+mysterious -> dra?on no match
+near -> dra?on no match
+ocean -> dra?on no match
+palace -> dra?on no match
+potion -> dra?on no match
+princess -> dra?on no match
+puzzle -> dra?on no match
+queen -> dra?on no match
+rabbit -> dra?on no match
+reads -> dra?on no match
+school -> dra?on no match
+secret -> dra?on no match
+sees -> dra?on no match
+silver -> dra?on no match
+story -> dra?on no match
+strange -> dra?on no match
+student -> dra?on no match
+studies -> dra?on no match
+teacher -> dra?on no match
+the -> dra?on no match
+through -> dra?on no match
+tower -> dra?on no match
+treasure -> dra?on no match
+turtle -> dra?on no match
+under -> dra?on no match
+valley -> dra?on no match
+village -> dra?on no match
+watches -> dra?on no match
+wise -> dra?on no match
+wizard -> dra?on no match
+wonderland -> dra?on no match
+writes -> dra?on no match
+
+Scan candidates for dra?on
+dragon
+
+Check scan candidates against summary mappings
+
+dragon
+f -> d agrees
+x -> r agrees
+y -> a agrees
+p -> g new
+t -> o agrees
+c -> n agrees
+PASS
+add p -> g
+
+choose dragon
+
+hyuw
+h -> c
+y -> a
+u -> ? unknown
+w -> e
+hyuw -> ca?e
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ca?e
+above -> ca?e no match
+alice -> ca?e no match
+ancient -> ca?e no match
+around -> ca?e no match
+beyond -> ca?e no match
+bird -> ca?e no match
+book -> ca?e no match
+bright -> ca?e no match
+castle -> ca?e no match
+cat -> ca?e no match
+cave -> ca?e match
+chases -> ca?e no match
+clever -> ca?e no match
+colorful -> ca?e no match
+creates -> ca?e no match
+crystal -> ca?e no match
+curious -> ca?e no match
+dark -> ca?e no match
+discovers -> ca?e no match
+door -> ca?e no match
+dragon -> ca?e no match
+draws -> ca?e no match
+dreams -> ca?e no match
+explores -> ca?e no match
+follows -> ca?e no match
+forest -> ca?e no match
+found -> ca?e no match
+garden -> ca?e no match
+golden -> ca?e no match
+hatter -> ca?e no match
+hidden -> ca?e no match
+imagines -> ca?e no match
+in -> ca?e no match
+inside -> ca?e no match
+island -> ca?e no match
+key -> ca?e no match
+king -> ca?e no match
+knight -> ca?e no match
+library -> ca?e no match
+magical -> ca?e no match
+map -> ca?e no match
+message -> ca?e no match
+mirror -> ca?e no match
+mountain -> ca?e no match
+mouse -> ca?e no match
+mysterious -> ca?e no match
+near -> ca?e no match
+ocean -> ca?e no match
+palace -> ca?e no match
+potion -> ca?e no match
+princess -> ca?e no match
+puzzle -> ca?e no match
+queen -> ca?e no match
+rabbit -> ca?e no match
+reads -> ca?e no match
+school -> ca?e no match
+secret -> ca?e no match
+sees -> ca?e no match
+silver -> ca?e no match
+story -> ca?e no match
+strange -> ca?e no match
+student -> ca?e no match
+studies -> ca?e no match
+teacher -> ca?e no match
+the -> ca?e no match
+through -> ca?e no match
+tower -> ca?e no match
+treasure -> ca?e no match
+turtle -> ca?e no match
+under -> ca?e no match
+valley -> ca?e no match
+village -> ca?e no match
+watches -> ca?e no match
+wise -> ca?e no match
+wizard -> ca?e no match
+wonderland -> ca?e no match
+writes -> ca?e no match
+
+Scan candidates for ca?e
+cave
+
+Check scan candidates against summary mappings
+
+cave
+h -> c agrees
+y -> a agrees
+u -> v new
+w -> e agrees
+PASS
+add u -> v
+
+choose cave
+
+uybbwd
+u -> v
+y -> a
+b -> l
+b -> l
+w -> e
+d -> ? unknown
+uybbwd -> valle?
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match valle?
+above -> valle? no match
+alice -> valle? no match
+ancient -> valle? no match
+around -> valle? no match
+beyond -> valle? no match
+bird -> valle? no match
+book -> valle? no match
+bright -> valle? no match
+castle -> valle? no match
+cat -> valle? no match
+cave -> valle? no match
+chases -> valle? no match
+clever -> valle? no match
+colorful -> valle? no match
+creates -> valle? no match
+crystal -> valle? no match
+curious -> valle? no match
+dark -> valle? no match
+discovers -> valle? no match
+door -> valle? no match
+dragon -> valle? no match
+draws -> valle? no match
+dreams -> valle? no match
+explores -> valle? no match
+follows -> valle? no match
+forest -> valle? no match
+found -> valle? no match
+garden -> valle? no match
+golden -> valle? no match
+hatter -> valle? no match
+hidden -> valle? no match
+imagines -> valle? no match
+in -> valle? no match
+inside -> valle? no match
+island -> valle? no match
+key -> valle? no match
+king -> valle? no match
+knight -> valle? no match
+library -> valle? no match
+magical -> valle? no match
+map -> valle? no match
+message -> valle? no match
+mirror -> valle? no match
+mountain -> valle? no match
+mouse -> valle? no match
+mysterious -> valle? no match
+near -> valle? no match
+ocean -> valle? no match
+palace -> valle? no match
+potion -> valle? no match
+princess -> valle? no match
+puzzle -> valle? no match
+queen -> valle? no match
+rabbit -> valle? no match
+reads -> valle? no match
+school -> valle? no match
+secret -> valle? no match
+sees -> valle? no match
+silver -> valle? no match
+story -> valle? no match
+strange -> valle? no match
+student -> valle? no match
+studies -> valle? no match
+teacher -> valle? no match
+the -> valle? no match
+through -> valle? no match
+tower -> valle? no match
+treasure -> valle? no match
+turtle -> valle? no match
+under -> valle? no match
+valley -> valle? match
+village -> valle? no match
+watches -> valle? no match
+wise -> valle? no match
+wizard -> valle? no match
+wonderland -> valle? no match
+writes -> valle? no match
+
+Scan candidates for valle?
+valley
+
+Check scan candidates against summary mappings
+
+valley
+u -> v agrees
+y -> a agrees
+b -> l agrees
+b -> l agrees
+w -> e agrees
+d -> y new
+PASS
+add d -> y
+
+choose valley
+
+Decoded phrase
+dragon cave valley
+
+Answer: \boxed{dragon cave valley}
+</think>
+\boxed{dragon cave valley}

@@ -1,0 +1,104 @@
+Problem syn_tc_dp_phrase_copy_alignment_0042
+Bucket: phrase_copy_alignment
+Gold answer: discovers chases cave
+Note: phrase_copy_exact_example_cipher_phrase
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+webilatcb ixkbtb ikat -> discovers chases cave
+Now, decrypt the following text: webilatcb ixkbtb ikat
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+webilatcb ixkbtb ikat -> discovers chases cave
+
+Training target:
+webilatcb -> discovers
+w -> d new
+e -> i new
+b -> s new
+i -> c new
+l -> o new
+a -> v new
+t -> e new
+c -> r new
+b -> s agrees
+
+ixkbtb -> chases
+i -> c agrees
+x -> h new
+k -> a new
+b -> s agrees
+t -> e agrees
+b -> s agrees
+
+ikat -> cave
+i -> c agrees
+k -> a agrees
+a -> v agrees
+t -> e agrees
+
+Summary character mappings
+a -> v
+b -> s
+c -> r
+e -> i
+i -> c
+k -> a
+l -> o
+t -> e
+w -> d
+x -> h
+
+Target text
+webilatcb ixkbtb ikat
+
+Decode target words from character mappings
+
+webilatcb
+w -> d
+e -> i
+b -> s
+i -> c
+l -> o
+a -> v
+t -> e
+c -> r
+b -> s
+webilatcb -> discovers
+fully mapped
+
+choose discovers
+
+ixkbtb
+i -> c
+x -> h
+k -> a
+b -> s
+t -> e
+b -> s
+ixkbtb -> chases
+fully mapped
+
+choose chases
+
+ikat
+i -> c
+k -> a
+a -> v
+t -> e
+ikat -> cave
+fully mapped
+
+choose cave
+
+Decoded phrase
+discovers chases cave
+
+Answer: \boxed{discovers chases cave}
+</think>
+\boxed{discovers chases cave}

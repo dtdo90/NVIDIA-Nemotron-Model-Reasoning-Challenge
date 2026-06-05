@@ -1,0 +1,197 @@
+Problem syn_tc_dp_phrase_reject_failed_0080
+Bucket: phrase_reject_failed_candidate
+Gold answer: book turtle cat alice
+Note: phrase_candidate_conflict_rejection
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+tnolm gtymf -> ocean found
+jolfx njvxilq -> reads crystal
+hdrljf -> wizard
+ztqfom ijolxyjo -> golden treasure
+Now, decrypt the following text: attb iyjiqo nli lqdno
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+d -> i
+f -> d
+g -> f
+h -> w
+i -> t
+j -> r
+l -> a
+m -> n
+n -> c
+o -> e
+q -> l
+r -> z
+t -> o
+v -> y
+x -> s
+y -> u
+z -> g
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+attb iyjiqo nli lqdno
+
+Decode target words from character mappings
+
+attb
+a -> ? unknown
+t -> o
+t -> o
+b -> ? unknown
+
+Training target:
+attb -> ?oo?
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?oo?
+above -> ?oo? no match
+alice -> ?oo? no match
+ancient -> ?oo? no match
+around -> ?oo? no match
+beyond -> ?oo? no match
+bird -> ?oo? no match
+book -> ?oo? match
+bright -> ?oo? no match
+castle -> ?oo? no match
+cat -> ?oo? no match
+cave -> ?oo? no match
+chases -> ?oo? no match
+clever -> ?oo? no match
+colorful -> ?oo? no match
+creates -> ?oo? no match
+crystal -> ?oo? no match
+curious -> ?oo? no match
+dark -> ?oo? no match
+discovers -> ?oo? no match
+door -> ?oo? match
+dragon -> ?oo? no match
+draws -> ?oo? no match
+dreams -> ?oo? no match
+explores -> ?oo? no match
+follows -> ?oo? no match
+forest -> ?oo? no match
+found -> ?oo? no match
+garden -> ?oo? no match
+golden -> ?oo? no match
+hatter -> ?oo? no match
+hidden -> ?oo? no match
+imagines -> ?oo? no match
+in -> ?oo? no match
+inside -> ?oo? no match
+island -> ?oo? no match
+key -> ?oo? no match
+king -> ?oo? no match
+knight -> ?oo? no match
+library -> ?oo? no match
+magical -> ?oo? no match
+map -> ?oo? no match
+message -> ?oo? no match
+mirror -> ?oo? no match
+mountain -> ?oo? no match
+mouse -> ?oo? no match
+mysterious -> ?oo? no match
+near -> ?oo? no match
+ocean -> ?oo? no match
+palace -> ?oo? no match
+potion -> ?oo? no match
+princess -> ?oo? no match
+puzzle -> ?oo? no match
+queen -> ?oo? no match
+rabbit -> ?oo? no match
+reads -> ?oo? no match
+school -> ?oo? no match
+secret -> ?oo? no match
+sees -> ?oo? no match
+silver -> ?oo? no match
+story -> ?oo? no match
+strange -> ?oo? no match
+student -> ?oo? no match
+studies -> ?oo? no match
+teacher -> ?oo? no match
+the -> ?oo? no match
+through -> ?oo? no match
+tower -> ?oo? no match
+treasure -> ?oo? no match
+turtle -> ?oo? no match
+under -> ?oo? no match
+valley -> ?oo? no match
+village -> ?oo? no match
+watches -> ?oo? no match
+wise -> ?oo? no match
+wizard -> ?oo? no match
+wonderland -> ?oo? no match
+writes -> ?oo? no match
+
+Scan candidates for ?oo?
+book, door
+
+Check scan candidates against summary mappings
+
+door
+a -> d conflicts
+f -> d already exists
+t -> o agrees
+t -> o agrees
+b -> r conflicts
+j -> r already exists
+FAIL
+
+book
+a -> b new
+t -> o agrees
+t -> o agrees
+b -> k new
+PASS
+add a -> b
+add b -> k
+
+choose book
+
+iyjiqo
+i -> t
+y -> u
+j -> r
+i -> t
+q -> l
+o -> e
+iyjiqo -> turtle
+fully mapped
+
+choose turtle
+
+nli
+n -> c
+l -> a
+i -> t
+nli -> cat
+fully mapped
+
+choose cat
+
+lqdno
+l -> a
+q -> l
+d -> i
+n -> c
+o -> e
+lqdno -> alice
+fully mapped
+
+choose alice
+
+Decoded phrase
+book turtle cat alice
+
+Answer: \boxed{book turtle cat alice}
+</think>
+\boxed{book turtle cat alice}

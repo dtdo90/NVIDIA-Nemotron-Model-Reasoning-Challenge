@@ -23,6 +23,7 @@ DATA_DIR = WORKSPACE / "data"
 OUTPUT_DIR = WORKSPACE / "outputs"
 REPORT_DIR = WORKSPACE / "reports"
 SPLIT_NAMES = ("sft_train", "eval_holdout", "grpo_holdout")
+VALID_SPLIT_NAMES = (*SPLIT_NAMES, "unused")
 TRAIN_ONLY_SOURCE_MODES = {
     "huikang_synthetic_matching",
     "phase1_synthetic_direct_template",
@@ -389,7 +390,7 @@ def summarize_rows(rows: list[dict[str, str]], assignments: dict[str, str] | Non
     if assignments:
         split_counts_payload = Counter(assignments[row["id"]] for row in rows)
         by_split_subtype: dict[str, dict[str, int]] = {}
-        for split_name in SPLIT_NAMES:
+        for split_name in sorted(split_counts_payload):
             split_rows = [row for row in rows if assignments[row["id"]] == split_name]
             by_split_subtype[split_name] = dict(
                 sorted(Counter(row["diagnostic_subtype"] for row in split_rows).items())
@@ -435,7 +436,7 @@ def validate_split_assignments(
             f"Missing={missing[:5]} extra={extra[:5]}"
         )
 
-    invalid_splits = sorted(set(assignments.values()) - set(SPLIT_NAMES))
+    invalid_splits = sorted(set(assignments.values()) - set(VALID_SPLIT_NAMES))
     if invalid_splits:
         raise ValueError(f"{split_csv} has invalid split names: {invalid_splits}")
 

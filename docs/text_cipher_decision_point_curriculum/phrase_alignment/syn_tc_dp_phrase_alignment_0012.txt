@@ -1,0 +1,257 @@
+Problem syn_tc_dp_phrase_alignment_0012
+Bucket: phrase_alignment
+Gold answer: magical dark
+Note: phrase_strict_left_to_right_alignment
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+pwlrcls -> creates
+vjwwfw wlros -> mirror reads
+wlros -> reads
+Now, decrypt the following text: vrnjprb orwg
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Summary character mappings
+c -> t
+f -> o
+j -> i
+l -> e
+o -> d
+p -> c
+r -> a
+s -> s
+v -> m
+w -> r
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+vrnjprb orwg
+
+Decode target words from character mappings
+
+vrnjprb
+v -> m
+r -> a
+n -> ? unknown
+j -> i
+p -> c
+r -> a
+b -> ? unknown
+
+Training target:
+vrnjprb -> ma?ica?
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ma?ica?
+above -> ma?ica? no match
+alice -> ma?ica? no match
+ancient -> ma?ica? no match
+around -> ma?ica? no match
+beyond -> ma?ica? no match
+bird -> ma?ica? no match
+book -> ma?ica? no match
+bright -> ma?ica? no match
+castle -> ma?ica? no match
+cat -> ma?ica? no match
+cave -> ma?ica? no match
+chases -> ma?ica? no match
+clever -> ma?ica? no match
+colorful -> ma?ica? no match
+creates -> ma?ica? no match
+crystal -> ma?ica? no match
+curious -> ma?ica? no match
+dark -> ma?ica? no match
+discovers -> ma?ica? no match
+door -> ma?ica? no match
+dragon -> ma?ica? no match
+draws -> ma?ica? no match
+dreams -> ma?ica? no match
+explores -> ma?ica? no match
+follows -> ma?ica? no match
+forest -> ma?ica? no match
+found -> ma?ica? no match
+garden -> ma?ica? no match
+golden -> ma?ica? no match
+hatter -> ma?ica? no match
+hidden -> ma?ica? no match
+imagines -> ma?ica? no match
+in -> ma?ica? no match
+inside -> ma?ica? no match
+island -> ma?ica? no match
+key -> ma?ica? no match
+king -> ma?ica? no match
+knight -> ma?ica? no match
+library -> ma?ica? no match
+magical -> ma?ica? match
+map -> ma?ica? no match
+message -> ma?ica? no match
+mirror -> ma?ica? no match
+mountain -> ma?ica? no match
+mouse -> ma?ica? no match
+mysterious -> ma?ica? no match
+near -> ma?ica? no match
+ocean -> ma?ica? no match
+palace -> ma?ica? no match
+potion -> ma?ica? no match
+princess -> ma?ica? no match
+puzzle -> ma?ica? no match
+queen -> ma?ica? no match
+rabbit -> ma?ica? no match
+reads -> ma?ica? no match
+school -> ma?ica? no match
+secret -> ma?ica? no match
+sees -> ma?ica? no match
+silver -> ma?ica? no match
+story -> ma?ica? no match
+strange -> ma?ica? no match
+student -> ma?ica? no match
+studies -> ma?ica? no match
+teacher -> ma?ica? no match
+the -> ma?ica? no match
+through -> ma?ica? no match
+tower -> ma?ica? no match
+treasure -> ma?ica? no match
+turtle -> ma?ica? no match
+under -> ma?ica? no match
+valley -> ma?ica? no match
+village -> ma?ica? no match
+watches -> ma?ica? no match
+wise -> ma?ica? no match
+wizard -> ma?ica? no match
+wonderland -> ma?ica? no match
+writes -> ma?ica? no match
+
+Scan candidates for ma?ica?
+magical
+
+Check scan candidates against summary mappings
+
+magical
+v -> m agrees
+r -> a agrees
+n -> g new
+j -> i agrees
+p -> c agrees
+r -> a agrees
+b -> l new
+PASS
+add n -> g
+add b -> l
+
+choose magical
+
+orwg
+o -> d
+r -> a
+w -> r
+g -> ? unknown
+orwg -> dar?
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match dar?
+above -> dar? no match
+alice -> dar? no match
+ancient -> dar? no match
+around -> dar? no match
+beyond -> dar? no match
+bird -> dar? no match
+book -> dar? no match
+bright -> dar? no match
+castle -> dar? no match
+cat -> dar? no match
+cave -> dar? no match
+chases -> dar? no match
+clever -> dar? no match
+colorful -> dar? no match
+creates -> dar? no match
+crystal -> dar? no match
+curious -> dar? no match
+dark -> dar? match
+discovers -> dar? no match
+door -> dar? no match
+dragon -> dar? no match
+draws -> dar? no match
+dreams -> dar? no match
+explores -> dar? no match
+follows -> dar? no match
+forest -> dar? no match
+found -> dar? no match
+garden -> dar? no match
+golden -> dar? no match
+hatter -> dar? no match
+hidden -> dar? no match
+imagines -> dar? no match
+in -> dar? no match
+inside -> dar? no match
+island -> dar? no match
+key -> dar? no match
+king -> dar? no match
+knight -> dar? no match
+library -> dar? no match
+magical -> dar? no match
+map -> dar? no match
+message -> dar? no match
+mirror -> dar? no match
+mountain -> dar? no match
+mouse -> dar? no match
+mysterious -> dar? no match
+near -> dar? no match
+ocean -> dar? no match
+palace -> dar? no match
+potion -> dar? no match
+princess -> dar? no match
+puzzle -> dar? no match
+queen -> dar? no match
+rabbit -> dar? no match
+reads -> dar? no match
+school -> dar? no match
+secret -> dar? no match
+sees -> dar? no match
+silver -> dar? no match
+story -> dar? no match
+strange -> dar? no match
+student -> dar? no match
+studies -> dar? no match
+teacher -> dar? no match
+the -> dar? no match
+through -> dar? no match
+tower -> dar? no match
+treasure -> dar? no match
+turtle -> dar? no match
+under -> dar? no match
+valley -> dar? no match
+village -> dar? no match
+watches -> dar? no match
+wise -> dar? no match
+wizard -> dar? no match
+wonderland -> dar? no match
+writes -> dar? no match
+
+Scan candidates for dar?
+dark
+
+Check scan candidates against summary mappings
+
+dark
+o -> d agrees
+r -> a agrees
+w -> r agrees
+g -> k new
+PASS
+add g -> k
+
+choose dark
+
+Decoded phrase
+magical dark
+
+Answer: \boxed{magical dark}
+</think>
+\boxed{magical dark}

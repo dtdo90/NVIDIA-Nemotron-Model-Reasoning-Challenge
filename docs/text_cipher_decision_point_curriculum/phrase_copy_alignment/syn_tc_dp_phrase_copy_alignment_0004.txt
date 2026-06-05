@@ -1,0 +1,108 @@
+Problem syn_tc_dp_phrase_copy_alignment_0004
+Bucket: phrase_copy_alignment
+Gold answer: school studies dragon
+Note: phrase_copy_exact_example_cipher_phrase
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+sxajjf smlwqns wruojh -> school studies dragon
+Now, decrypt the following text: sxajjf smlwqns wruojh
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+sxajjf smlwqns wruojh -> school studies dragon
+
+Training target:
+sxajjf -> school
+s -> s new
+x -> c new
+a -> h new
+j -> o new
+j -> o agrees
+f -> l new
+
+smlwqns -> studies
+s -> s agrees
+m -> t new
+l -> u new
+w -> d new
+q -> i new
+n -> e new
+s -> s agrees
+
+wruojh -> dragon
+w -> d agrees
+r -> r new
+u -> a new
+o -> g new
+j -> o agrees
+h -> n new
+
+Summary character mappings
+a -> h
+f -> l
+h -> n
+j -> o
+l -> u
+m -> t
+n -> e
+o -> g
+q -> i
+r -> r
+s -> s
+u -> a
+w -> d
+x -> c
+
+Target text
+sxajjf smlwqns wruojh
+
+Decode target words from character mappings
+
+sxajjf
+s -> s
+x -> c
+a -> h
+j -> o
+j -> o
+f -> l
+sxajjf -> school
+fully mapped
+
+choose school
+
+smlwqns
+s -> s
+m -> t
+l -> u
+w -> d
+q -> i
+n -> e
+s -> s
+smlwqns -> studies
+fully mapped
+
+choose studies
+
+wruojh
+w -> d
+r -> r
+u -> a
+o -> g
+j -> o
+h -> n
+wruojh -> dragon
+fully mapped
+
+choose dragon
+
+Decoded phrase
+school studies dragon
+
+Answer: \boxed{school studies dragon}
+</think>
+\boxed{school studies dragon}

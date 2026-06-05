@@ -1,0 +1,121 @@
+Problem syn_tc_dp_phrase_copy_alignment_0019
+Bucket: phrase_copy_alignment
+Gold answer: sees dark library student
+Note: phrase_copy_exact_example_cipher_phrase
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+ummu dvbh gwzbvba ufkdmef -> sees dark library student
+Now, decrypt the following text: ummu dvbh gwzbvba ufkdmef
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+ummu dvbh gwzbvba ufkdmef -> sees dark library student
+
+Training target:
+ummu -> sees
+u -> s new
+m -> e new
+m -> e agrees
+u -> s agrees
+
+dvbh -> dark
+d -> d new
+v -> a new
+b -> r new
+h -> k new
+
+gwzbvba -> library
+g -> l new
+w -> i new
+z -> b new
+b -> r agrees
+v -> a agrees
+b -> r agrees
+a -> y new
+
+ufkdmef -> student
+u -> s agrees
+f -> t new
+k -> u new
+d -> d agrees
+m -> e agrees
+e -> n new
+f -> t agrees
+
+Summary character mappings
+a -> y
+b -> r
+d -> d
+e -> n
+f -> t
+g -> l
+h -> k
+k -> u
+m -> e
+u -> s
+v -> a
+w -> i
+z -> b
+
+Target text
+ummu dvbh gwzbvba ufkdmef
+
+Decode target words from character mappings
+
+ummu
+u -> s
+m -> e
+m -> e
+u -> s
+ummu -> sees
+fully mapped
+
+choose sees
+
+dvbh
+d -> d
+v -> a
+b -> r
+h -> k
+dvbh -> dark
+fully mapped
+
+choose dark
+
+gwzbvba
+g -> l
+w -> i
+z -> b
+b -> r
+v -> a
+b -> r
+a -> y
+gwzbvba -> library
+fully mapped
+
+choose library
+
+ufkdmef
+u -> s
+f -> t
+k -> u
+d -> d
+m -> e
+e -> n
+f -> t
+ufkdmef -> student
+fully mapped
+
+choose student
+
+Decoded phrase
+sees dark library student
+
+Answer: \boxed{sees dark library student}
+</think>
+\boxed{sees dark library student}

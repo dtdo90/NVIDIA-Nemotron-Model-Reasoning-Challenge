@@ -1,0 +1,150 @@
+Problem syn_tc_dp_phrase_copy_alignment_0020
+Bucket: phrase_copy_alignment
+Gold answer: around student cave discovers curious
+Note: phrase_copy_exact_example_cipher_phrase
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+izyqat upqtgap liwg txulywgzu lqzxyqu -> around student cave discovers curious
+Now, decrypt the following text: izyqat upqtgap liwg txulywgzu lqzxyqu
+
+Solution:
+<think>
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+izyqat upqtgap liwg txulywgzu lqzxyqu -> around student cave discovers curious
+
+Training target:
+izyqat -> around
+i -> a new
+z -> r new
+y -> o new
+q -> u new
+a -> n new
+t -> d new
+
+upqtgap -> student
+u -> s new
+p -> t new
+q -> u agrees
+t -> d agrees
+g -> e new
+a -> n agrees
+p -> t agrees
+
+liwg -> cave
+l -> c new
+i -> a agrees
+w -> v new
+g -> e agrees
+
+txulywgzu -> discovers
+t -> d agrees
+x -> i new
+u -> s agrees
+l -> c agrees
+y -> o agrees
+w -> v agrees
+g -> e agrees
+z -> r agrees
+u -> s agrees
+
+lqzxyqu -> curious
+l -> c agrees
+q -> u agrees
+z -> r agrees
+x -> i agrees
+y -> o agrees
+q -> u agrees
+u -> s agrees
+
+Summary character mappings
+a -> n
+g -> e
+i -> a
+l -> c
+p -> t
+q -> u
+t -> d
+u -> s
+w -> v
+x -> i
+y -> o
+z -> r
+
+Target text
+izyqat upqtgap liwg txulywgzu lqzxyqu
+
+Decode target words from character mappings
+
+izyqat
+i -> a
+z -> r
+y -> o
+q -> u
+a -> n
+t -> d
+izyqat -> around
+fully mapped
+
+choose around
+
+upqtgap
+u -> s
+p -> t
+q -> u
+t -> d
+g -> e
+a -> n
+p -> t
+upqtgap -> student
+fully mapped
+
+choose student
+
+liwg
+l -> c
+i -> a
+w -> v
+g -> e
+liwg -> cave
+fully mapped
+
+choose cave
+
+txulywgzu
+t -> d
+x -> i
+u -> s
+l -> c
+y -> o
+w -> v
+g -> e
+z -> r
+u -> s
+txulywgzu -> discovers
+fully mapped
+
+choose discovers
+
+lqzxyqu
+l -> c
+q -> u
+z -> r
+x -> i
+y -> o
+q -> u
+u -> s
+lqzxyqu -> curious
+fully mapped
+
+choose curious
+
+Decoded phrase
+around student cave discovers curious
+
+Answer: \boxed{around student cave discovers curious}
+</think>
+\boxed{around student cave discovers curious}
