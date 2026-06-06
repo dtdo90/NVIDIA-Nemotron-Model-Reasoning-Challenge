@@ -142,7 +142,7 @@ ancient
 
 Check scan candidates against summary mappings
 
-ancient
+neqryep -> ancient
 n -> a agrees
 e -> n agrees
 q -> c new
@@ -258,7 +258,7 @@ king
 
 Check scan candidates against summary mappings
 
-king
+zreh -> king
 z -> k new
 r -> i agrees
 e -> n agrees

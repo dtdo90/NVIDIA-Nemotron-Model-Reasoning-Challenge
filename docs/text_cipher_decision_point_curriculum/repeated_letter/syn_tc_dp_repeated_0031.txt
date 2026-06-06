@@ -129,7 +129,7 @@ door
 
 Check scan candidates against summary mappings
 
-door
+zppm -> door
 z -> d new
 p -> o agrees
 p -> o agrees

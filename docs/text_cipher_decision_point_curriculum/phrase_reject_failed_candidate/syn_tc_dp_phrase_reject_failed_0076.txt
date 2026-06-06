@@ -134,20 +134,20 @@ book, door
 
 Check scan candidates against summary mappings
 
-door
+haad -> book
+h -> b new
+a -> o agrees
+a -> o agrees
+d -> k new
+PASS
+
+haad -> door
 h -> d new
 a -> o agrees
 a -> o agrees
 d -> r conflicts
 z -> r already exists
 FAIL
-
-book
-h -> b new
-a -> o agrees
-a -> o agrees
-d -> k new
-PASS
 add h -> b
 add d -> k
 
@@ -246,7 +246,7 @@ cave
 
 Check scan candidates against summary mappings
 
-cave
+ubnm -> cave
 u -> c new
 b -> a agrees
 n -> v new
@@ -366,7 +366,7 @@ mountain
 
 Check scan candidates against summary mappings
 
-mountain
+pawxqbkx -> mountain
 p -> m agrees
 a -> o agrees
 w -> u new

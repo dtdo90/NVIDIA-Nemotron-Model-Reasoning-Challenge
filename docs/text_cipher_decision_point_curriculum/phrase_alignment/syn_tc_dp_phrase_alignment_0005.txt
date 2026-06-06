@@ -139,7 +139,7 @@ king
 
 Check scan candidates against summary mappings
 
-king
+gelj -> king
 g -> k new
 e -> i agrees
 l -> n agrees
@@ -259,7 +259,7 @@ colorful
 
 Check scan candidates against summary mappings
 
-colorful
+muquvzxq -> colorful
 m -> c agrees
 u -> o agrees
 q -> l agrees

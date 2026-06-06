@@ -133,7 +133,14 @@ bird, dark
 
 Check scan candidates against summary mappings
 
-dark
+malr -> bird
+m -> b new
+a -> i new
+l -> r agrees
+r -> d new
+PASS
+
+malr -> dark
 m -> d new
 a -> a conflicts
 p -> a already exists
@@ -141,13 +148,6 @@ l -> r agrees
 r -> k conflicts
 n -> k already exists
 FAIL
-
-bird
-m -> b new
-a -> i new
-l -> r agrees
-r -> d new
-PASS
 add m -> b
 add a -> i
 add r -> d
@@ -249,7 +249,7 @@ garden
 
 Check scan candidates against summary mappings
 
-garden
+hplrfu -> garden
 h -> g new
 p -> a agrees
 l -> r agrees
@@ -356,7 +356,7 @@ palace
 
 Check scan candidates against summary mappings
 
-palace
+jpgpzf -> palace
 j -> p new
 p -> a agrees
 g -> l new

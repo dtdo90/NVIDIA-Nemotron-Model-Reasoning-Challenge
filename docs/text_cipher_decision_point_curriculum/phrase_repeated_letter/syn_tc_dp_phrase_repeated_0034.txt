@@ -137,7 +137,7 @@ message
 
 Check scan candidates against summary mappings
 
-message
+stkklgt -> message
 s -> m new
 t -> e agrees
 k -> s new
@@ -246,7 +246,7 @@ clever
 
 Check scan candidates against summary mappings
 
-clever
+dvtptf -> clever
 d -> c new
 v -> l new
 t -> e agrees

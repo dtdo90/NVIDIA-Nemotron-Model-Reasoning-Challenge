@@ -137,7 +137,7 @@ follows
 
 Check scan candidates against summary mappings
 
-follows
+rlfflig -> follows
 r -> f new
 l -> o new
 f -> l agrees
@@ -272,7 +272,7 @@ inside
 
 Check scan candidates against summary mappings
 
-inside
+wdgwam -> inside
 w -> i agrees
 d -> n new
 g -> s agrees

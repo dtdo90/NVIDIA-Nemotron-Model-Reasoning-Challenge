@@ -135,7 +135,7 @@ king
 
 Check scan candidates against summary mappings
 
-king
+ydkh -> king
 y -> k new
 d -> i agrees
 k -> n agrees
@@ -240,7 +240,7 @@ silver
 
 Check scan candidates against summary mappings
 
-silver
+udbajx -> silver
 u -> s agrees
 d -> i agrees
 b -> l new
@@ -347,7 +347,7 @@ castle
 
 Check scan candidates against summary mappings
 
-castle
+irucbj -> castle
 i -> c new
 r -> a agrees
 u -> s agrees

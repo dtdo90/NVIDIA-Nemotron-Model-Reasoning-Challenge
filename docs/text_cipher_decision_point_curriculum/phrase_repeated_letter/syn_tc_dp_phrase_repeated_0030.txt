@@ -133,7 +133,7 @@ valley
 
 Check scan candidates against summary mappings
 
-valley
+auqqse -> valley
 a -> v agrees
 u -> a agrees
 q -> l new
@@ -241,7 +241,7 @@ rabbit
 
 Check scan candidates against summary mappings
 
-rabbit
+kullwt -> rabbit
 k -> r agrees
 u -> a agrees
 l -> b agrees
@@ -349,7 +349,7 @@ curious
 
 Check scan candidates against summary mappings
 
-curious
+mrkwfrg -> curious
 m -> c new
 r -> u agrees
 k -> r agrees

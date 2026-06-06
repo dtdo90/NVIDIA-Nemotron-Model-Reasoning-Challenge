@@ -134,7 +134,16 @@ bright, knight
 
 Check scan candidates against summary mappings
 
-knight
+zglwtp -> bright
+z -> b new
+g -> r new
+l -> i agrees
+w -> g new
+t -> h agrees
+p -> t agrees
+PASS
+
+zglwtp -> knight
 z -> k new
 g -> n conflicts
 q -> n already exists
@@ -143,15 +152,6 @@ w -> g new
 t -> h agrees
 p -> t agrees
 FAIL
-
-bright
-z -> b new
-g -> r new
-l -> i agrees
-w -> g new
-t -> h agrees
-p -> t agrees
-PASS
 add z -> b
 add g -> r
 add w -> g
@@ -253,7 +253,7 @@ clever
 
 Check scan candidates against summary mappings
 
-clever
+ieafag -> clever
 i -> c agrees
 e -> l new
 a -> e agrees
@@ -370,7 +370,7 @@ beyond
 
 Check scan candidates against summary mappings
 
-beyond
+zacuqr -> beyond
 z -> b agrees
 a -> e agrees
 c -> y new
@@ -475,7 +475,7 @@ king
 
 Check scan candidates against summary mappings
 
-king
+blqw -> king
 b -> k new
 l -> i agrees
 q -> n agrees

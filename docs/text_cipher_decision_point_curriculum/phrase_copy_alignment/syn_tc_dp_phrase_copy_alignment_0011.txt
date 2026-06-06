@@ -1,74 +1,97 @@
 Problem syn_tc_dp_phrase_copy_alignment_0011
 Bucket: phrase_copy_alignment
-Gold answer: above bird
-Note: phrase_copy_exact_example_cipher_phrase
+Gold answer: creates palace valley
+Note: phrase_copy_fully_mapped_nontrivial_target
 
 Training prompt:
 In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
-gpabn pfoy -> above bird
-Now, decrypt the following text: gpabn pfoy
+baktvqz bqpf -> crystal cave
+gqs -> map
+Now, decrypt the following text: bafqvft sqzqbf pqzzfk
 
-Solution:
-<think>
+Training target:
 We need to decode the target strictly from left to right using the character mappings.
 
 Process examples
 
-gpabn pfoy -> above bird
+baktvqz bqpf -> crystal cave
+baktvqz -> crystal
+b -> c new
+a -> r new
+k -> y new
+t -> s new
+v -> t new
+q -> a new
+z -> l new
 
-Training target:
-gpabn -> above
-g -> a new
-p -> b new
-a -> o new
-b -> v new
-n -> e new
+bqpf -> cave
+b -> c agrees
+q -> a agrees
+p -> v new
+f -> e new
 
-pfoy -> bird
-p -> b agrees
-f -> i new
-o -> r new
-y -> d new
+gqs -> map
+gqs -> map
+g -> m new
+q -> a agrees
+s -> p new
 
 Summary character mappings
-a -> o
-b -> v
-f -> i
-g -> a
-n -> e
-o -> r
-p -> b
-y -> d
+a -> r
+b -> c
+f -> e
+g -> m
+k -> y
+p -> v
+q -> a
+s -> p
+t -> s
+v -> t
+z -> l
 
 Target text
-gpabn pfoy
+bafqvft sqzqbf pqzzfk
 
 Decode target words from character mappings
 
-gpabn
-g -> a
-p -> b
-a -> o
-b -> v
-n -> e
-gpabn -> above
+bafqvft
+b -> c
+a -> r
+f -> e
+q -> a
+v -> t
+f -> e
+t -> s
+bafqvft -> creates
 fully mapped
 
-choose above
+choose creates
 
-pfoy
-p -> b
-f -> i
-o -> r
-y -> d
-pfoy -> bird
+sqzqbf
+s -> p
+q -> a
+z -> l
+q -> a
+b -> c
+f -> e
+sqzqbf -> palace
 fully mapped
 
-choose bird
+choose palace
+
+pqzzfk
+p -> v
+q -> a
+z -> l
+z -> l
+f -> e
+k -> y
+pqzzfk -> valley
+fully mapped
+
+choose valley
 
 Decoded phrase
-above bird
+creates palace valley
 
-Answer: \boxed{above bird}
-</think>
-\boxed{above bird}
+Answer: \boxed{creates palace valley}

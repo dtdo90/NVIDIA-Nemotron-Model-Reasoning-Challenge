@@ -129,7 +129,7 @@ under
 
 Check scan candidates against summary mappings
 
-under
+gslor -> under
 g -> u new
 s -> n agrees
 l -> d agrees

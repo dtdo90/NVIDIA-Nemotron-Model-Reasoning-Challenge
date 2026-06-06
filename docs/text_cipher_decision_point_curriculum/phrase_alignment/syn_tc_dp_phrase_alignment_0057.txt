@@ -1,0 +1,280 @@
+Problem syn_tc_dp_phrase_alignment_0057
+Bucket: phrase_alignment
+Gold answer: mountain queen
+Note: phrase_strict_left_to_right_alignment_extra_short
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+ebunmve fxqdv -> studies above
+evve -> sees
+Now, decrypt the following text: squcbfmc juvvc
+
+Training target:
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+ebunmve fxqdv -> studies above
+ebunmve -> studies
+e -> s new
+b -> t new
+u -> u new
+n -> d new
+m -> i new
+v -> e new
+e -> s agrees
+fxqdv -> above
+f -> a new
+x -> b new
+q -> o new
+d -> v new
+v -> e agrees
+
+evve -> sees
+evve -> sees
+e -> s agrees
+v -> e agrees
+v -> e agrees
+e -> s agrees
+
+Summary character mappings
+e -> s
+b -> t
+u -> u
+n -> d
+m -> i
+v -> e
+f -> a
+x -> b
+q -> o
+d -> v
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+squcbfmc juvvc
+
+Decode target words from character mappings
+
+squcbfmc
+s -> ? unknown
+q -> o
+u -> u
+c -> ? unknown
+b -> t
+f -> a
+m -> i
+c -> ? unknown
+squcbfmc -> ?ou?tai?
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?ou?tai?
+above -> ?ou?tai? no match
+alice -> ?ou?tai? no match
+ancient -> ?ou?tai? no match
+around -> ?ou?tai? no match
+beyond -> ?ou?tai? no match
+bird -> ?ou?tai? no match
+book -> ?ou?tai? no match
+bright -> ?ou?tai? no match
+castle -> ?ou?tai? no match
+cat -> ?ou?tai? no match
+cave -> ?ou?tai? no match
+chases -> ?ou?tai? no match
+clever -> ?ou?tai? no match
+colorful -> ?ou?tai? no match
+creates -> ?ou?tai? no match
+crystal -> ?ou?tai? no match
+curious -> ?ou?tai? no match
+dark -> ?ou?tai? no match
+discovers -> ?ou?tai? no match
+door -> ?ou?tai? no match
+dragon -> ?ou?tai? no match
+draws -> ?ou?tai? no match
+dreams -> ?ou?tai? no match
+explores -> ?ou?tai? no match
+follows -> ?ou?tai? no match
+forest -> ?ou?tai? no match
+found -> ?ou?tai? no match
+garden -> ?ou?tai? no match
+golden -> ?ou?tai? no match
+hatter -> ?ou?tai? no match
+hidden -> ?ou?tai? no match
+imagines -> ?ou?tai? no match
+in -> ?ou?tai? no match
+inside -> ?ou?tai? no match
+island -> ?ou?tai? no match
+key -> ?ou?tai? no match
+king -> ?ou?tai? no match
+knight -> ?ou?tai? no match
+library -> ?ou?tai? no match
+magical -> ?ou?tai? no match
+map -> ?ou?tai? no match
+message -> ?ou?tai? no match
+mirror -> ?ou?tai? no match
+mountain -> ?ou?tai? match
+mouse -> ?ou?tai? no match
+mysterious -> ?ou?tai? no match
+near -> ?ou?tai? no match
+ocean -> ?ou?tai? no match
+palace -> ?ou?tai? no match
+potion -> ?ou?tai? no match
+princess -> ?ou?tai? no match
+puzzle -> ?ou?tai? no match
+queen -> ?ou?tai? no match
+rabbit -> ?ou?tai? no match
+reads -> ?ou?tai? no match
+school -> ?ou?tai? no match
+secret -> ?ou?tai? no match
+sees -> ?ou?tai? no match
+silver -> ?ou?tai? no match
+story -> ?ou?tai? no match
+strange -> ?ou?tai? no match
+student -> ?ou?tai? no match
+studies -> ?ou?tai? no match
+teacher -> ?ou?tai? no match
+the -> ?ou?tai? no match
+through -> ?ou?tai? no match
+tower -> ?ou?tai? no match
+treasure -> ?ou?tai? no match
+turtle -> ?ou?tai? no match
+under -> ?ou?tai? no match
+valley -> ?ou?tai? no match
+village -> ?ou?tai? no match
+watches -> ?ou?tai? no match
+wise -> ?ou?tai? no match
+wizard -> ?ou?tai? no match
+wonderland -> ?ou?tai? no match
+writes -> ?ou?tai? no match
+
+Scan candidates for ?ou?tai?
+mountain
+
+Check scan candidates against summary mappings
+
+squcbfmc -> mountain
+s -> m new
+q -> o agrees
+u -> u agrees
+c -> n new
+b -> t agrees
+f -> a agrees
+m -> i agrees
+c -> n new
+PASS
+add s -> m
+add c -> n
+
+choose mountain
+
+juvvc
+j -> ? unknown
+u -> u
+v -> e
+v -> e
+c -> n
+juvvc -> ?ueen
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?ueen
+above -> ?ueen no match
+alice -> ?ueen no match
+ancient -> ?ueen no match
+around -> ?ueen no match
+beyond -> ?ueen no match
+bird -> ?ueen no match
+book -> ?ueen no match
+bright -> ?ueen no match
+castle -> ?ueen no match
+cat -> ?ueen no match
+cave -> ?ueen no match
+chases -> ?ueen no match
+clever -> ?ueen no match
+colorful -> ?ueen no match
+creates -> ?ueen no match
+crystal -> ?ueen no match
+curious -> ?ueen no match
+dark -> ?ueen no match
+discovers -> ?ueen no match
+door -> ?ueen no match
+dragon -> ?ueen no match
+draws -> ?ueen no match
+dreams -> ?ueen no match
+explores -> ?ueen no match
+follows -> ?ueen no match
+forest -> ?ueen no match
+found -> ?ueen no match
+garden -> ?ueen no match
+golden -> ?ueen no match
+hatter -> ?ueen no match
+hidden -> ?ueen no match
+imagines -> ?ueen no match
+in -> ?ueen no match
+inside -> ?ueen no match
+island -> ?ueen no match
+key -> ?ueen no match
+king -> ?ueen no match
+knight -> ?ueen no match
+library -> ?ueen no match
+magical -> ?ueen no match
+map -> ?ueen no match
+message -> ?ueen no match
+mirror -> ?ueen no match
+mountain -> ?ueen no match
+mouse -> ?ueen no match
+mysterious -> ?ueen no match
+near -> ?ueen no match
+ocean -> ?ueen no match
+palace -> ?ueen no match
+potion -> ?ueen no match
+princess -> ?ueen no match
+puzzle -> ?ueen no match
+queen -> ?ueen match
+rabbit -> ?ueen no match
+reads -> ?ueen no match
+school -> ?ueen no match
+secret -> ?ueen no match
+sees -> ?ueen no match
+silver -> ?ueen no match
+story -> ?ueen no match
+strange -> ?ueen no match
+student -> ?ueen no match
+studies -> ?ueen no match
+teacher -> ?ueen no match
+the -> ?ueen no match
+through -> ?ueen no match
+tower -> ?ueen no match
+treasure -> ?ueen no match
+turtle -> ?ueen no match
+under -> ?ueen no match
+valley -> ?ueen no match
+village -> ?ueen no match
+watches -> ?ueen no match
+wise -> ?ueen no match
+wizard -> ?ueen no match
+wonderland -> ?ueen no match
+writes -> ?ueen no match
+
+Scan candidates for ?ueen
+queen
+
+Check scan candidates against summary mappings
+
+juvvc -> queen
+j -> q new
+u -> u agrees
+v -> e agrees
+v -> e agrees
+c -> n agrees
+PASS
+add j -> q
+
+choose queen
+
+Decoded phrase
+mountain queen
+
+Answer: \boxed{mountain queen}

@@ -141,7 +141,7 @@ hatter
 
 Check scan candidates against summary mappings
 
-hatter
+zyooec -> hatter
 z -> h new
 y -> a agrees
 o -> t new
@@ -251,7 +251,7 @@ colorful
 
 Check scan candidates against summary mappings
 
-colorful
+psxsctax -> colorful
 p -> c agrees
 s -> o agrees
 x -> l agrees

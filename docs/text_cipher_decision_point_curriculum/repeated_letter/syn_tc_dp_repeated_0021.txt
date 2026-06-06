@@ -132,7 +132,7 @@ rabbit
 
 Check scan candidates against summary mappings
 
-rabbit
+ctfflo -> rabbit
 c -> r new
 t -> a agrees
 f -> b agrees

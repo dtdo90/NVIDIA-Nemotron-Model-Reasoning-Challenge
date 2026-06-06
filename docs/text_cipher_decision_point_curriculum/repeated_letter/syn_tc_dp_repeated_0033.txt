@@ -127,7 +127,7 @@ book
 
 Check scan candidates against summary mappings
 
-book
+rffo -> book
 r -> b new
 f -> o agrees
 f -> o agrees

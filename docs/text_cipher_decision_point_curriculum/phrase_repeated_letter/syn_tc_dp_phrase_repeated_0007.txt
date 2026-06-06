@@ -132,7 +132,7 @@ puzzle, turtle
 
 Check scan candidates against summary mappings
 
-puzzle
+tleeou -> puzzle
 t -> p new
 l -> u agrees
 e -> z new
@@ -140,6 +140,17 @@ e -> z new
 o -> l agrees
 u -> e agrees
 PASS
+
+tleeou -> turtle
+t -> t new
+l -> u agrees
+e -> r conflicts
+h -> r already exists
+e -> t conflicts
+t -> t already used in this candidate
+o -> l agrees
+u -> e agrees
+FAIL
 add t -> p
 add e -> z
 
@@ -240,7 +251,7 @@ dreams
 
 Check scan candidates against summary mappings
 
-dreams
+jhuxcn -> dreams
 j -> d agrees
 h -> r agrees
 u -> e agrees
@@ -350,7 +361,7 @@ discovers
 
 Check scan candidates against summary mappings
 
-discovers
+jvnsrquhn -> discovers
 j -> d agrees
 v -> i agrees
 n -> s agrees
@@ -462,7 +473,7 @@ potion
 
 Check scan candidates against summary mappings
 
-potion
+trwvrf -> potion
 t -> p agrees
 r -> o agrees
 w -> t new

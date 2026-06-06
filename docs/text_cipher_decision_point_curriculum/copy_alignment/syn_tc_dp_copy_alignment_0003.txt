@@ -1,12 +1,12 @@
 Problem syn_tc_dp_copy_alignment_0003
 Bucket: copy_alignment
-Gold answer: rabbit
-Note: copy_exact_example_cipher_word
+Gold answer: school
+Note: copy_fully_mapped_nontrivial_target
 
 Training prompt:
 In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
-blmmhr -> rabbit
-Now, decrypt the following text: blmmhr
+unrrndt zeftkt -> follows chases
+Now, decrypt the following text: tzennr
 
 Solution:
 <think>
@@ -14,43 +14,57 @@ We need to decode the target strictly from left to right using the character map
 
 Process examples
 
-blmmhr -> rabbit
+unrrndt zeftkt -> follows chases
 
 Training target:
-b -> r new
-l -> a new
-m -> b new
-m -> b agrees
-h -> i new
-r -> t new
+unrrndt -> follows
+u -> f new
+n -> o new
+r -> l new
+r -> l agrees
+n -> o agrees
+d -> w new
+t -> s new
+
+zeftkt -> chases
+z -> c new
+e -> h new
+f -> a new
+t -> s agrees
+k -> e new
+t -> s agrees
 
 Summary character mappings
-b -> r
-h -> i
-l -> a
-m -> b
-r -> t
+d -> w
+e -> h
+f -> a
+k -> e
+n -> o
+r -> l
+t -> s
+u -> f
+z -> c
 
 Target text
-blmmhr
+tzennr
 
 Decode target words from character mappings
 
-blmmhr
-b -> r
-l -> a
-m -> b
-m -> b
-h -> i
-r -> t
-blmmhr -> rabbit
+tzennr
+t -> s
+z -> c
+e -> h
+n -> o
+n -> o
+r -> l
+tzennr -> school
 fully mapped
 
-choose rabbit
+choose school
 
 Decoded phrase
-rabbit
+school
 
-Answer: \boxed{rabbit}
+Answer: \boxed{school}
 </think>
-\boxed{rabbit}
+\boxed{school}

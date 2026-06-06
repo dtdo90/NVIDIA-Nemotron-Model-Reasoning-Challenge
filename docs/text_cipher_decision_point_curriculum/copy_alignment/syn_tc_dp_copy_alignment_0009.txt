@@ -1,12 +1,12 @@
 Problem syn_tc_dp_copy_alignment_0009
 Bucket: copy_alignment
-Gold answer: dragon
-Note: copy_exact_example_cipher_word
+Gold answer: ocean
+Note: copy_fully_mapped_nontrivial_target
 
 Training prompt:
 In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
-xqbacn -> dragon
-Now, decrypt the following text: xqbacn
+dynavye pggm -> ancient book
+Now, decrypt the following text: gnvdy
 
 Solution:
 <think>
@@ -14,44 +14,54 @@ We need to decode the target strictly from left to right using the character map
 
 Process examples
 
-xqbacn -> dragon
+dynavye pggm -> ancient book
 
 Training target:
-x -> d new
-q -> r new
-b -> a new
-a -> g new
-c -> o new
-n -> n new
+dynavye -> ancient
+d -> a new
+y -> n new
+n -> c new
+a -> i new
+v -> e new
+y -> n agrees
+e -> t new
+
+pggm -> book
+p -> b new
+g -> o new
+g -> o agrees
+m -> k new
 
 Summary character mappings
-a -> g
-b -> a
-c -> o
-n -> n
-q -> r
-x -> d
+a -> i
+d -> a
+e -> t
+g -> o
+m -> k
+n -> c
+p -> b
+v -> e
+y -> n
 
 Target text
-xqbacn
+gnvdy
 
 Decode target words from character mappings
 
-xqbacn
-x -> d
-q -> r
-b -> a
-a -> g
-c -> o
-n -> n
-xqbacn -> dragon
+gnvdy
+g -> o
+n -> c
+v -> e
+d -> a
+y -> n
+gnvdy -> ocean
 fully mapped
 
-choose dragon
+choose ocean
 
 Decoded phrase
-dragon
+ocean
 
-Answer: \boxed{dragon}
+Answer: \boxed{ocean}
 </think>
-\boxed{dragon}
+\boxed{ocean}

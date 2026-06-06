@@ -140,7 +140,7 @@ follows
 
 Check scan candidates against summary mappings
 
-follows
+swbbwqi -> follows
 s -> f new
 w -> o agrees
 b -> l new
@@ -263,7 +263,7 @@ discovers
 
 Check scan candidates against summary mappings
 
-discovers
+tjifwdvyi -> discovers
 t -> d agrees
 j -> i agrees
 i -> s agrees

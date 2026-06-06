@@ -1,12 +1,12 @@
 Problem syn_tc_dp_copy_alignment_0013
 Bucket: copy_alignment
-Gold answer: mysterious
-Note: copy_exact_example_cipher_word
+Gold answer: dragon
+Note: copy_fully_mapped_nontrivial_target
 
 Training prompt:
 In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
-swbqljrhyb -> mysterious
-Now, decrypt the following text: swbqljrhyb
+hvzukf ltkb -> around king
+Now, decrypt the following text: fvhbzk
 
 Solution:
 <think>
@@ -14,55 +14,54 @@ We need to decode the target strictly from left to right using the character map
 
 Process examples
 
-swbqljrhyb -> mysterious
+hvzukf ltkb -> around king
 
 Training target:
-s -> m new
-w -> y new
-b -> s new
-q -> t new
-l -> e new
-j -> r new
-r -> i new
-h -> o new
-y -> u new
-b -> s agrees
+hvzukf -> around
+h -> a new
+v -> r new
+z -> o new
+u -> u new
+k -> n new
+f -> d new
+
+ltkb -> king
+l -> k new
+t -> i new
+k -> n agrees
+b -> g new
 
 Summary character mappings
-b -> s
-h -> o
-j -> r
-l -> e
-q -> t
-r -> i
-s -> m
-w -> y
-y -> u
+b -> g
+f -> d
+h -> a
+k -> n
+l -> k
+t -> i
+u -> u
+v -> r
+z -> o
 
 Target text
-swbqljrhyb
+fvhbzk
 
 Decode target words from character mappings
 
-swbqljrhyb
-s -> m
-w -> y
-b -> s
-q -> t
-l -> e
-j -> r
-r -> i
-h -> o
-y -> u
-b -> s
-swbqljrhyb -> mysterious
+fvhbzk
+f -> d
+v -> r
+h -> a
+b -> g
+z -> o
+k -> n
+fvhbzk -> dragon
 fully mapped
 
-choose mysterious
+choose dragon
 
 Decoded phrase
-mysterious
+dragon
 
-Answer: \boxed{mysterious}
+Answer: \boxed{dragon}
 </think>
-\boxed{mysterious}
+\boxed{dragon}

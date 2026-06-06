@@ -1,0 +1,273 @@
+Problem syn_tc_dp_phrase_alignment_0053
+Bucket: phrase_alignment
+Gold answer: cave student
+Note: phrase_strict_left_to_right_alignment_extra_short
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+xnals rwcol -> under above
+uhl -> the
+Now, decrypt the following text: qrol buxalnu
+
+Training target:
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+xnals rwcol -> under above
+xnals -> under
+x -> u new
+n -> n new
+a -> d new
+l -> e new
+s -> r new
+rwcol -> above
+r -> a new
+w -> b new
+c -> o new
+o -> v new
+l -> e agrees
+
+uhl -> the
+uhl -> the
+u -> t new
+h -> h new
+l -> e agrees
+
+Summary character mappings
+x -> u
+n -> n
+a -> d
+l -> e
+s -> r
+r -> a
+w -> b
+c -> o
+o -> v
+u -> t
+h -> h
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+qrol buxalnu
+
+Decode target words from character mappings
+
+qrol
+q -> ? unknown
+r -> a
+o -> v
+l -> e
+qrol -> ?ave
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?ave
+above -> ?ave no match
+alice -> ?ave no match
+ancient -> ?ave no match
+around -> ?ave no match
+beyond -> ?ave no match
+bird -> ?ave no match
+book -> ?ave no match
+bright -> ?ave no match
+castle -> ?ave no match
+cat -> ?ave no match
+cave -> ?ave match
+chases -> ?ave no match
+clever -> ?ave no match
+colorful -> ?ave no match
+creates -> ?ave no match
+crystal -> ?ave no match
+curious -> ?ave no match
+dark -> ?ave no match
+discovers -> ?ave no match
+door -> ?ave no match
+dragon -> ?ave no match
+draws -> ?ave no match
+dreams -> ?ave no match
+explores -> ?ave no match
+follows -> ?ave no match
+forest -> ?ave no match
+found -> ?ave no match
+garden -> ?ave no match
+golden -> ?ave no match
+hatter -> ?ave no match
+hidden -> ?ave no match
+imagines -> ?ave no match
+in -> ?ave no match
+inside -> ?ave no match
+island -> ?ave no match
+key -> ?ave no match
+king -> ?ave no match
+knight -> ?ave no match
+library -> ?ave no match
+magical -> ?ave no match
+map -> ?ave no match
+message -> ?ave no match
+mirror -> ?ave no match
+mountain -> ?ave no match
+mouse -> ?ave no match
+mysterious -> ?ave no match
+near -> ?ave no match
+ocean -> ?ave no match
+palace -> ?ave no match
+potion -> ?ave no match
+princess -> ?ave no match
+puzzle -> ?ave no match
+queen -> ?ave no match
+rabbit -> ?ave no match
+reads -> ?ave no match
+school -> ?ave no match
+secret -> ?ave no match
+sees -> ?ave no match
+silver -> ?ave no match
+story -> ?ave no match
+strange -> ?ave no match
+student -> ?ave no match
+studies -> ?ave no match
+teacher -> ?ave no match
+the -> ?ave no match
+through -> ?ave no match
+tower -> ?ave no match
+treasure -> ?ave no match
+turtle -> ?ave no match
+under -> ?ave no match
+valley -> ?ave no match
+village -> ?ave no match
+watches -> ?ave no match
+wise -> ?ave no match
+wizard -> ?ave no match
+wonderland -> ?ave no match
+writes -> ?ave no match
+
+Scan candidates for ?ave
+cave
+
+Check scan candidates against summary mappings
+
+qrol -> cave
+q -> c new
+r -> a agrees
+o -> v agrees
+l -> e agrees
+PASS
+add q -> c
+
+choose cave
+
+buxalnu
+b -> ? unknown
+u -> t
+x -> u
+a -> d
+l -> e
+n -> n
+u -> t
+buxalnu -> ?tudent
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?tudent
+above -> ?tudent no match
+alice -> ?tudent no match
+ancient -> ?tudent no match
+around -> ?tudent no match
+beyond -> ?tudent no match
+bird -> ?tudent no match
+book -> ?tudent no match
+bright -> ?tudent no match
+castle -> ?tudent no match
+cat -> ?tudent no match
+cave -> ?tudent no match
+chases -> ?tudent no match
+clever -> ?tudent no match
+colorful -> ?tudent no match
+creates -> ?tudent no match
+crystal -> ?tudent no match
+curious -> ?tudent no match
+dark -> ?tudent no match
+discovers -> ?tudent no match
+door -> ?tudent no match
+dragon -> ?tudent no match
+draws -> ?tudent no match
+dreams -> ?tudent no match
+explores -> ?tudent no match
+follows -> ?tudent no match
+forest -> ?tudent no match
+found -> ?tudent no match
+garden -> ?tudent no match
+golden -> ?tudent no match
+hatter -> ?tudent no match
+hidden -> ?tudent no match
+imagines -> ?tudent no match
+in -> ?tudent no match
+inside -> ?tudent no match
+island -> ?tudent no match
+key -> ?tudent no match
+king -> ?tudent no match
+knight -> ?tudent no match
+library -> ?tudent no match
+magical -> ?tudent no match
+map -> ?tudent no match
+message -> ?tudent no match
+mirror -> ?tudent no match
+mountain -> ?tudent no match
+mouse -> ?tudent no match
+mysterious -> ?tudent no match
+near -> ?tudent no match
+ocean -> ?tudent no match
+palace -> ?tudent no match
+potion -> ?tudent no match
+princess -> ?tudent no match
+puzzle -> ?tudent no match
+queen -> ?tudent no match
+rabbit -> ?tudent no match
+reads -> ?tudent no match
+school -> ?tudent no match
+secret -> ?tudent no match
+sees -> ?tudent no match
+silver -> ?tudent no match
+story -> ?tudent no match
+strange -> ?tudent no match
+student -> ?tudent match
+studies -> ?tudent no match
+teacher -> ?tudent no match
+the -> ?tudent no match
+through -> ?tudent no match
+tower -> ?tudent no match
+treasure -> ?tudent no match
+turtle -> ?tudent no match
+under -> ?tudent no match
+valley -> ?tudent no match
+village -> ?tudent no match
+watches -> ?tudent no match
+wise -> ?tudent no match
+wizard -> ?tudent no match
+wonderland -> ?tudent no match
+writes -> ?tudent no match
+
+Scan candidates for ?tudent
+student
+
+Check scan candidates against summary mappings
+
+buxalnu -> student
+b -> s new
+u -> t agrees
+x -> u agrees
+a -> d agrees
+l -> e agrees
+n -> n agrees
+u -> t agrees
+PASS
+add b -> s
+
+choose student
+
+Decoded phrase
+cave student
+
+Answer: \boxed{cave student}

@@ -133,7 +133,14 @@ book, door
 
 Check scan candidates against summary mappings
 
-door
+rhhu -> book
+r -> b new
+h -> o agrees
+h -> o agrees
+u -> k new
+PASS
+
+rhhu -> door
 r -> d conflicts
 v -> d already exists
 h -> o agrees
@@ -141,13 +148,6 @@ h -> o agrees
 u -> r conflicts
 e -> r already exists
 FAIL
-
-book
-r -> b new
-h -> o agrees
-h -> o agrees
-u -> k new
-PASS
 add r -> b
 add u -> k
 
@@ -249,7 +249,7 @@ creates
 
 Check scan candidates against summary mappings
 
-creates
+oedmgdw -> creates
 o -> c new
 e -> r agrees
 d -> e agrees

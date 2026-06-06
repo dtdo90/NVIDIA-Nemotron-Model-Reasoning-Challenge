@@ -134,7 +134,7 @@ puzzle, turtle
 
 Check scan candidates against summary mappings
 
-puzzle
+hzppuq -> puzzle
 h -> p new
 z -> u agrees
 p -> z new
@@ -142,6 +142,18 @@ p -> z new
 u -> l agrees
 q -> e agrees
 PASS
+
+hzppuq -> turtle
+h -> t conflicts
+v -> t already exists
+z -> u agrees
+p -> r conflicts
+x -> r already exists
+p -> t conflicts
+v -> t already exists
+u -> l agrees
+q -> e agrees
+FAIL
 add h -> p
 add p -> z
 
@@ -242,7 +254,7 @@ chases
 
 Check scan candidates against summary mappings
 
-chases
+gbmiqi -> chases
 g -> c agrees
 b -> h new
 m -> a agrees
@@ -364,7 +376,7 @@ mouse
 
 Check scan candidates against summary mappings
 
-mouse
+rnziq -> mouse
 r -> m new
 n -> o agrees
 z -> u agrees

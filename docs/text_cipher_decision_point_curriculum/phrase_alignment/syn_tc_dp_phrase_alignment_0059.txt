@@ -1,0 +1,284 @@
+Problem syn_tc_dp_phrase_alignment_0059
+Bucket: phrase_alignment
+Gold answer: studies explores
+Note: phrase_strict_left_to_right_alignment_extra_short
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+sqdsju ehsfhg -> turtle potion
+rfdx -> bird
+Now, decrypt the following text: wsqxfuw uiejhduw
+
+Training target:
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+sqdsju ehsfhg -> turtle potion
+sqdsju -> turtle
+s -> t new
+q -> u new
+d -> r new
+s -> t agrees
+j -> l new
+u -> e new
+ehsfhg -> potion
+e -> p new
+h -> o new
+s -> t agrees
+f -> i new
+h -> o agrees
+g -> n new
+
+rfdx -> bird
+rfdx -> bird
+r -> b new
+f -> i agrees
+d -> r agrees
+x -> d new
+
+Summary character mappings
+s -> t
+q -> u
+d -> r
+j -> l
+u -> e
+e -> p
+h -> o
+f -> i
+g -> n
+r -> b
+x -> d
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+wsqxfuw uiejhduw
+
+Decode target words from character mappings
+
+wsqxfuw
+w -> ? unknown
+s -> t
+q -> u
+x -> d
+f -> i
+u -> e
+w -> ? unknown
+wsqxfuw -> ?tudie?
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?tudie?
+above -> ?tudie? no match
+alice -> ?tudie? no match
+ancient -> ?tudie? no match
+around -> ?tudie? no match
+beyond -> ?tudie? no match
+bird -> ?tudie? no match
+book -> ?tudie? no match
+bright -> ?tudie? no match
+castle -> ?tudie? no match
+cat -> ?tudie? no match
+cave -> ?tudie? no match
+chases -> ?tudie? no match
+clever -> ?tudie? no match
+colorful -> ?tudie? no match
+creates -> ?tudie? no match
+crystal -> ?tudie? no match
+curious -> ?tudie? no match
+dark -> ?tudie? no match
+discovers -> ?tudie? no match
+door -> ?tudie? no match
+dragon -> ?tudie? no match
+draws -> ?tudie? no match
+dreams -> ?tudie? no match
+explores -> ?tudie? no match
+follows -> ?tudie? no match
+forest -> ?tudie? no match
+found -> ?tudie? no match
+garden -> ?tudie? no match
+golden -> ?tudie? no match
+hatter -> ?tudie? no match
+hidden -> ?tudie? no match
+imagines -> ?tudie? no match
+in -> ?tudie? no match
+inside -> ?tudie? no match
+island -> ?tudie? no match
+key -> ?tudie? no match
+king -> ?tudie? no match
+knight -> ?tudie? no match
+library -> ?tudie? no match
+magical -> ?tudie? no match
+map -> ?tudie? no match
+message -> ?tudie? no match
+mirror -> ?tudie? no match
+mountain -> ?tudie? no match
+mouse -> ?tudie? no match
+mysterious -> ?tudie? no match
+near -> ?tudie? no match
+ocean -> ?tudie? no match
+palace -> ?tudie? no match
+potion -> ?tudie? no match
+princess -> ?tudie? no match
+puzzle -> ?tudie? no match
+queen -> ?tudie? no match
+rabbit -> ?tudie? no match
+reads -> ?tudie? no match
+school -> ?tudie? no match
+secret -> ?tudie? no match
+sees -> ?tudie? no match
+silver -> ?tudie? no match
+story -> ?tudie? no match
+strange -> ?tudie? no match
+student -> ?tudie? no match
+studies -> ?tudie? match
+teacher -> ?tudie? no match
+the -> ?tudie? no match
+through -> ?tudie? no match
+tower -> ?tudie? no match
+treasure -> ?tudie? no match
+turtle -> ?tudie? no match
+under -> ?tudie? no match
+valley -> ?tudie? no match
+village -> ?tudie? no match
+watches -> ?tudie? no match
+wise -> ?tudie? no match
+wizard -> ?tudie? no match
+wonderland -> ?tudie? no match
+writes -> ?tudie? no match
+
+Scan candidates for ?tudie?
+studies
+
+Check scan candidates against summary mappings
+
+wsqxfuw -> studies
+w -> s new
+s -> t agrees
+q -> u agrees
+x -> d agrees
+f -> i agrees
+u -> e agrees
+w -> s new
+PASS
+add w -> s
+
+choose studies
+
+uiejhduw
+u -> e
+i -> ? unknown
+e -> p
+j -> l
+h -> o
+d -> r
+u -> e
+w -> s
+uiejhduw -> e?plores
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match e?plores
+above -> e?plores no match
+alice -> e?plores no match
+ancient -> e?plores no match
+around -> e?plores no match
+beyond -> e?plores no match
+bird -> e?plores no match
+book -> e?plores no match
+bright -> e?plores no match
+castle -> e?plores no match
+cat -> e?plores no match
+cave -> e?plores no match
+chases -> e?plores no match
+clever -> e?plores no match
+colorful -> e?plores no match
+creates -> e?plores no match
+crystal -> e?plores no match
+curious -> e?plores no match
+dark -> e?plores no match
+discovers -> e?plores no match
+door -> e?plores no match
+dragon -> e?plores no match
+draws -> e?plores no match
+dreams -> e?plores no match
+explores -> e?plores match
+follows -> e?plores no match
+forest -> e?plores no match
+found -> e?plores no match
+garden -> e?plores no match
+golden -> e?plores no match
+hatter -> e?plores no match
+hidden -> e?plores no match
+imagines -> e?plores no match
+in -> e?plores no match
+inside -> e?plores no match
+island -> e?plores no match
+key -> e?plores no match
+king -> e?plores no match
+knight -> e?plores no match
+library -> e?plores no match
+magical -> e?plores no match
+map -> e?plores no match
+message -> e?plores no match
+mirror -> e?plores no match
+mountain -> e?plores no match
+mouse -> e?plores no match
+mysterious -> e?plores no match
+near -> e?plores no match
+ocean -> e?plores no match
+palace -> e?plores no match
+potion -> e?plores no match
+princess -> e?plores no match
+puzzle -> e?plores no match
+queen -> e?plores no match
+rabbit -> e?plores no match
+reads -> e?plores no match
+school -> e?plores no match
+secret -> e?plores no match
+sees -> e?plores no match
+silver -> e?plores no match
+story -> e?plores no match
+strange -> e?plores no match
+student -> e?plores no match
+studies -> e?plores no match
+teacher -> e?plores no match
+the -> e?plores no match
+through -> e?plores no match
+tower -> e?plores no match
+treasure -> e?plores no match
+turtle -> e?plores no match
+under -> e?plores no match
+valley -> e?plores no match
+village -> e?plores no match
+watches -> e?plores no match
+wise -> e?plores no match
+wizard -> e?plores no match
+wonderland -> e?plores no match
+writes -> e?plores no match
+
+Scan candidates for e?plores
+explores
+
+Check scan candidates against summary mappings
+
+uiejhduw -> explores
+u -> e agrees
+i -> x new
+e -> p agrees
+j -> l agrees
+h -> o agrees
+d -> r agrees
+u -> e agrees
+w -> s agrees
+PASS
+add i -> x
+
+choose explores
+
+Decoded phrase
+studies explores
+
+Answer: \boxed{studies explores}

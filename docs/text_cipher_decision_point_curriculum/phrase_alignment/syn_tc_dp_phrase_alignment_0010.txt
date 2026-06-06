@@ -140,7 +140,7 @@ colorful
 
 Check scan candidates against summary mappings
 
-colorful
+igfgzaof -> colorful
 i -> c agrees
 g -> o agrees
 f -> l agrees
@@ -262,7 +262,7 @@ writes
 
 Check scan candidates against summary mappings
 
-writes
+mzcjtp -> writes
 m -> w new
 z -> r agrees
 c -> i agrees

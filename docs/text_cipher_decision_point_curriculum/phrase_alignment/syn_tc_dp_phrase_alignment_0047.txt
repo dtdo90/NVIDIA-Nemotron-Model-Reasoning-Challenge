@@ -138,7 +138,7 @@ puzzle
 
 Check scan candidates against summary mappings
 
-puzzle
+aybbwe -> puzzle
 a -> p agrees
 y -> u agrees
 b -> z new

@@ -132,7 +132,7 @@ mirror
 
 Check scan candidates against summary mappings
 
-mirror
+qaeeje -> mirror
 q -> m agrees
 a -> i agrees
 e -> r new
@@ -239,7 +239,7 @@ rabbit
 
 Check scan candidates against summary mappings
 
-rabbit
+erooax -> rabbit
 e -> r agrees
 r -> a agrees
 o -> b agrees
@@ -345,13 +345,34 @@ found, mouse, tower
 
 Check scan candidates against summary mappings
 
-found
+sjmcl -> found
 s -> f new
 j -> o agrees
 m -> u new
 c -> n new
 l -> d new
 PASS
+
+sjmcl -> mouse
+s -> m conflicts
+q -> m already exists
+j -> o agrees
+m -> u new
+c -> s new
+l -> e conflicts
+d -> e already exists
+FAIL
+
+sjmcl -> tower
+s -> t conflicts
+x -> t already exists
+j -> o agrees
+m -> w new
+c -> e conflicts
+d -> e already exists
+l -> r conflicts
+e -> r already exists
+FAIL
 add s -> f
 add m -> u
 add c -> n
@@ -454,7 +475,7 @@ bright
 
 Check scan candidates against summary mappings
 
-bright
+oeaphx -> bright
 o -> b agrees
 e -> r agrees
 a -> i agrees

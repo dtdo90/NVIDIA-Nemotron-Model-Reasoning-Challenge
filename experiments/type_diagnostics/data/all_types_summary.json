@@ -12,25 +12,19 @@
   ],
   "global_split_csv": "experiments/type_diagnostics/data/global_splits_80_10_10.csv",
   "global_split_counts": {
-    "eval_holdout": 973,
-    "grpo_holdout": 771,
-    "sft_train": 16809,
-    "unused": 114
+    "eval_holdout": 901,
+    "grpo_holdout": 896,
+    "sft_train": 16680
   },
-  "synced_root_split_csv": "data/single_phase_training_clean/single_phase_splits_80_10_10.csv",
-  "synced_root_split_counts": {
-    "eval_holdout": 973,
-    "grpo_holdout": 771,
-    "sft_train": 16809,
-    "unused": 114
-  },
+  "synced_root_split_csv": null,
+  "synced_root_split_counts": null,
   "totals": {
     "bit_manipulation": {
       "total": 6117,
       "split_counts": {
-        "eval_holdout": 136,
-        "grpo_holdout": 136,
-        "sft_train": 5845
+        "eval_holdout": 160,
+        "grpo_holdout": 160,
+        "sft_train": 5797
       },
       "subtype_count": 3
     },
@@ -53,13 +47,13 @@
       "subtype_count": 1
     },
     "text_cipher": {
-      "total": 2136,
+      "total": 1976,
       "split_counts": {
         "eval_holdout": 158,
         "grpo_holdout": 158,
-        "sft_train": 1820
+        "sft_train": 1660
       },
-      "subtype_count": 9
+      "subtype_count": 5
     },
     "numeral_system": {
       "total": 1576,
@@ -71,22 +65,22 @@
       "subtype_count": 1
     },
     "numeric_equation": {
-      "total": 4763,
+      "total": 4733,
       "split_counts": {
-        "eval_holdout": 133,
-        "sft_train": 4612,
-        "unused": 18
+        "eval_holdout": 72,
+        "grpo_holdout": 67,
+        "sft_train": 4594
       },
-      "subtype_count": 58
+      "subtype_count": 57
     },
     "symbol_transform": {
       "total": 884,
       "split_counts": {
-        "eval_holdout": 69,
-        "sft_train": 719,
-        "unused": 96
+        "eval_holdout": 34,
+        "grpo_holdout": 34,
+        "sft_train": 816
       },
-      "subtype_count": 5
+      "subtype_count": 4
     }
   },
   "categories": {

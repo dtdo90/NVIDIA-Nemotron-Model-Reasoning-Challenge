@@ -138,7 +138,7 @@ under
 
 Check scan candidates against summary mappings
 
-under
+gdkar -> under
 g -> u new
 d -> n agrees
 k -> d agrees

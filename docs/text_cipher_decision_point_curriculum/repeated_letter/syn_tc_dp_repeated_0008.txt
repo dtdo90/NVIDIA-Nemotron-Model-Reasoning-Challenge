@@ -132,7 +132,7 @@ follows
 
 Check scan candidates against summary mappings
 
-follows
+ghpphus -> follows
 g -> f new
 h -> o agrees
 p -> l agrees

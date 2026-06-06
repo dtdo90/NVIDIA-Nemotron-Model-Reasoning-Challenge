@@ -139,7 +139,7 @@ message
 
 Check scan candidates against summary mappings
 
-message
+fowwiro -> message
 f -> m new
 o -> e agrees
 w -> s agrees
@@ -257,7 +257,7 @@ dark
 
 Check scan candidates against summary mappings
 
-dark
+qizh -> dark
 q -> d agrees
 i -> a agrees
 z -> r agrees

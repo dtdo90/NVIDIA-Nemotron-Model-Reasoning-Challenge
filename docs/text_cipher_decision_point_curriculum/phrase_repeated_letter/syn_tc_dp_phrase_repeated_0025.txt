@@ -138,7 +138,7 @@ through
 
 Check scan candidates against summary mappings
 
-through
+ohmytsh -> through
 o -> t agrees
 h -> h new
 m -> r agrees

@@ -130,14 +130,14 @@ cat, map
 
 Check scan candidates against summary mappings
 
-cat
+fno -> cat
 f -> c new
 n -> a agrees
 o -> t conflicts
 w -> t already exists
 FAIL
 
-map
+fno -> map
 f -> m new
 n -> a agrees
 o -> p new
@@ -242,7 +242,7 @@ mirror
 
 Check scan candidates against summary mappings
 
-mirror
+fpzzsz -> mirror
 f -> m agrees
 p -> i new
 z -> r agrees
@@ -351,7 +351,7 @@ treasure
 
 Check scan candidates against summary mappings
 
-treasure
+wzunbqzu -> treasure
 w -> t agrees
 z -> r agrees
 u -> e agrees

@@ -1,88 +1,126 @@
 Problem syn_tc_dp_phrase_copy_alignment_0023
 Bucket: phrase_copy_alignment
-Gold answer: wonderland found
-Note: phrase_copy_exact_example_cipher_phrase
+Gold answer: strange wizard crystal
+Note: phrase_copy_fully_mapped_nontrivial_target
 
 Training prompt:
 In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
-qjlfgidalf xjnlf -> wonderland found
-Now, decrypt the following text: qjlfgidalf xjnlf
+garefycvre jobpfyuadb -> wonderland mysterious
+jvsuhvc kdnncf -> magical puzzle
+Now, decrypt the following text: bpyvrsf gunvye hyobpvc
 
-Solution:
-<think>
+Training target:
 We need to decode the target strictly from left to right using the character mappings.
 
 Process examples
 
-qjlfgidalf xjnlf -> wonderland found
+garefycvre jobpfyuadb -> wonderland mysterious
+garefycvre -> wonderland
+g -> w new
+a -> o new
+r -> n new
+e -> d new
+f -> e new
+y -> r new
+c -> l new
+v -> a new
+r -> n agrees
+e -> d agrees
 
-Training target:
-qjlfgidalf -> wonderland
-q -> w new
-j -> o new
-l -> n new
-f -> d new
-g -> e new
-i -> r new
-d -> l new
-a -> a new
-l -> n agrees
-f -> d agrees
+jobpfyuadb -> mysterious
+j -> m new
+o -> y new
+b -> s new
+p -> t new
+f -> e agrees
+y -> r agrees
+u -> i new
+a -> o agrees
+d -> u new
+b -> s agrees
 
-xjnlf -> found
-x -> f new
-j -> o agrees
-n -> u new
-l -> n agrees
-f -> d agrees
+jvsuhvc kdnncf -> magical puzzle
+jvsuhvc -> magical
+j -> m agrees
+v -> a agrees
+s -> g new
+u -> i agrees
+h -> c new
+v -> a agrees
+c -> l agrees
+
+kdnncf -> puzzle
+k -> p new
+d -> u agrees
+n -> z new
+n -> z agrees
+c -> l agrees
+f -> e agrees
 
 Summary character mappings
-a -> a
-d -> l
-f -> d
-g -> e
-i -> r
-j -> o
-l -> n
-n -> u
-q -> w
-x -> f
+a -> o
+b -> s
+c -> l
+d -> u
+e -> d
+f -> e
+g -> w
+h -> c
+j -> m
+k -> p
+n -> z
+o -> y
+p -> t
+r -> n
+s -> g
+u -> i
+v -> a
+y -> r
 
 Target text
-qjlfgidalf xjnlf
+bpyvrsf gunvye hyobpvc
 
 Decode target words from character mappings
 
-qjlfgidalf
-q -> w
-j -> o
-l -> n
-f -> d
-g -> e
-i -> r
-d -> l
-a -> a
-l -> n
-f -> d
-qjlfgidalf -> wonderland
+bpyvrsf
+b -> s
+p -> t
+y -> r
+v -> a
+r -> n
+s -> g
+f -> e
+bpyvrsf -> strange
 fully mapped
 
-choose wonderland
+choose strange
 
-xjnlf
-x -> f
-j -> o
-n -> u
-l -> n
-f -> d
-xjnlf -> found
+gunvye
+g -> w
+u -> i
+n -> z
+v -> a
+y -> r
+e -> d
+gunvye -> wizard
 fully mapped
 
-choose found
+choose wizard
+
+hyobpvc
+h -> c
+y -> r
+o -> y
+b -> s
+p -> t
+v -> a
+c -> l
+hyobpvc -> crystal
+fully mapped
+
+choose crystal
 
 Decoded phrase
-wonderland found
+strange wizard crystal
 
-Answer: \boxed{wonderland found}
-</think>
-\boxed{wonderland found}
+Answer: \boxed{strange wizard crystal}

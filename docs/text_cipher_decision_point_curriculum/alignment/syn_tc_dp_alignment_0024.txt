@@ -130,7 +130,7 @@ valley
 
 Check scan candidates against summary mappings
 
-valley
+myllgx -> valley
 m -> v new
 y -> a agrees
 l -> l agrees

@@ -1,104 +1,122 @@
 Problem syn_tc_dp_phrase_copy_alignment_0027
 Bucket: phrase_copy_alignment
-Gold answer: puzzle tower studies
-Note: phrase_copy_exact_example_cipher_phrase
+Gold answer: wonderland valley magical
+Note: phrase_copy_fully_mapped_nontrivial_target
 
 Training prompt:
 In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
-mqxxdg rtegp vrqywgv -> puzzle tower studies
-Now, decrypt the following text: mqxxdg rtegp vrqywgv
+wtvnhldyv tzuotkdv -> discovers imagines
+rheehav cdb -> follows key
+Now, decrypt the following text: ahkwdyeukw lueedb zuotnue
 
-Solution:
-<think>
+Training target:
 We need to decode the target strictly from left to right using the character mappings.
 
 Process examples
 
-mqxxdg rtegp vrqywgv -> puzzle tower studies
-
-Training target:
-mqxxdg -> puzzle
-m -> p new
-q -> u new
-x -> z new
-x -> z agrees
-d -> l new
-g -> e new
-
-rtegp -> tower
-r -> t new
-t -> o new
-e -> w new
-g -> e agrees
-p -> r new
-
-vrqywgv -> studies
+wtvnhldyv tzuotkdv -> discovers imagines
+wtvnhldyv -> discovers
+w -> d new
+t -> i new
 v -> s new
-r -> t agrees
-q -> u agrees
-y -> d new
-w -> i new
-g -> e agrees
+n -> c new
+h -> o new
+l -> v new
+d -> e new
+y -> r new
 v -> s agrees
 
+tzuotkdv -> imagines
+t -> i agrees
+z -> m new
+u -> a new
+o -> g new
+t -> i agrees
+k -> n new
+d -> e agrees
+v -> s agrees
+
+rheehav cdb -> follows key
+rheehav -> follows
+r -> f new
+h -> o agrees
+e -> l new
+e -> l agrees
+h -> o agrees
+a -> w new
+v -> s agrees
+
+cdb -> key
+c -> k new
+d -> e agrees
+b -> y new
+
 Summary character mappings
-d -> l
-e -> w
-g -> e
-m -> p
-p -> r
-q -> u
-r -> t
-t -> o
+a -> w
+b -> y
+c -> k
+d -> e
+e -> l
+h -> o
+k -> n
+l -> v
+n -> c
+o -> g
+r -> f
+t -> i
+u -> a
 v -> s
-w -> i
-x -> z
-y -> d
+w -> d
+y -> r
+z -> m
 
 Target text
-mqxxdg rtegp vrqywgv
+ahkwdyeukw lueedb zuotnue
 
 Decode target words from character mappings
 
-mqxxdg
-m -> p
-q -> u
-x -> z
-x -> z
-d -> l
-g -> e
-mqxxdg -> puzzle
+ahkwdyeukw
+a -> w
+h -> o
+k -> n
+w -> d
+d -> e
+y -> r
+e -> l
+u -> a
+k -> n
+w -> d
+ahkwdyeukw -> wonderland
 fully mapped
 
-choose puzzle
+choose wonderland
 
-rtegp
-r -> t
-t -> o
-e -> w
-g -> e
-p -> r
-rtegp -> tower
+lueedb
+l -> v
+u -> a
+e -> l
+e -> l
+d -> e
+b -> y
+lueedb -> valley
 fully mapped
 
-choose tower
+choose valley
 
-vrqywgv
-v -> s
-r -> t
-q -> u
-y -> d
-w -> i
-g -> e
-v -> s
-vrqywgv -> studies
+zuotnue
+z -> m
+u -> a
+o -> g
+t -> i
+n -> c
+u -> a
+e -> l
+zuotnue -> magical
 fully mapped
 
-choose studies
+choose magical
 
 Decoded phrase
-puzzle tower studies
+wonderland valley magical
 
-Answer: \boxed{puzzle tower studies}
-</think>
-\boxed{puzzle tower studies}
+Answer: \boxed{wonderland valley magical}

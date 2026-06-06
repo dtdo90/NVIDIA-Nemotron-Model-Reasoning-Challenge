@@ -1,126 +1,118 @@
 Problem syn_tc_dp_phrase_copy_alignment_0039
 Bucket: phrase_copy_alignment
-Gold answer: strange hatter turtle school
-Note: phrase_copy_exact_example_cipher_phrase
+Gold answer: village through dreams
+Note: phrase_copy_fully_mapped_nontrivial_target
 
 Training prompt:
 In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
-qysbrig cbyygs yzsylg qdcmml -> strange hatter turtle school
-Now, decrypt the following text: qysbrig cbyygs yzsylg qdcmml
+ltoxypbmko gdrryt -> mysterious valley
+zbccye vbew -> hidden king
+Now, decrypt the following text: gbrrdwy xzpmkwz cpydlo
 
-Solution:
-<think>
+Training target:
 We need to decode the target strictly from left to right using the character mappings.
 
 Process examples
 
-qysbrig cbyygs yzsylg qdcmml -> strange hatter turtle school
-
-Training target:
-qysbrig -> strange
-q -> s new
-y -> t new
-s -> r new
-b -> a new
-r -> n new
-i -> g new
-g -> e new
-
-cbyygs -> hatter
-c -> h new
-b -> a agrees
-y -> t agrees
-y -> t agrees
-g -> e agrees
-s -> r agrees
-
-yzsylg -> turtle
-y -> t agrees
-z -> u new
-s -> r agrees
-y -> t agrees
-l -> l new
-g -> e agrees
-
-qdcmml -> school
-q -> s agrees
-d -> c new
-c -> h agrees
+ltoxypbmko gdrryt -> mysterious valley
+ltoxypbmko -> mysterious
+l -> m new
+t -> y new
+o -> s new
+x -> t new
+y -> e new
+p -> r new
+b -> i new
 m -> o new
-m -> o agrees
-l -> l agrees
+k -> u new
+o -> s agrees
+
+gdrryt -> valley
+g -> v new
+d -> a new
+r -> l new
+r -> l agrees
+y -> e agrees
+t -> y agrees
+
+zbccye vbew -> hidden king
+zbccye -> hidden
+z -> h new
+b -> i agrees
+c -> d new
+c -> d agrees
+y -> e agrees
+e -> n new
+
+vbew -> king
+v -> k new
+b -> i agrees
+e -> n agrees
+w -> g new
 
 Summary character mappings
-b -> a
-c -> h
-d -> c
-g -> e
-i -> g
-l -> l
+b -> i
+c -> d
+d -> a
+e -> n
+g -> v
+k -> u
+l -> m
 m -> o
-q -> s
-r -> n
-s -> r
-y -> t
-z -> u
+o -> s
+p -> r
+r -> l
+t -> y
+v -> k
+w -> g
+x -> t
+y -> e
+z -> h
 
 Target text
-qysbrig cbyygs yzsylg qdcmml
+gbrrdwy xzpmkwz cpydlo
 
 Decode target words from character mappings
 
-qysbrig
-q -> s
-y -> t
-s -> r
-b -> a
-r -> n
-i -> g
-g -> e
-qysbrig -> strange
+gbrrdwy
+g -> v
+b -> i
+r -> l
+r -> l
+d -> a
+w -> g
+y -> e
+gbrrdwy -> village
 fully mapped
 
-choose strange
+choose village
 
-cbyygs
-c -> h
-b -> a
-y -> t
-y -> t
-g -> e
-s -> r
-cbyygs -> hatter
-fully mapped
-
-choose hatter
-
-yzsylg
-y -> t
-z -> u
-s -> r
-y -> t
-l -> l
-g -> e
-yzsylg -> turtle
-fully mapped
-
-choose turtle
-
-qdcmml
-q -> s
-d -> c
-c -> h
+xzpmkwz
+x -> t
+z -> h
+p -> r
 m -> o
-m -> o
-l -> l
-qdcmml -> school
+k -> u
+w -> g
+z -> h
+xzpmkwz -> through
 fully mapped
 
-choose school
+choose through
+
+cpydlo
+c -> d
+p -> r
+y -> e
+d -> a
+l -> m
+o -> s
+cpydlo -> dreams
+fully mapped
+
+choose dreams
 
 Decoded phrase
-strange hatter turtle school
+village through dreams
 
-Answer: \boxed{strange hatter turtle school}
-</think>
-\boxed{strange hatter turtle school}
+Answer: \boxed{village through dreams}

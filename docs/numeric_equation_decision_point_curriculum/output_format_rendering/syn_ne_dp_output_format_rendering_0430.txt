@@ -230,7 +230,7 @@ op_prefix
 Common
 op_prefix
 
-Apply AB_CD|abs(x-y)|common to the query
+Apply format AB_CD|abs(x-y)|common to the query
 
 Query
 93+43

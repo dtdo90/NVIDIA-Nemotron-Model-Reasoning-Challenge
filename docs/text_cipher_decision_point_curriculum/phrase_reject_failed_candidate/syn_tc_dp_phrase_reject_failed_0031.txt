@@ -132,7 +132,7 @@ cat, map
 
 Check scan candidates against summary mappings
 
-cat
+mlp -> cat
 m -> c conflicts
 k -> c already exists
 l -> a agrees
@@ -140,7 +140,7 @@ p -> t conflicts
 w -> t already exists
 FAIL
 
-map
+mlp -> map
 m -> m new
 l -> a agrees
 p -> p new
@@ -256,7 +256,7 @@ mouse
 
 Check scan candidates against summary mappings
 
-mouse
+mgdcj -> mouse
 m -> m agrees
 g -> o new
 d -> u new

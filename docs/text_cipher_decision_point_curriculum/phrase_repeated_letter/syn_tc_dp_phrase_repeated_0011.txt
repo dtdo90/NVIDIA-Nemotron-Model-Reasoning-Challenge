@@ -139,7 +139,7 @@ door
 
 Check scan candidates against summary mappings
 
-door
+tyyi -> door
 t -> d agrees
 y -> o new
 y -> o new
@@ -241,7 +241,7 @@ key
 
 Check scan candidates against summary mappings
 
-key
+rnw -> key
 r -> k agrees
 n -> e agrees
 w -> y new
@@ -358,7 +358,7 @@ mouse
 
 Check scan candidates against summary mappings
 
-mouse
+cyeqn -> mouse
 c -> m new
 y -> o agrees
 e -> u agrees

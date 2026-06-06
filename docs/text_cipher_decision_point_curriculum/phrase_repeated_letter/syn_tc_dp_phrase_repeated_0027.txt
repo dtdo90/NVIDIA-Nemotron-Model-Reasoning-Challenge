@@ -136,7 +136,7 @@ through
 
 Check scan candidates against summary mappings
 
-through
+mgskqig -> through
 m -> t agrees
 g -> h new
 s -> r agrees
@@ -246,7 +246,7 @@ bright
 
 Check scan candidates against summary mappings
 
-bright
+fsnigm -> bright
 f -> b new
 s -> r agrees
 n -> i agrees

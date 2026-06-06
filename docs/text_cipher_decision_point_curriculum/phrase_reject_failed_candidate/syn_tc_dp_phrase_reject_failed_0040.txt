@@ -135,7 +135,7 @@ cat, map
 
 Check scan candidates against summary mappings
 
-cat
+nbi -> cat
 n -> c conflicts
 f -> c already exists
 b -> a agrees
@@ -143,7 +143,7 @@ i -> t conflicts
 a -> t already exists
 FAIL
 
-map
+nbi -> map
 n -> m new
 b -> a agrees
 i -> p new

@@ -135,7 +135,7 @@ puzzle, turtle
 
 Check scan candidates against summary mappings
 
-puzzle
+ubrrfq -> puzzle
 u -> p new
 b -> u agrees
 r -> z new
@@ -143,6 +143,18 @@ r -> z new
 f -> l new
 q -> e agrees
 PASS
+
+ubrrfq -> turtle
+u -> t conflicts
+a -> t already exists
+b -> u agrees
+r -> r conflicts
+x -> r already exists
+r -> t conflicts
+a -> t already exists
+f -> l new
+q -> e agrees
+FAIL
 add u -> p
 add r -> z
 add f -> l
@@ -245,7 +257,7 @@ village
 
 Check scan candidates against summary mappings
 
-village
+vcffzhq -> village
 v -> v agrees
 c -> i agrees
 f -> l agrees

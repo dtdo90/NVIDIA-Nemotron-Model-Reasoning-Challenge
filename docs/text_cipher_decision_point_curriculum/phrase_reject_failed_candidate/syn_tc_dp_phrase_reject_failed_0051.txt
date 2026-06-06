@@ -136,7 +136,7 @@ bird, book
 
 Check scan candidates against summary mappings
 
-bird
+zqqx -> bird
 z -> b agrees
 q -> i conflicts
 v -> i already exists
@@ -146,7 +146,7 @@ x -> d conflicts
 m -> d already exists
 FAIL
 
-book
+zqqx -> book
 z -> b agrees
 q -> o new
 q -> o new
@@ -256,7 +256,7 @@ mysterious
 
 Check scan candidates against summary mappings
 
-mysterious
+dgnrwevqsn -> mysterious
 d -> m agrees
 g -> y new
 n -> s agrees
@@ -366,7 +366,7 @@ tower
 
 Check scan candidates against summary mappings
 
-tower
+rqkwe -> tower
 r -> t agrees
 q -> o agrees
 k -> w new

@@ -135,7 +135,7 @@ mountain
 
 Check scan candidates against summary mappings
 
-mountain
+spocvlwc -> mountain
 s -> m new
 p -> o new
 o -> u new
@@ -246,7 +246,7 @@ school
 
 Check scan candidates against summary mappings
 
-school
+makppe -> school
 m -> s agrees
 a -> c agrees
 k -> h new
@@ -365,7 +365,7 @@ garden
 
 Check scan candidates against summary mappings
 
-garden
+rlhujc -> garden
 r -> g new
 l -> a agrees
 h -> r agrees

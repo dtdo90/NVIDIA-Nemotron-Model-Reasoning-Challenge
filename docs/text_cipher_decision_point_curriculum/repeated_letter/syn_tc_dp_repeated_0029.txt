@@ -132,7 +132,7 @@ ancient
 
 Check scan candidates against summary mappings
 
-ancient
+cauywav -> ancient
 c -> a new
 a -> n agrees
 u -> c agrees

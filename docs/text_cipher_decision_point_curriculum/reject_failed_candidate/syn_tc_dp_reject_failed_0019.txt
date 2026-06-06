@@ -130,7 +130,15 @@ draws, reads
 
 Check scan candidates against summary mappings
 
-reads
+xaumf -> draws
+x -> d new
+a -> r new
+u -> a agrees
+m -> w new
+f -> s agrees
+PASS
+
+xaumf -> reads
 x -> r new
 a -> e conflicts
 j -> e already exists
@@ -138,14 +146,6 @@ u -> a agrees
 m -> d new
 f -> s agrees
 FAIL
-
-draws
-x -> d new
-a -> r new
-u -> a agrees
-m -> w new
-f -> s agrees
-PASS
 add x -> d
 add a -> r
 add m -> w

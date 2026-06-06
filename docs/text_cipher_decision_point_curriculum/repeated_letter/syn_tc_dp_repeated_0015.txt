@@ -129,7 +129,7 @@ hidden
 
 Check scan candidates against summary mappings
 
-hidden
+lorrix -> hidden
 l -> h new
 o -> i agrees
 r -> d agrees

@@ -130,7 +130,7 @@ cat, map
 
 Check scan candidates against summary mappings
 
-cat
+aen -> cat
 a -> c conflicts
 v -> c already exists
 e -> a agrees
@@ -138,7 +138,7 @@ n -> t conflicts
 z -> t already exists
 FAIL
 
-map
+aen -> map
 a -> m new
 e -> a agrees
 n -> p new
@@ -256,7 +256,7 @@ inside
 
 Check scan candidates against summary mappings
 
-inside
+sposdx -> inside
 s -> i new
 p -> n agrees
 o -> s agrees

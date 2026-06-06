@@ -141,7 +141,7 @@ castle, puzzle, turtle
 
 Check scan candidates against summary mappings
 
-castle
+ewzzrm -> castle
 e -> c conflicts
 l -> c already exists
 w -> a conflicts
@@ -154,7 +154,7 @@ r -> l agrees
 m -> e agrees
 FAIL
 
-puzzle
+ewzzrm -> puzzle
 e -> p new
 w -> u new
 z -> z new
@@ -162,6 +162,18 @@ z -> z new
 r -> l agrees
 m -> e agrees
 PASS
+
+ewzzrm -> turtle
+e -> t conflicts
+c -> t already exists
+w -> u new
+z -> r conflicts
+a -> r already exists
+z -> t conflicts
+c -> t already exists
+r -> l agrees
+m -> e agrees
+FAIL
 add e -> p
 add w -> u
 add z -> z

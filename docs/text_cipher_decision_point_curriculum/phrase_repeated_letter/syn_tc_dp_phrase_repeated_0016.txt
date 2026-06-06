@@ -131,7 +131,7 @@ studies
 
 Check scan candidates against summary mappings
 
-studies
+ikblvmi -> studies
 i -> s new
 k -> t agrees
 b -> u new
@@ -240,7 +240,7 @@ tower
 
 Check scan candidates against summary mappings
 
-tower
+kqemp -> tower
 k -> t agrees
 q -> o agrees
 e -> w new
@@ -345,7 +345,7 @@ alice
 
 Check scan candidates against summary mappings
 
-alice
+fyvnm -> alice
 f -> a agrees
 y -> l new
 v -> i agrees

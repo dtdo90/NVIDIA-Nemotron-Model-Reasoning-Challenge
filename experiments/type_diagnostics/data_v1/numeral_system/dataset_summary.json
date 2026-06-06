@@ -1,0 +1,37 @@
+{
+  "question_type": "numeral_system",
+  "category": "Numeral System",
+  "source_csv": "data/single_phase_training_clean/single_phase_sft_v1.csv",
+  "train_csv": "experiments/type_diagnostics/data_v1/numeral_system/numeral_system.csv",
+  "split_csv": "experiments/type_diagnostics/data_v1/numeral_system/splits_80_10_10.csv",
+  "seed": 42,
+  "total": 1576,
+  "by_subtype": {
+    "standard": 1576
+  },
+  "by_source_mode": {
+    "real": 1576
+  },
+  "by_eval_eligible": {
+    "true": 1576
+  },
+  "by_split_policy": {
+    "auto": 1576
+  },
+  "split_counts": {
+    "eval_holdout": 158,
+    "grpo_holdout": 158,
+    "sft_train": 1260
+  },
+  "by_split_subtype": {
+    "eval_holdout": {
+      "standard": 158
+    },
+    "grpo_holdout": {
+      "standard": 158
+    },
+    "sft_train": {
+      "standard": 1260
+    }
+  }
+}

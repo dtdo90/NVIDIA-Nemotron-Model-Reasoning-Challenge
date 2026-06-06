@@ -1,0 +1,191 @@
+Problem syn_tc_dp_phrase_repeated_0061
+Bucket: phrase_repeated_letter
+Gold answer: studies watches
+Note: phrase_preserve_repeated_letter_pattern_extra_short
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+gxcby rmalkp -> draws knight
+zexawey -> curious
+Now, decrypt the following text: ypegady bcpzkdy
+
+Training target:
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+gxcby rmalkp -> draws knight
+gxcby -> draws
+g -> d new
+x -> r new
+c -> a new
+b -> w new
+y -> s new
+rmalkp -> knight
+r -> k new
+m -> n new
+a -> i new
+l -> g new
+k -> h new
+p -> t new
+
+zexawey -> curious
+zexawey -> curious
+z -> c new
+e -> u new
+x -> r agrees
+a -> i agrees
+w -> o new
+e -> u agrees
+y -> s agrees
+
+Summary character mappings
+g -> d
+x -> r
+c -> a
+b -> w
+y -> s
+r -> k
+m -> n
+a -> i
+l -> g
+k -> h
+p -> t
+z -> c
+e -> u
+w -> o
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+ypegady bcpzkdy
+
+Decode target words from character mappings
+
+ypegady
+y -> s
+p -> t
+e -> u
+g -> d
+a -> i
+d -> ? unknown
+y -> s
+ypegady -> studi?s
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match studi?s
+above -> studi?s no match
+alice -> studi?s no match
+ancient -> studi?s no match
+around -> studi?s no match
+beyond -> studi?s no match
+bird -> studi?s no match
+book -> studi?s no match
+bright -> studi?s no match
+castle -> studi?s no match
+cat -> studi?s no match
+cave -> studi?s no match
+chases -> studi?s no match
+clever -> studi?s no match
+colorful -> studi?s no match
+creates -> studi?s no match
+crystal -> studi?s no match
+curious -> studi?s no match
+dark -> studi?s no match
+discovers -> studi?s no match
+door -> studi?s no match
+dragon -> studi?s no match
+draws -> studi?s no match
+dreams -> studi?s no match
+explores -> studi?s no match
+follows -> studi?s no match
+forest -> studi?s no match
+found -> studi?s no match
+garden -> studi?s no match
+golden -> studi?s no match
+hatter -> studi?s no match
+hidden -> studi?s no match
+imagines -> studi?s no match
+in -> studi?s no match
+inside -> studi?s no match
+island -> studi?s no match
+key -> studi?s no match
+king -> studi?s no match
+knight -> studi?s no match
+library -> studi?s no match
+magical -> studi?s no match
+map -> studi?s no match
+message -> studi?s no match
+mirror -> studi?s no match
+mountain -> studi?s no match
+mouse -> studi?s no match
+mysterious -> studi?s no match
+near -> studi?s no match
+ocean -> studi?s no match
+palace -> studi?s no match
+potion -> studi?s no match
+princess -> studi?s no match
+puzzle -> studi?s no match
+queen -> studi?s no match
+rabbit -> studi?s no match
+reads -> studi?s no match
+school -> studi?s no match
+secret -> studi?s no match
+sees -> studi?s no match
+silver -> studi?s no match
+story -> studi?s no match
+strange -> studi?s no match
+student -> studi?s no match
+studies -> studi?s match
+teacher -> studi?s no match
+the -> studi?s no match
+through -> studi?s no match
+tower -> studi?s no match
+treasure -> studi?s no match
+turtle -> studi?s no match
+under -> studi?s no match
+valley -> studi?s no match
+village -> studi?s no match
+watches -> studi?s no match
+wise -> studi?s no match
+wizard -> studi?s no match
+wonderland -> studi?s no match
+writes -> studi?s no match
+
+Scan candidates for studi?s
+studies
+
+Check scan candidates against summary mappings
+
+ypegady -> studies
+y -> s agrees
+p -> t agrees
+e -> u agrees
+g -> d agrees
+a -> i agrees
+d -> e new
+y -> s agrees
+PASS
+add d -> e
+
+choose studies
+
+bcpzkdy
+b -> w
+c -> a
+p -> t
+z -> c
+k -> h
+d -> e
+y -> s
+bcpzkdy -> watches
+fully mapped
+
+choose watches
+
+Decoded phrase
+studies watches
+
+Answer: \boxed{studies watches}

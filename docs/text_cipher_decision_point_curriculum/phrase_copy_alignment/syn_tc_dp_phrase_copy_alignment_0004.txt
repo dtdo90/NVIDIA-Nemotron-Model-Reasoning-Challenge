@@ -1,108 +1,90 @@
 Problem syn_tc_dp_phrase_copy_alignment_0004
 Bucket: phrase_copy_alignment
-Gold answer: school studies dragon
-Note: phrase_copy_exact_example_cipher_phrase
+Gold answer: valley tower
+Note: phrase_copy_fully_mapped_nontrivial_target
 
 Training prompt:
 In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
-sxajjf smlwqns wruojh -> school studies dragon
-Now, decrypt the following text: sxajjf smlwqns wruojh
+ehbikctybi mvhcr -> wonderland story
+uyjk -> cave
+Now, decrypt the following text: jyttkr vhekc
 
-Solution:
-<think>
+Training target:
 We need to decode the target strictly from left to right using the character mappings.
 
 Process examples
 
-sxajjf smlwqns wruojh -> school studies dragon
+ehbikctybi mvhcr -> wonderland story
+ehbikctybi -> wonderland
+e -> w new
+h -> o new
+b -> n new
+i -> d new
+k -> e new
+c -> r new
+t -> l new
+y -> a new
+b -> n agrees
+i -> d agrees
 
-Training target:
-sxajjf -> school
-s -> s new
-x -> c new
-a -> h new
-j -> o new
-j -> o agrees
-f -> l new
+mvhcr -> story
+m -> s new
+v -> t new
+h -> o agrees
+c -> r agrees
+r -> y new
 
-smlwqns -> studies
-s -> s agrees
-m -> t new
-l -> u new
-w -> d new
-q -> i new
-n -> e new
-s -> s agrees
-
-wruojh -> dragon
-w -> d agrees
-r -> r new
-u -> a new
-o -> g new
-j -> o agrees
-h -> n new
+uyjk -> cave
+uyjk -> cave
+u -> c new
+y -> a agrees
+j -> v new
+k -> e agrees
 
 Summary character mappings
-a -> h
-f -> l
-h -> n
-j -> o
-l -> u
-m -> t
-n -> e
-o -> g
-q -> i
-r -> r
-s -> s
-u -> a
-w -> d
-x -> c
+b -> n
+c -> r
+e -> w
+h -> o
+i -> d
+j -> v
+k -> e
+m -> s
+r -> y
+t -> l
+u -> c
+v -> t
+y -> a
 
 Target text
-sxajjf smlwqns wruojh
+jyttkr vhekc
 
 Decode target words from character mappings
 
-sxajjf
-s -> s
-x -> c
-a -> h
-j -> o
-j -> o
-f -> l
-sxajjf -> school
+jyttkr
+j -> v
+y -> a
+t -> l
+t -> l
+k -> e
+r -> y
+jyttkr -> valley
 fully mapped
 
-choose school
+choose valley
 
-smlwqns
-s -> s
-m -> t
-l -> u
-w -> d
-q -> i
-n -> e
-s -> s
-smlwqns -> studies
+vhekc
+v -> t
+h -> o
+e -> w
+k -> e
+c -> r
+vhekc -> tower
 fully mapped
 
-choose studies
-
-wruojh
-w -> d
-r -> r
-u -> a
-o -> g
-j -> o
-h -> n
-wruojh -> dragon
-fully mapped
-
-choose dragon
+choose tower
 
 Decoded phrase
-school studies dragon
+valley tower
 
-Answer: \boxed{school studies dragon}
-</think>
-\boxed{school studies dragon}
+Answer: \boxed{valley tower}

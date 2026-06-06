@@ -131,7 +131,7 @@ cat, map
 
 Check scan candidates against summary mappings
 
-cat
+ipj -> cat
 i -> c conflicts
 k -> c already exists
 p -> a agrees
@@ -139,7 +139,7 @@ j -> t conflicts
 r -> t already exists
 FAIL
 
-map
+ipj -> map
 i -> m new
 p -> a agrees
 j -> p new
@@ -242,7 +242,14 @@ book, door
 
 Check scan candidates against summary mappings
 
-door
+zooq -> book
+z -> b new
+o -> o agrees
+o -> o agrees
+q -> k new
+PASS
+
+zooq -> door
 z -> d conflicts
 c -> d already exists
 o -> o agrees
@@ -250,13 +257,6 @@ o -> o agrees
 q -> r conflicts
 b -> r already exists
 FAIL
-
-book
-z -> b new
-o -> o agrees
-o -> o agrees
-q -> k new
-PASS
 add z -> b
 add q -> k
 
@@ -358,7 +358,7 @@ village
 
 Check scan candidates against summary mappings
 
-village
+ysuupxf -> village
 y -> v new
 s -> i new
 u -> l agrees

@@ -131,7 +131,15 @@ found, mouse, tower
 
 Check scan candidates against summary mappings
 
-mouse
+qpmlh -> found
+q -> f new
+p -> o agrees
+m -> u new
+l -> n new
+h -> d new
+PASS
+
+qpmlh -> mouse
 q -> m conflicts
 z -> m already exists
 p -> o agrees
@@ -142,7 +150,7 @@ h -> e conflicts
 x -> e already exists
 FAIL
 
-tower
+qpmlh -> tower
 q -> t new
 p -> o agrees
 m -> w new
@@ -151,14 +159,6 @@ x -> e already exists
 h -> r conflicts
 d -> r already exists
 FAIL
-
-found
-q -> f new
-p -> o agrees
-m -> u new
-l -> n new
-h -> d new
-PASS
 add q -> f
 add m -> u
 add l -> n
@@ -270,7 +270,7 @@ studies
 
 Check scan candidates against summary mappings
 
-studies
+nrmhbxn -> studies
 n -> s agrees
 r -> t new
 m -> u agrees

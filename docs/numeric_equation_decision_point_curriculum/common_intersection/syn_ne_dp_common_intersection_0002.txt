@@ -298,7 +298,7 @@ plain
 op_prefix_if_neg
 abs
 
-Apply AB_CD|x*y|common to the query
+Apply format AB_CD|x*y|common to the query
 
 Query
 12^70

@@ -1,159 +1,78 @@
 Problem syn_tc_dp_phrase_copy_alignment_0016
 Bucket: phrase_copy_alignment
-Gold answer: explores around discovers dragon village
-Note: phrase_copy_exact_example_cipher_phrase
+Gold answer: dragon chases
+Note: phrase_copy_fully_mapped_nontrivial_target
 
 Training prompt:
 In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
-calvwxcy uxwoeg gdyhwtcxy gxurwe tdvvurc -> explores around discovers dragon village
-Now, decrypt the following text: calvwxcy uxwoeg gdyhwtcxy gxurwe tdvvurc
+dtifoc nrkyye -> garden school
+Now, decrypt the following text: fitdyc rktnon
 
-Solution:
-<think>
+Training target:
 We need to decode the target strictly from left to right using the character mappings.
 
 Process examples
 
-calvwxcy uxwoeg gdyhwtcxy gxurwe tdvvurc -> explores around discovers dragon village
+dtifoc nrkyye -> garden school
+dtifoc -> garden
+d -> g new
+t -> a new
+i -> r new
+f -> d new
+o -> e new
+c -> n new
 
-Training target:
-calvwxcy -> explores
-c -> e new
-a -> x new
-l -> p new
-v -> l new
-w -> o new
-x -> r new
-c -> e agrees
-y -> s new
-
-uxwoeg -> around
-u -> a new
-x -> r agrees
-w -> o agrees
-o -> u new
-e -> n new
-g -> d new
-
-gdyhwtcxy -> discovers
-g -> d agrees
-d -> i new
-y -> s agrees
-h -> c new
-w -> o agrees
-t -> v new
-c -> e agrees
-x -> r agrees
-y -> s agrees
-
-gxurwe -> dragon
-g -> d agrees
-x -> r agrees
-u -> a agrees
-r -> g new
-w -> o agrees
-e -> n agrees
-
-tdvvurc -> village
-t -> v agrees
-d -> i agrees
-v -> l agrees
-v -> l agrees
-u -> a agrees
-r -> g agrees
-c -> e agrees
+nrkyye -> school
+n -> s new
+r -> c new
+k -> h new
+y -> o new
+y -> o agrees
+e -> l new
 
 Summary character mappings
-a -> x
-c -> e
-d -> i
-e -> n
-g -> d
-h -> c
-l -> p
-o -> u
-r -> g
-t -> v
-u -> a
-v -> l
-w -> o
-x -> r
-y -> s
+c -> n
+d -> g
+e -> l
+f -> d
+i -> r
+k -> h
+n -> s
+o -> e
+r -> c
+t -> a
+y -> o
 
 Target text
-calvwxcy uxwoeg gdyhwtcxy gxurwe tdvvurc
+fitdyc rktnon
 
 Decode target words from character mappings
 
-calvwxcy
-c -> e
-a -> x
-l -> p
-v -> l
-w -> o
-x -> r
-c -> e
-y -> s
-calvwxcy -> explores
-fully mapped
-
-choose explores
-
-uxwoeg
-u -> a
-x -> r
-w -> o
-o -> u
-e -> n
-g -> d
-uxwoeg -> around
-fully mapped
-
-choose around
-
-gdyhwtcxy
-g -> d
-d -> i
-y -> s
-h -> c
-w -> o
-t -> v
-c -> e
-x -> r
-y -> s
-gdyhwtcxy -> discovers
-fully mapped
-
-choose discovers
-
-gxurwe
-g -> d
-x -> r
-u -> a
-r -> g
-w -> o
-e -> n
-gxurwe -> dragon
+fitdyc
+f -> d
+i -> r
+t -> a
+d -> g
+y -> o
+c -> n
+fitdyc -> dragon
 fully mapped
 
 choose dragon
 
-tdvvurc
-t -> v
-d -> i
-v -> l
-v -> l
-u -> a
-r -> g
-c -> e
-tdvvurc -> village
+rktnon
+r -> c
+k -> h
+t -> a
+n -> s
+o -> e
+n -> s
+rktnon -> chases
 fully mapped
 
-choose village
+choose chases
 
 Decoded phrase
-explores around discovers dragon village
+dragon chases
 
-Answer: \boxed{explores around discovers dragon village}
-</think>
-\boxed{explores around discovers dragon village}
+Answer: \boxed{dragon chases}

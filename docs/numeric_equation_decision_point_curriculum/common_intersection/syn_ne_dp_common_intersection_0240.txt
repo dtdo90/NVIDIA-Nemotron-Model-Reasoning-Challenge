@@ -279,7 +279,7 @@ Training target:
 plain
 rev
 
-Apply AB_CD|y-x|common to the query
+Apply format AB_CD|y-x|common to the query
 
 Query
 68&75

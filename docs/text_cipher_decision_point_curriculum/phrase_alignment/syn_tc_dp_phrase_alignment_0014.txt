@@ -140,7 +140,7 @@ silver
 
 Check scan candidates against summary mappings
 
-silver
+chjefi -> silver
 c -> s agrees
 h -> i agrees
 j -> l new

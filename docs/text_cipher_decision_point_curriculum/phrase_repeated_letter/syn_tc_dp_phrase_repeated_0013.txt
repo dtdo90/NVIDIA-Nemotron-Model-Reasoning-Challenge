@@ -133,7 +133,7 @@ hidden, silver
 
 Check scan candidates against summary mappings
 
-hidden
+ewllzk -> hidden
 e -> h new
 w -> i agrees
 l -> d new
@@ -141,6 +141,18 @@ l -> d new
 z -> e agrees
 k -> n new
 PASS
+
+ewllzk -> silver
+e -> s conflicts
+m -> s already exists
+w -> i agrees
+l -> l conflicts
+v -> l already exists
+l -> v new
+z -> e agrees
+k -> r conflicts
+s -> r already exists
+FAIL
 add e -> h
 add l -> d
 add k -> n
@@ -242,7 +254,7 @@ around
 
 Check scan candidates against summary mappings
 
-around
+qsogkl -> around
 q -> a agrees
 s -> r agrees
 o -> o agrees

@@ -127,7 +127,14 @@ cave, dark
 
 Check scan candidates against summary mappings
 
-dark
+srtq -> cave
+s -> c new
+r -> a agrees
+t -> v new
+q -> e new
+PASS
+
+srtq -> dark
 s -> d conflicts
 b -> d already exists
 r -> a agrees
@@ -136,13 +143,6 @@ u -> r already exists
 q -> k conflicts
 w -> k already exists
 FAIL
-
-cave
-s -> c new
-r -> a agrees
-t -> v new
-q -> e new
-PASS
 add s -> c
 add t -> v
 add q -> e

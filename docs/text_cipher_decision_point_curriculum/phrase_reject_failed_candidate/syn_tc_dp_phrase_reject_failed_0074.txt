@@ -129,18 +129,18 @@ cat, map
 
 Check scan candidates against summary mappings
 
-map
+iuj -> cat
+i -> c new
+u -> a agrees
+j -> t new
+PASS
+
+iuj -> map
 i -> m conflicts
 a -> m already exists
 u -> a agrees
 j -> p new
 FAIL
-
-cat
-i -> c new
-u -> a agrees
-j -> t new
-PASS
 add i -> c
 add j -> t
 
@@ -241,7 +241,7 @@ writes
 
 Check scan candidates against summary mappings
 
-writes
+gxljhb -> writes
 g -> w agrees
 x -> r agrees
 l -> i new

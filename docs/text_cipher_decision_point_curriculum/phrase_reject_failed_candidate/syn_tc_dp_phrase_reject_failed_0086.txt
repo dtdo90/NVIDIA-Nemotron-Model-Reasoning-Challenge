@@ -137,7 +137,15 @@ found, mouse, tower
 
 Check scan candidates against summary mappings
 
-mouse
+roypm -> found
+r -> f new
+o -> o agrees
+y -> u new
+p -> n new
+m -> d new
+PASS
+
+roypm -> mouse
 r -> m conflicts
 c -> m already exists
 o -> o agrees
@@ -148,7 +156,7 @@ m -> e conflicts
 i -> e already exists
 FAIL
 
-tower
+roypm -> tower
 r -> t conflicts
 b -> t already exists
 o -> o agrees
@@ -159,14 +167,6 @@ i -> e already exists
 m -> r conflicts
 x -> r already exists
 FAIL
-
-found
-r -> f new
-o -> o agrees
-y -> u new
-p -> n new
-m -> d new
-PASS
 add r -> f
 add y -> u
 add p -> n

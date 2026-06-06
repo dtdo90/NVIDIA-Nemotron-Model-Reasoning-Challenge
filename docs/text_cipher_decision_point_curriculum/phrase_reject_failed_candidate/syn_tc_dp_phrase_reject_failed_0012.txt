@@ -133,14 +133,14 @@ cat, map
 
 Check scan candidates against summary mappings
 
-cat
+bxr -> cat
 b -> c new
 x -> a agrees
 r -> t conflicts
 c -> t already exists
 FAIL
 
-map
+bxr -> map
 b -> m new
 x -> a agrees
 r -> p new
@@ -244,7 +244,7 @@ story
 
 Check scan candidates against summary mappings
 
-story
+ycntd -> story
 y -> s agrees
 c -> t agrees
 n -> o agrees

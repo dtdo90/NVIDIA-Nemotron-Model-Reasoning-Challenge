@@ -131,7 +131,15 @@ above, alice
 
 Check scan candidates against summary mappings
 
-alice
+fqokb -> above
+f -> a agrees
+q -> b new
+o -> o new
+k -> v new
+b -> e agrees
+PASS
+
+fqokb -> alice
 f -> a agrees
 q -> l conflicts
 d -> l already exists
@@ -141,14 +149,6 @@ k -> c conflicts
 p -> c already exists
 b -> e agrees
 FAIL
-
-above
-f -> a agrees
-q -> b new
-o -> o new
-k -> v new
-b -> e agrees
-PASS
 add q -> b
 add o -> o
 add k -> v

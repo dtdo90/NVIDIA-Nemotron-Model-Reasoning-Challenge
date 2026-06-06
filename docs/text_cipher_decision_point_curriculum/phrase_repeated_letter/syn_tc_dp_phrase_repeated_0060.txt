@@ -1,0 +1,278 @@
+Problem syn_tc_dp_phrase_repeated_0060
+Bucket: phrase_repeated_letter
+Gold answer: clever queen
+Note: phrase_preserve_repeated_letter_pattern_extra_short
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+ipgne okhune -> under silver
+bvenox -> forest
+Now, decrypt the following text: zhnune tinnp
+
+Training target:
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+ipgne okhune -> under silver
+ipgne -> under
+i -> u new
+p -> n new
+g -> d new
+n -> e new
+e -> r new
+okhune -> silver
+o -> s new
+k -> i new
+h -> l new
+u -> v new
+n -> e agrees
+e -> r agrees
+
+bvenox -> forest
+bvenox -> forest
+b -> f new
+v -> o new
+e -> r agrees
+n -> e agrees
+o -> s agrees
+x -> t new
+
+Summary character mappings
+i -> u
+p -> n
+g -> d
+n -> e
+e -> r
+o -> s
+k -> i
+h -> l
+u -> v
+b -> f
+v -> o
+x -> t
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+zhnune tinnp
+
+Decode target words from character mappings
+
+zhnune
+z -> ? unknown
+h -> l
+n -> e
+u -> v
+n -> e
+e -> r
+zhnune -> ?lever
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?lever
+above -> ?lever no match
+alice -> ?lever no match
+ancient -> ?lever no match
+around -> ?lever no match
+beyond -> ?lever no match
+bird -> ?lever no match
+book -> ?lever no match
+bright -> ?lever no match
+castle -> ?lever no match
+cat -> ?lever no match
+cave -> ?lever no match
+chases -> ?lever no match
+clever -> ?lever match
+colorful -> ?lever no match
+creates -> ?lever no match
+crystal -> ?lever no match
+curious -> ?lever no match
+dark -> ?lever no match
+discovers -> ?lever no match
+door -> ?lever no match
+dragon -> ?lever no match
+draws -> ?lever no match
+dreams -> ?lever no match
+explores -> ?lever no match
+follows -> ?lever no match
+forest -> ?lever no match
+found -> ?lever no match
+garden -> ?lever no match
+golden -> ?lever no match
+hatter -> ?lever no match
+hidden -> ?lever no match
+imagines -> ?lever no match
+in -> ?lever no match
+inside -> ?lever no match
+island -> ?lever no match
+key -> ?lever no match
+king -> ?lever no match
+knight -> ?lever no match
+library -> ?lever no match
+magical -> ?lever no match
+map -> ?lever no match
+message -> ?lever no match
+mirror -> ?lever no match
+mountain -> ?lever no match
+mouse -> ?lever no match
+mysterious -> ?lever no match
+near -> ?lever no match
+ocean -> ?lever no match
+palace -> ?lever no match
+potion -> ?lever no match
+princess -> ?lever no match
+puzzle -> ?lever no match
+queen -> ?lever no match
+rabbit -> ?lever no match
+reads -> ?lever no match
+school -> ?lever no match
+secret -> ?lever no match
+sees -> ?lever no match
+silver -> ?lever no match
+story -> ?lever no match
+strange -> ?lever no match
+student -> ?lever no match
+studies -> ?lever no match
+teacher -> ?lever no match
+the -> ?lever no match
+through -> ?lever no match
+tower -> ?lever no match
+treasure -> ?lever no match
+turtle -> ?lever no match
+under -> ?lever no match
+valley -> ?lever no match
+village -> ?lever no match
+watches -> ?lever no match
+wise -> ?lever no match
+wizard -> ?lever no match
+wonderland -> ?lever no match
+writes -> ?lever no match
+
+Scan candidates for ?lever
+clever
+
+Check scan candidates against summary mappings
+
+zhnune -> clever
+z -> c new
+h -> l agrees
+n -> e agrees
+u -> v agrees
+n -> e agrees
+e -> r agrees
+PASS
+add z -> c
+
+choose clever
+
+tinnp
+t -> ? unknown
+i -> u
+n -> e
+n -> e
+p -> n
+tinnp -> ?ueen
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?ueen
+above -> ?ueen no match
+alice -> ?ueen no match
+ancient -> ?ueen no match
+around -> ?ueen no match
+beyond -> ?ueen no match
+bird -> ?ueen no match
+book -> ?ueen no match
+bright -> ?ueen no match
+castle -> ?ueen no match
+cat -> ?ueen no match
+cave -> ?ueen no match
+chases -> ?ueen no match
+clever -> ?ueen no match
+colorful -> ?ueen no match
+creates -> ?ueen no match
+crystal -> ?ueen no match
+curious -> ?ueen no match
+dark -> ?ueen no match
+discovers -> ?ueen no match
+door -> ?ueen no match
+dragon -> ?ueen no match
+draws -> ?ueen no match
+dreams -> ?ueen no match
+explores -> ?ueen no match
+follows -> ?ueen no match
+forest -> ?ueen no match
+found -> ?ueen no match
+garden -> ?ueen no match
+golden -> ?ueen no match
+hatter -> ?ueen no match
+hidden -> ?ueen no match
+imagines -> ?ueen no match
+in -> ?ueen no match
+inside -> ?ueen no match
+island -> ?ueen no match
+key -> ?ueen no match
+king -> ?ueen no match
+knight -> ?ueen no match
+library -> ?ueen no match
+magical -> ?ueen no match
+map -> ?ueen no match
+message -> ?ueen no match
+mirror -> ?ueen no match
+mountain -> ?ueen no match
+mouse -> ?ueen no match
+mysterious -> ?ueen no match
+near -> ?ueen no match
+ocean -> ?ueen no match
+palace -> ?ueen no match
+potion -> ?ueen no match
+princess -> ?ueen no match
+puzzle -> ?ueen no match
+queen -> ?ueen match
+rabbit -> ?ueen no match
+reads -> ?ueen no match
+school -> ?ueen no match
+secret -> ?ueen no match
+sees -> ?ueen no match
+silver -> ?ueen no match
+story -> ?ueen no match
+strange -> ?ueen no match
+student -> ?ueen no match
+studies -> ?ueen no match
+teacher -> ?ueen no match
+the -> ?ueen no match
+through -> ?ueen no match
+tower -> ?ueen no match
+treasure -> ?ueen no match
+turtle -> ?ueen no match
+under -> ?ueen no match
+valley -> ?ueen no match
+village -> ?ueen no match
+watches -> ?ueen no match
+wise -> ?ueen no match
+wizard -> ?ueen no match
+wonderland -> ?ueen no match
+writes -> ?ueen no match
+
+Scan candidates for ?ueen
+queen
+
+Check scan candidates against summary mappings
+
+tinnp -> queen
+t -> q new
+i -> u agrees
+n -> e agrees
+n -> e agrees
+p -> n agrees
+PASS
+add t -> q
+
+choose queen
+
+Decoded phrase
+clever queen
+
+Answer: \boxed{clever queen}

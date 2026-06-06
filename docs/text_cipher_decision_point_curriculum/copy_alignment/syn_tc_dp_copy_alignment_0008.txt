@@ -1,12 +1,12 @@
 Problem syn_tc_dp_copy_alignment_0008
 Bucket: copy_alignment
-Gold answer: beyond
-Note: copy_exact_example_cipher_word
+Gold answer: mysterious
+Note: copy_fully_mapped_nontrivial_target
 
 Training prompt:
 In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
-qpkeos -> beyond
-Now, decrypt the following text: qpkeos
+bwzsj qzkbe qusszs -> story mouse mirror
+Now, decrypt the following text: qjbwesuzkb
 
 Solution:
 <think>
@@ -14,44 +14,66 @@ We need to decode the target strictly from left to right using the character map
 
 Process examples
 
-qpkeos -> beyond
+bwzsj qzkbe qusszs -> story mouse mirror
 
 Training target:
-q -> b new
-p -> e new
-k -> y new
-e -> o new
-o -> n new
-s -> d new
+bwzsj -> story
+b -> s new
+w -> t new
+z -> o new
+s -> r new
+j -> y new
+
+qzkbe -> mouse
+q -> m new
+z -> o agrees
+k -> u new
+b -> s agrees
+e -> e new
+
+qusszs -> mirror
+q -> m agrees
+u -> i new
+s -> r agrees
+s -> r agrees
+z -> o agrees
+s -> r agrees
 
 Summary character mappings
-e -> o
-k -> y
-o -> n
-p -> e
-q -> b
-s -> d
+b -> s
+e -> e
+j -> y
+k -> u
+q -> m
+s -> r
+u -> i
+w -> t
+z -> o
 
 Target text
-qpkeos
+qjbwesuzkb
 
 Decode target words from character mappings
 
-qpkeos
-q -> b
-p -> e
-k -> y
-e -> o
-o -> n
-s -> d
-qpkeos -> beyond
+qjbwesuzkb
+q -> m
+j -> y
+b -> s
+w -> t
+e -> e
+s -> r
+u -> i
+z -> o
+k -> u
+b -> s
+qjbwesuzkb -> mysterious
 fully mapped
 
-choose beyond
+choose mysterious
 
 Decoded phrase
-beyond
+mysterious
 
-Answer: \boxed{beyond}
+Answer: \boxed{mysterious}
 </think>
-\boxed{beyond}
+\boxed{mysterious}

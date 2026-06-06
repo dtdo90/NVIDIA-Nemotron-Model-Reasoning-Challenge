@@ -1,99 +1,82 @@
 Problem syn_tc_dp_phrase_copy_alignment_0034
 Bucket: phrase_copy_alignment
-Gold answer: discovers sees wise
-Note: phrase_copy_exact_example_cipher_phrase
+Gold answer: bird dreams
+Note: phrase_copy_fully_mapped_nontrivial_target
 
 Training prompt:
 In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
-taswchpos spps kasp -> discovers sees wise
-Now, decrypt the following text: taswchpos spps kasp
+sfwpc vdssis -> reads mirror
+riiq -> book
+Now, decrypt the following text: rdsp psfwvc
 
-Solution:
-<think>
+Training target:
 We need to decode the target strictly from left to right using the character mappings.
 
 Process examples
 
-taswchpos spps kasp -> discovers sees wise
+sfwpc vdssis -> reads mirror
+sfwpc -> reads
+s -> r new
+f -> e new
+w -> a new
+p -> d new
+c -> s new
 
-Training target:
-taswchpos -> discovers
-t -> d new
-a -> i new
-s -> s new
-w -> c new
-c -> o new
-h -> v new
-p -> e new
-o -> r new
-s -> s agrees
+vdssis -> mirror
+v -> m new
+d -> i new
+s -> r agrees
+s -> r agrees
+i -> o new
+s -> r agrees
 
-spps -> sees
-s -> s agrees
-p -> e agrees
-p -> e agrees
-s -> s agrees
-
-kasp -> wise
-k -> w new
-a -> i agrees
-s -> s agrees
-p -> e agrees
+riiq -> book
+riiq -> book
+r -> b new
+i -> o agrees
+i -> o agrees
+q -> k new
 
 Summary character mappings
-a -> i
-c -> o
-h -> v
-k -> w
-o -> r
-p -> e
-s -> s
-t -> d
-w -> c
+c -> s
+d -> i
+f -> e
+i -> o
+p -> d
+q -> k
+r -> b
+s -> r
+v -> m
+w -> a
 
 Target text
-taswchpos spps kasp
+rdsp psfwvc
 
 Decode target words from character mappings
 
-taswchpos
-t -> d
-a -> i
-s -> s
-w -> c
-c -> o
-h -> v
-p -> e
-o -> r
-s -> s
-taswchpos -> discovers
+rdsp
+r -> b
+d -> i
+s -> r
+p -> d
+rdsp -> bird
 fully mapped
 
-choose discovers
+choose bird
 
-spps
-s -> s
-p -> e
-p -> e
-s -> s
-spps -> sees
+psfwvc
+p -> d
+s -> r
+f -> e
+w -> a
+v -> m
+c -> s
+psfwvc -> dreams
 fully mapped
 
-choose sees
-
-kasp
-k -> w
-a -> i
-s -> s
-p -> e
-kasp -> wise
-fully mapped
-
-choose wise
+choose dreams
 
 Decoded phrase
-discovers sees wise
+bird dreams
 
-Answer: \boxed{discovers sees wise}
-</think>
-\boxed{discovers sees wise}
+Answer: \boxed{bird dreams}

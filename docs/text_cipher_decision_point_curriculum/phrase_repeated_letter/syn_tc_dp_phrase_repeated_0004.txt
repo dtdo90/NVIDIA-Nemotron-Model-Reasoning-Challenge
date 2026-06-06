@@ -141,7 +141,7 @@ through
 
 Check scan candidates against summary mappings
 
-through
+htcoant -> through
 h -> t agrees
 t -> h new
 c -> r agrees
@@ -257,7 +257,7 @@ book
 
 Check scan candidates against summary mappings
 
-book
+moor -> book
 m -> b new
 o -> o agrees
 o -> o agrees

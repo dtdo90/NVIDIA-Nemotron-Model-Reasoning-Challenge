@@ -12,6 +12,7 @@ from .common import (
     DATA_DIR,
     QUESTION_TYPES,
     SPLIT_NAMES,
+    SOURCE_CSV,
     assert_type_dataset_fresh,
     load_split_assignments,
     normalize_question_type,
@@ -55,6 +56,8 @@ from nemotron_baseline.runtime import (
 def parse_args(
     default_question_type: str | None = None,
     *,
+    default_data_dir: str | Path | None = None,
+    default_source_csv: str | Path | None = None,
     default_exclude_source_modes: list[str] | None = None,
     default_output_suffix: str | None = None,
 ) -> argparse.Namespace:
@@ -65,7 +68,15 @@ def parse_args(
         parser.add_argument("--question-type", required=True)
     else:
         parser.set_defaults(question_type=default_question_type)
-    parser.add_argument("--data-dir", default=str(DATA_DIR))
+    parser.add_argument("--data-dir", default=str(default_data_dir or DATA_DIR))
+    parser.add_argument(
+        "--source-csv",
+        default=str(default_source_csv or SOURCE_CSV),
+        help=(
+            "Single-phase source CSV used to freshness-check the prepared "
+            "type dataset."
+        ),
+    )
     parser.add_argument(
         "--split-csv",
         default=None,
@@ -131,15 +142,18 @@ def load_diagnostic_train_examples(
     paths,
     split_csv: Path,
     *,
+    source_csv: Path,
     exclude_source_modes: set[str] | None = None,
 ) -> tuple[list, list[dict[str, str]], dict[str, str]]:
     if not paths.train_csv.exists() or not split_csv.exists():
         raise SystemExit(
             f"Missing diagnostic data for {paths.slug}. Run:\n"
-            f"  python3 experiments/type_diagnostics/prepare_type_datasets.py --question-type {paths.slug}"
+            "  python3 experiments/type_diagnostics/prepare_type_datasets.py "
+            f"--question-type {paths.slug} --source-csv {source_csv} "
+            f"--data-dir {paths.data_dir.parent}"
         )
 
-    assert_type_dataset_fresh(paths.slug, type_csv=paths.train_csv)
+    assert_type_dataset_fresh(paths.slug, type_csv=paths.train_csv, source_csv=source_csv)
     rows, _ = read_csv_rows(paths.train_csv)
     assignments = load_split_assignments(split_csv)
     validate_split_assignments(rows, assignments, split_csv=split_csv)
@@ -192,6 +206,7 @@ def print_summary(args: argparse.Namespace, paths, train_examples, rows, assignm
             resolve_trainer_state_dir(output_dir, args.trainer_state_dir).resolve()
         ),
         "train_csv": str(paths.train_csv.resolve()),
+        "source_csv": str(Path(args.source_csv).resolve()),
         "split_csv": str(Path(args.split_csv).resolve()),
         "all_rows": len(rows),
         "sft_train_rows": len(train_examples),
@@ -252,15 +267,20 @@ def apply_output_suffix(
 def main(
     default_question_type: str | None = None,
     *,
+    default_data_dir: str | Path | None = None,
+    default_source_csv: str | Path | None = None,
     default_exclude_source_modes: list[str] | None = None,
     default_output_suffix: str | None = None,
 ) -> None:
     args = parse_args(
         default_question_type,
+        default_data_dir=default_data_dir,
+        default_source_csv=default_source_csv,
         default_exclude_source_modes=default_exclude_source_modes,
         default_output_suffix=default_output_suffix,
     )
     paths = type_paths(args.question_type, data_dir=Path(args.data_dir))
+    source_csv = Path(args.source_csv)
     split_csv = Path(args.split_csv) if args.split_csv else paths.split_csv
     args.split_csv = str(split_csv)
     if args.output_dir is None:
@@ -282,6 +302,7 @@ def main(
     train_examples, rows, assignments = load_diagnostic_train_examples(
         paths,
         split_csv,
+        source_csv=source_csv,
         exclude_source_modes=excluded_source_modes,
     )
 

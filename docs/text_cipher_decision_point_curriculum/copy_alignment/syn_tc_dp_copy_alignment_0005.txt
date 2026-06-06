@@ -1,12 +1,12 @@
 Problem syn_tc_dp_copy_alignment_0005
 Bucket: copy_alignment
-Gold answer: colorful
-Note: copy_exact_example_cipher_word
+Gold answer: studies
+Note: copy_fully_mapped_nontrivial_target
 
 Training prompt:
 In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
-yejewiaj -> colorful
-Now, decrypt the following text: yejewiaj
+rohazdo scjjtj -> student mirror
+Now, decrypt the following text: rohaczr
 
 Solution:
 <think>
@@ -14,48 +14,59 @@ We need to decode the target strictly from left to right using the character map
 
 Process examples
 
-yejewiaj -> colorful
+rohazdo scjjtj -> student mirror
 
 Training target:
-y -> c new
-e -> o new
-j -> l new
-e -> o agrees
-w -> r new
-i -> f new
-a -> u new
-j -> l agrees
+rohazdo -> student
+r -> s new
+o -> t new
+h -> u new
+a -> d new
+z -> e new
+d -> n new
+o -> t agrees
+
+scjjtj -> mirror
+s -> m new
+c -> i new
+j -> r new
+j -> r agrees
+t -> o new
+j -> r agrees
 
 Summary character mappings
-a -> u
-e -> o
-i -> f
-j -> l
-w -> r
-y -> c
+a -> d
+c -> i
+d -> n
+h -> u
+j -> r
+o -> t
+r -> s
+s -> m
+t -> o
+z -> e
 
 Target text
-yejewiaj
+rohaczr
 
 Decode target words from character mappings
 
-yejewiaj
-y -> c
-e -> o
-j -> l
-e -> o
-w -> r
-i -> f
-a -> u
-j -> l
-yejewiaj -> colorful
+rohaczr
+r -> s
+o -> t
+h -> u
+a -> d
+c -> i
+z -> e
+r -> s
+rohaczr -> studies
 fully mapped
 
-choose colorful
+choose studies
 
 Decoded phrase
-colorful
+studies
 
-Answer: \boxed{colorful}
+Answer: \boxed{studies}
 </think>
-\boxed{colorful}
+\boxed{studies}

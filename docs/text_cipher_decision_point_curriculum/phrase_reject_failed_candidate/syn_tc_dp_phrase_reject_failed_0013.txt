@@ -129,7 +129,7 @@ cat, map
 
 Check scan candidates against summary mappings
 
-cat
+ewk -> cat
 e -> c conflicts
 n -> c already exists
 w -> a agrees
@@ -137,7 +137,7 @@ k -> t conflicts
 h -> t already exists
 FAIL
 
-map
+ewk -> map
 e -> m new
 w -> a agrees
 k -> p new
@@ -242,7 +242,7 @@ golden
 
 Check scan candidates against summary mappings
 
-golden
+fmbcuq -> golden
 f -> g agrees
 m -> o agrees
 b -> l new
@@ -354,7 +354,7 @@ mysterious
 
 Check scan candidates against summary mappings
 
-mysterious
+elzhuitmdz -> mysterious
 e -> m agrees
 l -> y new
 z -> s agrees

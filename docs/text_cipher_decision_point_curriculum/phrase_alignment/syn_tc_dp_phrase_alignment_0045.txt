@@ -135,7 +135,7 @@ hidden
 
 Check scan candidates against summary mappings
 
-hidden
+vqxxns -> hidden
 v -> h new
 q -> i agrees
 x -> d agrees
@@ -241,7 +241,7 @@ queen
 
 Check scan candidates against summary mappings
 
-queen
+tenns -> queen
 t -> q new
 e -> u agrees
 n -> e agrees
@@ -348,7 +348,7 @@ watches
 
 Check scan candidates against summary mappings
 
-watches
+kcpjvnf -> watches
 k -> w new
 c -> a agrees
 p -> t agrees

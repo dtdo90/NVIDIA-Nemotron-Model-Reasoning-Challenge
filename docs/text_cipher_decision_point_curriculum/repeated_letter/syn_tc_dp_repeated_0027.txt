@@ -132,7 +132,7 @@ hatter
 
 Check scan candidates against summary mappings
 
-hatter
+rsppgc -> hatter
 r -> h new
 s -> a agrees
 p -> t agrees

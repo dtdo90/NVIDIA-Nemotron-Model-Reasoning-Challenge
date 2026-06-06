@@ -1,80 +1,129 @@
 Problem syn_tc_dp_phrase_copy_alignment_0041
 Bucket: phrase_copy_alignment
-Gold answer: imagines king
-Note: phrase_copy_exact_example_cipher_phrase
+Gold answer: mirror golden potion beyond
+Note: phrase_copy_fully_mapped_nontrivial_target
 
 Training prompt:
 In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
-uctvudok qudv -> imagines king
-Now, decrypt the following text: uctvudok qudv
+bqstukgpfs yzkxud -> mysterious garden
+jzczou rppm -> palace book
+Now, decrypt the following text: bgkkpk ypcxud jptgpd ruqpdx
 
-Solution:
-<think>
+Training target:
 We need to decode the target strictly from left to right using the character mappings.
 
 Process examples
 
-uctvudok qudv -> imagines king
+bqstukgpfs yzkxud -> mysterious garden
+bqstukgpfs -> mysterious
+b -> m new
+q -> y new
+s -> s new
+t -> t new
+u -> e new
+k -> r new
+g -> i new
+p -> o new
+f -> u new
+s -> s agrees
 
-Training target:
-uctvudok -> imagines
-u -> i new
-c -> m new
-t -> a new
-v -> g new
-u -> i agrees
+yzkxud -> garden
+y -> g new
+z -> a new
+k -> r agrees
+x -> d new
+u -> e agrees
 d -> n new
-o -> e new
-k -> s new
 
-qudv -> king
-q -> k new
-u -> i agrees
-d -> n agrees
-v -> g agrees
+jzczou rppm -> palace book
+jzczou -> palace
+j -> p new
+z -> a agrees
+c -> l new
+z -> a agrees
+o -> c new
+u -> e agrees
+
+rppm -> book
+r -> b new
+p -> o agrees
+p -> o agrees
+m -> k new
 
 Summary character mappings
-c -> m
+b -> m
+c -> l
 d -> n
-k -> s
-o -> e
-q -> k
-t -> a
-u -> i
-v -> g
+f -> u
+g -> i
+j -> p
+k -> r
+m -> k
+o -> c
+p -> o
+q -> y
+r -> b
+s -> s
+t -> t
+u -> e
+x -> d
+y -> g
+z -> a
 
 Target text
-uctvudok qudv
+bgkkpk ypcxud jptgpd ruqpdx
 
 Decode target words from character mappings
 
-uctvudok
-u -> i
-c -> m
-t -> a
-v -> g
-u -> i
-d -> n
-o -> e
-k -> s
-uctvudok -> imagines
+bgkkpk
+b -> m
+g -> i
+k -> r
+k -> r
+p -> o
+k -> r
+bgkkpk -> mirror
 fully mapped
 
-choose imagines
+choose mirror
 
-qudv
-q -> k
-u -> i
+ypcxud
+y -> g
+p -> o
+c -> l
+x -> d
+u -> e
 d -> n
-v -> g
-qudv -> king
+ypcxud -> golden
 fully mapped
 
-choose king
+choose golden
+
+jptgpd
+j -> p
+p -> o
+t -> t
+g -> i
+p -> o
+d -> n
+jptgpd -> potion
+fully mapped
+
+choose potion
+
+ruqpdx
+r -> b
+u -> e
+q -> y
+p -> o
+d -> n
+x -> d
+ruqpdx -> beyond
+fully mapped
+
+choose beyond
 
 Decoded phrase
-imagines king
+mirror golden potion beyond
 
-Answer: \boxed{imagines king}
-</think>
-\boxed{imagines king}
+Answer: \boxed{mirror golden potion beyond}

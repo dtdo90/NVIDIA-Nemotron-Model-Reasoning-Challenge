@@ -132,7 +132,7 @@ rabbit
 
 Check scan candidates against summary mappings
 
-rabbit
+xtqqyl -> rabbit
 x -> r agrees
 t -> a agrees
 q -> b new
@@ -237,7 +237,7 @@ cat, map
 
 Check scan candidates against summary mappings
 
-cat
+dtw -> cat
 d -> c conflicts
 o -> c already exists
 t -> a agrees
@@ -245,7 +245,7 @@ w -> t conflicts
 l -> t already exists
 FAIL
 
-map
+dtw -> map
 d -> m new
 t -> a agrees
 w -> p new
@@ -352,7 +352,7 @@ princess
 
 Check scan candidates against summary mappings
 
-princess
+wxybokaa -> princess
 w -> p agrees
 x -> r agrees
 y -> i agrees
@@ -463,7 +463,7 @@ imagines
 
 Check scan candidates against summary mappings
 
-imagines
+ydtnybka -> imagines
 y -> i agrees
 d -> m agrees
 t -> a agrees

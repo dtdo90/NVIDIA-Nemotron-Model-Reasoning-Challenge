@@ -132,7 +132,16 @@ bright, knight
 
 Check scan candidates against summary mappings
 
-knight
+sxuebm -> bright
+s -> b new
+x -> r new
+u -> i agrees
+e -> g agrees
+b -> h agrees
+m -> t agrees
+PASS
+
+sxuebm -> knight
 s -> k conflicts
 q -> k already exists
 x -> n conflicts
@@ -142,15 +151,6 @@ e -> g agrees
 b -> h agrees
 m -> t agrees
 FAIL
-
-bright
-s -> b new
-x -> r new
-u -> i agrees
-e -> g agrees
-b -> h agrees
-m -> t agrees
-PASS
 add s -> b
 add x -> r
 

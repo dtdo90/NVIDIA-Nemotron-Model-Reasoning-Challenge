@@ -1,129 +1,79 @@
 Problem syn_tc_dp_phrase_copy_alignment_0021
 Bucket: phrase_copy_alignment
-Gold answer: island forest through mirror
-Note: phrase_copy_exact_example_cipher_phrase
+Gold answer: reads turtle
+Note: phrase_copy_fully_mapped_nontrivial_target
 
 Training prompt:
 In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
-glfkdj pnbrli izbnxoz tgbbnb -> island forest through mirror
-Now, decrypt the following text: glfkdj pnbrli izbnxoz tgbbnb
+whkdqfhk mrsikx -> treasure golden
+Now, decrypt the following text: hkdiq wfhwsk
 
-Solution:
-<think>
+Training target:
 We need to decode the target strictly from left to right using the character mappings.
 
 Process examples
 
-glfkdj pnbrli izbnxoz tgbbnb -> island forest through mirror
+whkdqfhk mrsikx -> treasure golden
+whkdqfhk -> treasure
+w -> t new
+h -> r new
+k -> e new
+d -> a new
+q -> s new
+f -> u new
+h -> r agrees
+k -> e agrees
 
-Training target:
-glfkdj -> island
-g -> i new
-l -> s new
-f -> l new
-k -> a new
-d -> n new
-j -> d new
-
-pnbrli -> forest
-p -> f new
-n -> o new
-b -> r new
-r -> e new
-l -> s agrees
-i -> t new
-
-izbnxoz -> through
-i -> t agrees
-z -> h new
-b -> r agrees
-n -> o agrees
-x -> u new
-o -> g new
-z -> h agrees
-
-tgbbnb -> mirror
-t -> m new
-g -> i agrees
-b -> r agrees
-b -> r agrees
-n -> o agrees
-b -> r agrees
+mrsikx -> golden
+m -> g new
+r -> o new
+s -> l new
+i -> d new
+k -> e agrees
+x -> n new
 
 Summary character mappings
-b -> r
-d -> n
-f -> l
-g -> i
-i -> t
-j -> d
-k -> a
-l -> s
-n -> o
-o -> g
-p -> f
-r -> e
-t -> m
-x -> u
-z -> h
+d -> a
+f -> u
+h -> r
+i -> d
+k -> e
+m -> g
+q -> s
+r -> o
+s -> l
+w -> t
+x -> n
 
 Target text
-glfkdj pnbrli izbnxoz tgbbnb
+hkdiq wfhwsk
 
 Decode target words from character mappings
 
-glfkdj
-g -> i
-l -> s
-f -> l
-k -> a
-d -> n
-j -> d
-glfkdj -> island
+hkdiq
+h -> r
+k -> e
+d -> a
+i -> d
+q -> s
+hkdiq -> reads
 fully mapped
 
-choose island
+choose reads
 
-pnbrli
-p -> f
-n -> o
-b -> r
-r -> e
-l -> s
-i -> t
-pnbrli -> forest
+wfhwsk
+w -> t
+f -> u
+h -> r
+w -> t
+s -> l
+k -> e
+wfhwsk -> turtle
 fully mapped
 
-choose forest
-
-izbnxoz
-i -> t
-z -> h
-b -> r
-n -> o
-x -> u
-o -> g
-z -> h
-izbnxoz -> through
-fully mapped
-
-choose through
-
-tgbbnb
-t -> m
-g -> i
-b -> r
-b -> r
-n -> o
-b -> r
-tgbbnb -> mirror
-fully mapped
-
-choose mirror
+choose turtle
 
 Decoded phrase
-island forest through mirror
+reads turtle
 
-Answer: \boxed{island forest through mirror}
-</think>
-\boxed{island forest through mirror}
+Answer: \boxed{reads turtle}

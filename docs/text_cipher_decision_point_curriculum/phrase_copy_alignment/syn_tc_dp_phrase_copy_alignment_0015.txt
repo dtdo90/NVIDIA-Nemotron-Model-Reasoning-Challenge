@@ -1,123 +1,90 @@
 Problem syn_tc_dp_phrase_copy_alignment_0015
 Bucket: phrase_copy_alignment
-Gold answer: dragon hidden school under
-Note: phrase_copy_exact_example_cipher_phrase
+Gold answer: colorful castle
+Note: phrase_copy_fully_mapped_nontrivial_target
 
 Training prompt:
 In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
-uxhisz yluucz tdyssv kzucx -> dragon hidden school under
-Now, decrypt the following text: uxhisz yluucz tdyssv kzucx
+efncbgfn usxxsab -> treasure follows
+zce -> cat
+Now, decrypt the following text: zsxsfugx zcbexn
 
-Solution:
-<think>
+Training target:
 We need to decode the target strictly from left to right using the character mappings.
 
 Process examples
 
-uxhisz yluucz tdyssv kzucx -> dragon hidden school under
+efncbgfn usxxsab -> treasure follows
+efncbgfn -> treasure
+e -> t new
+f -> r new
+n -> e new
+c -> a new
+b -> s new
+g -> u new
+f -> r agrees
+n -> e agrees
 
-Training target:
-uxhisz -> dragon
-u -> d new
-x -> r new
-h -> a new
-i -> g new
+usxxsab -> follows
+u -> f new
 s -> o new
-z -> n new
-
-yluucz -> hidden
-y -> h new
-l -> i new
-u -> d agrees
-u -> d agrees
-c -> e new
-z -> n agrees
-
-tdyssv -> school
-t -> s new
-d -> c new
-y -> h agrees
+x -> l new
+x -> l agrees
 s -> o agrees
-s -> o agrees
-v -> l new
+a -> w new
+b -> s agrees
 
-kzucx -> under
-k -> u new
-z -> n agrees
-u -> d agrees
-c -> e agrees
-x -> r agrees
+zce -> cat
+zce -> cat
+z -> c new
+c -> a agrees
+e -> t agrees
 
 Summary character mappings
-c -> e
-d -> c
-h -> a
-i -> g
-k -> u
-l -> i
+a -> w
+b -> s
+c -> a
+e -> t
+f -> r
+g -> u
+n -> e
 s -> o
-t -> s
-u -> d
-v -> l
-x -> r
-y -> h
-z -> n
+u -> f
+x -> l
+z -> c
 
 Target text
-uxhisz yluucz tdyssv kzucx
+zsxsfugx zcbexn
 
 Decode target words from character mappings
 
-uxhisz
-u -> d
-x -> r
-h -> a
-i -> g
+zsxsfugx
+z -> c
 s -> o
-z -> n
-uxhisz -> dragon
-fully mapped
-
-choose dragon
-
-yluucz
-y -> h
-l -> i
-u -> d
-u -> d
-c -> e
-z -> n
-yluucz -> hidden
-fully mapped
-
-choose hidden
-
-tdyssv
-t -> s
-d -> c
-y -> h
+x -> l
 s -> o
-s -> o
-v -> l
-tdyssv -> school
+f -> r
+u -> f
+g -> u
+x -> l
+zsxsfugx -> colorful
 fully mapped
 
-choose school
+choose colorful
 
-kzucx
-k -> u
-z -> n
-u -> d
-c -> e
-x -> r
-kzucx -> under
+zcbexn
+z -> c
+c -> a
+b -> s
+e -> t
+x -> l
+n -> e
+zcbexn -> castle
 fully mapped
 
-choose under
+choose castle
 
 Decoded phrase
-dragon hidden school under
+colorful castle
 
-Answer: \boxed{dragon hidden school under}
-</think>
-\boxed{dragon hidden school under}
+Answer: \boxed{colorful castle}

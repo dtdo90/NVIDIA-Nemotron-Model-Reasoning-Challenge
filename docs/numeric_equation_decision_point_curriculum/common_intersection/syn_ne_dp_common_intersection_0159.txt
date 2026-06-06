@@ -249,7 +249,7 @@ Common
 Training target:
 rev
 
-Apply AB_CD|min(x,y)-max(x,y)|common to the query
+Apply format AB_CD|min(x,y)-max(x,y)|common to the query
 
 Query
 98{22

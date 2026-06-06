@@ -131,7 +131,7 @@ turtle
 
 Check scan candidates against summary mappings
 
-turtle
+vajvsg -> turtle
 v -> t agrees
 a -> u new
 j -> r agrees

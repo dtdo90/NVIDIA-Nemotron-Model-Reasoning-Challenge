@@ -131,7 +131,7 @@ clever
 
 Check scan candidates against summary mappings
 
-clever
+vgaoat -> clever
 v -> c new
 g -> l agrees
 a -> e agrees

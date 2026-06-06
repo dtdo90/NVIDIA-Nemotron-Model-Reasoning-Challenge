@@ -134,7 +134,7 @@ discovers
 
 Check scan candidates against summary mappings
 
-discovers
+vnhlpdcwh -> discovers
 v -> d new
 n -> i agrees
 h -> s agrees

@@ -137,7 +137,7 @@ message
 
 Check scan candidates against summary mappings
 
-message
+himmcki -> message
 h -> m new
 i -> e agrees
 m -> s agrees
@@ -259,7 +259,7 @@ forest
 
 Check scan candidates against summary mappings
 
-forest
+evyimb -> forest
 e -> f new
 v -> o agrees
 y -> r agrees

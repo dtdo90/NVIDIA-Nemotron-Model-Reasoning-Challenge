@@ -1,0 +1,37 @@
+{
+  "question_type": "gravity",
+  "category": "Gravity",
+  "source_csv": "data/single_phase_training_clean/single_phase_sft_v1.csv",
+  "train_csv": "experiments/type_diagnostics/data_v1/gravity/gravity.csv",
+  "split_csv": "experiments/type_diagnostics/data_v1/gravity/splits_80_10_10.csv",
+  "seed": 42,
+  "total": 1597,
+  "by_subtype": {
+    "standard": 1597
+  },
+  "by_source_mode": {
+    "real": 1597
+  },
+  "by_eval_eligible": {
+    "true": 1597
+  },
+  "by_split_policy": {
+    "auto": 1597
+  },
+  "split_counts": {
+    "eval_holdout": 160,
+    "grpo_holdout": 160,
+    "sft_train": 1277
+  },
+  "by_split_subtype": {
+    "eval_holdout": {
+      "standard": 160
+    },
+    "grpo_holdout": {
+      "standard": 160
+    },
+    "sft_train": {
+      "standard": 1277
+    }
+  }
+}

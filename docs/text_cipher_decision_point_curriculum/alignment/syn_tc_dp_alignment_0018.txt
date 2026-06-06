@@ -132,7 +132,7 @@ above
 
 Check scan candidates against summary mappings
 
-above
+bcegv -> above
 b -> a new
 c -> b agrees
 e -> o agrees

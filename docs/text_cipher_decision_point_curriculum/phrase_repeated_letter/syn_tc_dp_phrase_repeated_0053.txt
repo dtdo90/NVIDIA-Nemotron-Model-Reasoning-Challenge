@@ -137,7 +137,7 @@ follows
 
 Check scan candidates against summary mappings
 
-follows
+yummuex -> follows
 y -> f new
 u -> o new
 m -> l agrees
@@ -244,7 +244,7 @@ dark
 
 Check scan candidates against summary mappings
 
-dark
+wfjs -> dark
 w -> d agrees
 f -> a agrees
 j -> r agrees
@@ -347,7 +347,7 @@ bird
 
 Check scan candidates against summary mappings
 
-bird
+tojw -> bird
 t -> b new
 o -> i agrees
 j -> r agrees
@@ -452,7 +452,7 @@ hidden
 
 Check scan candidates against summary mappings
 
-hidden
+vowwra -> hidden
 v -> h agrees
 o -> i agrees
 w -> d agrees

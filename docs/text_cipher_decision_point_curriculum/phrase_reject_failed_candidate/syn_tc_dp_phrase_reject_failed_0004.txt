@@ -135,20 +135,20 @@ book, door
 
 Check scan candidates against summary mappings
 
-door
+gppz -> book
+g -> b new
+p -> o agrees
+p -> o agrees
+z -> k new
+PASS
+
+gppz -> door
 g -> d new
 p -> o agrees
 p -> o agrees
 z -> r conflicts
 l -> r already exists
 FAIL
-
-book
-g -> b new
-p -> o agrees
-p -> o agrees
-z -> k new
-PASS
 add g -> b
 add z -> k
 
@@ -252,7 +252,7 @@ discovers
 
 Check scan candidates against summary mappings
 
-discovers
+acjdpxelj -> discovers
 a -> d new
 c -> i agrees
 j -> s agrees

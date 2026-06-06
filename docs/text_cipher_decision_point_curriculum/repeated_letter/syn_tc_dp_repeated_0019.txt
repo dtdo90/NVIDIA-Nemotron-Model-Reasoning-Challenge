@@ -133,7 +133,7 @@ princess
 
 Check scan candidates against summary mappings
 
-princess
+croinfhh -> princess
 c -> p new
 r -> r agrees
 o -> i agrees

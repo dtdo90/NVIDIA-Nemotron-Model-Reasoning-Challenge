@@ -136,7 +136,7 @@ chases
 
 Check scan candidates against summary mappings
 
-chases
+jhvwmw -> chases
 j -> c new
 h -> h agrees
 v -> a agrees
@@ -243,7 +243,7 @@ found
 
 Check scan candidates against summary mappings
 
-found
+izeqo -> found
 i -> f new
 z -> o agrees
 e -> u new
@@ -351,7 +351,7 @@ watches
 
 Check scan candidates against summary mappings
 
-watches
+nvrjhmw -> watches
 n -> w new
 v -> a agrees
 r -> t agrees
@@ -457,7 +457,7 @@ dark
 
 Check scan candidates against summary mappings
 
-dark
+ovua -> dark
 o -> d agrees
 v -> a agrees
 u -> r agrees

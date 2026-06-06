@@ -129,7 +129,7 @@ bird, king, wise
 
 Check scan candidates against summary mappings
 
-bird
+hpsb -> bird
 h -> b conflicts
 o -> b already exists
 p -> i agrees
@@ -139,12 +139,21 @@ b -> d conflicts
 j -> d already exists
 FAIL
 
-king
+hpsb -> king
 h -> k new
 p -> i agrees
 s -> n new
 b -> g new
 PASS
+
+hpsb -> wise
+h -> w conflicts
+a -> w already exists
+p -> i agrees
+s -> s new
+b -> e conflicts
+n -> e already exists
+FAIL
 add h -> k
 add s -> n
 add b -> g

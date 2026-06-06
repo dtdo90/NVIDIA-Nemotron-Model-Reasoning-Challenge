@@ -132,7 +132,14 @@ book, door
 
 Check scan candidates against summary mappings
 
-door
+aiik -> book
+a -> b new
+i -> o agrees
+i -> o agrees
+k -> k new
+PASS
+
+aiik -> door
 a -> d conflicts
 y -> d already exists
 i -> o agrees
@@ -140,13 +147,6 @@ i -> o agrees
 k -> r conflicts
 s -> r already exists
 FAIL
-
-book
-a -> b new
-i -> o agrees
-i -> o agrees
-k -> k new
-PASS
 add a -> b
 add k -> k
 
@@ -247,7 +247,7 @@ knight
 
 Check scan candidates against summary mappings
 
-knight
+kmgjqc -> knight
 k -> k agrees
 m -> n agrees
 g -> i new

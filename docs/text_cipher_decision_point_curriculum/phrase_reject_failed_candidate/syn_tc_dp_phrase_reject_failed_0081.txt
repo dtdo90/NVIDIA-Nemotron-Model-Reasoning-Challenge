@@ -128,7 +128,7 @@ cat, map
 
 Check scan candidates against summary mappings
 
-cat
+xhb -> cat
 x -> c conflicts
 u -> c already exists
 h -> a agrees
@@ -136,7 +136,7 @@ b -> t conflicts
 y -> t already exists
 FAIL
 
-map
+xhb -> map
 x -> m new
 h -> a agrees
 b -> p new
@@ -242,7 +242,7 @@ message
 
 Check scan candidates against summary mappings
 
-message
+xpjjhlp -> message
 x -> m agrees
 p -> e agrees
 j -> s agrees
@@ -353,7 +353,7 @@ discovers
 
 Check scan candidates against summary mappings
 
-discovers
+rnjuqcptj -> discovers
 r -> d agrees
 n -> i agrees
 j -> s agrees

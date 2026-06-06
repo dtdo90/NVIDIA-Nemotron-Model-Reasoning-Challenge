@@ -134,7 +134,16 @@ bright, writes
 
 Check scan candidates against summary mappings
 
-writes
+pkutzi -> bright
+p -> b new
+k -> r agrees
+u -> i agrees
+t -> g new
+z -> h new
+i -> t new
+PASS
+
+pkutzi -> writes
 p -> w new
 k -> r agrees
 u -> i agrees
@@ -144,15 +153,6 @@ w -> e already exists
 i -> s conflicts
 b -> s already exists
 FAIL
-
-bright
-p -> b new
-k -> r agrees
-u -> i agrees
-t -> g new
-z -> h new
-i -> t new
-PASS
 add p -> b
 add t -> g
 add z -> h
@@ -256,7 +256,7 @@ magical
 
 Check scan candidates against summary mappings
 
-magical
+ydtuode -> magical
 y -> m agrees
 d -> a agrees
 t -> g agrees
@@ -363,7 +363,7 @@ found
 
 Check scan candidates against summary mappings
 
-found
+mxnac -> found
 m -> f new
 x -> o new
 n -> u new
@@ -472,7 +472,7 @@ follows
 
 Check scan candidates against summary mappings
 
-follows
+mxeexgb -> follows
 m -> f agrees
 x -> o agrees
 e -> l agrees

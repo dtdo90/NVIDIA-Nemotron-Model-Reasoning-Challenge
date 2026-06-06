@@ -136,7 +136,7 @@ bright, knight
 
 Check scan candidates against summary mappings
 
-bright
+ishcnv -> bright
 i -> b conflicts
 b -> b already exists
 s -> r conflicts
@@ -147,7 +147,7 @@ n -> h new
 v -> t agrees
 FAIL
 
-knight
+ishcnv -> knight
 i -> k new
 s -> n new
 h -> i agrees
@@ -267,7 +267,7 @@ cat
 
 Check scan candidates against summary mappings
 
-cat
+qwv -> cat
 q -> c new
 w -> a agrees
 v -> t agrees

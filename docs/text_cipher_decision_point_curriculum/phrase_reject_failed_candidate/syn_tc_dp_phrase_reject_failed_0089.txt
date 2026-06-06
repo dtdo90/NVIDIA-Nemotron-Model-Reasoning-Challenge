@@ -136,7 +136,7 @@ bright, knight
 
 Check scan candidates against summary mappings
 
-bright
+lvihzy -> bright
 l -> b new
 v -> r conflicts
 e -> r already exists
@@ -146,7 +146,7 @@ z -> h agrees
 y -> t agrees
 FAIL
 
-knight
+lvihzy -> knight
 l -> k new
 v -> n new
 i -> i agrees
@@ -265,7 +265,7 @@ tower
 
 Check scan candidates against summary mappings
 
-tower
+ymcxe -> tower
 y -> t agrees
 m -> o agrees
 c -> w new

@@ -137,7 +137,7 @@ colorful
 
 Check scan candidates against summary mappings
 
-colorful
+qwdwgzkd -> colorful
 q -> c new
 w -> o agrees
 d -> l agrees

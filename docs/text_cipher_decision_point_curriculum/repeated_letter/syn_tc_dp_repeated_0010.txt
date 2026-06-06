@@ -134,7 +134,7 @@ explores
 
 Check scan candidates against summary mappings
 
-explores
+fnxdiafs -> explores
 f -> e agrees
 n -> x new
 x -> p agrees

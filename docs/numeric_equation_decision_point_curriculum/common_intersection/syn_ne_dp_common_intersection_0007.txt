@@ -303,7 +303,7 @@ rev
 Common
 rev
 
-Apply AB_CD|x-y|common to the query
+Apply format AB_CD|x-y|common to the query
 
 Query
 90&19

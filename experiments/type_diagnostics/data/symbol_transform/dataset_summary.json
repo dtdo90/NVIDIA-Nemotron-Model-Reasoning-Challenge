@@ -4,14 +4,13 @@
   "source_csv": "data/single_phase_training_clean/single_phase_sft_v2.csv",
   "train_csv": "experiments/type_diagnostics/data/symbol_transform/symbol_transform.csv",
   "split_csv": "experiments/type_diagnostics/data/symbol_transform/splits_80_10_10.csv",
-  "seed": 20260605,
+  "seed": 42,
   "total": 884,
   "by_subtype": {
-    "ba_dc": 11,
     "direct_template_template0134": 400,
     "direct_template_template3401": 200,
     "operator_absence_template0134": 164,
-    "untrained_eval_only": 109
+    "untrained_eval_only": 120
   },
   "by_source_mode": {
     "op_ab_guess_0134_correct": 13,
@@ -26,37 +25,33 @@
     "true": 343
   },
   "by_split_policy": {
-    "auto": 234,
-    "eval_only": 109,
+    "auto": 223,
+    "eval_only": 120,
     "train_only": 541
   },
   "split_counts": {
-    "eval_holdout": 69,
-    "sft_train": 719,
-    "unused": 96
+    "eval_holdout": 34,
+    "grpo_holdout": 34,
+    "sft_train": 816
   },
   "by_split_subtype": {
     "eval_holdout": {
-      "ba_dc": 11,
-      "direct_template_template0134": 8,
-      "direct_template_template3401": 4,
-      "operator_absence_template0134": 33,
-      "untrained_eval_only": 13
+      "direct_template_template0134": 5,
+      "direct_template_template3401": 1,
+      "operator_absence_template0134": 16,
+      "untrained_eval_only": 12
+    },
+    "grpo_holdout": {
+      "direct_template_template0134": 5,
+      "direct_template_template3401": 1,
+      "operator_absence_template0134": 16,
+      "untrained_eval_only": 12
     },
     "sft_train": {
-      "direct_template_template0134": 392,
-      "direct_template_template3401": 196,
-      "operator_absence_template0134": 131
-    },
-    "unused": {
+      "direct_template_template0134": 390,
+      "direct_template_template3401": 198,
+      "operator_absence_template0134": 132,
       "untrained_eval_only": 96
     }
-  },
-  "honest_eval_reassignment": {
-    "seed": 20260605,
-    "eval_split": "eval_holdout",
-    "grpo_holdout": "unused for this type after reassignment",
-    "target_eval_fraction": 0.2,
-    "unused_split": "symbol_transform_untrained_eval_only rows not selected for eval are excluded from SFT"
   }
 }

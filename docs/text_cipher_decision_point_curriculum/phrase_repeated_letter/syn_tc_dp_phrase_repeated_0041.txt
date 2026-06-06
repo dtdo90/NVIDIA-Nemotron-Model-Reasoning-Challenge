@@ -138,7 +138,7 @@ colorful
 
 Check scan candidates against summary mappings
 
-colorful
+ivmvekzm -> colorful
 i -> c agrees
 v -> o agrees
 m -> l new
@@ -271,7 +271,7 @@ story
 
 Check scan candidates against summary mappings
 
-story
+jbveu -> story
 j -> s agrees
 b -> t agrees
 v -> o agrees

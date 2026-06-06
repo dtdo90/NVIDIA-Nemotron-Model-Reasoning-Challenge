@@ -131,7 +131,16 @@ garden, golden
 
 Check scan candidates against summary mappings
 
-golden
+reqwio -> garden
+r -> g agrees
+e -> a new
+q -> r new
+w -> d agrees
+i -> e agrees
+o -> n agrees
+PASS
+
+reqwio -> golden
 r -> g agrees
 e -> o conflicts
 u -> o already exists
@@ -141,15 +150,6 @@ w -> d agrees
 i -> e agrees
 o -> n agrees
 FAIL
-
-garden
-r -> g agrees
-e -> a new
-q -> r new
-w -> d agrees
-i -> e agrees
-o -> n agrees
-PASS
 add e -> a
 add q -> r
 

@@ -137,7 +137,14 @@ book, door
 
 Check scan candidates against summary mappings
 
-door
+rcch -> book
+r -> b new
+c -> o agrees
+c -> o agrees
+h -> k new
+PASS
+
+rcch -> door
 r -> d conflicts
 v -> d already exists
 c -> o agrees
@@ -145,13 +152,6 @@ c -> o agrees
 h -> r conflicts
 s -> r already exists
 FAIL
-
-book
-r -> b new
-c -> o agrees
-c -> o agrees
-h -> k new
-PASS
 add r -> b
 add h -> k
 
@@ -252,7 +252,7 @@ palace
 
 Check scan candidates against summary mappings
 
-palace
+gxlxew -> palace
 g -> p new
 x -> a agrees
 l -> l agrees

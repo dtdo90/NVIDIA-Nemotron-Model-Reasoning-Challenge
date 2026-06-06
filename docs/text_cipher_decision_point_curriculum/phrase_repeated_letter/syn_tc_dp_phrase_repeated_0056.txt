@@ -1,0 +1,195 @@
+Problem syn_tc_dp_phrase_repeated_0056
+Bucket: phrase_repeated_letter
+Gold answer: wonderland above
+Note: phrase_preserve_repeated_letter_pattern_extra_short
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+vahuzk wmdn -> dragon wise
+pmav yhgn -> bird cave
+Now, decrypt the following text: wzkvnalhkv hpzgn
+
+Training target:
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+vahuzk wmdn -> dragon wise
+vahuzk -> dragon
+v -> d new
+a -> r new
+h -> a new
+u -> g new
+z -> o new
+k -> n new
+wmdn -> wise
+w -> w new
+m -> i new
+d -> s new
+n -> e new
+
+pmav yhgn -> bird cave
+pmav -> bird
+p -> b new
+m -> i agrees
+a -> r agrees
+v -> d agrees
+yhgn -> cave
+y -> c new
+h -> a agrees
+g -> v new
+n -> e agrees
+
+Summary character mappings
+v -> d
+a -> r
+h -> a
+u -> g
+z -> o
+k -> n
+w -> w
+m -> i
+d -> s
+n -> e
+p -> b
+y -> c
+g -> v
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+wzkvnalhkv hpzgn
+
+Decode target words from character mappings
+
+wzkvnalhkv
+w -> w
+z -> o
+k -> n
+v -> d
+n -> e
+a -> r
+l -> ? unknown
+h -> a
+k -> n
+v -> d
+wzkvnalhkv -> wonder?and
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match wonder?and
+above -> wonder?and no match
+alice -> wonder?and no match
+ancient -> wonder?and no match
+around -> wonder?and no match
+beyond -> wonder?and no match
+bird -> wonder?and no match
+book -> wonder?and no match
+bright -> wonder?and no match
+castle -> wonder?and no match
+cat -> wonder?and no match
+cave -> wonder?and no match
+chases -> wonder?and no match
+clever -> wonder?and no match
+colorful -> wonder?and no match
+creates -> wonder?and no match
+crystal -> wonder?and no match
+curious -> wonder?and no match
+dark -> wonder?and no match
+discovers -> wonder?and no match
+door -> wonder?and no match
+dragon -> wonder?and no match
+draws -> wonder?and no match
+dreams -> wonder?and no match
+explores -> wonder?and no match
+follows -> wonder?and no match
+forest -> wonder?and no match
+found -> wonder?and no match
+garden -> wonder?and no match
+golden -> wonder?and no match
+hatter -> wonder?and no match
+hidden -> wonder?and no match
+imagines -> wonder?and no match
+in -> wonder?and no match
+inside -> wonder?and no match
+island -> wonder?and no match
+key -> wonder?and no match
+king -> wonder?and no match
+knight -> wonder?and no match
+library -> wonder?and no match
+magical -> wonder?and no match
+map -> wonder?and no match
+message -> wonder?and no match
+mirror -> wonder?and no match
+mountain -> wonder?and no match
+mouse -> wonder?and no match
+mysterious -> wonder?and no match
+near -> wonder?and no match
+ocean -> wonder?and no match
+palace -> wonder?and no match
+potion -> wonder?and no match
+princess -> wonder?and no match
+puzzle -> wonder?and no match
+queen -> wonder?and no match
+rabbit -> wonder?and no match
+reads -> wonder?and no match
+school -> wonder?and no match
+secret -> wonder?and no match
+sees -> wonder?and no match
+silver -> wonder?and no match
+story -> wonder?and no match
+strange -> wonder?and no match
+student -> wonder?and no match
+studies -> wonder?and no match
+teacher -> wonder?and no match
+the -> wonder?and no match
+through -> wonder?and no match
+tower -> wonder?and no match
+treasure -> wonder?and no match
+turtle -> wonder?and no match
+under -> wonder?and no match
+valley -> wonder?and no match
+village -> wonder?and no match
+watches -> wonder?and no match
+wise -> wonder?and no match
+wizard -> wonder?and no match
+wonderland -> wonder?and match
+writes -> wonder?and no match
+
+Scan candidates for wonder?and
+wonderland
+
+Check scan candidates against summary mappings
+
+wzkvnalhkv -> wonderland
+w -> w agrees
+z -> o agrees
+k -> n agrees
+v -> d agrees
+n -> e agrees
+a -> r agrees
+l -> l new
+h -> a agrees
+k -> n agrees
+v -> d agrees
+PASS
+add l -> l
+
+choose wonderland
+
+hpzgn
+h -> a
+p -> b
+z -> o
+g -> v
+n -> e
+hpzgn -> above
+fully mapped
+
+choose above
+
+Decoded phrase
+wonderland above
+
+Answer: \boxed{wonderland above}

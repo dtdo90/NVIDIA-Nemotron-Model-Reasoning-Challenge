@@ -134,7 +134,14 @@ book, door
 
 Check scan candidates against summary mappings
 
-door
+uhhf -> book
+u -> b new
+h -> o agrees
+h -> o agrees
+f -> k new
+PASS
+
+uhhf -> door
 u -> d conflicts
 q -> d already exists
 h -> o agrees
@@ -142,13 +149,6 @@ h -> o agrees
 f -> r conflicts
 v -> r already exists
 FAIL
-
-book
-u -> b new
-h -> o agrees
-h -> o agrees
-f -> k new
-PASS
 add u -> b
 add f -> k
 
@@ -253,7 +253,7 @@ mysterious
 
 Check scan candidates against summary mappings
 
-mysterious
+itpjnvchlp -> mysterious
 i -> m new
 t -> y new
 p -> s agrees

@@ -143,7 +143,7 @@ colorful
 
 Check scan candidates against summary mappings
 
-colorful
+jedeaumd -> colorful
 j -> c agrees
 e -> o agrees
 d -> l agrees
@@ -261,7 +261,7 @@ the
 
 Check scan candidates against summary mappings
 
-the
+cpg -> the
 c -> t agrees
 p -> h new
 g -> e agrees

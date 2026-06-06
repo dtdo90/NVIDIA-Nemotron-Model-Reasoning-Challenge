@@ -1,101 +1,143 @@
 Problem syn_tc_dp_phrase_copy_alignment_0013
 Bucket: phrase_copy_alignment
-Gold answer: puzzle ocean valley
-Note: phrase_copy_exact_example_cipher_phrase
+Gold answer: imagines found silver bird
+Note: phrase_copy_fully_mapped_nontrivial_target
 
 Training prompt:
 In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
-wvttyd ipder geyydb -> puzzle ocean valley
-Now, decrypt the following text: wvttyd ipder geyydb
+cxawrkbzaw jygfrkvxtg -> wonderland mysterious
+zmxhr evad -> above king
+lxbbxcg -> follows
+Now, decrypt the following text: vjzdvarg lxtaw gvbhrk mvkw
 
-Solution:
-<think>
+Training target:
 We need to decode the target strictly from left to right using the character mappings.
 
 Process examples
 
-wvttyd ipder geyydb -> puzzle ocean valley
+cxawrkbzaw jygfrkvxtg -> wonderland mysterious
+cxawrkbzaw -> wonderland
+c -> w new
+x -> o new
+a -> n new
+w -> d new
+r -> e new
+k -> r new
+b -> l new
+z -> a new
+a -> n agrees
+w -> d agrees
 
-Training target:
-wvttyd -> puzzle
-w -> p new
-v -> u new
-t -> z new
-t -> z agrees
-y -> l new
-d -> e new
+jygfrkvxtg -> mysterious
+j -> m new
+y -> y new
+g -> s new
+f -> t new
+r -> e agrees
+k -> r agrees
+v -> i new
+x -> o agrees
+t -> u new
+g -> s agrees
 
-ipder -> ocean
-i -> o new
-p -> c new
-d -> e agrees
-e -> a new
-r -> n new
+zmxhr evad -> above king
+zmxhr -> above
+z -> a agrees
+m -> b new
+x -> o agrees
+h -> v new
+r -> e agrees
 
-geyydb -> valley
-g -> v new
-e -> a agrees
-y -> l agrees
-y -> l agrees
-d -> e agrees
-b -> y new
+evad -> king
+e -> k new
+v -> i agrees
+a -> n agrees
+d -> g new
+
+lxbbxcg -> follows
+lxbbxcg -> follows
+l -> f new
+x -> o agrees
+b -> l agrees
+b -> l agrees
+x -> o agrees
+c -> w agrees
+g -> s agrees
 
 Summary character mappings
-b -> y
-d -> e
-e -> a
-g -> v
-i -> o
-p -> c
-r -> n
-t -> z
-v -> u
-w -> p
-y -> l
+a -> n
+b -> l
+c -> w
+d -> g
+e -> k
+f -> t
+g -> s
+h -> v
+j -> m
+k -> r
+l -> f
+m -> b
+r -> e
+t -> u
+v -> i
+w -> d
+x -> o
+y -> y
+z -> a
 
 Target text
-wvttyd ipder geyydb
+vjzdvarg lxtaw gvbhrk mvkw
 
 Decode target words from character mappings
 
-wvttyd
-w -> p
-v -> u
-t -> z
-t -> z
-y -> l
-d -> e
-wvttyd -> puzzle
+vjzdvarg
+v -> i
+j -> m
+z -> a
+d -> g
+v -> i
+a -> n
+r -> e
+g -> s
+vjzdvarg -> imagines
 fully mapped
 
-choose puzzle
+choose imagines
 
-ipder
-i -> o
-p -> c
-d -> e
-e -> a
-r -> n
-ipder -> ocean
+lxtaw
+l -> f
+x -> o
+t -> u
+a -> n
+w -> d
+lxtaw -> found
 fully mapped
 
-choose ocean
+choose found
 
-geyydb
-g -> v
-e -> a
-y -> l
-y -> l
-d -> e
-b -> y
-geyydb -> valley
+gvbhrk
+g -> s
+v -> i
+b -> l
+h -> v
+r -> e
+k -> r
+gvbhrk -> silver
 fully mapped
 
-choose valley
+choose silver
+
+mvkw
+m -> b
+v -> i
+k -> r
+w -> d
+mvkw -> bird
+fully mapped
+
+choose bird
 
 Decoded phrase
-puzzle ocean valley
+imagines found silver bird
 
-Answer: \boxed{puzzle ocean valley}
-</think>
-\boxed{puzzle ocean valley}
+Answer: \boxed{imagines found silver bird}

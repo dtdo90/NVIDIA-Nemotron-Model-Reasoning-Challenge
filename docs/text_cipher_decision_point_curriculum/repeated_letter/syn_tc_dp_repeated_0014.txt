@@ -129,7 +129,7 @@ palace
 
 Check scan candidates against summary mappings
 
-palace
+ktftjy -> palace
 k -> p new
 t -> a agrees
 f -> l agrees

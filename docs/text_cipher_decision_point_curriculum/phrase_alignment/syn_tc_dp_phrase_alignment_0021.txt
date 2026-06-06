@@ -139,7 +139,7 @@ bright
 
 Check scan candidates against summary mappings
 
-bright
+pcrkzq -> bright
 p -> b agrees
 c -> r agrees
 r -> i agrees

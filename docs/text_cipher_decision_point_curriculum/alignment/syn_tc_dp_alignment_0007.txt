@@ -131,7 +131,7 @@ knight
 
 Check scan candidates against summary mappings
 
-knight
+urcdgq -> knight
 u -> k new
 r -> n agrees
 c -> i agrees

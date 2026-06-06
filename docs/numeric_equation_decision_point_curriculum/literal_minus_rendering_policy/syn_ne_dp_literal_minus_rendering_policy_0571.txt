@@ -59,6 +59,7 @@ op_prefix_rev
 
 Common
 none
+
 x-y fails under BA_DC
 
 Try BA_DC with y-x for operator -
@@ -82,6 +83,7 @@ rev_or_op_prefix_rev_if_neg
 
 Common
 none
+
 y-x fails under BA_DC
 
 Try BA_DC with abs(x-y) for operator -

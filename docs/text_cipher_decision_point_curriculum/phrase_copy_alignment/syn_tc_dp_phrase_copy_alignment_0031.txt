@@ -1,120 +1,109 @@
 Problem syn_tc_dp_phrase_copy_alignment_0031
 Bucket: phrase_copy_alignment
-Gold answer: under follows queen tower
-Note: phrase_copy_exact_example_cipher_phrase
+Gold answer: secret mountain palace
+Note: phrase_copy_fully_mapped_nontrivial_target
 
 Training prompt:
 In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
-uaehw bkggkfn ouhha jkfhw -> under follows queen tower
-Now, decrypt the following text: uaehw bkggkfn ouhha jkfhw
+yailxjdmti mcxeq -> mysterious ocean
+btnnwx -> puzzle
+Now, decrypt the following text: ixcjxl ymtqledq bewecx
 
-Solution:
-<think>
+Training target:
 We need to decode the target strictly from left to right using the character mappings.
 
 Process examples
 
-uaehw bkggkfn ouhha jkfhw -> under follows queen tower
+yailxjdmti mcxeq -> mysterious ocean
+yailxjdmti -> mysterious
+y -> m new
+a -> y new
+i -> s new
+l -> t new
+x -> e new
+j -> r new
+d -> i new
+m -> o new
+t -> u new
+i -> s agrees
 
-Training target:
-uaehw -> under
-u -> u new
-a -> n new
-e -> d new
-h -> e new
-w -> r new
+mcxeq -> ocean
+m -> o agrees
+c -> c new
+x -> e agrees
+e -> a new
+q -> n new
 
-bkggkfn -> follows
-b -> f new
-k -> o new
-g -> l new
-g -> l agrees
-k -> o agrees
-f -> w new
-n -> s new
-
-ouhha -> queen
-o -> q new
-u -> u agrees
-h -> e agrees
-h -> e agrees
-a -> n agrees
-
-jkfhw -> tower
-j -> t new
-k -> o agrees
-f -> w agrees
-h -> e agrees
-w -> r agrees
+btnnwx -> puzzle
+btnnwx -> puzzle
+b -> p new
+t -> u agrees
+n -> z new
+n -> z agrees
+w -> l new
+x -> e agrees
 
 Summary character mappings
-a -> n
-b -> f
-e -> d
-f -> w
-g -> l
-h -> e
-j -> t
-k -> o
-n -> s
-o -> q
-u -> u
-w -> r
+a -> y
+b -> p
+c -> c
+d -> i
+e -> a
+i -> s
+j -> r
+l -> t
+m -> o
+n -> z
+q -> n
+t -> u
+w -> l
+x -> e
+y -> m
 
 Target text
-uaehw bkggkfn ouhha jkfhw
+ixcjxl ymtqledq bewecx
 
 Decode target words from character mappings
 
-uaehw
-u -> u
-a -> n
-e -> d
-h -> e
-w -> r
-uaehw -> under
+ixcjxl
+i -> s
+x -> e
+c -> c
+j -> r
+x -> e
+l -> t
+ixcjxl -> secret
 fully mapped
 
-choose under
+choose secret
 
-bkggkfn
-b -> f
-k -> o
-g -> l
-g -> l
-k -> o
-f -> w
-n -> s
-bkggkfn -> follows
+ymtqledq
+y -> m
+m -> o
+t -> u
+q -> n
+l -> t
+e -> a
+d -> i
+q -> n
+ymtqledq -> mountain
 fully mapped
 
-choose follows
+choose mountain
 
-ouhha
-o -> q
-u -> u
-h -> e
-h -> e
-a -> n
-ouhha -> queen
+bewecx
+b -> p
+e -> a
+w -> l
+e -> a
+c -> c
+x -> e
+bewecx -> palace
 fully mapped
 
-choose queen
-
-jkfhw
-j -> t
-k -> o
-f -> w
-h -> e
-w -> r
-jkfhw -> tower
-fully mapped
-
-choose tower
+choose palace
 
 Decoded phrase
-under follows queen tower
+secret mountain palace
 
-Answer: \boxed{under follows queen tower}
-</think>
-\boxed{under follows queen tower}
+Answer: \boxed{secret mountain palace}

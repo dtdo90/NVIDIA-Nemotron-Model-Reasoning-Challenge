@@ -132,7 +132,7 @@ bird, book, cave, dark, door, king, near, sees, wise
 
 Check scan candidates against summary mappings
 
-bird
+stte -> bird
 s -> b new
 t -> i conflicts
 f -> i already exists
@@ -142,7 +142,14 @@ e -> d conflicts
 x -> d already exists
 FAIL
 
-cave
+stte -> book
+s -> b new
+t -> o new
+t -> o new
+e -> k new
+PASS
+
+stte -> cave
 s -> c new
 t -> a conflicts
 a -> a already exists
@@ -152,7 +159,7 @@ e -> e conflicts
 v -> e already exists
 FAIL
 
-dark
+stte -> dark
 s -> d conflicts
 x -> d already exists
 t -> a conflicts
@@ -162,7 +169,7 @@ y -> r already exists
 e -> k new
 FAIL
 
-door
+stte -> door
 s -> d conflicts
 x -> d already exists
 t -> o new
@@ -171,7 +178,7 @@ e -> r conflicts
 y -> r already exists
 FAIL
 
-king
+stte -> king
 s -> k new
 t -> i conflicts
 f -> i already exists
@@ -180,7 +187,7 @@ e -> g conflicts
 p -> g already exists
 FAIL
 
-near
+stte -> near
 s -> n new
 t -> e conflicts
 v -> e already exists
@@ -190,7 +197,7 @@ e -> r conflicts
 y -> r already exists
 FAIL
 
-sees
+stte -> sees
 s -> s conflicts
 z -> s already exists
 t -> e conflicts
@@ -201,7 +208,7 @@ e -> s conflicts
 z -> s already exists
 FAIL
 
-wise
+stte -> wise
 s -> w conflicts
 b -> w already exists
 t -> i conflicts
@@ -211,13 +218,6 @@ z -> s already exists
 e -> e conflicts
 v -> e already exists
 FAIL
-
-book
-s -> b new
-t -> o new
-t -> o new
-e -> k new
-PASS
 add s -> b
 add t -> o
 add e -> k
@@ -319,7 +319,7 @@ forest
 
 Check scan candidates against summary mappings
 
-forest
+wtyvzk -> forest
 w -> f new
 t -> o agrees
 y -> r agrees
@@ -427,7 +427,7 @@ curious
 
 Check scan candidates against summary mappings
 
-curious
+ojyftjz -> curious
 o -> c new
 j -> u agrees
 y -> r agrees
@@ -539,7 +539,7 @@ mysterious
 
 Check scan candidates against summary mappings
 
-mysterious
+mrzkvyftjz -> mysterious
 m -> m new
 r -> y new
 z -> s agrees
@@ -652,7 +652,7 @@ strange
 
 Check scan candidates against summary mappings
 
-strange
+zkyaupv -> strange
 z -> s agrees
 k -> t agrees
 y -> r agrees

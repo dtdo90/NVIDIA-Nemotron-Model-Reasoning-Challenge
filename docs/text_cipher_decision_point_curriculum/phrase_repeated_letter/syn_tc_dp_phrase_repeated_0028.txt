@@ -139,7 +139,7 @@ through
 
 Check scan candidates against summary mappings
 
-through
+sjdwcvj -> through
 s -> t agrees
 j -> h new
 d -> r agrees
@@ -246,7 +246,7 @@ cave
 
 Check scan candidates against summary mappings
 
-cave
+phay -> cave
 p -> c new
 h -> a agrees
 a -> v new

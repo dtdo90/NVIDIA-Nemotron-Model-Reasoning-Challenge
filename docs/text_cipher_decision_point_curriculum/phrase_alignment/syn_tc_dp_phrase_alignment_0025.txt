@@ -139,7 +139,7 @@ follows
 
 Check scan candidates against summary mappings
 
-follows
+mlqqlda -> follows
 m -> f new
 l -> o agrees
 q -> l agrees

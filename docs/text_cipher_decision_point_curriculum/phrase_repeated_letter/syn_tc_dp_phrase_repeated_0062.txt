@@ -1,0 +1,188 @@
+Problem syn_tc_dp_phrase_repeated_0062
+Bucket: phrase_repeated_letter
+Gold answer: colorful secret
+Note: phrase_preserve_repeated_letter_pattern_extra_short
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+ujlrwi yvgxr -> forest alice
+qyvyxr -> palace
+Now, decrypt the following text: xjvjlupv wrxlri
+
+Training target:
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+ujlrwi yvgxr -> forest alice
+ujlrwi -> forest
+u -> f new
+j -> o new
+l -> r new
+r -> e new
+w -> s new
+i -> t new
+yvgxr -> alice
+y -> a new
+v -> l new
+g -> i new
+x -> c new
+r -> e agrees
+
+qyvyxr -> palace
+qyvyxr -> palace
+q -> p new
+y -> a agrees
+v -> l agrees
+y -> a agrees
+x -> c agrees
+r -> e agrees
+
+Summary character mappings
+u -> f
+j -> o
+l -> r
+r -> e
+w -> s
+i -> t
+y -> a
+v -> l
+g -> i
+x -> c
+q -> p
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+xjvjlupv wrxlri
+
+Decode target words from character mappings
+
+xjvjlupv
+x -> c
+j -> o
+v -> l
+j -> o
+l -> r
+u -> f
+p -> ? unknown
+v -> l
+xjvjlupv -> colorf?l
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match colorf?l
+above -> colorf?l no match
+alice -> colorf?l no match
+ancient -> colorf?l no match
+around -> colorf?l no match
+beyond -> colorf?l no match
+bird -> colorf?l no match
+book -> colorf?l no match
+bright -> colorf?l no match
+castle -> colorf?l no match
+cat -> colorf?l no match
+cave -> colorf?l no match
+chases -> colorf?l no match
+clever -> colorf?l no match
+colorful -> colorf?l match
+creates -> colorf?l no match
+crystal -> colorf?l no match
+curious -> colorf?l no match
+dark -> colorf?l no match
+discovers -> colorf?l no match
+door -> colorf?l no match
+dragon -> colorf?l no match
+draws -> colorf?l no match
+dreams -> colorf?l no match
+explores -> colorf?l no match
+follows -> colorf?l no match
+forest -> colorf?l no match
+found -> colorf?l no match
+garden -> colorf?l no match
+golden -> colorf?l no match
+hatter -> colorf?l no match
+hidden -> colorf?l no match
+imagines -> colorf?l no match
+in -> colorf?l no match
+inside -> colorf?l no match
+island -> colorf?l no match
+key -> colorf?l no match
+king -> colorf?l no match
+knight -> colorf?l no match
+library -> colorf?l no match
+magical -> colorf?l no match
+map -> colorf?l no match
+message -> colorf?l no match
+mirror -> colorf?l no match
+mountain -> colorf?l no match
+mouse -> colorf?l no match
+mysterious -> colorf?l no match
+near -> colorf?l no match
+ocean -> colorf?l no match
+palace -> colorf?l no match
+potion -> colorf?l no match
+princess -> colorf?l no match
+puzzle -> colorf?l no match
+queen -> colorf?l no match
+rabbit -> colorf?l no match
+reads -> colorf?l no match
+school -> colorf?l no match
+secret -> colorf?l no match
+sees -> colorf?l no match
+silver -> colorf?l no match
+story -> colorf?l no match
+strange -> colorf?l no match
+student -> colorf?l no match
+studies -> colorf?l no match
+teacher -> colorf?l no match
+the -> colorf?l no match
+through -> colorf?l no match
+tower -> colorf?l no match
+treasure -> colorf?l no match
+turtle -> colorf?l no match
+under -> colorf?l no match
+valley -> colorf?l no match
+village -> colorf?l no match
+watches -> colorf?l no match
+wise -> colorf?l no match
+wizard -> colorf?l no match
+wonderland -> colorf?l no match
+writes -> colorf?l no match
+
+Scan candidates for colorf?l
+colorful
+
+Check scan candidates against summary mappings
+
+xjvjlupv -> colorful
+x -> c agrees
+j -> o agrees
+v -> l agrees
+j -> o agrees
+l -> r agrees
+u -> f agrees
+p -> u new
+v -> l agrees
+PASS
+add p -> u
+
+choose colorful
+
+wrxlri
+w -> s
+r -> e
+x -> c
+l -> r
+r -> e
+i -> t
+wrxlri -> secret
+fully mapped
+
+choose secret
+
+Decoded phrase
+colorful secret
+
+Answer: \boxed{colorful secret}

@@ -129,7 +129,7 @@ book, door
 
 Check scan candidates against summary mappings
 
-book
+jssk -> book
 j -> b conflicts
 h -> b already exists
 s -> o agrees
@@ -138,7 +138,7 @@ k -> k conflicts
 t -> k already exists
 FAIL
 
-door
+jssk -> door
 j -> d new
 s -> o agrees
 s -> o agrees

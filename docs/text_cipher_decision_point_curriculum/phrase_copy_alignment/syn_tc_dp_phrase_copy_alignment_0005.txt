@@ -1,153 +1,107 @@
 Problem syn_tc_dp_phrase_copy_alignment_0005
 Bucket: phrase_copy_alignment
-Gold answer: imagines writes chases hidden through
-Note: phrase_copy_exact_example_cipher_phrase
+Gold answer: treasure turtle imagines
+Note: phrase_copy_fully_mapped_nontrivial_target
 
 Training prompt:
 In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
-efwoehcm ykepcm qvwmcm vettch pvkgbov -> imagines writes chases hidden through
-Now, decrypt the following text: efwoehcm ykepcm qvwmcm vettch pvkgbov
+iestoly ztlpwtm -> strange magical
+ugyyo -> queen
+Now, decrypt the following text: esytigsy egsemy pztlpoyi
 
-Solution:
-<think>
+Training target:
 We need to decode the target strictly from left to right using the character mappings.
 
 Process examples
 
-efwoehcm ykepcm qvwmcm vettch pvkgbov -> imagines writes chases hidden through
+iestoly ztlpwtm -> strange magical
+iestoly -> strange
+i -> s new
+e -> t new
+s -> r new
+t -> a new
+o -> n new
+l -> g new
+y -> e new
 
-Training target:
-efwoehcm -> imagines
-e -> i new
-f -> m new
-w -> a new
-o -> g new
-e -> i agrees
-h -> n new
-c -> e new
-m -> s new
+ztlpwtm -> magical
+z -> m new
+t -> a agrees
+l -> g agrees
+p -> i new
+w -> c new
+t -> a agrees
+m -> l new
 
-ykepcm -> writes
-y -> w new
-k -> r new
-e -> i agrees
-p -> t new
-c -> e agrees
-m -> s agrees
-
-qvwmcm -> chases
-q -> c new
-v -> h new
-w -> a agrees
-m -> s agrees
-c -> e agrees
-m -> s agrees
-
-vettch -> hidden
-v -> h agrees
-e -> i agrees
-t -> d new
-t -> d agrees
-c -> e agrees
-h -> n agrees
-
-pvkgbov -> through
-p -> t agrees
-v -> h agrees
-k -> r agrees
-g -> o new
-b -> u new
-o -> g agrees
-v -> h agrees
+ugyyo -> queen
+ugyyo -> queen
+u -> q new
+g -> u new
+y -> e agrees
+y -> e agrees
+o -> n agrees
 
 Summary character mappings
-b -> u
-c -> e
-e -> i
-f -> m
-g -> o
-h -> n
-k -> r
-m -> s
-o -> g
-p -> t
-q -> c
-t -> d
-v -> h
-w -> a
-y -> w
+e -> t
+g -> u
+i -> s
+l -> g
+m -> l
+o -> n
+p -> i
+s -> r
+t -> a
+u -> q
+w -> c
+y -> e
+z -> m
 
 Target text
-efwoehcm ykepcm qvwmcm vettch pvkgbov
+esytigsy egsemy pztlpoyi
 
 Decode target words from character mappings
 
-efwoehcm
-e -> i
-f -> m
-w -> a
-o -> g
-e -> i
-h -> n
-c -> e
-m -> s
-efwoehcm -> imagines
+esytigsy
+e -> t
+s -> r
+y -> e
+t -> a
+i -> s
+g -> u
+s -> r
+y -> e
+esytigsy -> treasure
+fully mapped
+
+choose treasure
+
+egsemy
+e -> t
+g -> u
+s -> r
+e -> t
+m -> l
+y -> e
+egsemy -> turtle
+fully mapped
+
+choose turtle
+
+pztlpoyi
+p -> i
+z -> m
+t -> a
+l -> g
+p -> i
+o -> n
+y -> e
+i -> s
+pztlpoyi -> imagines
 fully mapped
 
 choose imagines
 
-ykepcm
-y -> w
-k -> r
-e -> i
-p -> t
-c -> e
-m -> s
-ykepcm -> writes
-fully mapped
-
-choose writes
-
-qvwmcm
-q -> c
-v -> h
-w -> a
-m -> s
-c -> e
-m -> s
-qvwmcm -> chases
-fully mapped
-
-choose chases
-
-vettch
-v -> h
-e -> i
-t -> d
-t -> d
-c -> e
-h -> n
-vettch -> hidden
-fully mapped
-
-choose hidden
-
-pvkgbov
-p -> t
-v -> h
-k -> r
-g -> o
-b -> u
-o -> g
-v -> h
-pvkgbov -> through
-fully mapped
-
-choose through
-
 Decoded phrase
-imagines writes chases hidden through
+treasure turtle imagines
 
-Answer: \boxed{imagines writes chases hidden through}
-</think>
-\boxed{imagines writes chases hidden through}
+Answer: \boxed{treasure turtle imagines}

@@ -133,7 +133,7 @@ school
 
 Check scan candidates against summary mappings
 
-school
+wyqhhn -> school
 w -> s agrees
 y -> c agrees
 q -> h new
@@ -239,7 +239,7 @@ above
 
 Check scan candidates against summary mappings
 
-above
+lghbi -> above
 l -> a agrees
 g -> b new
 h -> o agrees

@@ -133,7 +133,7 @@ inside
 
 Check scan candidates against summary mappings
 
-inside
+biwbjk -> inside
 b -> i new
 i -> n agrees
 w -> s agrees

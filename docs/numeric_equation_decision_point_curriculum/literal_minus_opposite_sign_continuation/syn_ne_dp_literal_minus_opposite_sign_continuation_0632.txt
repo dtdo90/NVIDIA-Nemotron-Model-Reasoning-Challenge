@@ -1,67 +1,101 @@
 Problem syn_ne_dp_literal_minus_opposite_sign_continuation_0632
 Bucket: literal_minus_opposite_sign_continuation
 Subbucket: BA_DC_literal_minus
-Source id: syn_ne_policy_literal_minus_opposite_sign_0020
-Source mode: synthetic
-Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/non_unanimous_policy/literal_minus_opposite_sign/syn_ne_policy_literal_minus_opposite_sign_0020.txt
-Gold answer: -2
+Source mode: numeric_equation_decision_point_curriculum
+Pattern: A
+Gold answer: -12
 Pairing: BA_DC
 Operator: -
-Note: opposite_sign
+Note: x-y and y-x common outputs are positive, so continue until abs(x-y) restores the negative output
 
 Training prompt:
 In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
-02-25 = -23
-Now, determine the result for: 92-72
+31-45 = -14
+Now, determine the result for: 97-85
 
-Solution:
-<think>
+Generated COT:
 We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
 
-Query 92-72
+Query 97-85
 Query operator is -
 
 Compare example operators
-02-25 = -23 operator -
+31-45 = -14 operator -
 same
 
 Same operator examples
-02-25 = -23
+31-45 = -14
 
-Same operator RHS values are -23
+Same operator RHS values are -14
 The RHS values have length 2, so use addition, subtraction, or modular
-Try x-y,y-x,abs(x-y),min(x,y)-max(x,y),max(x,y)%min(x,y),x%y,y%x
+Try x+y,x+y-1,x+y+1,x-y,y-x,abs(x-y),min(x,y)-max(x,y),max(x,y)%min(x,y),x%y,y%x
 
 Try BA_DC first
+
+Try BA_DC with x+y for operator -
+The current format is BA_DC|x+y
+
+Example 31-45 = -14
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+13 54 67 76 67 67 76 -67 76 67- -76 76 67
+Match
+none
+
+Common
+none
+
+Try BA_DC with x+y-1 for operator -
+The current format is BA_DC|x+y-1
+
+Example 31-45 = -14
+BA DC BA+DC-1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+13 54 66 66 66 66 66 -66 66 66- -66 66 66
+Match
+none
+
+Common
+none
+
+Try BA_DC with x+y+1 for operator -
+The current format is BA_DC|x+y+1
+
+Example 31-45 = -14
+BA DC BA+DC+1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+13 54 68 86 68 68 86 -68 86 68- -86 86 68
+Match
+none
+
+Common
+none
 
 Try BA_DC with x-y for operator -
 The current format is BA_DC|x-y
 
-Example 02-25 = -23
-BA DC BA-DC op_prefix_rev
-20 52 -32 -23
+Example 31-45 = -14
+BA DC BA-DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+13 54 -41 -14 -41 -41 -14 41 14- 41- 14 14 41
 Match
-op_prefix_rev
+rev
+rev_or_op_prefix_rev_if_neg
 
 Common
-op_prefix_rev
+rev
+rev_or_op_prefix_rev_if_neg
 
 Apply format BA_DC|x-y|common to the query
 
 Query
-92-72
-BA DC BA-DC op_prefix_rev
-29 27 2 -2
-
-Training target:
-The common output formats agree on -2, but this query uses the opposite sign branch from all the examples, so continue scanning.
+97-85
+BA DC BA-DC rev rev_or_op_prefix_rev_if_neg
+79 58 21 12 12
+The common output formats agree on 12, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
 
-Example 02-25 = -23
-BA DC DC-BA op_prefix_rev
-20 52 32 -23
+Example 31-45 = -14
+BA DC DC-BA rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+13 54 41 14 41 41 14 -41 14 41- -14 14 41
 Match
 op_prefix_rev
 
@@ -71,17 +105,17 @@ op_prefix_rev
 Apply format BA_DC|y-x|common to the query
 
 Query
-92-72
+97-85
 BA DC DC-BA op_prefix_rev
-29 27 -2 -2
-The common output formats agree on -2, but this query uses the opposite sign branch from all the examples, so continue scanning.
+79 58 -21 12
+The common output formats agree on 12, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
 
-Example 02-25 = -23
-BA DC abs(BA-DC) op_prefix_rev
-20 52 32 -23
+Example 31-45 = -14
+BA DC abs(BA-DC) rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+13 54 41 14 41 41 14 -41 14 41- -14 14 41
 Match
 op_prefix_rev
 
@@ -91,12 +125,10 @@ op_prefix_rev
 Apply format BA_DC|abs(x-y)|common to the query
 
 Query
-92-72
+97-85
 BA DC abs(BA-DC) op_prefix_rev
-29 27 2 -2
-All common output formats agree on -2
+79 58 21 -12
+All common output formats agree on -12
 The output format gives the same negative sign as the same-operator example
 
-Answer: \boxed{-2}
-</think>
-\boxed{-2}
+Answer: \boxed{-12}

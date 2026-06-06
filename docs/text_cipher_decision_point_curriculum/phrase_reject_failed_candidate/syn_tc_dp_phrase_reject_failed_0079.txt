@@ -133,20 +133,20 @@ book, door
 
 Check scan candidates against summary mappings
 
-door
+ypph -> book
+y -> b new
+p -> o agrees
+p -> o agrees
+h -> k new
+PASS
+
+ypph -> door
 y -> d new
 p -> o agrees
 p -> o agrees
 h -> r conflicts
 c -> r already exists
 FAIL
-
-book
-y -> b new
-p -> o agrees
-p -> o agrees
-h -> k new
-PASS
 add y -> b
 add h -> k
 
@@ -249,7 +249,7 @@ explores
 
 Check scan candidates against summary mappings
 
-explores
+bmwipcbv -> explores
 b -> e agrees
 m -> x new
 w -> p agrees
@@ -361,7 +361,7 @@ discovers
 
 Check scan candidates against summary mappings
 
-discovers
+lfvupobcv -> discovers
 l -> d new
 f -> i new
 v -> s agrees

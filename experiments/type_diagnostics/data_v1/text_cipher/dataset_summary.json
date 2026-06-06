@@ -1,0 +1,49 @@
+{
+  "question_type": "text_cipher",
+  "category": "Text Cipher",
+  "source_csv": "data/single_phase_training_clean/single_phase_sft_v1.csv",
+  "train_csv": "experiments/type_diagnostics/data_v1/text_cipher/text_cipher.csv",
+  "split_csv": "experiments/type_diagnostics/data_v1/text_cipher/splits_80_10_10.csv",
+  "seed": 42,
+  "total": 2176,
+  "by_subtype": {
+    "decision_point_phrase_alignment": 67,
+    "decision_point_phrase_copy_alignment": 55,
+    "decision_point_phrase_reject_failed_candidate": 207,
+    "decision_point_phrase_repeated_letter": 71,
+    "standard": 1776
+  },
+  "by_source_mode": {
+    "real": 1576,
+    "single_phase_synthetic_text_cipher_confusion": 200,
+    "text_cipher_decision_point_curriculum": 400
+  },
+  "by_eval_eligible": {
+    "false": 600,
+    "true": 1576
+  },
+  "by_split_policy": {
+    "auto": 1576,
+    "train_only": 600
+  },
+  "split_counts": {
+    "eval_holdout": 158,
+    "grpo_holdout": 158,
+    "sft_train": 1860
+  },
+  "by_split_subtype": {
+    "eval_holdout": {
+      "standard": 158
+    },
+    "grpo_holdout": {
+      "standard": 158
+    },
+    "sft_train": {
+      "decision_point_phrase_alignment": 67,
+      "decision_point_phrase_copy_alignment": 55,
+      "decision_point_phrase_reject_failed_candidate": 207,
+      "decision_point_phrase_repeated_letter": 71,
+      "standard": 1460
+    }
+  }
+}

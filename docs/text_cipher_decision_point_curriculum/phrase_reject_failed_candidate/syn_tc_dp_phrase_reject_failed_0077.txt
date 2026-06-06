@@ -139,7 +139,7 @@ bright, knight
 
 Check scan candidates against summary mappings
 
-bright
+vzboyg -> bright
 v -> b conflicts
 x -> b already exists
 z -> r conflicts
@@ -150,7 +150,7 @@ y -> h agrees
 g -> t agrees
 FAIL
 
-knight
+vzboyg -> knight
 v -> k new
 z -> n new
 b -> i agrees
@@ -258,7 +258,7 @@ valley
 
 Check scan candidates against summary mappings
 
-valley
+willth -> valley
 w -> v new
 i -> a agrees
 l -> l agrees
@@ -382,7 +382,7 @@ message
 
 Check scan candidates against summary mappings
 
-message
+ptssiot -> message
 p -> m new
 t -> e agrees
 s -> s agrees

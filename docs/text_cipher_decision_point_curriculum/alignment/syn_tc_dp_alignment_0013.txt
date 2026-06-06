@@ -132,7 +132,7 @@ beyond
 
 Check scan candidates against summary mappings
 
-beyond
+bcglqz -> beyond
 b -> b new
 c -> e agrees
 g -> y agrees

@@ -128,7 +128,7 @@ chases
 
 Check scan candidates against summary mappings
 
-chases
+bokxgx -> chases
 b -> c new
 o -> h agrees
 k -> a agrees

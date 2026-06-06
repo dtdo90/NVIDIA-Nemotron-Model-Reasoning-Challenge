@@ -141,7 +141,14 @@ book, door
 
 Check scan candidates against summary mappings
 
-door
+fyyk -> book
+f -> b new
+y -> o agrees
+y -> o agrees
+k -> k new
+PASS
+
+fyyk -> door
 f -> d conflicts
 z -> d already exists
 y -> o agrees
@@ -149,13 +156,6 @@ y -> o agrees
 k -> r conflicts
 o -> r already exists
 FAIL
-
-book
-f -> b new
-y -> o agrees
-y -> o agrees
-k -> k new
-PASS
 add f -> b
 add k -> k
 
@@ -293,7 +293,7 @@ strange
 
 Check scan candidates against summary mappings
 
-strange
+dioamcw -> strange
 d -> s agrees
 i -> t agrees
 o -> r agrees

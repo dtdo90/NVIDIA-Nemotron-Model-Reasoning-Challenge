@@ -136,7 +136,7 @@ cat, map
 
 Check scan candidates against summary mappings
 
-cat
+kxg -> cat
 k -> c conflicts
 l -> c already exists
 x -> a agrees
@@ -144,7 +144,7 @@ g -> t conflicts
 z -> t already exists
 FAIL
 
-map
+kxg -> map
 k -> m new
 x -> a agrees
 g -> p new
@@ -249,7 +249,7 @@ rabbit
 
 Check scan candidates against summary mappings
 
-rabbit
+axwwsz -> rabbit
 a -> r agrees
 x -> a agrees
 w -> b new

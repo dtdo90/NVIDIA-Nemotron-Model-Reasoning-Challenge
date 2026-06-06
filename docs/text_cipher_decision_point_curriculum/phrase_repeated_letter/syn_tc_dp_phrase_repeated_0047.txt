@@ -137,7 +137,7 @@ rabbit
 
 Check scan candidates against summary mappings
 
-rabbit
+osddrl -> rabbit
 o -> r agrees
 s -> a agrees
 d -> b new

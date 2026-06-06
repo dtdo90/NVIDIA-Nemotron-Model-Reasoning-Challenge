@@ -137,7 +137,7 @@ puzzle, turtle
 
 Check scan candidates against summary mappings
 
-puzzle
+roqqpv -> puzzle
 r -> p new
 o -> u agrees
 q -> z new
@@ -145,6 +145,18 @@ q -> z new
 p -> l agrees
 v -> e agrees
 PASS
+
+roqqpv -> turtle
+r -> t conflicts
+y -> t already exists
+o -> u agrees
+q -> r conflicts
+n -> r already exists
+q -> t conflicts
+y -> t already exists
+p -> l agrees
+v -> e agrees
+FAIL
 add r -> p
 add q -> z
 
@@ -242,7 +254,7 @@ map
 
 Check scan candidates against summary mappings
 
-map
+bur -> map
 b -> m new
 u -> a agrees
 r -> p agrees
@@ -358,7 +370,7 @@ magical
 
 Check scan candidates against summary mappings
 
-magical
+buxhcup -> magical
 b -> m agrees
 u -> a agrees
 x -> g new

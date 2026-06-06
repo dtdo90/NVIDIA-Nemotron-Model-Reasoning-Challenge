@@ -132,7 +132,7 @@ found
 
 Check scan candidates against summary mappings
 
-found
+evtwj -> found
 e -> f new
 v -> o agrees
 t -> u agrees

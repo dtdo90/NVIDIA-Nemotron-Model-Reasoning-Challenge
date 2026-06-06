@@ -136,7 +136,7 @@ garden, golden, hidden
 
 Check scan candidates against summary mappings
 
-garden
+mctunk -> garden
 m -> g new
 c -> a conflicts
 z -> a already exists
@@ -147,7 +147,16 @@ n -> e agrees
 k -> n agrees
 FAIL
 
-hidden
+mctunk -> golden
+m -> g new
+c -> o new
+t -> l new
+u -> d agrees
+n -> e agrees
+k -> n agrees
+PASS
+
+mctunk -> hidden
 m -> h new
 c -> i conflicts
 d -> i already exists
@@ -157,15 +166,6 @@ u -> d agrees
 n -> e agrees
 k -> n agrees
 FAIL
-
-golden
-m -> g new
-c -> o new
-t -> l new
-u -> d agrees
-n -> e agrees
-k -> n agrees
-PASS
 add m -> g
 add c -> o
 add t -> l

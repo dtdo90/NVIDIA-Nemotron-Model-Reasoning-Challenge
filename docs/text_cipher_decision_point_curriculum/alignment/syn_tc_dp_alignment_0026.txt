@@ -130,7 +130,7 @@ around
 
 Check scan candidates against summary mappings
 
-around
+abpsmw -> around
 a -> a new
 b -> r agrees
 p -> o agrees

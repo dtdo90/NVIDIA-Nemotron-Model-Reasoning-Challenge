@@ -135,7 +135,7 @@ bright, knight
 
 Check scan candidates against summary mappings
 
-bright
+ojrylu -> bright
 o -> b conflicts
 a -> b already exists
 j -> r conflicts
@@ -146,7 +146,7 @@ l -> h new
 u -> t agrees
 FAIL
 
-knight
+ojrylu -> knight
 o -> k new
 j -> n new
 r -> i agrees
@@ -280,7 +280,7 @@ golden
 
 Check scan candidates against summary mappings
 
-golden
+ybdmtj -> golden
 y -> g agrees
 b -> o new
 d -> l agrees

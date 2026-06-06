@@ -1,0 +1,47 @@
+{
+  "question_type": "bit_manipulation",
+  "category": "Bit Manipulation",
+  "source_csv": "data/single_phase_training_clean/single_phase_sft_v1.csv",
+  "train_csv": "experiments/type_diagnostics/data_v1/bit_manipulation/bit_manipulation.csv",
+  "split_csv": "experiments/type_diagnostics/data_v1/bit_manipulation/splits_80_10_10.csv",
+  "seed": 42,
+  "total": 6117,
+  "by_subtype": {
+    "huikang_real_extra_trace": 238,
+    "huikang_real_rule_found": 1364,
+    "huikang_synthetic_matching": 4515
+  },
+  "by_source_mode": {
+    "huikang_real_bit": 1364,
+    "huikang_real_bit_extra_trace": 238,
+    "huikang_synthetic_matching": 4515
+  },
+  "by_eval_eligible": {
+    "false": 4515,
+    "true": 1602
+  },
+  "by_split_policy": {
+    "auto": 1602,
+    "train_only": 4515
+  },
+  "split_counts": {
+    "eval_holdout": 160,
+    "grpo_holdout": 160,
+    "sft_train": 5797
+  },
+  "by_split_subtype": {
+    "eval_holdout": {
+      "huikang_real_extra_trace": 24,
+      "huikang_real_rule_found": 136
+    },
+    "grpo_holdout": {
+      "huikang_real_extra_trace": 24,
+      "huikang_real_rule_found": 136
+    },
+    "sft_train": {
+      "huikang_real_extra_trace": 190,
+      "huikang_real_rule_found": 1092,
+      "huikang_synthetic_matching": 4515
+    }
+  }
+}

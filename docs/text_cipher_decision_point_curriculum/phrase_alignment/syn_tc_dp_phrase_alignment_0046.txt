@@ -138,7 +138,7 @@ bright
 
 Check scan candidates against summary mappings
 
-bright
+yxaktr -> bright
 y -> b agrees
 x -> r agrees
 a -> i agrees
@@ -259,7 +259,7 @@ follows
 
 Check scan candidates against summary mappings
 
-follows
+sdwwdhc -> follows
 s -> f agrees
 d -> o agrees
 w -> l agrees

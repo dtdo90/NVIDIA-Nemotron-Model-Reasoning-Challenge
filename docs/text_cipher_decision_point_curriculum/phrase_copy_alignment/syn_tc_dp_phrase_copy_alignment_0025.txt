@@ -1,111 +1,133 @@
 Problem syn_tc_dp_phrase_copy_alignment_0025
 Bucket: phrase_copy_alignment
-Gold answer: mountain follows inside
-Note: phrase_copy_exact_example_cipher_phrase
+Gold answer: found follows wizard student
+Note: phrase_copy_fully_mapped_nontrivial_target
 
 Training prompt:
 In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
-znovajcv mnllnts cvscex -> mountain follows inside
-Now, decrypt the following text: znovajcv mnllnts cvscex
+gnqecmyjqe iswehci -> wonderland studies
+xwrryc onynmpwy -> puzzle colorful
+Now, decrypt the following text: pnwqe pnyyngi ghrjme iswecqs
 
-Solution:
-<think>
+Training target:
 We need to decode the target strictly from left to right using the character mappings.
 
 Process examples
 
-znovajcv mnllnts cvscex -> mountain follows inside
-
-Training target:
-znovajcv -> mountain
-z -> m new
+gnqecmyjqe iswehci -> wonderland studies
+gnqecmyjqe -> wonderland
+g -> w new
 n -> o new
-o -> u new
-v -> n new
-a -> t new
-j -> a new
-c -> i new
-v -> n agrees
-
-mnllnts -> follows
-m -> f new
-n -> o agrees
-l -> l new
-l -> l agrees
-n -> o agrees
-t -> w new
-s -> s new
-
-cvscex -> inside
-c -> i agrees
-v -> n agrees
-s -> s agrees
-c -> i agrees
+q -> n new
 e -> d new
-x -> e new
+c -> e new
+m -> r new
+y -> l new
+j -> a new
+q -> n agrees
+e -> d agrees
+
+iswehci -> studies
+i -> s new
+s -> t new
+w -> u new
+e -> d agrees
+h -> i new
+c -> e agrees
+i -> s agrees
+
+xwrryc onynmpwy -> puzzle colorful
+xwrryc -> puzzle
+x -> p new
+w -> u agrees
+r -> z new
+r -> z agrees
+y -> l agrees
+c -> e agrees
+
+onynmpwy -> colorful
+o -> c new
+n -> o agrees
+y -> l agrees
+n -> o agrees
+m -> r agrees
+p -> f new
+w -> u agrees
+y -> l agrees
 
 Summary character mappings
-a -> t
-c -> i
+c -> e
 e -> d
+g -> w
+h -> i
+i -> s
 j -> a
-l -> l
-m -> f
+m -> r
 n -> o
-o -> u
-s -> s
-t -> w
-v -> n
-x -> e
-z -> m
+o -> c
+p -> f
+q -> n
+r -> z
+s -> t
+w -> u
+x -> p
+y -> l
 
 Target text
-znovajcv mnllnts cvscex
+pnwqe pnyyngi ghrjme iswecqs
 
 Decode target words from character mappings
 
-znovajcv
-z -> m
+pnwqe
+p -> f
 n -> o
-o -> u
-v -> n
-a -> t
-j -> a
-c -> i
-v -> n
-znovajcv -> mountain
+w -> u
+q -> n
+e -> d
+pnwqe -> found
 fully mapped
 
-choose mountain
+choose found
 
-mnllnts
-m -> f
+pnyyngi
+p -> f
 n -> o
-l -> l
-l -> l
+y -> l
+y -> l
 n -> o
-t -> w
-s -> s
-mnllnts -> follows
+g -> w
+i -> s
+pnyyngi -> follows
 fully mapped
 
 choose follows
 
-cvscex
-c -> i
-v -> n
-s -> s
-c -> i
+ghrjme
+g -> w
+h -> i
+r -> z
+j -> a
+m -> r
 e -> d
-x -> e
-cvscex -> inside
+ghrjme -> wizard
 fully mapped
 
-choose inside
+choose wizard
+
+iswecqs
+i -> s
+s -> t
+w -> u
+e -> d
+c -> e
+q -> n
+s -> t
+iswecqs -> student
+fully mapped
+
+choose student
 
 Decoded phrase
-mountain follows inside
+found follows wizard student
 
-Answer: \boxed{mountain follows inside}
-</think>
-\boxed{mountain follows inside}
+Answer: \boxed{found follows wizard student}

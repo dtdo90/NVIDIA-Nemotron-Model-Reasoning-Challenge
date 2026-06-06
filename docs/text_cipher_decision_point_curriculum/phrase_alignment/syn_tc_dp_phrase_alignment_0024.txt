@@ -138,7 +138,7 @@ library
 
 Check scan candidates against summary mappings
 
-library
+cbtypyi -> library
 c -> l agrees
 b -> i agrees
 t -> b agrees
@@ -247,7 +247,7 @@ teacher
 
 Check scan candidates against summary mappings
 
-teacher
+lrpokry -> teacher
 l -> t agrees
 r -> e new
 p -> a agrees

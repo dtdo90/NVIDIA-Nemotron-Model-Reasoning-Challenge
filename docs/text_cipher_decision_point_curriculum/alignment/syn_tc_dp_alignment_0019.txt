@@ -131,7 +131,7 @@ teacher
 
 Check scan candidates against summary mappings
 
-teacher
+skzvtkd -> teacher
 s -> t new
 k -> e agrees
 z -> a agrees

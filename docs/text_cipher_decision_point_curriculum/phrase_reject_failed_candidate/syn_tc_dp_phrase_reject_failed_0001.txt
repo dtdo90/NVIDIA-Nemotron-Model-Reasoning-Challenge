@@ -131,7 +131,7 @@ cat, map
 
 Check scan candidates against summary mappings
 
-cat
+wzb -> cat
 w -> c conflicts
 o -> c already exists
 z -> a agrees
@@ -139,7 +139,7 @@ b -> t conflicts
 p -> t already exists
 FAIL
 
-map
+wzb -> map
 w -> m new
 z -> a agrees
 b -> p new
@@ -244,7 +244,7 @@ island
 
 Check scan candidates against summary mappings
 
-island
+jvlzkq -> island
 j -> i new
 v -> s new
 l -> l agrees

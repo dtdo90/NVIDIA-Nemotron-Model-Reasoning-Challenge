@@ -132,7 +132,7 @@ bird, book, cave, dark, door, king, near, sees, wise
 
 Check scan candidates against summary mappings
 
-bird
+fvqt -> bird
 f -> b new
 v -> i new
 q -> r conflicts
@@ -141,7 +141,7 @@ t -> d conflicts
 a -> d already exists
 FAIL
 
-book
+fvqt -> book
 f -> b new
 v -> o conflicts
 k -> o already exists
@@ -150,7 +150,7 @@ k -> o already exists
 t -> k new
 FAIL
 
-cave
+fvqt -> cave
 f -> c conflicts
 x -> c already exists
 v -> a conflicts
@@ -160,7 +160,7 @@ t -> e conflicts
 c -> e already exists
 FAIL
 
-dark
+fvqt -> dark
 f -> d conflicts
 a -> d already exists
 v -> a conflicts
@@ -170,7 +170,7 @@ j -> r already exists
 t -> k new
 FAIL
 
-door
+fvqt -> door
 f -> d conflicts
 a -> d already exists
 v -> o conflicts
@@ -181,7 +181,14 @@ t -> r conflicts
 j -> r already exists
 FAIL
 
-near
+fvqt -> king
+f -> k new
+v -> i new
+q -> n new
+t -> g new
+PASS
+
+fvqt -> near
 f -> n new
 v -> e conflicts
 c -> e already exists
@@ -191,7 +198,7 @@ t -> r conflicts
 j -> r already exists
 FAIL
 
-sees
+fvqt -> sees
 f -> s conflicts
 b -> s already exists
 v -> e conflicts
@@ -202,7 +209,7 @@ t -> s conflicts
 b -> s already exists
 FAIL
 
-wise
+fvqt -> wise
 f -> w new
 v -> i new
 q -> s conflicts
@@ -210,13 +217,6 @@ b -> s already exists
 t -> e conflicts
 c -> e already exists
 FAIL
-
-king
-f -> k new
-v -> i new
-q -> n new
-t -> g new
-PASS
 add f -> k
 add v -> i
 add q -> n
@@ -320,7 +320,7 @@ follows
 
 Check scan candidates against summary mappings
 
-follows
+hknnksb -> follows
 h -> f new
 k -> o agrees
 n -> l agrees
@@ -429,7 +429,7 @@ clever
 
 Check scan candidates against summary mappings
 
-clever
+xnclcj -> clever
 x -> c agrees
 n -> l agrees
 c -> e agrees

@@ -137,7 +137,7 @@ studies
 
 Check scan candidates against summary mappings
 
-studies
+lbwungl -> studies
 l -> s new
 b -> t agrees
 w -> u agrees
@@ -247,7 +247,7 @@ hidden
 
 Check scan candidates against summary mappings
 
-hidden
+knuugq -> hidden
 k -> h new
 n -> i agrees
 u -> d agrees
@@ -355,7 +355,7 @@ beyond
 
 Check scan candidates against summary mappings
 
-beyond
+jgrzqu -> beyond
 j -> b new
 g -> e agrees
 r -> y agrees

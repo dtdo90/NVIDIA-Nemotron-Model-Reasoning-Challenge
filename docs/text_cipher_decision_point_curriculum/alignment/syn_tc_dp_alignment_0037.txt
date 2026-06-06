@@ -131,7 +131,7 @@ chases
 
 Check scan candidates against summary mappings
 
-chases
+ueicvc -> chases
 u -> c new
 e -> h agrees
 i -> a agrees

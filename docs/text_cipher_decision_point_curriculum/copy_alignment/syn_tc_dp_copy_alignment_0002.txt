@@ -1,12 +1,12 @@
 Problem syn_tc_dp_copy_alignment_0002
 Bucket: copy_alignment
-Gold answer: hidden
-Note: copy_exact_example_cipher_word
+Gold answer: under
+Note: copy_fully_mapped_nontrivial_target
 
 Training prompt:
 In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
-jfmmei -> hidden
-Now, decrypt the following text: jfmmei
+bwgnvuw nddh -> student door
+Now, decrypt the following text: gunvh
 
 Solution:
 <think>
@@ -14,43 +14,53 @@ We need to decode the target strictly from left to right using the character map
 
 Process examples
 
-jfmmei -> hidden
+bwgnvuw nddh -> student door
 
 Training target:
-j -> h new
-f -> i new
-m -> d new
-m -> d agrees
-e -> e new
-i -> n new
+bwgnvuw -> student
+b -> s new
+w -> t new
+g -> u new
+n -> d new
+v -> e new
+u -> n new
+w -> t agrees
+
+nddh -> door
+n -> d agrees
+d -> o new
+d -> o agrees
+h -> r new
 
 Summary character mappings
-e -> e
-f -> i
-i -> n
-j -> h
-m -> d
+b -> s
+d -> o
+g -> u
+h -> r
+n -> d
+u -> n
+v -> e
+w -> t
 
 Target text
-jfmmei
+gunvh
 
 Decode target words from character mappings
 
-jfmmei
-j -> h
-f -> i
-m -> d
-m -> d
-e -> e
-i -> n
-jfmmei -> hidden
+gunvh
+g -> u
+u -> n
+n -> d
+v -> e
+h -> r
+gunvh -> under
 fully mapped
 
-choose hidden
+choose under
 
 Decoded phrase
-hidden
+under
 
-Answer: \boxed{hidden}
+Answer: \boxed{under}
 </think>
-\boxed{hidden}
+\boxed{under}

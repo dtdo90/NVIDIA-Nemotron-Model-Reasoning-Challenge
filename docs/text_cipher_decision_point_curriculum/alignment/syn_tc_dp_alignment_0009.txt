@@ -131,7 +131,7 @@ dreams
 
 Check scan candidates against summary mappings
 
-dreams
+smvnpl -> dreams
 s -> d new
 m -> r agrees
 v -> e agrees

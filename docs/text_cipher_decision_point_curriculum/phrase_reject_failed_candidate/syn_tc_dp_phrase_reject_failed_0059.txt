@@ -133,7 +133,14 @@ book, door
 
 Check scan candidates against summary mappings
 
-door
+ryyq -> book
+r -> b new
+y -> o agrees
+y -> o agrees
+q -> k new
+PASS
+
+ryyq -> door
 r -> d conflicts
 d -> d already exists
 y -> o agrees
@@ -141,13 +148,6 @@ y -> o agrees
 q -> r conflicts
 k -> r already exists
 FAIL
-
-book
-r -> b new
-y -> o agrees
-y -> o agrees
-q -> k new
-PASS
 add r -> b
 add q -> k
 
@@ -256,7 +256,7 @@ mouse
 
 Check scan candidates against summary mappings
 
-mouse
+hyglw -> mouse
 h -> m new
 y -> o agrees
 g -> u agrees
@@ -363,7 +363,7 @@ watches
 
 Check scan candidates against summary mappings
 
-watches
+acjofwl -> watches
 a -> w new
 c -> a agrees
 j -> t agrees

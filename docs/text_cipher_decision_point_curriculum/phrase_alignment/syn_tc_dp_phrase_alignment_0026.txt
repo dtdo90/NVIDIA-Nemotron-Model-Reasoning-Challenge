@@ -132,7 +132,7 @@ above
 
 Check scan candidates against summary mappings
 
-above
+jupry -> above
 j -> a agrees
 u -> b new
 p -> o agrees
@@ -240,7 +240,7 @@ curious
 
 Check scan candidates against summary mappings
 
-curious
+knqspnl -> curious
 k -> c agrees
 n -> u new
 q -> r agrees
@@ -348,7 +348,7 @@ wizard
 
 Check scan candidates against summary mappings
 
-wizard
+hstjqv -> wizard
 h -> w new
 s -> i agrees
 t -> z new
@@ -453,7 +453,7 @@ the
 
 Check scan candidates against summary mappings
 
-the
+efy -> the
 e -> t agrees
 f -> h new
 y -> e agrees
@@ -558,7 +558,7 @@ through
 
 Check scan candidates against summary mappings
 
-through
+efqpnbf -> through
 e -> t agrees
 f -> h agrees
 q -> r agrees

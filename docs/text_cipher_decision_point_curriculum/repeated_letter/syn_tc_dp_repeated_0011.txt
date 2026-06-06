@@ -132,7 +132,7 @@ library
 
 Check scan candidates against summary mappings
 
-library
+mgudqdp -> library
 m -> l new
 g -> i agrees
 u -> b agrees

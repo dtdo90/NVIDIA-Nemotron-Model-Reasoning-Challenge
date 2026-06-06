@@ -131,7 +131,7 @@ creates
 
 Check scan candidates against summary mappings
 
-creates
+vydhfdl -> creates
 v -> c new
 y -> r agrees
 d -> e agrees

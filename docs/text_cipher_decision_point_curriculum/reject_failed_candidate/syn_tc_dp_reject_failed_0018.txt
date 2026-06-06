@@ -129,7 +129,7 @@ cave, dark
 
 Check scan candidates against summary mappings
 
-cave
+eurf -> cave
 e -> c conflicts
 z -> c already exists
 u -> a agrees
@@ -139,7 +139,7 @@ f -> e conflicts
 i -> e already exists
 FAIL
 
-dark
+eurf -> dark
 e -> d new
 u -> a agrees
 r -> r new

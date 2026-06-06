@@ -1,0 +1,199 @@
+Problem syn_tc_dp_phrase_repeated_0064
+Bucket: phrase_repeated_letter
+Gold answer: follows turtle
+Note: phrase_preserve_repeated_letter_pattern_extra_short
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+trbcwlkidb gizuwlavzu -> mysterious wonderland
+bcduwzc -> student
+Now, decrypt the following text: fiaaigb cdlcaw
+
+Training target:
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+trbcwlkidb gizuwlavzu -> mysterious wonderland
+trbcwlkidb -> mysterious
+t -> m new
+r -> y new
+b -> s new
+c -> t new
+w -> e new
+l -> r new
+k -> i new
+i -> o new
+d -> u new
+b -> s agrees
+gizuwlavzu -> wonderland
+g -> w new
+i -> o agrees
+z -> n new
+u -> d new
+w -> e agrees
+l -> r agrees
+a -> l new
+v -> a new
+z -> n agrees
+u -> d agrees
+
+bcduwzc -> student
+bcduwzc -> student
+b -> s agrees
+c -> t agrees
+d -> u agrees
+u -> d agrees
+w -> e agrees
+z -> n agrees
+c -> t agrees
+
+Summary character mappings
+t -> m
+r -> y
+b -> s
+c -> t
+w -> e
+l -> r
+k -> i
+i -> o
+d -> u
+g -> w
+z -> n
+u -> d
+a -> l
+v -> a
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+fiaaigb cdlcaw
+
+Decode target words from character mappings
+
+fiaaigb
+f -> ? unknown
+i -> o
+a -> l
+a -> l
+i -> o
+g -> w
+b -> s
+fiaaigb -> ?ollows
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?ollows
+above -> ?ollows no match
+alice -> ?ollows no match
+ancient -> ?ollows no match
+around -> ?ollows no match
+beyond -> ?ollows no match
+bird -> ?ollows no match
+book -> ?ollows no match
+bright -> ?ollows no match
+castle -> ?ollows no match
+cat -> ?ollows no match
+cave -> ?ollows no match
+chases -> ?ollows no match
+clever -> ?ollows no match
+colorful -> ?ollows no match
+creates -> ?ollows no match
+crystal -> ?ollows no match
+curious -> ?ollows no match
+dark -> ?ollows no match
+discovers -> ?ollows no match
+door -> ?ollows no match
+dragon -> ?ollows no match
+draws -> ?ollows no match
+dreams -> ?ollows no match
+explores -> ?ollows no match
+follows -> ?ollows match
+forest -> ?ollows no match
+found -> ?ollows no match
+garden -> ?ollows no match
+golden -> ?ollows no match
+hatter -> ?ollows no match
+hidden -> ?ollows no match
+imagines -> ?ollows no match
+in -> ?ollows no match
+inside -> ?ollows no match
+island -> ?ollows no match
+key -> ?ollows no match
+king -> ?ollows no match
+knight -> ?ollows no match
+library -> ?ollows no match
+magical -> ?ollows no match
+map -> ?ollows no match
+message -> ?ollows no match
+mirror -> ?ollows no match
+mountain -> ?ollows no match
+mouse -> ?ollows no match
+mysterious -> ?ollows no match
+near -> ?ollows no match
+ocean -> ?ollows no match
+palace -> ?ollows no match
+potion -> ?ollows no match
+princess -> ?ollows no match
+puzzle -> ?ollows no match
+queen -> ?ollows no match
+rabbit -> ?ollows no match
+reads -> ?ollows no match
+school -> ?ollows no match
+secret -> ?ollows no match
+sees -> ?ollows no match
+silver -> ?ollows no match
+story -> ?ollows no match
+strange -> ?ollows no match
+student -> ?ollows no match
+studies -> ?ollows no match
+teacher -> ?ollows no match
+the -> ?ollows no match
+through -> ?ollows no match
+tower -> ?ollows no match
+treasure -> ?ollows no match
+turtle -> ?ollows no match
+under -> ?ollows no match
+valley -> ?ollows no match
+village -> ?ollows no match
+watches -> ?ollows no match
+wise -> ?ollows no match
+wizard -> ?ollows no match
+wonderland -> ?ollows no match
+writes -> ?ollows no match
+
+Scan candidates for ?ollows
+follows
+
+Check scan candidates against summary mappings
+
+fiaaigb -> follows
+f -> f new
+i -> o agrees
+a -> l agrees
+a -> l agrees
+i -> o agrees
+g -> w agrees
+b -> s agrees
+PASS
+add f -> f
+
+choose follows
+
+cdlcaw
+c -> t
+d -> u
+l -> r
+c -> t
+a -> l
+w -> e
+cdlcaw -> turtle
+fully mapped
+
+choose turtle
+
+Decoded phrase
+follows turtle
+
+Answer: \boxed{follows turtle}

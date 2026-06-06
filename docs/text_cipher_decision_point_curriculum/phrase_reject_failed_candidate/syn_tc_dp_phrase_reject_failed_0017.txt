@@ -131,7 +131,7 @@ cat, map
 
 Check scan candidates against summary mappings
 
-cat
+qfh -> cat
 q -> c conflicts
 i -> c already exists
 f -> a agrees
@@ -139,7 +139,7 @@ h -> t conflicts
 t -> t already exists
 FAIL
 
-map
+qfh -> map
 q -> m new
 f -> a agrees
 h -> p new
@@ -245,7 +245,7 @@ crystal
 
 Check scan candidates against summary mappings
 
-crystal
+ikrptfj -> crystal
 i -> c agrees
 k -> r agrees
 r -> y agrees
@@ -353,7 +353,7 @@ hatter
 
 Check scan candidates against summary mappings
 
-hatter
+wfttck -> hatter
 w -> h new
 f -> a agrees
 t -> t agrees

@@ -137,7 +137,14 @@ book, door
 
 Check scan candidates against summary mappings
 
-door
+bqqn -> book
+b -> b new
+q -> o agrees
+q -> o agrees
+n -> k new
+PASS
+
+bqqn -> door
 b -> d conflicts
 m -> d already exists
 q -> o agrees
@@ -145,13 +152,6 @@ q -> o agrees
 n -> r conflicts
 c -> r already exists
 FAIL
-
-book
-b -> b new
-q -> o agrees
-q -> o agrees
-n -> k new
-PASS
 add b -> b
 add n -> k
 
@@ -253,7 +253,7 @@ teacher
 
 Check scan candidates against summary mappings
 
-teacher
+azotvzc -> teacher
 a -> t agrees
 z -> e agrees
 o -> a agrees

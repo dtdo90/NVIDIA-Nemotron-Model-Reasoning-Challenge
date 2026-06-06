@@ -131,7 +131,15 @@ found, mouse
 
 Check scan candidates against summary mappings
 
-mouse
+ximwn -> found
+x -> f new
+i -> o agrees
+m -> u agrees
+w -> n new
+n -> d new
+PASS
+
+ximwn -> mouse
 x -> m conflicts
 y -> m already exists
 i -> o agrees
@@ -141,14 +149,6 @@ r -> s already exists
 n -> e conflicts
 v -> e already exists
 FAIL
-
-found
-x -> f new
-i -> o agrees
-m -> u agrees
-w -> n new
-n -> d new
-PASS
 add x -> f
 add w -> n
 add n -> d

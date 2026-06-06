@@ -1,80 +1,122 @@
 Problem syn_tc_dp_phrase_copy_alignment_0009
 Bucket: phrase_copy_alignment
-Gold answer: near princess
-Note: phrase_copy_exact_example_cipher_phrase
+Gold answer: mysterious ancient around reads
+Note: phrase_copy_fully_mapped_nontrivial_target
 
 Training prompt:
 In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
-onav yvjohnqq -> near princess
-Now, decrypt the following text: onav yvjohnqq
+hsaxbjzx rzumsyknu -> mountain discovers
+pkw -> key
+Now, decrypt the following text: hwubknzsau jxmzkxb jnsaxr nkjru
 
-Solution:
-<think>
+Training target:
 We need to decode the target strictly from left to right using the character mappings.
 
 Process examples
 
-onav yvjohnqq -> near princess
+hsaxbjzx rzumsyknu -> mountain discovers
+hsaxbjzx -> mountain
+h -> m new
+s -> o new
+a -> u new
+x -> n new
+b -> t new
+j -> a new
+z -> i new
+x -> n agrees
 
-Training target:
-onav -> near
-o -> n new
-n -> e new
-a -> a new
-v -> r new
+rzumsyknu -> discovers
+r -> d new
+z -> i agrees
+u -> s new
+m -> c new
+s -> o agrees
+y -> v new
+k -> e new
+n -> r new
+u -> s agrees
 
-yvjohnqq -> princess
-y -> p new
-v -> r agrees
-j -> i new
-o -> n agrees
-h -> c new
-n -> e agrees
-q -> s new
-q -> s agrees
+pkw -> key
+pkw -> key
+p -> k new
+k -> e agrees
+w -> y new
 
 Summary character mappings
-a -> a
-h -> c
-j -> i
-n -> e
-o -> n
-q -> s
-v -> r
-y -> p
+a -> u
+b -> t
+h -> m
+j -> a
+k -> e
+m -> c
+n -> r
+p -> k
+r -> d
+s -> o
+u -> s
+w -> y
+x -> n
+y -> v
+z -> i
 
 Target text
-onav yvjohnqq
+hwubknzsau jxmzkxb jnsaxr nkjru
 
 Decode target words from character mappings
 
-onav
-o -> n
-n -> e
-a -> a
-v -> r
-onav -> near
+hwubknzsau
+h -> m
+w -> y
+u -> s
+b -> t
+k -> e
+n -> r
+z -> i
+s -> o
+a -> u
+u -> s
+hwubknzsau -> mysterious
 fully mapped
 
-choose near
+choose mysterious
 
-yvjohnqq
-y -> p
-v -> r
-j -> i
-o -> n
-h -> c
-n -> e
-q -> s
-q -> s
-yvjohnqq -> princess
+jxmzkxb
+j -> a
+x -> n
+m -> c
+z -> i
+k -> e
+x -> n
+b -> t
+jxmzkxb -> ancient
 fully mapped
 
-choose princess
+choose ancient
+
+jnsaxr
+j -> a
+n -> r
+s -> o
+a -> u
+x -> n
+r -> d
+jnsaxr -> around
+fully mapped
+
+choose around
+
+nkjru
+n -> r
+k -> e
+j -> a
+r -> d
+u -> s
+nkjru -> reads
+fully mapped
+
+choose reads
 
 Decoded phrase
-near princess
+mysterious ancient around reads
 
-Answer: \boxed{near princess}
-</think>
-\boxed{near princess}
+Answer: \boxed{mysterious ancient around reads}

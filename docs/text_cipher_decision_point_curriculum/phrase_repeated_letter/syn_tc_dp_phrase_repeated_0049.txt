@@ -138,7 +138,7 @@ imagines
 
 Check scan candidates against summary mappings
 
-imagines
+iytdiwlu -> imagines
 i -> i new
 y -> m new
 t -> a agrees
@@ -249,7 +249,7 @@ knight
 
 Check scan candidates against summary mappings
 
-knight
+ewidkb -> knight
 e -> k agrees
 w -> n agrees
 i -> i agrees

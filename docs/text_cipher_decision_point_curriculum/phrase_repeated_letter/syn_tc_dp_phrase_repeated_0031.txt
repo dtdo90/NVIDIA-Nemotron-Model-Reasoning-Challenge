@@ -133,7 +133,7 @@ village
 
 Check scan candidates against summary mappings
 
-village
+ghiiplx -> village
 g -> v agrees
 h -> i new
 i -> l new
@@ -243,7 +243,7 @@ secret
 
 Check scan candidates against summary mappings
 
-secret
+uxbwxo -> secret
 u -> s agrees
 x -> e agrees
 b -> c new
@@ -350,7 +350,7 @@ turtle
 
 Check scan candidates against summary mappings
 
-turtle
+orwoix -> turtle
 o -> t agrees
 r -> u new
 w -> r agrees

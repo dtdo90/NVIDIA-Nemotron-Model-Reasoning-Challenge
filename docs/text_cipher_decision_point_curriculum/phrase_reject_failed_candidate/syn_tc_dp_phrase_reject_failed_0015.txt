@@ -134,7 +134,7 @@ bird, book, cave, dark, door, king, near, sees, wise
 
 Check scan candidates against summary mappings
 
-bird
+sggy -> bird
 s -> b new
 g -> i conflicts
 u -> i already exists
@@ -144,7 +144,14 @@ y -> d conflicts
 r -> d already exists
 FAIL
 
-cave
+sggy -> book
+s -> b new
+g -> o new
+g -> o new
+y -> k new
+PASS
+
+sggy -> cave
 s -> c conflicts
 k -> c already exists
 g -> a conflicts
@@ -154,7 +161,7 @@ y -> e conflicts
 b -> e already exists
 FAIL
 
-dark
+sggy -> dark
 s -> d conflicts
 r -> d already exists
 g -> a conflicts
@@ -164,7 +171,7 @@ n -> r already exists
 y -> k new
 FAIL
 
-door
+sggy -> door
 s -> d conflicts
 r -> d already exists
 g -> o new
@@ -173,7 +180,7 @@ y -> r conflicts
 n -> r already exists
 FAIL
 
-king
+sggy -> king
 s -> k new
 g -> i conflicts
 u -> i already exists
@@ -182,7 +189,7 @@ h -> n already exists
 y -> g new
 FAIL
 
-near
+sggy -> near
 s -> n conflicts
 h -> n already exists
 g -> e conflicts
@@ -193,7 +200,7 @@ y -> r conflicts
 n -> r already exists
 FAIL
 
-sees
+sggy -> sees
 s -> s conflicts
 a -> s already exists
 g -> e conflicts
@@ -204,7 +211,7 @@ y -> s conflicts
 a -> s already exists
 FAIL
 
-wise
+sggy -> wise
 s -> w conflicts
 t -> w already exists
 g -> i conflicts
@@ -214,13 +221,6 @@ a -> s already exists
 y -> e conflicts
 b -> e already exists
 FAIL
-
-book
-s -> b new
-g -> o new
-g -> o new
-y -> k new
-PASS
 add s -> b
 add g -> o
 add y -> k
@@ -322,7 +322,7 @@ hatter
 
 Check scan candidates against summary mappings
 
-hatter
+jxllbn -> hatter
 j -> h agrees
 x -> a agrees
 l -> t new
@@ -430,7 +430,7 @@ library
 
 Check scan candidates against summary mappings
 
-library
+eusnxni -> library
 e -> l agrees
 u -> i agrees
 s -> b agrees
@@ -537,7 +537,7 @@ mouse
 
 Check scan candidates against summary mappings
 
-mouse
+cgvab -> mouse
 c -> m new
 g -> o agrees
 v -> u agrees

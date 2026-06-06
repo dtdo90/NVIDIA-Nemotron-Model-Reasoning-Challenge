@@ -1,12 +1,12 @@
 Problem syn_tc_dp_copy_alignment_0014
 Bucket: copy_alignment
-Gold answer: valley
-Note: copy_exact_example_cipher_word
+Gold answer: village
+Note: copy_fully_mapped_nontrivial_target
 
 Training prompt:
 In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
-jonnsg -> valley
-Now, decrypt the following text: jonnsg
+dunnkq xrop -> valley king
+Now, decrypt the following text: drnnupk
 
 Solution:
 <think>
@@ -14,43 +14,55 @@ We need to decode the target strictly from left to right using the character map
 
 Process examples
 
-jonnsg -> valley
+dunnkq xrop -> valley king
 
 Training target:
-j -> v new
-o -> a new
+dunnkq -> valley
+d -> v new
+u -> a new
 n -> l new
 n -> l agrees
-s -> e new
-g -> y new
+k -> e new
+q -> y new
+
+xrop -> king
+x -> k new
+r -> i new
+o -> n new
+p -> g new
 
 Summary character mappings
-g -> y
-j -> v
+d -> v
+k -> e
 n -> l
-o -> a
-s -> e
+o -> n
+p -> g
+q -> y
+r -> i
+u -> a
+x -> k
 
 Target text
-jonnsg
+drnnupk
 
 Decode target words from character mappings
 
-jonnsg
-j -> v
-o -> a
+drnnupk
+d -> v
+r -> i
 n -> l
 n -> l
-s -> e
-g -> y
-jonnsg -> valley
+u -> a
+p -> g
+k -> e
+drnnupk -> village
 fully mapped
 
-choose valley
+choose village
 
 Decoded phrase
-valley
+village
 
-Answer: \boxed{valley}
+Answer: \boxed{village}
 </think>
-\boxed{valley}
+\boxed{village}

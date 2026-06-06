@@ -137,7 +137,7 @@ chases
 
 Check scan candidates against summary mappings
 
-chases
+eslvov -> chases
 e -> c agrees
 s -> h new
 l -> a agrees
@@ -270,7 +270,7 @@ watches
 
 Check scan candidates against summary mappings
 
-watches
+alkesov -> watches
 a -> w new
 l -> a agrees
 k -> t agrees

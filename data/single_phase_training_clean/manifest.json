@@ -1,6 +1,6 @@
 {
   "output_csv": "data/single_phase_training_clean/single_phase_sft_v2.csv",
-  "total_rows": 18667,
+  "total_rows": 18477,
   "phase2_rows": 11356,
   "phase2_rows_after_replacing_bit": 9992,
   "removed_phase2_bit_rows": 1364,
@@ -23,10 +23,11 @@
   "numeric_equation_decision_point_curriculum": {
     "source_dir": "docs/numeric_equation_decision_point_curriculum",
     "source_mode": "numeric_equation_decision_point_curriculum",
-    "prompt_format": "raw_completion",
+    "prompt_format": "competition_chat_template",
     "split_policy": "train_only",
     "eval_eligible": false,
-    "append_answer_instruction": false
+    "append_answer_instruction": true,
+    "style": "normal synthetic question with full CoT trace; no Solution-prefix prompt masking"
   },
   "symbol_direct_template_total": {
     "phase2_real": 59,
@@ -60,16 +61,16 @@
     "single_phase_synthetic_direct_template": 325,
     "single_phase_synthetic_text_cipher_confusion": 200,
     "symbol_transform_untrained_eval_only": 109,
-    "synthetic": 3217,
-    "text_cipher_decision_point_curriculum": 360
+    "synthetic": 3187,
+    "text_cipher_decision_point_curriculum": 200
   },
   "category_counts": {
     "Bit Manipulation": 6117,
     "Gravity": 1597,
     "Numeral System": 1576,
-    "Numeric Equation Transformation Rules": 4763,
+    "Numeric Equation Transformation Rules": 4733,
     "Symbol Transform": 884,
-    "Text Cipher": 2136,
+    "Text Cipher": 1976,
     "Unit Conversion": 1594
   },
   "prompt_rewrite": {
@@ -81,15 +82,13 @@
   "removed_huikang_duplicate_bit_alternate_trace_note": "Rows with source_mode=synthetic in Bit Manipulation are -p0 alternate traces for real HuiKang bit problems with identical prompts/answers, so they are excluded to avoid duplicate bias and split leakage.",
   "single_phase_split_csv": "data/single_phase_training_clean/single_phase_splits_80_10_10.csv",
   "single_phase_split_counts": {
-    "eval_holdout": 973,
-    "grpo_holdout": 771,
-    "sft_train": 16809,
-    "unused": 114
+    "eval_holdout": 901,
+    "grpo_holdout": 896,
+    "sft_train": 16680
   },
-  "single_phase_split_strategy": "80/10/10 stratified per question type by diagnostic_subtype and source_mode; rows marked train-only stay in sft_train; rows marked unused are excluded from SFT and validation; symbol/numeric use an honest eval_holdout reassignment for weak or unsolved families",
+  "single_phase_split_strategy": "80/10/10 stratified per question type by diagnostic_subtype and source_mode; rows marked split_policy=train_only or eval_eligible=false stay in sft_train; eval_holdout is the optional GRPO training bucket and grpo_holdout is final local eval",
   "prompt_format_counts": {
-    "competition_chat_template": 17407,
-    "decision_point_chat_template": 1260
+    "competition_chat_template": 18477
   },
   "honest_eval_split_policy": {
     "eval_fraction": 0.2,
@@ -102,31 +101,31 @@
     "symbol_wrong_answer_source_mode": "op_ab_guess_0134_wrong",
     "symbol_correct_guess_source_mode": "op_ab_guess_0134_correct"
   },
-  "added_text_cipher_decision_point_curriculum_rows": 360,
+  "added_text_cipher_decision_point_curriculum_rows": 200,
   "text_cipher_decision_point_curriculum": {
     "source_dir": "docs/text_cipher_decision_point_curriculum",
     "source_mode": "text_cipher_decision_point_curriculum",
-    "prompt_format": "decision_point_chat_template",
+    "prompt_format": "competition_chat_template",
     "split_policy": "train_only",
     "eval_eligible": false,
-    "append_answer_instruction": false,
+    "append_answer_instruction": true,
     "bucket_counts": {
-      "alignment": 40,
-      "copy_alignment": 15,
-      "phrase_alignment": 50,
+      "phrase_alignment": 47,
       "phrase_copy_alignment": 45,
-      "phrase_reject_failed_candidate": 90,
-      "phrase_repeated_letter": 55,
-      "reject_failed_candidate": 30,
-      "repeated_letter": 35
+      "phrase_reject_failed_candidate": 57,
+      "phrase_repeated_letter": 51
     },
     "word_count_distribution": {
-      "1": 120,
-      "2": 61,
+      "2": 91,
       "3": 59,
-      "4": 80,
-      "5": 40
-    }
+      "4": 33,
+      "5": 17
+    },
+    "short_2_or_3_word_rows": 150,
+    "long_4_or_5_word_rows": 50,
+    "style": "normal synthetic question with full CoT trace; no Solution-prefix prompt masking",
+    "removed_one_word_example_rows": 295,
+    "summary_mapping_order": "first_seen_for_all_text_cipher_traces"
   },
   "removed_symbol_transform_ba_dc_sft_train_rows": 43,
   "removed_symbol_transform_ba_dc_sft_train_ids": [
@@ -194,15 +193,22 @@
     }
   },
   "symbol_transform_unused_training_rows": {
-    "count": 96,
+    "count": 0,
     "source_mode": "symbol_transform_untrained_eval_only",
-    "reason": "answer-only same-operator symbol rows are outside the approved direct-template/operator-absence training buckets",
-    "split": "unused"
+    "reason": "all answer-only symbol other rows are excluded from SFT and used as eval_holdout to hit the original train.csv 20% target",
+    "split": "eval_holdout"
   },
   "numeric_equation_unused_training_rows": {
-    "count": 18,
+    "count": 5,
     "source_mode": "numeric_equation_untrained_eval_only",
-    "reason": "answer-only unsolved numeric rows are outside the approved trace-supervised training buckets",
+    "reason": "remaining answer-only numeric rows are excluded from SFT after moving enough rows to hit the original train.csv 20% eval target",
     "split": "unused"
-  }
+  },
+  "original_train_csv_eval_targets": {
+    "numeric_equation_total": 732,
+    "numeric_equation_eval_target": 146,
+    "symbol_transform_total": 823,
+    "symbol_transform_eval_target": 165
+  },
+  "text_cipher_summary_mapping_order": "first_seen_for_all_text_cipher_traces"
 }

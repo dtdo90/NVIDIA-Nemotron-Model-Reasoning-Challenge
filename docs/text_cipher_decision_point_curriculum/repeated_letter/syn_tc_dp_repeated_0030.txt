@@ -131,7 +131,7 @@ school
 
 Check scan candidates against summary mappings
 
-school
+feyhhj -> school
 f -> s new
 e -> c agrees
 y -> h agrees

@@ -142,7 +142,7 @@ library
 
 Check scan candidates against summary mappings
 
-library
+chotmta -> library
 c -> l agrees
 h -> i agrees
 o -> b agrees
@@ -252,7 +252,7 @@ explores
 
 Check scan candidates against summary mappings
 
-explores
+luycqtlk -> explores
 l -> e agrees
 u -> x new
 y -> p new
@@ -361,7 +361,7 @@ king
 
 Check scan candidates against summary mappings
 
-king
+ehzd -> king
 e -> k new
 h -> i agrees
 z -> n agrees

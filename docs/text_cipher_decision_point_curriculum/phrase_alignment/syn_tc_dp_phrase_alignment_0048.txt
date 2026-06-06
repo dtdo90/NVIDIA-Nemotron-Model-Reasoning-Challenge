@@ -136,7 +136,7 @@ bright
 
 Check scan candidates against summary mappings
 
-bright
+ihjucy -> bright
 i -> b new
 h -> r agrees
 j -> i agrees
@@ -242,7 +242,7 @@ ocean
 
 Check scan candidates against summary mappings
 
-ocean
+pamkw -> ocean
 p -> o agrees
 a -> c agrees
 m -> e agrees

@@ -135,7 +135,7 @@ cat, key, map, the
 
 Check scan candidates against summary mappings
 
-cat
+sjf -> cat
 s -> c conflicts
 r -> c already exists
 j -> a conflicts
@@ -144,7 +144,13 @@ f -> t conflicts
 v -> t already exists
 FAIL
 
-map
+sjf -> key
+s -> k new
+j -> e new
+f -> y new
+PASS
+
+sjf -> map
 s -> m conflicts
 c -> m already exists
 j -> a conflicts
@@ -153,19 +159,13 @@ f -> p conflicts
 q -> p already exists
 FAIL
 
-the
+sjf -> the
 s -> t conflicts
 v -> t already exists
 j -> h conflicts
 n -> h already exists
 f -> e new
 FAIL
-
-key
-s -> k new
-j -> e new
-f -> y new
-PASS
 add s -> k
 add j -> e
 add f -> y
@@ -290,7 +290,7 @@ knight
 
 Check scan candidates against summary mappings
 
-knight
+steunv -> knight
 s -> k agrees
 t -> n agrees
 e -> i agrees

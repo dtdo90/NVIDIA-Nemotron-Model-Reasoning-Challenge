@@ -132,7 +132,15 @@ found, mouse
 
 Check scan candidates against summary mappings
 
-mouse
+epami -> found
+e -> f new
+p -> o agrees
+a -> u agrees
+m -> n new
+i -> d new
+PASS
+
+epami -> mouse
 e -> m conflicts
 g -> m already exists
 p -> o agrees
@@ -142,14 +150,6 @@ r -> s already exists
 i -> e conflicts
 o -> e already exists
 FAIL
-
-found
-e -> f new
-p -> o agrees
-a -> u agrees
-m -> n new
-i -> d new
-PASS
 add e -> f
 add m -> n
 add i -> d
@@ -253,7 +253,7 @@ explores
 
 Check scan candidates against summary mappings
 
-explores
+otbzplor -> explores
 o -> e agrees
 t -> x new
 b -> p new
@@ -376,7 +376,7 @@ school
 
 Check scan candidates against summary mappings
 
-school
+rjnppz -> school
 r -> s agrees
 j -> c agrees
 n -> h new

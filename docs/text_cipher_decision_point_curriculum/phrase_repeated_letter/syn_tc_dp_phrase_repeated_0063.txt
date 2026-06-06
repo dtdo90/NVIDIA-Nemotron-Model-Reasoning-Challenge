@@ -1,0 +1,183 @@
+Problem syn_tc_dp_phrase_repeated_0063
+Bucket: phrase_repeated_letter
+Gold answer: hatter alice
+Note: phrase_preserve_repeated_letter_pattern_extra_short
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+wshgiu mjqk -> castle bird
+ijmqsqn -> library
+Now, decrypt the following text: fsgguq sijwu
+
+Training target:
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+wshgiu mjqk -> castle bird
+wshgiu -> castle
+w -> c new
+s -> a new
+h -> s new
+g -> t new
+i -> l new
+u -> e new
+mjqk -> bird
+m -> b new
+j -> i new
+q -> r new
+k -> d new
+
+ijmqsqn -> library
+ijmqsqn -> library
+i -> l agrees
+j -> i agrees
+m -> b agrees
+q -> r agrees
+s -> a agrees
+q -> r agrees
+n -> y new
+
+Summary character mappings
+w -> c
+s -> a
+h -> s
+g -> t
+i -> l
+u -> e
+m -> b
+j -> i
+q -> r
+k -> d
+n -> y
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+fsgguq sijwu
+
+Decode target words from character mappings
+
+fsgguq
+f -> ? unknown
+s -> a
+g -> t
+g -> t
+u -> e
+q -> r
+fsgguq -> ?atter
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?atter
+above -> ?atter no match
+alice -> ?atter no match
+ancient -> ?atter no match
+around -> ?atter no match
+beyond -> ?atter no match
+bird -> ?atter no match
+book -> ?atter no match
+bright -> ?atter no match
+castle -> ?atter no match
+cat -> ?atter no match
+cave -> ?atter no match
+chases -> ?atter no match
+clever -> ?atter no match
+colorful -> ?atter no match
+creates -> ?atter no match
+crystal -> ?atter no match
+curious -> ?atter no match
+dark -> ?atter no match
+discovers -> ?atter no match
+door -> ?atter no match
+dragon -> ?atter no match
+draws -> ?atter no match
+dreams -> ?atter no match
+explores -> ?atter no match
+follows -> ?atter no match
+forest -> ?atter no match
+found -> ?atter no match
+garden -> ?atter no match
+golden -> ?atter no match
+hatter -> ?atter match
+hidden -> ?atter no match
+imagines -> ?atter no match
+in -> ?atter no match
+inside -> ?atter no match
+island -> ?atter no match
+key -> ?atter no match
+king -> ?atter no match
+knight -> ?atter no match
+library -> ?atter no match
+magical -> ?atter no match
+map -> ?atter no match
+message -> ?atter no match
+mirror -> ?atter no match
+mountain -> ?atter no match
+mouse -> ?atter no match
+mysterious -> ?atter no match
+near -> ?atter no match
+ocean -> ?atter no match
+palace -> ?atter no match
+potion -> ?atter no match
+princess -> ?atter no match
+puzzle -> ?atter no match
+queen -> ?atter no match
+rabbit -> ?atter no match
+reads -> ?atter no match
+school -> ?atter no match
+secret -> ?atter no match
+sees -> ?atter no match
+silver -> ?atter no match
+story -> ?atter no match
+strange -> ?atter no match
+student -> ?atter no match
+studies -> ?atter no match
+teacher -> ?atter no match
+the -> ?atter no match
+through -> ?atter no match
+tower -> ?atter no match
+treasure -> ?atter no match
+turtle -> ?atter no match
+under -> ?atter no match
+valley -> ?atter no match
+village -> ?atter no match
+watches -> ?atter no match
+wise -> ?atter no match
+wizard -> ?atter no match
+wonderland -> ?atter no match
+writes -> ?atter no match
+
+Scan candidates for ?atter
+hatter
+
+Check scan candidates against summary mappings
+
+fsgguq -> hatter
+f -> h new
+s -> a agrees
+g -> t agrees
+g -> t agrees
+u -> e agrees
+q -> r agrees
+PASS
+add f -> h
+
+choose hatter
+
+sijwu
+s -> a
+i -> l
+j -> i
+w -> c
+u -> e
+sijwu -> alice
+fully mapped
+
+choose alice
+
+Decoded phrase
+hatter alice
+
+Answer: \boxed{hatter alice}

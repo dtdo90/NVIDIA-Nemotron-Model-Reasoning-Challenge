@@ -134,7 +134,7 @@ hatter
 
 Check scan candidates against summary mappings
 
-hatter
+gerrkc -> hatter
 g -> h new
 e -> a agrees
 r -> t agrees

@@ -1,73 +1,96 @@
 Problem syn_tc_dp_phrase_copy_alignment_0002
 Bucket: phrase_copy_alignment
-Gold answer: palace the
-Note: phrase_copy_exact_example_cipher_phrase
+Gold answer: creates secret dragon
+Note: phrase_copy_fully_mapped_nontrivial_target
 
 Training prompt:
 In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
-fgxgpn zln -> palace the
-Now, decrypt the following text: fgxgpn zln
+yvxkcgt deyzjmtxy -> strange discovers
+Now, decrypt the following text: zxtkvty ytzxtv dxkgjc
 
-Solution:
-<think>
+Training target:
 We need to decode the target strictly from left to right using the character mappings.
 
 Process examples
 
-fgxgpn zln -> palace the
+yvxkcgt deyzjmtxy -> strange discovers
+yvxkcgt -> strange
+y -> s new
+v -> t new
+x -> r new
+k -> a new
+c -> n new
+g -> g new
+t -> e new
 
-Training target:
-fgxgpn -> palace
-f -> p new
-g -> a new
-x -> l new
-g -> a agrees
-p -> c new
-n -> e new
-
-zln -> the
-z -> t new
-l -> h new
-n -> e agrees
+deyzjmtxy -> discovers
+d -> d new
+e -> i new
+y -> s agrees
+z -> c new
+j -> o new
+m -> v new
+t -> e agrees
+x -> r agrees
+y -> s agrees
 
 Summary character mappings
-f -> p
-g -> a
-l -> h
-n -> e
-p -> c
-x -> l
-z -> t
+c -> n
+d -> d
+e -> i
+g -> g
+j -> o
+k -> a
+m -> v
+t -> e
+v -> t
+x -> r
+y -> s
+z -> c
 
 Target text
-fgxgpn zln
+zxtkvty ytzxtv dxkgjc
 
 Decode target words from character mappings
 
-fgxgpn
-f -> p
-g -> a
-x -> l
-g -> a
-p -> c
-n -> e
-fgxgpn -> palace
+zxtkvty
+z -> c
+x -> r
+t -> e
+k -> a
+v -> t
+t -> e
+y -> s
+zxtkvty -> creates
 fully mapped
 
-choose palace
+choose creates
 
-zln
-z -> t
-l -> h
-n -> e
-zln -> the
+ytzxtv
+y -> s
+t -> e
+z -> c
+x -> r
+t -> e
+v -> t
+ytzxtv -> secret
 fully mapped
 
-choose the
+choose secret
+
+dxkgjc
+d -> d
+x -> r
+k -> a
+g -> g
+j -> o
+c -> n
+dxkgjc -> dragon
+fully mapped
+
+choose dragon
 
 Decoded phrase
-palace the
+creates secret dragon
 
-Answer: \boxed{palace the}
-</think>
-\boxed{palace the}
+Answer: \boxed{creates secret dragon}

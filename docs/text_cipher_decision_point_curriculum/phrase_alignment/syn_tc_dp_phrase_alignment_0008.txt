@@ -142,7 +142,7 @@ explores
 
 Check scan candidates against summary mappings
 
-explores
+byrlqkba -> explores
 b -> e agrees
 y -> x new
 r -> p agrees
@@ -253,7 +253,7 @@ colorful
 
 Check scan candidates against summary mappings
 
-colorful
+gqlqkutl -> colorful
 g -> c new
 q -> o agrees
 l -> l agrees
@@ -363,7 +363,7 @@ mirror
 
 Check scan candidates against summary mappings
 
-mirror
+fekkqk -> mirror
 f -> m new
 e -> i agrees
 k -> r agrees
@@ -470,7 +470,7 @@ knight
 
 Check scan candidates against summary mappings
 
-knight
+pmesco -> knight
 p -> k new
 m -> n agrees
 e -> i agrees

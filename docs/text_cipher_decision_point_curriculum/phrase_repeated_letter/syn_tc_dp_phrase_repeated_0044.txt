@@ -136,7 +136,7 @@ curious
 
 Check scan candidates against summary mappings
 
-curious
+fnsmynp -> curious
 f -> c agrees
 n -> u new
 s -> r agrees
@@ -242,7 +242,7 @@ cave
 
 Check scan candidates against summary mappings
 
-cave
+fohr -> cave
 f -> c agrees
 o -> a agrees
 h -> v new

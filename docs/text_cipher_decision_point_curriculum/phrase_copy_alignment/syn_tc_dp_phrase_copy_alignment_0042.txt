@@ -1,104 +1,91 @@
 Problem syn_tc_dp_phrase_copy_alignment_0042
 Bucket: phrase_copy_alignment
-Gold answer: discovers chases cave
-Note: phrase_copy_exact_example_cipher_phrase
+Gold answer: wonderland mirror
+Note: phrase_copy_fully_mapped_nontrivial_target
 
 Training prompt:
 In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
-webilatcb ixkbtb ikat -> discovers chases cave
-Now, decrypt the following text: webilatcb ixkbtb ikat
+kixqah tjghld -> wizard golden
+zqm -> map
+Now, decrypt the following text: kjdhlagqdh ziaaja
 
-Solution:
-<think>
+Training target:
 We need to decode the target strictly from left to right using the character mappings.
 
 Process examples
 
-webilatcb ixkbtb ikat -> discovers chases cave
+kixqah tjghld -> wizard golden
+kixqah -> wizard
+k -> w new
+i -> i new
+x -> z new
+q -> a new
+a -> r new
+h -> d new
 
-Training target:
-webilatcb -> discovers
-w -> d new
-e -> i new
-b -> s new
-i -> c new
-l -> o new
-a -> v new
-t -> e new
-c -> r new
-b -> s agrees
+tjghld -> golden
+t -> g new
+j -> o new
+g -> l new
+h -> d agrees
+l -> e new
+d -> n new
 
-ixkbtb -> chases
-i -> c agrees
-x -> h new
-k -> a new
-b -> s agrees
-t -> e agrees
-b -> s agrees
-
-ikat -> cave
-i -> c agrees
-k -> a agrees
-a -> v agrees
-t -> e agrees
+zqm -> map
+zqm -> map
+z -> m new
+q -> a agrees
+m -> p new
 
 Summary character mappings
-a -> v
-b -> s
-c -> r
-e -> i
-i -> c
-k -> a
-l -> o
-t -> e
-w -> d
-x -> h
+a -> r
+d -> n
+g -> l
+h -> d
+i -> i
+j -> o
+k -> w
+l -> e
+m -> p
+q -> a
+t -> g
+x -> z
+z -> m
 
 Target text
-webilatcb ixkbtb ikat
+kjdhlagqdh ziaaja
 
 Decode target words from character mappings
 
-webilatcb
-w -> d
-e -> i
-b -> s
-i -> c
-l -> o
-a -> v
-t -> e
-c -> r
-b -> s
-webilatcb -> discovers
+kjdhlagqdh
+k -> w
+j -> o
+d -> n
+h -> d
+l -> e
+a -> r
+g -> l
+q -> a
+d -> n
+h -> d
+kjdhlagqdh -> wonderland
 fully mapped
 
-choose discovers
+choose wonderland
 
-ixkbtb
-i -> c
-x -> h
-k -> a
-b -> s
-t -> e
-b -> s
-ixkbtb -> chases
+ziaaja
+z -> m
+i -> i
+a -> r
+a -> r
+j -> o
+a -> r
+ziaaja -> mirror
 fully mapped
 
-choose chases
-
-ikat
-i -> c
-k -> a
-a -> v
-t -> e
-ikat -> cave
-fully mapped
-
-choose cave
+choose mirror
 
 Decoded phrase
-discovers chases cave
+wonderland mirror
 
-Answer: \boxed{discovers chases cave}
-</think>
-\boxed{discovers chases cave}
+Answer: \boxed{wonderland mirror}

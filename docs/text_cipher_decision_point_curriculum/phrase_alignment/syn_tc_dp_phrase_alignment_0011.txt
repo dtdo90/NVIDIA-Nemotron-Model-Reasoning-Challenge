@@ -135,7 +135,7 @@ dragon
 
 Check scan candidates against summary mappings
 
-dragon
+fxyptc -> dragon
 f -> d agrees
 x -> r agrees
 y -> a agrees
@@ -240,7 +240,7 @@ cave
 
 Check scan candidates against summary mappings
 
-cave
+hyuw -> cave
 h -> c agrees
 y -> a agrees
 u -> v new
@@ -345,7 +345,7 @@ valley
 
 Check scan candidates against summary mappings
 
-valley
+uybbwd -> valley
 u -> v agrees
 y -> a agrees
 b -> l agrees

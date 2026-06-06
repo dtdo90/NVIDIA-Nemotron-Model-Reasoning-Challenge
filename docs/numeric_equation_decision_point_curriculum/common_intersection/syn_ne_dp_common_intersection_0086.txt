@@ -1,102 +1,162 @@
 Problem syn_ne_dp_common_intersection_0086
 Bucket: common_intersection
 Subbucket: single
-Source id: syn_ne_policy_literal_minus_opposite_sign_0007
+Source id: syn_ne_ba_dc_sub_abs_0003
 Source mode: synthetic
-Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/non_unanimous_policy/literal_minus_opposite_sign/syn_ne_policy_literal_minus_opposite_sign_0007.txt
-Gold answer: -1
+Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/ba_dc_subtraction/abs_x_y/syn_ne_ba_dc_sub_abs_0003.txt
+Gold answer: ^31
 Pairing: BA_DC
-Operator: -
+Operator: ^
 Note: common_single_BA_DC
 
 Training prompt:
 In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
-45-75 = -3
-Now, determine the result for: 93-83
+96^44 = ^25
+12^06 = ^39
+42&02 = 44
+66:14 = 701
+Now, determine the result for: 24^37
 
-Solution:
-<think>
+Training target:
 We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
 
-Query 93-83
-Query operator is -
+Query 24^37
+Query operator is ^
 
 Compare example operators
-45-75 = -3 operator -
+96^44 = ^25 operator ^
 same
+12^06 = ^39 operator ^
+same
+42&02 = 44 operator &
+different
+66:14 = 701 operator :
+different
 
 Same operator examples
-45-75 = -3
+96^44 = ^25
+12^06 = ^39
 
-Same operator RHS values are -3
+Same operator RHS values are ^25 and ^39
 The RHS values have length 2, so use addition, subtraction, or modular
-Try x-y,y-x,abs(x-y),min(x,y)-max(x,y),max(x,y)%min(x,y),x%y,y%x
+Try x+y,x+y-1,x+y+1,x-y,y-x,abs(x-y),min(x,y)-max(x,y),max(x,y)%min(x,y),x%y,y%x
 
 Try BA_DC first
 
-Try BA_DC with x-y for operator -
+Try BA_DC with x+y for operator ^
+The current format is BA_DC|x+y
+
+Example 96^44 = ^25
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+69 44 113 311 113 113 311 ^113 311 113^ ^311 311 113
+Match
+none
+
+Example 12^06 = ^39
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+21 60 81 18 81 81 18 ^81 18 81^ ^18 18 81
+Match
+none
+
+Common
+none
+
+Try BA_DC with x+y-1 for operator ^
+The current format is BA_DC|x+y-1
+
+Example 96^44 = ^25
+BA DC BA+DC-1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+69 44 112 211 112 112 211 ^112 211 112^ ^211 211 112
+Match
+none
+
+Example 12^06 = ^39
+BA DC BA+DC-1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+21 60 80 08 80 80 08 ^80 08 80^ ^08 08 80
+Match
+none
+
+Common
+none
+
+Try BA_DC with x+y+1 for operator ^
+The current format is BA_DC|x+y+1
+
+Example 96^44 = ^25
+BA DC BA+DC+1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+69 44 114 411 114 114 411 ^114 411 114^ ^411 411 114
+Match
+none
+
+Example 12^06 = ^39
+BA DC BA+DC+1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+21 60 82 28 82 82 28 ^82 28 82^ ^28 28 82
+Match
+none
+
+Common
+none
+
+Try BA_DC with x-y for operator ^
 The current format is BA_DC|x-y
 
-Example 45-75 = -3
-BA DC BA-DC op_prefix_rev
-54 57 -3 -3
+Example 96^44 = ^25
+BA DC BA-DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+69 44 25 52 25 25 52 ^25 52 25^ ^52 52 25
 Match
-op_prefix_rev
+op_prefix
+
+Example 12^06 = ^39
+BA DC BA-DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+21 60 -39 -93 -39 ^39 ^93 ^-39 93^ -39^ ^-93 93 39
+Match
+op_prefix_if_neg
 
 Common
-op_prefix_rev
+none
 
-Apply format BA_DC|x-y|common to the query
-
-Query
-93-83
-BA DC BA-DC op_prefix_rev
-39 38 1 -1
-The common output formats agree on -1, but this query uses the opposite sign branch from all the examples, so continue scanning.
-
-Try BA_DC with y-x for operator -
+Try BA_DC with y-x for operator ^
 The current format is BA_DC|y-x
 
-Example 45-75 = -3
-BA DC DC-BA op_prefix_rev
-54 57 3 -3
+Example 96^44 = ^25
+BA DC DC-BA rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+69 44 -25 -52 -25 ^25 ^52 ^-25 52^ -25^ ^-52 52 25
 Match
-op_prefix_rev
+op_prefix_if_neg
+
+Example 12^06 = ^39
+BA DC DC-BA rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+21 60 39 93 39 39 93 ^39 93 39^ ^93 93 39
+Match
+op_prefix
 
 Common
-op_prefix_rev
+none
 
-Apply format BA_DC|y-x|common to the query
-
-Query
-93-83
-BA DC DC-BA op_prefix_rev
-39 38 -1 -1
-The common output formats agree on -1, but this query uses the opposite sign branch from all the examples, so continue scanning.
-
-Try BA_DC with abs(x-y) for operator -
+Try BA_DC with abs(x-y) for operator ^
 The current format is BA_DC|abs(x-y)
 
-Example 45-75 = -3
-BA DC abs(BA-DC) op_prefix_rev
-54 57 3 -3
+Example 96^44 = ^25
+BA DC abs(BA-DC) rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+69 44 25 52 25 25 52 ^25 52 25^ ^52 52 25
 Match
-op_prefix_rev
+op_prefix
+
+Example 12^06 = ^39
+BA DC abs(BA-DC) rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+21 60 39 93 39 39 93 ^39 93 39^ ^93 93 39
+Match
+op_prefix
 
 Common
-
-Training target:
-op_prefix_rev
+op_prefix
 
 Apply format BA_DC|abs(x-y)|common to the query
 
 Query
-93-83
-BA DC abs(BA-DC) op_prefix_rev
-39 38 1 -1
-All common output formats agree on -1
-The output format gives the same negative sign as the same-operator example
+24^37
+BA DC abs(BA-DC) op_prefix
+42 73 31 ^31
+All common output formats agree on ^31
 
-Answer: \boxed{-1}
-</think>
-\boxed{-1}
+Answer: \boxed{^31}

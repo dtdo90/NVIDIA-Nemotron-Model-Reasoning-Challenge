@@ -139,7 +139,7 @@ potion
 
 Check scan candidates against summary mappings
 
-potion
+dqelqw -> potion
 d -> p new
 q -> o new
 e -> t agrees

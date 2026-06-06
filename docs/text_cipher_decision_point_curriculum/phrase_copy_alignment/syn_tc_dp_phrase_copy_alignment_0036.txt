@@ -1,128 +1,133 @@
 Problem syn_tc_dp_phrase_copy_alignment_0036
 Bucket: phrase_copy_alignment
-Gold answer: colorful draws wise princess
-Note: phrase_copy_exact_example_cipher_phrase
+Gold answer: treasure bright mountain tower
+Note: phrase_copy_fully_mapped_nontrivial_target
 
 Training prompt:
 In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
-nwvwuepv oujst sgti zuglnitt -> colorful draws wise princess
-Now, decrypt the following text: nwvwuepv oujst sgti zuglnitt
+hwgrzpfvmg lpcuvt -> mysterious dragon
+jcrxizg evvq -> watches book
+Now, decrypt the following text: rpzcgmpz epfuir hvmtrcft rvjzp
 
-Solution:
-<think>
+Training target:
 We need to decode the target strictly from left to right using the character mappings.
 
 Process examples
 
-nwvwuepv oujst sgti zuglnitt -> colorful draws wise princess
+hwgrzpfvmg lpcuvt -> mysterious dragon
+hwgrzpfvmg -> mysterious
+h -> m new
+w -> y new
+g -> s new
+r -> t new
+z -> e new
+p -> r new
+f -> i new
+v -> o new
+m -> u new
+g -> s agrees
 
-Training target:
-nwvwuepv -> colorful
-n -> c new
-w -> o new
-v -> l new
-w -> o agrees
-u -> r new
-e -> f new
-p -> u new
-v -> l agrees
+lpcuvt -> dragon
+l -> d new
+p -> r agrees
+c -> a new
+u -> g new
+v -> o agrees
+t -> n new
 
-oujst -> draws
-o -> d new
-u -> r agrees
-j -> a new
-s -> w new
-t -> s new
+jcrxizg evvq -> watches book
+jcrxizg -> watches
+j -> w new
+c -> a agrees
+r -> t agrees
+x -> c new
+i -> h new
+z -> e agrees
+g -> s agrees
 
-sgti -> wise
-s -> w agrees
-g -> i new
-t -> s agrees
-i -> e new
-
-zuglnitt -> princess
-z -> p new
-u -> r agrees
-g -> i agrees
-l -> n new
-n -> c agrees
-i -> e agrees
-t -> s agrees
-t -> s agrees
+evvq -> book
+e -> b new
+v -> o agrees
+v -> o agrees
+q -> k new
 
 Summary character mappings
-e -> f
-g -> i
-i -> e
-j -> a
-l -> n
-n -> c
-o -> d
-p -> u
-s -> w
-t -> s
-u -> r
-v -> l
-w -> o
-z -> p
+c -> a
+e -> b
+f -> i
+g -> s
+h -> m
+i -> h
+j -> w
+l -> d
+m -> u
+p -> r
+q -> k
+r -> t
+t -> n
+u -> g
+v -> o
+w -> y
+x -> c
+z -> e
 
 Target text
-nwvwuepv oujst sgti zuglnitt
+rpzcgmpz epfuir hvmtrcft rvjzp
 
 Decode target words from character mappings
 
-nwvwuepv
-n -> c
-w -> o
-v -> l
-w -> o
-u -> r
-e -> f
-p -> u
-v -> l
-nwvwuepv -> colorful
+rpzcgmpz
+r -> t
+p -> r
+z -> e
+c -> a
+g -> s
+m -> u
+p -> r
+z -> e
+rpzcgmpz -> treasure
 fully mapped
 
-choose colorful
+choose treasure
 
-oujst
-o -> d
-u -> r
-j -> a
-s -> w
-t -> s
-oujst -> draws
+epfuir
+e -> b
+p -> r
+f -> i
+u -> g
+i -> h
+r -> t
+epfuir -> bright
 fully mapped
 
-choose draws
+choose bright
 
-sgti
-s -> w
-g -> i
-t -> s
-i -> e
-sgti -> wise
+hvmtrcft
+h -> m
+v -> o
+m -> u
+t -> n
+r -> t
+c -> a
+f -> i
+t -> n
+hvmtrcft -> mountain
 fully mapped
 
-choose wise
+choose mountain
 
-zuglnitt
-z -> p
-u -> r
-g -> i
-l -> n
-n -> c
-i -> e
-t -> s
-t -> s
-zuglnitt -> princess
+rvjzp
+r -> t
+v -> o
+j -> w
+z -> e
+p -> r
+rvjzp -> tower
 fully mapped
 
-choose princess
+choose tower
 
 Decoded phrase
-colorful draws wise princess
+treasure bright mountain tower
 
-Answer: \boxed{colorful draws wise princess}
-</think>
-\boxed{colorful draws wise princess}
+Answer: \boxed{treasure bright mountain tower}

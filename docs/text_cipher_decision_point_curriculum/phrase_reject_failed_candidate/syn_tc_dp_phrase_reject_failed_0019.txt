@@ -135,7 +135,7 @@ bright, knight
 
 Check scan candidates against summary mappings
 
-bright
+jesqgy -> bright
 j -> b conflicts
 o -> b already exists
 e -> r conflicts
@@ -146,7 +146,7 @@ g -> h new
 y -> t agrees
 FAIL
 
-knight
+jesqgy -> knight
 j -> k new
 e -> n new
 s -> i agrees
@@ -280,7 +280,7 @@ under
 
 Check scan candidates against summary mappings
 
-under
+mexnw -> under
 m -> u agrees
 e -> n agrees
 x -> d new

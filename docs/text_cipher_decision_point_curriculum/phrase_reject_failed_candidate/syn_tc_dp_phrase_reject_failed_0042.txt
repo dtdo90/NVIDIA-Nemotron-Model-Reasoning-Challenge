@@ -130,20 +130,20 @@ book, door
 
 Check scan candidates against summary mappings
 
-door
+zmmk -> book
+z -> b new
+m -> o agrees
+m -> o agrees
+k -> k new
+PASS
+
+zmmk -> door
 z -> d conflicts
 l -> d already exists
 m -> o agrees
 m -> o agrees
 k -> r new
 FAIL
-
-book
-z -> b new
-m -> o agrees
-m -> o agrees
-k -> k new
-PASS
 add z -> b
 add k -> k
 
@@ -254,7 +254,7 @@ tower
 
 Check scan candidates against summary mappings
 
-tower
+pmfiw -> tower
 p -> t new
 m -> o agrees
 f -> w new
@@ -374,7 +374,7 @@ forest
 
 Check scan candidates against summary mappings
 
-forest
+amwixp -> forest
 a -> f new
 m -> o agrees
 w -> r agrees

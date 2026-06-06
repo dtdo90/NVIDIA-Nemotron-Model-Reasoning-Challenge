@@ -1,102 +1,138 @@
 Problem syn_ne_dp_common_intersection_0058
 Bucket: common_intersection
 Subbucket: single
-Source id: syn_ne_policy_literal_minus_opposite_sign_0012
+Source id: syn_ne_postfix_ba_dc_yminusx_0012
 Source mode: synthetic
-Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/non_unanimous_policy/literal_minus_opposite_sign/syn_ne_policy_literal_minus_opposite_sign_0012.txt
-Gold answer: -04
+Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/prefix_postfix/syn_ne_postfix_ba_dc_yminusx_0012.txt
+Gold answer: 31%
 Pairing: BA_DC
-Operator: -
+Operator: %
 Note: common_single_BA_DC
 
 Training prompt:
 In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
-71-24 = -52
-Now, determine the result for: 45-41
+03%26 = 32%
+62%16 = 35%
+Now, determine the result for: 21%34
 
-Solution:
-<think>
+Training target:
 We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
 
-Query 45-41
-Query operator is -
+Query 21%34
+Query operator is %
 
 Compare example operators
-71-24 = -52 operator -
+03%26 = 32% operator %
+same
+62%16 = 35% operator %
 same
 
 Same operator examples
-71-24 = -52
+03%26 = 32%
+62%16 = 35%
 
-Same operator RHS values are -52
+Same operator RHS values are 32% and 35%
 The RHS values have length 2, so use addition, subtraction, or modular
-Try x-y,y-x,abs(x-y),min(x,y)-max(x,y),max(x,y)%min(x,y),x%y,y%x
+Try x+y,x+y-1,x+y+1,x-y,y-x,abs(x-y),min(x,y)-max(x,y),max(x,y)%min(x,y),x%y,y%x
 
 Try BA_DC first
 
-Try BA_DC with x-y for operator -
+Try BA_DC with x+y for operator %
+The current format is BA_DC|x+y
+
+Example 03%26 = 32%
+BA DC BA+DC plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+30 62 92 92 29 92 29 %92 29 92% %29 29 92
+Match
+none
+
+Example 62%16 = 35%
+BA DC BA+DC plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+26 61 87 87 78 87 78 %87 78 87% %78 78 87
+Match
+none
+
+Common
+none
+
+Try BA_DC with x+y-1 for operator %
+The current format is BA_DC|x+y-1
+
+Example 03%26 = 32%
+BA DC BA+DC-1 plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+30 62 91 91 19 91 19 %91 19 91% %19 19 91
+Match
+none
+
+Example 62%16 = 35%
+BA DC BA+DC-1 plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+26 61 86 86 68 86 68 %86 68 86% %68 68 86
+Match
+none
+
+Common
+none
+
+Try BA_DC with x+y+1 for operator %
+The current format is BA_DC|x+y+1
+
+Example 03%26 = 32%
+BA DC BA+DC+1 plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+30 62 93 93 39 93 39 %93 39 93% %39 39 93
+Match
+none
+
+Example 62%16 = 35%
+BA DC BA+DC+1 plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+26 61 88 88 88 88 88 %88 88 88% %88 88 88
+Match
+none
+
+Common
+none
+
+Try BA_DC with x-y for operator %
 The current format is BA_DC|x-y
 
-Example 71-24 = -52
-BA DC BA-DC op_prefix_rev
-17 42 -25 -52
+Example 03%26 = 32%
+BA DC BA-DC plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+30 62 -32 -32 -23 %32 %23 %-32 23% -32% %-23 23 32
 Match
-op_prefix_rev
+none
+
+Example 62%16 = 35%
+BA DC BA-DC plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+26 61 -35 -35 -53 %35 %53 %-35 53% -35% %-53 53 35
+Match
+none
 
 Common
+none
 
-Training target:
-op_prefix_rev
-
-Apply format BA_DC|x-y|common to the query
-
-Query
-45-41
-BA DC BA-DC op_prefix_rev
-54 14 40 -04
-The common output formats agree on -04, but this query uses the opposite sign branch from all the examples, so continue scanning.
-
-Try BA_DC with y-x for operator -
+Try BA_DC with y-x for operator %
 The current format is BA_DC|y-x
 
-Example 71-24 = -52
-BA DC DC-BA op_prefix_rev
-17 42 25 -52
+Example 03%26 = 32%
+BA DC DC-BA plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+30 62 32 32 23 32 23 %32 23 32% %23 23 32
 Match
-op_prefix_rev
+op_suffix
+
+Example 62%16 = 35%
+BA DC DC-BA plain rev op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+26 61 35 35 53 35 53 %35 53 35% %53 53 35
+Match
+op_suffix
 
 Common
-op_prefix_rev
+op_suffix
 
 Apply format BA_DC|y-x|common to the query
 
 Query
-45-41
-BA DC DC-BA op_prefix_rev
-54 14 -40 -04
-The common output formats agree on -04, but this query uses the opposite sign branch from all the examples, so continue scanning.
+21%34
+BA DC DC-BA op_suffix
+12 43 31 31%
+All common output formats agree on 31%
 
-Try BA_DC with abs(x-y) for operator -
-The current format is BA_DC|abs(x-y)
-
-Example 71-24 = -52
-BA DC abs(BA-DC) op_prefix_rev
-17 42 25 -52
-Match
-op_prefix_rev
-
-Common
-op_prefix_rev
-
-Apply format BA_DC|abs(x-y)|common to the query
-
-Query
-45-41
-BA DC abs(BA-DC) op_prefix_rev
-54 14 40 -04
-All common output formats agree on -04
-The output format gives the same negative sign as the same-operator example
-
-Answer: \boxed{-04}
-</think>
-\boxed{-04}
+Answer: \boxed{31%}

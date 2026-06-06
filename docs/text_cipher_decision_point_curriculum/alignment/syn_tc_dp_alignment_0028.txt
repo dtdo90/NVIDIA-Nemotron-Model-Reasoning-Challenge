@@ -131,7 +131,7 @@ wizard
 
 Check scan candidates against summary mappings
 
-wizard
+ksdlye -> wizard
 k -> w new
 s -> i agrees
 d -> z agrees

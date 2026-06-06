@@ -129,20 +129,20 @@ bird, dark
 
 Check scan candidates against summary mappings
 
-dark
+yrdq -> bird
+y -> b new
+r -> i new
+d -> r agrees
+q -> d new
+PASS
+
+yrdq -> dark
 y -> d new
 r -> a conflicts
 p -> a already exists
 d -> r agrees
 q -> k new
 FAIL
-
-bird
-y -> b new
-r -> i new
-d -> r agrees
-q -> d new
-PASS
 add y -> b
 add r -> i
 add q -> d

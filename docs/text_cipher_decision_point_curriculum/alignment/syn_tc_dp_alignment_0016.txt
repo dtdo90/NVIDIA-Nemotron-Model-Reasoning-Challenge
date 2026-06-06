@@ -132,7 +132,7 @@ studies
 
 Check scan candidates against summary mappings
 
-studies
+akyxfda -> studies
 a -> s new
 k -> t agrees
 y -> u agrees

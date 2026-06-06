@@ -1,77 +1,112 @@
 Problem syn_tc_dp_phrase_copy_alignment_0024
 Bucket: phrase_copy_alignment
-Gold answer: hatter tower
-Note: phrase_copy_exact_example_cipher_phrase
+Gold answer: inside valley creates sees
+Note: phrase_copy_fully_mapped_nontrivial_target
 
 Training prompt:
 In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
-pnjjfe jzyfe -> hatter tower
-Now, decrypt the following text: pnjjfe jzyfe
+iumyfbv ktoozl -> crystal hidden
+ibhz -> cave
+Now, decrypt the following text: tlytoz hbvvzm iuzbfzy yzzy
 
-Solution:
-<think>
+Training target:
 We need to decode the target strictly from left to right using the character mappings.
 
 Process examples
 
-pnjjfe jzyfe -> hatter tower
+iumyfbv ktoozl -> crystal hidden
+iumyfbv -> crystal
+i -> c new
+u -> r new
+m -> y new
+y -> s new
+f -> t new
+b -> a new
+v -> l new
 
-Training target:
-pnjjfe -> hatter
-p -> h new
-n -> a new
-j -> t new
-j -> t agrees
-f -> e new
-e -> r new
+ktoozl -> hidden
+k -> h new
+t -> i new
+o -> d new
+o -> d agrees
+z -> e new
+l -> n new
 
-jzyfe -> tower
-j -> t agrees
-z -> o new
-y -> w new
-f -> e agrees
-e -> r agrees
+ibhz -> cave
+ibhz -> cave
+i -> c agrees
+b -> a agrees
+h -> v new
+z -> e agrees
 
 Summary character mappings
-e -> r
-f -> e
-j -> t
-n -> a
-p -> h
-y -> w
-z -> o
+b -> a
+f -> t
+h -> v
+i -> c
+k -> h
+l -> n
+m -> y
+o -> d
+t -> i
+u -> r
+v -> l
+y -> s
+z -> e
 
 Target text
-pnjjfe jzyfe
+tlytoz hbvvzm iuzbfzy yzzy
 
 Decode target words from character mappings
 
-pnjjfe
-p -> h
-n -> a
-j -> t
-j -> t
-f -> e
-e -> r
-pnjjfe -> hatter
+tlytoz
+t -> i
+l -> n
+y -> s
+t -> i
+o -> d
+z -> e
+tlytoz -> inside
 fully mapped
 
-choose hatter
+choose inside
 
-jzyfe
-j -> t
-z -> o
-y -> w
-f -> e
-e -> r
-jzyfe -> tower
+hbvvzm
+h -> v
+b -> a
+v -> l
+v -> l
+z -> e
+m -> y
+hbvvzm -> valley
 fully mapped
 
-choose tower
+choose valley
+
+iuzbfzy
+i -> c
+u -> r
+z -> e
+b -> a
+f -> t
+z -> e
+y -> s
+iuzbfzy -> creates
+fully mapped
+
+choose creates
+
+yzzy
+y -> s
+z -> e
+z -> e
+y -> s
+yzzy -> sees
+fully mapped
+
+choose sees
 
 Decoded phrase
-hatter tower
+inside valley creates sees
 
-Answer: \boxed{hatter tower}
-</think>
-\boxed{hatter tower}
+Answer: \boxed{inside valley creates sees}

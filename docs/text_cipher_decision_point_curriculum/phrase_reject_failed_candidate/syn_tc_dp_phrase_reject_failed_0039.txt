@@ -140,20 +140,20 @@ book, door
 
 Check scan candidates against summary mappings
 
-door
+ussz -> book
+u -> b new
+s -> o agrees
+s -> o agrees
+z -> k new
+PASS
+
+ussz -> door
 u -> d new
 s -> o agrees
 s -> o agrees
 z -> r conflicts
 h -> r already exists
 FAIL
-
-book
-u -> b new
-s -> o agrees
-s -> o agrees
-z -> k new
-PASS
 add u -> b
 add z -> k
 
@@ -254,7 +254,7 @@ golden
 
 Check scan candidates against summary mappings
 
-golden
+fstraj -> golden
 f -> g agrees
 s -> o agrees
 t -> l agrees

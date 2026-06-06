@@ -131,7 +131,7 @@ potion
 
 Check scan candidates against summary mappings
 
-potion
+zepreo -> potion
 z -> p new
 e -> o agrees
 p -> t agrees

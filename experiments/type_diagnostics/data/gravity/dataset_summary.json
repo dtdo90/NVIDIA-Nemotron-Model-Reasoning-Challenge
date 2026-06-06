@@ -1,9 +1,9 @@
 {
   "question_type": "gravity",
   "category": "Gravity",
-  "source_csv": "/Users/taido/Desktop/Tai/NVIDIA Nemotron Model Reasoning/data/single_phase_training_clean/single_phase_sft_v2.csv",
-  "train_csv": "/Users/taido/Desktop/Tai/NVIDIA Nemotron Model Reasoning/experiments/type_diagnostics/data/gravity/gravity.csv",
-  "split_csv": "/Users/taido/Desktop/Tai/NVIDIA Nemotron Model Reasoning/experiments/type_diagnostics/data/gravity/splits_80_10_10.csv",
+  "source_csv": "data/single_phase_training_clean/single_phase_sft_v2.csv",
+  "train_csv": "experiments/type_diagnostics/data/gravity/gravity.csv",
+  "split_csv": "experiments/type_diagnostics/data/gravity/splits_80_10_10.csv",
   "seed": 42,
   "total": 1597,
   "by_subtype": {
@@ -24,14 +24,14 @@
     "sft_train": 1277
   },
   "by_split_subtype": {
-    "sft_train": {
-      "standard": 1277
-    },
     "eval_holdout": {
       "standard": 160
     },
     "grpo_holdout": {
       "standard": 160
+    },
+    "sft_train": {
+      "standard": 1277
     }
   }
 }

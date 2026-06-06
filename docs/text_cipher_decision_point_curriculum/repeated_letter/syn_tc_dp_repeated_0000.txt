@@ -135,7 +135,7 @@ wonderland
 
 Check scan candidates against summary mappings
 
-wonderland
+auhqdpvnhq -> wonderland
 a -> w new
 u -> o agrees
 h -> n agrees

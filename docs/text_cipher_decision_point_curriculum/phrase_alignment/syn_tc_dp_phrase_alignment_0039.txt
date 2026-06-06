@@ -138,7 +138,7 @@ follows
 
 Check scan candidates against summary mappings
 
-follows
+rippinu -> follows
 r -> f new
 i -> o agrees
 p -> l agrees
@@ -246,7 +246,7 @@ under
 
 Check scan candidates against summary mappings
 
-under
+qmswz -> under
 q -> u new
 m -> n agrees
 s -> d agrees

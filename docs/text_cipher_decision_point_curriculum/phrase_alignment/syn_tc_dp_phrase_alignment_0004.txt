@@ -141,7 +141,7 @@ dragon
 
 Check scan candidates against summary mappings
 
-dragon
+sgmaoy -> dragon
 s -> d agrees
 g -> r agrees
 m -> a agrees
@@ -262,7 +262,7 @@ explores
 
 Check scan candidates against summary mappings
 
-explores
+tquvogtj -> explores
 t -> e agrees
 q -> x new
 u -> p agrees
@@ -372,7 +372,7 @@ village
 
 Check scan candidates against summary mappings
 
-village
+ezvvmat -> village
 e -> v new
 z -> i agrees
 v -> l agrees

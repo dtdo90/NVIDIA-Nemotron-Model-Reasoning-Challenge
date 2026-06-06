@@ -140,7 +140,7 @@ forest
 
 Check scan candidates against summary mappings
 
-forest
+bsyerc -> forest
 b -> f new
 s -> o agrees
 y -> r agrees
@@ -247,7 +247,7 @@ puzzle, turtle
 
 Check scan candidates against summary mappings
 
-puzzle
+jtxxde -> puzzle
 j -> p new
 t -> u agrees
 x -> z new
@@ -255,6 +255,18 @@ x -> z new
 d -> l agrees
 e -> e agrees
 PASS
+
+jtxxde -> turtle
+j -> t conflicts
+c -> t already exists
+t -> u agrees
+x -> r conflicts
+y -> r already exists
+x -> t conflicts
+c -> t already exists
+d -> l agrees
+e -> e agrees
+FAIL
 add j -> p
 add x -> z
 
@@ -370,7 +382,7 @@ bright
 
 Check scan candidates against summary mappings
 
-bright
+oyfgmc -> bright
 o -> b agrees
 y -> r agrees
 f -> i agrees

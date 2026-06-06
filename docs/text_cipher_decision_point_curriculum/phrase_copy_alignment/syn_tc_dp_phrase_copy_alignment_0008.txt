@@ -1,125 +1,106 @@
 Problem syn_tc_dp_phrase_copy_alignment_0008
 Bucket: phrase_copy_alignment
-Gold answer: castle hatter through hatter
-Note: phrase_copy_exact_example_cipher_phrase
+Gold answer: king crystal turtle
+Note: phrase_copy_fully_mapped_nontrivial_target
 
 Training prompt:
 In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
-dzsypc lzyyck ylkguel lzyyck -> castle hatter through hatter
-Now, decrypt the following text: dzsypc lzyyck ylkguel lzyyck
+vequolx uzadx -> strange alice
+sxy wixxo -> key queen
+Now, decrypt the following text: saol dqyveuz eiqezx
 
-Solution:
-<think>
+Training target:
 We need to decode the target strictly from left to right using the character mappings.
 
 Process examples
 
-dzsypc lzyyck ylkguel lzyyck -> castle hatter through hatter
+vequolx uzadx -> strange alice
+vequolx -> strange
+v -> s new
+e -> t new
+q -> r new
+u -> a new
+o -> n new
+l -> g new
+x -> e new
 
-Training target:
-dzsypc -> castle
+uzadx -> alice
+u -> a agrees
+z -> l new
+a -> i new
 d -> c new
-z -> a new
-s -> s new
-y -> t new
-p -> l new
-c -> e new
+x -> e agrees
 
-lzyyck -> hatter
-l -> h new
-z -> a agrees
-y -> t agrees
-y -> t agrees
-c -> e agrees
-k -> r new
+sxy wixxo -> key queen
+sxy -> key
+s -> k new
+x -> e agrees
+y -> y new
 
-ylkguel -> through
-y -> t agrees
-l -> h agrees
-k -> r agrees
-g -> o new
-u -> u new
-e -> g new
-l -> h agrees
-
-lzyyck -> hatter
-l -> h agrees
-z -> a agrees
-y -> t agrees
-y -> t agrees
-c -> e agrees
-k -> r agrees
+wixxo -> queen
+w -> q new
+i -> u new
+x -> e agrees
+x -> e agrees
+o -> n agrees
 
 Summary character mappings
-c -> e
+a -> i
 d -> c
-e -> g
-g -> o
-k -> r
-l -> h
-p -> l
-s -> s
-u -> u
-y -> t
-z -> a
+e -> t
+i -> u
+l -> g
+o -> n
+q -> r
+s -> k
+u -> a
+v -> s
+w -> q
+x -> e
+y -> y
+z -> l
 
 Target text
-dzsypc lzyyck ylkguel lzyyck
+saol dqyveuz eiqezx
 
 Decode target words from character mappings
 
-dzsypc
+saol
+s -> k
+a -> i
+o -> n
+l -> g
+saol -> king
+fully mapped
+
+choose king
+
+dqyveuz
 d -> c
-z -> a
-s -> s
-y -> t
-p -> l
-c -> e
-dzsypc -> castle
+q -> r
+y -> y
+v -> s
+e -> t
+u -> a
+z -> l
+dqyveuz -> crystal
 fully mapped
 
-choose castle
+choose crystal
 
-lzyyck
-l -> h
-z -> a
-y -> t
-y -> t
-c -> e
-k -> r
-lzyyck -> hatter
+eiqezx
+e -> t
+i -> u
+q -> r
+e -> t
+z -> l
+x -> e
+eiqezx -> turtle
 fully mapped
 
-choose hatter
-
-ylkguel
-y -> t
-l -> h
-k -> r
-g -> o
-u -> u
-e -> g
-l -> h
-ylkguel -> through
-fully mapped
-
-choose through
-
-lzyyck
-l -> h
-z -> a
-y -> t
-y -> t
-c -> e
-k -> r
-lzyyck -> hatter
-fully mapped
-
-choose hatter
+choose turtle
 
 Decoded phrase
-castle hatter through hatter
+king crystal turtle
 
-Answer: \boxed{castle hatter through hatter}
-</think>
-\boxed{castle hatter through hatter}
+Answer: \boxed{king crystal turtle}

@@ -138,7 +138,7 @@ potion
 
 Check scan candidates against summary mappings
 
-potion
+lmhfmq -> potion
 l -> p new
 m -> o new
 h -> t agrees
@@ -247,7 +247,7 @@ follows
 
 Check scan candidates against summary mappings
 
-follows
+umnnmgz -> follows
 u -> f new
 m -> o agrees
 n -> l agrees
@@ -356,7 +356,7 @@ magical
 
 Check scan candidates against summary mappings
 
-magical
+vojfcon -> magical
 v -> m new
 o -> a agrees
 j -> g agrees

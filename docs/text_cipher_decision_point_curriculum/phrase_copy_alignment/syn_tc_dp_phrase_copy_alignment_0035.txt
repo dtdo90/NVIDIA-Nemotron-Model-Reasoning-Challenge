@@ -1,146 +1,91 @@
 Problem syn_tc_dp_phrase_copy_alignment_0035
 Bucket: phrase_copy_alignment
-Gold answer: ancient story cave discovers queen
-Note: phrase_copy_exact_example_cipher_phrase
+Gold answer: draws wonderland
+Note: phrase_copy_fully_mapped_nontrivial_target
 
 Training prompt:
 In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
-nczwrcx txuvd zner lwtzuervt qmrrc -> ancient story cave discovers queen
-Now, decrypt the following text: nczwrcx txuvd zner lwtzuervt qmrrc
+erxks hwddwqs -> reads follows
+afrru -> queen
+Now, decrypt the following text: kexqs qwukredxuk
 
-Solution:
-<think>
+Training target:
 We need to decode the target strictly from left to right using the character mappings.
 
 Process examples
 
-nczwrcx txuvd zner lwtzuervt qmrrc -> ancient story cave discovers queen
-
-Training target:
-nczwrcx -> ancient
-n -> a new
-c -> n new
-z -> c new
-w -> i new
+erxks hwddwqs -> reads follows
+erxks -> reads
+e -> r new
 r -> e new
-c -> n agrees
-x -> t new
+x -> a new
+k -> d new
+s -> s new
 
-txuvd -> story
-t -> s new
-x -> t agrees
-u -> o new
-v -> r new
-d -> y new
+hwddwqs -> follows
+h -> f new
+w -> o new
+d -> l new
+d -> l agrees
+w -> o agrees
+q -> w new
+s -> s agrees
 
-zner -> cave
-z -> c agrees
-n -> a agrees
-e -> v new
-r -> e agrees
-
-lwtzuervt -> discovers
-l -> d new
-w -> i agrees
-t -> s agrees
-z -> c agrees
-u -> o agrees
-e -> v agrees
-r -> e agrees
-v -> r agrees
-t -> s agrees
-
-qmrrc -> queen
-q -> q new
-m -> u new
+afrru -> queen
+afrru -> queen
+a -> q new
+f -> u new
 r -> e agrees
 r -> e agrees
-c -> n agrees
+u -> n new
 
 Summary character mappings
-c -> n
-d -> y
-e -> v
-l -> d
-m -> u
-n -> a
-q -> q
+a -> q
+d -> l
+e -> r
+f -> u
+h -> f
+k -> d
+q -> w
 r -> e
-t -> s
-u -> o
-v -> r
-w -> i
-x -> t
-z -> c
+s -> s
+u -> n
+w -> o
+x -> a
 
 Target text
-nczwrcx txuvd zner lwtzuervt qmrrc
+kexqs qwukredxuk
 
 Decode target words from character mappings
 
-nczwrcx
-n -> a
-c -> n
-z -> c
-w -> i
-r -> e
-c -> n
-x -> t
-nczwrcx -> ancient
+kexqs
+k -> d
+e -> r
+x -> a
+q -> w
+s -> s
+kexqs -> draws
 fully mapped
 
-choose ancient
+choose draws
 
-txuvd
-t -> s
-x -> t
-u -> o
-v -> r
-d -> y
-txuvd -> story
+qwukredxuk
+q -> w
+w -> o
+u -> n
+k -> d
+r -> e
+e -> r
+d -> l
+x -> a
+u -> n
+k -> d
+qwukredxuk -> wonderland
 fully mapped
 
-choose story
-
-zner
-z -> c
-n -> a
-e -> v
-r -> e
-zner -> cave
-fully mapped
-
-choose cave
-
-lwtzuervt
-l -> d
-w -> i
-t -> s
-z -> c
-u -> o
-e -> v
-r -> e
-v -> r
-t -> s
-lwtzuervt -> discovers
-fully mapped
-
-choose discovers
-
-qmrrc
-q -> q
-m -> u
-r -> e
-r -> e
-c -> n
-qmrrc -> queen
-fully mapped
-
-choose queen
+choose wonderland
 
 Decoded phrase
-ancient story cave discovers queen
+draws wonderland
 
-Answer: \boxed{ancient story cave discovers queen}
-</think>
-\boxed{ancient story cave discovers queen}
+Answer: \boxed{draws wonderland}

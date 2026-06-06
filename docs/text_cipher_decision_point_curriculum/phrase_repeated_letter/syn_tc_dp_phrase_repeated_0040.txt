@@ -131,7 +131,7 @@ sees
 
 Check scan candidates against summary mappings
 
-sees
+nxxn -> sees
 n -> s new
 x -> e agrees
 x -> e agrees
@@ -236,7 +236,7 @@ garden
 
 Check scan candidates against summary mappings
 
-garden
+vmwcxg -> garden
 v -> g agrees
 m -> a agrees
 w -> r agrees
@@ -342,7 +342,7 @@ found
 
 Check scan candidates against summary mappings
 
-found
+adsgc -> found
 a -> f new
 d -> o agrees
 s -> u agrees

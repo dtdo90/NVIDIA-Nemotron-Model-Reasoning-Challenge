@@ -1,129 +1,101 @@
 Problem syn_tc_dp_phrase_copy_alignment_0010
 Bucket: phrase_copy_alignment
-Gold answer: king discovers garden message
-Note: phrase_copy_exact_example_cipher_phrase
+Gold answer: bird studies book
+Note: phrase_copy_fully_mapped_nontrivial_target
 
 Training prompt:
 In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
-qbuf jbwkhcsyw fgyjsu zswwgfs -> king discovers garden message
-Now, decrypt the following text: qbuf jbwkhcsyw fgyjsu zswwgfs
+njvygzoelv uqzc -> mysterious dark
+zqxxoy -> rabbit
+Now, decrypt the following text: xozu vyluogv xeec
 
-Solution:
-<think>
+Training target:
 We need to decode the target strictly from left to right using the character mappings.
 
 Process examples
 
-qbuf jbwkhcsyw fgyjsu zswwgfs -> king discovers garden message
+njvygzoelv uqzc -> mysterious dark
+njvygzoelv -> mysterious
+n -> m new
+j -> y new
+v -> s new
+y -> t new
+g -> e new
+z -> r new
+o -> i new
+e -> o new
+l -> u new
+v -> s agrees
 
-Training target:
-qbuf -> king
-q -> k new
-b -> i new
-u -> n new
-f -> g new
+uqzc -> dark
+u -> d new
+q -> a new
+z -> r agrees
+c -> k new
 
-jbwkhcsyw -> discovers
-j -> d new
-b -> i agrees
-w -> s new
-k -> c new
-h -> o new
-c -> v new
-s -> e new
-y -> r new
-w -> s agrees
-
-fgyjsu -> garden
-f -> g agrees
-g -> a new
-y -> r agrees
-j -> d agrees
-s -> e agrees
-u -> n agrees
-
-zswwgfs -> message
-z -> m new
-s -> e agrees
-w -> s agrees
-w -> s agrees
-g -> a agrees
-f -> g agrees
-s -> e agrees
+zqxxoy -> rabbit
+zqxxoy -> rabbit
+z -> r agrees
+q -> a agrees
+x -> b new
+x -> b agrees
+o -> i agrees
+y -> t agrees
 
 Summary character mappings
-b -> i
-c -> v
-f -> g
-g -> a
-h -> o
-j -> d
-k -> c
-q -> k
-s -> e
-u -> n
-w -> s
-y -> r
-z -> m
+c -> k
+e -> o
+g -> e
+j -> y
+l -> u
+n -> m
+o -> i
+q -> a
+u -> d
+v -> s
+x -> b
+y -> t
+z -> r
 
 Target text
-qbuf jbwkhcsyw fgyjsu zswwgfs
+xozu vyluogv xeec
 
 Decode target words from character mappings
 
-qbuf
-q -> k
-b -> i
-u -> n
-f -> g
-qbuf -> king
+xozu
+x -> b
+o -> i
+z -> r
+u -> d
+xozu -> bird
 fully mapped
 
-choose king
+choose bird
 
-jbwkhcsyw
-j -> d
-b -> i
-w -> s
-k -> c
-h -> o
-c -> v
-s -> e
-y -> r
-w -> s
-jbwkhcsyw -> discovers
+vyluogv
+v -> s
+y -> t
+l -> u
+u -> d
+o -> i
+g -> e
+v -> s
+vyluogv -> studies
 fully mapped
 
-choose discovers
+choose studies
 
-fgyjsu
-f -> g
-g -> a
-y -> r
-j -> d
-s -> e
-u -> n
-fgyjsu -> garden
+xeec
+x -> b
+e -> o
+e -> o
+c -> k
+xeec -> book
 fully mapped
 
-choose garden
-
-zswwgfs
-z -> m
-s -> e
-w -> s
-w -> s
-g -> a
-f -> g
-s -> e
-zswwgfs -> message
-fully mapped
-
-choose message
+choose book
 
 Decoded phrase
-king discovers garden message
+bird studies book
 
-Answer: \boxed{king discovers garden message}
-</think>
-\boxed{king discovers garden message}
+Answer: \boxed{bird studies book}

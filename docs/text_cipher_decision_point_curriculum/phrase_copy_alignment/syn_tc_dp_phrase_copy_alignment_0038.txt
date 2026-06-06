@@ -1,120 +1,102 @@
 Problem syn_tc_dp_phrase_copy_alignment_0038
 Bucket: phrase_copy_alignment
-Gold answer: imagines hidden book sees
-Note: phrase_copy_exact_example_cipher_phrase
+Gold answer: castle draws studies
+Note: phrase_copy_fully_mapped_nontrivial_target
 
 Training prompt:
 In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
-gzyugjml hgddmj evvt lmml -> imagines hidden book sees
-Now, decrypt the following text: gzyugjml hgddmj evvt lmml
+yzifwozi ftrgi -> treasure alice
+nrpfzv -> wizard
+Now, decrypt the following text: gfwyti vzfnw wyovriw
 
-Solution:
-<think>
+Training target:
 We need to decode the target strictly from left to right using the character mappings.
 
 Process examples
 
-gzyugjml hgddmj evvt lmml -> imagines hidden book sees
+yzifwozi ftrgi -> treasure alice
+yzifwozi -> treasure
+y -> t new
+z -> r new
+i -> e new
+f -> a new
+w -> s new
+o -> u new
+z -> r agrees
+i -> e agrees
 
-Training target:
-gzyugjml -> imagines
-g -> i new
-z -> m new
-y -> a new
-u -> g new
-g -> i agrees
-j -> n new
-m -> e new
-l -> s new
+ftrgi -> alice
+f -> a agrees
+t -> l new
+r -> i new
+g -> c new
+i -> e agrees
 
-hgddmj -> hidden
-h -> h new
-g -> i agrees
-d -> d new
-d -> d agrees
-m -> e agrees
-j -> n agrees
-
-evvt -> book
-e -> b new
-v -> o new
-v -> o agrees
-t -> k new
-
-lmml -> sees
-l -> s agrees
-m -> e agrees
-m -> e agrees
-l -> s agrees
+nrpfzv -> wizard
+nrpfzv -> wizard
+n -> w new
+r -> i agrees
+p -> z new
+f -> a agrees
+z -> r agrees
+v -> d new
 
 Summary character mappings
-d -> d
-e -> b
-g -> i
-h -> h
-j -> n
-l -> s
-m -> e
-t -> k
-u -> g
-v -> o
-y -> a
-z -> m
+f -> a
+g -> c
+i -> e
+n -> w
+o -> u
+p -> z
+r -> i
+t -> l
+v -> d
+w -> s
+y -> t
+z -> r
 
 Target text
-gzyugjml hgddmj evvt lmml
+gfwyti vzfnw wyovriw
 
 Decode target words from character mappings
 
-gzyugjml
-g -> i
-z -> m
-y -> a
-u -> g
-g -> i
-j -> n
-m -> e
-l -> s
-gzyugjml -> imagines
+gfwyti
+g -> c
+f -> a
+w -> s
+y -> t
+t -> l
+i -> e
+gfwyti -> castle
 fully mapped
 
-choose imagines
+choose castle
 
-hgddmj
-h -> h
-g -> i
-d -> d
-d -> d
-m -> e
-j -> n
-hgddmj -> hidden
+vzfnw
+v -> d
+z -> r
+f -> a
+n -> w
+w -> s
+vzfnw -> draws
 fully mapped
 
-choose hidden
+choose draws
 
-evvt
-e -> b
-v -> o
-v -> o
-t -> k
-evvt -> book
+wyovriw
+w -> s
+y -> t
+o -> u
+v -> d
+r -> i
+i -> e
+w -> s
+wyovriw -> studies
 fully mapped
 
-choose book
-
-lmml
-l -> s
-m -> e
-m -> e
-l -> s
-lmml -> sees
-fully mapped
-
-choose sees
+choose studies
 
 Decoded phrase
-imagines hidden book sees
+castle draws studies
 
-Answer: \boxed{imagines hidden book sees}
-</think>
-\boxed{imagines hidden book sees}
+Answer: \boxed{castle draws studies}

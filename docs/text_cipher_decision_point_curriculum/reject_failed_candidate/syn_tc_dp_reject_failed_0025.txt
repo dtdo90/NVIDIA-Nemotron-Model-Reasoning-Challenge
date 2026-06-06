@@ -127,7 +127,22 @@ bird, king, wise
 
 Check scan candidates against summary mappings
 
-wise
+acni -> bird
+a -> b new
+c -> i agrees
+n -> r conflicts
+t -> r already exists
+i -> d new
+FAIL
+
+acni -> king
+a -> k new
+c -> i agrees
+n -> n new
+i -> g new
+PASS
+
+acni -> wise
 a -> w conflicts
 u -> w already exists
 c -> i agrees
@@ -136,13 +151,6 @@ o -> s already exists
 i -> e conflicts
 s -> e already exists
 FAIL
-
-king
-a -> k new
-c -> i agrees
-n -> n new
-i -> g new
-PASS
 add a -> k
 add n -> n
 add i -> g

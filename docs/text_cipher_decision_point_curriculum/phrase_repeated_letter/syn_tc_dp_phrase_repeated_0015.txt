@@ -137,7 +137,7 @@ puzzle, turtle
 
 Check scan candidates against summary mappings
 
-puzzle
+yjcclr -> puzzle
 y -> p new
 j -> u agrees
 c -> z new
@@ -145,6 +145,18 @@ c -> z new
 l -> l agrees
 r -> e agrees
 PASS
+
+yjcclr -> turtle
+y -> t conflicts
+o -> t already exists
+j -> u agrees
+c -> r conflicts
+z -> r already exists
+c -> t conflicts
+o -> t already exists
+l -> l agrees
+r -> e agrees
+FAIL
 add y -> p
 add c -> z
 

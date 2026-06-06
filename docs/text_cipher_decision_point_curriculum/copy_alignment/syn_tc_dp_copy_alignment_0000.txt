@@ -1,12 +1,12 @@
 Problem syn_tc_dp_copy_alignment_0000
 Bucket: copy_alignment
-Gold answer: puzzle
-Note: copy_exact_example_cipher_word
+Gold answer: princess
+Note: copy_fully_mapped_nontrivial_target
 
 Training prompt:
 In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
-nywwbe -> puzzle
-Now, decrypt the following text: nywwbe
+mxrtipwjr ziexig -> discovers potion
+Now, decrypt the following text: zjxgtwrr
 
 Solution:
 <think>
@@ -14,43 +14,63 @@ We need to decode the target strictly from left to right using the character map
 
 Process examples
 
-nywwbe -> puzzle
+mxrtipwjr ziexig -> discovers potion
 
 Training target:
-n -> p new
-y -> u new
-w -> z new
-w -> z agrees
-b -> l new
-e -> e new
+mxrtipwjr -> discovers
+m -> d new
+x -> i new
+r -> s new
+t -> c new
+i -> o new
+p -> v new
+w -> e new
+j -> r new
+r -> s agrees
+
+ziexig -> potion
+z -> p new
+i -> o agrees
+e -> t new
+x -> i agrees
+i -> o agrees
+g -> n new
 
 Summary character mappings
-b -> l
-e -> e
-n -> p
-w -> z
-y -> u
+e -> t
+g -> n
+i -> o
+j -> r
+m -> d
+p -> v
+r -> s
+t -> c
+w -> e
+x -> i
+z -> p
 
 Target text
-nywwbe
+zjxgtwrr
 
 Decode target words from character mappings
 
-nywwbe
-n -> p
-y -> u
-w -> z
-w -> z
-b -> l
-e -> e
-nywwbe -> puzzle
+zjxgtwrr
+z -> p
+j -> r
+x -> i
+g -> n
+t -> c
+w -> e
+r -> s
+r -> s
+zjxgtwrr -> princess
 fully mapped
 
-choose puzzle
+choose princess
 
 Decoded phrase
-puzzle
+princess
 
-Answer: \boxed{puzzle}
+Answer: \boxed{princess}
 </think>
-\boxed{puzzle}
+\boxed{princess}

@@ -327,7 +327,7 @@ Common
 Training target:
 plain
 
-Apply AB_CD|y-x|common to the query
+Apply format AB_CD|y-x|common to the query
 
 Query
 95#17

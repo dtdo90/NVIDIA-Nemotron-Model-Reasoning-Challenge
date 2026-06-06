@@ -136,7 +136,7 @@ rabbit
 
 Check scan candidates against summary mappings
 
-rabbit
+yissuz -> rabbit
 y -> r agrees
 i -> a agrees
 s -> b new
@@ -243,7 +243,7 @@ garden
 
 Check scan candidates against summary mappings
 
-garden
+fiydgk -> garden
 f -> g new
 i -> a agrees
 y -> r agrees

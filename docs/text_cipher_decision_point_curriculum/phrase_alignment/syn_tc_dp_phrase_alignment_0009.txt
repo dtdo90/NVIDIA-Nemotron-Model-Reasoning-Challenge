@@ -133,7 +133,7 @@ dark
 
 Check scan candidates against summary mappings
 
-dark
+qdoz -> dark
 q -> d agrees
 d -> a agrees
 o -> r agrees
@@ -245,7 +245,7 @@ alice
 
 Check scan candidates against summary mappings
 
-alice
+drpnb -> alice
 d -> a agrees
 r -> l agrees
 p -> i agrees

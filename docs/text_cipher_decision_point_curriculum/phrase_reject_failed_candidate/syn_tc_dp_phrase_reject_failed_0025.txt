@@ -136,20 +136,20 @@ book, door
 
 Check scan candidates against summary mappings
 
-door
+tuuq -> book
+t -> b new
+u -> o agrees
+u -> o agrees
+q -> k new
+PASS
+
+tuuq -> door
 t -> d new
 u -> o agrees
 u -> o agrees
 q -> r conflicts
 r -> r already exists
 FAIL
-
-book
-t -> b new
-u -> o agrees
-u -> o agrees
-q -> k new
-PASS
 add t -> b
 add q -> k
 
@@ -261,7 +261,7 @@ dragon
 
 Check scan candidates against summary mappings
 
-dragon
+frcjus -> dragon
 f -> d new
 r -> r agrees
 c -> a agrees

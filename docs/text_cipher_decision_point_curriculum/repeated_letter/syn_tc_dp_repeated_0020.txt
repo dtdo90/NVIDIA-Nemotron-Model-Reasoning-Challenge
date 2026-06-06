@@ -133,7 +133,7 @@ curious
 
 Check scan candidates against summary mappings
 
-curious
+wpqespf -> curious
 w -> c new
 p -> u agrees
 q -> r agrees

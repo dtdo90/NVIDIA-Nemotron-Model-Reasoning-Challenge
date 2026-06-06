@@ -129,7 +129,7 @@ draws, reads
 
 Check scan candidates against summary mappings
 
-draws
+pxeog -> draws
 p -> d new
 x -> r new
 e -> a agrees
@@ -138,7 +138,7 @@ i -> w already exists
 g -> s agrees
 FAIL
 
-reads
+pxeog -> reads
 p -> r new
 x -> e new
 e -> a agrees

@@ -132,7 +132,7 @@ magical
 
 Check scan candidates against summary mappings
 
-magical
+vrnjprb -> magical
 v -> m agrees
 r -> a agrees
 n -> g new
@@ -239,7 +239,7 @@ dark
 
 Check scan candidates against summary mappings
 
-dark
+orwg -> dark
 o -> d agrees
 r -> a agrees
 w -> r agrees

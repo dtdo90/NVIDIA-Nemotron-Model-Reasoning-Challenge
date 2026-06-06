@@ -18,8 +18,12 @@ if str(ROOT) not in sys.path:
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-SOURCE_CSV = ROOT / "data/single_phase_training_clean/single_phase_sft_v2.csv"
-DATA_DIR = WORKSPACE / "data"
+SOURCE_CSV_V1 = ROOT / "data/single_phase_training_clean/single_phase_sft_v1.csv"
+SOURCE_CSV_V2 = ROOT / "data/single_phase_training_clean/single_phase_sft_v2.csv"
+SOURCE_CSV = SOURCE_CSV_V2
+DATA_DIR_V1 = WORKSPACE / "data_v1"
+DATA_DIR_V2 = WORKSPACE / "data"
+DATA_DIR = DATA_DIR_V2
 OUTPUT_DIR = WORKSPACE / "outputs"
 REPORT_DIR = WORKSPACE / "reports"
 SPLIT_NAMES = ("sft_train", "eval_holdout", "grpo_holdout")
@@ -272,7 +276,7 @@ def classify_symbol_subtype(row: dict[str, str]) -> str:
     key = source_key(row).lower()
     text = f"{row.get('generated_cot', '')}\n{row.get('assistant_content', '')}"
     if "ba_dc" in key:
-        return "ba_dc"
+        return "untrained_eval_only"
     if "direct_template" in key:
         return f"direct_template_{template_pass(text) or 'unknown'}"
     return safe_label(key)

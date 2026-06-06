@@ -1,72 +1,92 @@
 Problem syn_tc_dp_phrase_copy_alignment_0044
 Bucket: phrase_copy_alignment
-Gold answer: palace cat
-Note: phrase_copy_exact_example_cipher_phrase
+Gold answer: mysterious around
+Note: phrase_copy_fully_mapped_nontrivial_target
 
 Training prompt:
 In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
-zmnmew emi -> palace cat
-Now, decrypt the following text: zmnmew emi
+unfdtxod mqxsa -> mountain reads
+iqj -> key
+Now, decrypt the following text: ujatqmonfa xmnfds
 
-Solution:
-<think>
+Training target:
 We need to decode the target strictly from left to right using the character mappings.
 
 Process examples
 
-zmnmew emi -> palace cat
+unfdtxod mqxsa -> mountain reads
+unfdtxod -> mountain
+u -> m new
+n -> o new
+f -> u new
+d -> n new
+t -> t new
+x -> a new
+o -> i new
+d -> n agrees
 
-Training target:
-zmnmew -> palace
-z -> p new
-m -> a new
-n -> l new
-m -> a agrees
-e -> c new
-w -> e new
+mqxsa -> reads
+m -> r new
+q -> e new
+x -> a agrees
+s -> d new
+a -> s new
 
-emi -> cat
-e -> c agrees
-m -> a agrees
-i -> t new
+iqj -> key
+iqj -> key
+i -> k new
+q -> e agrees
+j -> y new
 
 Summary character mappings
-e -> c
-i -> t
-m -> a
-n -> l
-w -> e
-z -> p
+a -> s
+d -> n
+f -> u
+i -> k
+j -> y
+m -> r
+n -> o
+o -> i
+q -> e
+s -> d
+t -> t
+u -> m
+x -> a
 
 Target text
-zmnmew emi
+ujatqmonfa xmnfds
 
 Decode target words from character mappings
 
-zmnmew
-z -> p
-m -> a
-n -> l
-m -> a
-e -> c
-w -> e
-zmnmew -> palace
+ujatqmonfa
+u -> m
+j -> y
+a -> s
+t -> t
+q -> e
+m -> r
+o -> i
+n -> o
+f -> u
+a -> s
+ujatqmonfa -> mysterious
 fully mapped
 
-choose palace
+choose mysterious
 
-emi
-e -> c
-m -> a
-i -> t
-emi -> cat
+xmnfds
+x -> a
+m -> r
+n -> o
+f -> u
+d -> n
+s -> d
+xmnfds -> around
 fully mapped
 
-choose cat
+choose around
 
 Decoded phrase
-palace cat
+mysterious around
 
-Answer: \boxed{palace cat}
-</think>
-\boxed{palace cat}
+Answer: \boxed{mysterious around}

@@ -138,7 +138,7 @@ around
 
 Check scan candidates against summary mappings
 
-around
+kuyerp -> around
 k -> a new
 u -> r agrees
 y -> o agrees
@@ -246,7 +246,7 @@ wizard
 
 Check scan candidates against summary mappings
 
-wizard
+blokup -> wizard
 b -> w agrees
 l -> i agrees
 o -> z new
@@ -362,7 +362,7 @@ cat
 
 Check scan candidates against summary mappings
 
-cat
+ika -> cat
 i -> c new
 k -> a agrees
 a -> t agrees

@@ -133,7 +133,7 @@ bird, book
 
 Check scan candidates against summary mappings
 
-bird
+vzzq -> bird
 v -> b agrees
 z -> i conflicts
 j -> i already exists
@@ -143,7 +143,7 @@ q -> d conflicts
 p -> d already exists
 FAIL
 
-book
+vzzq -> book
 v -> b agrees
 z -> o new
 z -> o new
@@ -251,7 +251,7 @@ treasure
 
 Check scan candidates against summary mappings
 
-treasure
+gkliwakl -> treasure
 g -> t agrees
 k -> r agrees
 l -> e agrees

@@ -1,0 +1,57 @@
+{
+  "question_type": "symbol_transform",
+  "category": "Symbol Transform",
+  "source_csv": "data/single_phase_training_clean/single_phase_sft_v1.csv",
+  "train_csv": "experiments/type_diagnostics/data_v1/symbol_transform/symbol_transform.csv",
+  "split_csv": "experiments/type_diagnostics/data_v1/symbol_transform/splits_80_10_10.csv",
+  "seed": 42,
+  "total": 884,
+  "by_subtype": {
+    "direct_template_template0134": 400,
+    "direct_template_template3401": 200,
+    "operator_absence_template0134": 164,
+    "untrained_eval_only": 120
+  },
+  "by_source_mode": {
+    "op_ab_guess_0134_correct": 13,
+    "op_ab_guess_0134_wrong": 151,
+    "phase1_synthetic_direct_template": 216,
+    "real": 70,
+    "single_phase_synthetic_direct_template": 325,
+    "symbol_transform_untrained_eval_only": 109
+  },
+  "by_eval_eligible": {
+    "false": 541,
+    "true": 343
+  },
+  "by_split_policy": {
+    "auto": 223,
+    "eval_only": 120,
+    "train_only": 541
+  },
+  "split_counts": {
+    "eval_holdout": 34,
+    "grpo_holdout": 34,
+    "sft_train": 816
+  },
+  "by_split_subtype": {
+    "eval_holdout": {
+      "direct_template_template0134": 5,
+      "direct_template_template3401": 1,
+      "operator_absence_template0134": 16,
+      "untrained_eval_only": 12
+    },
+    "grpo_holdout": {
+      "direct_template_template0134": 5,
+      "direct_template_template3401": 1,
+      "operator_absence_template0134": 16,
+      "untrained_eval_only": 12
+    },
+    "sft_train": {
+      "direct_template_template0134": 390,
+      "direct_template_template3401": 198,
+      "operator_absence_template0134": 132,
+      "untrained_eval_only": 96
+    }
+  }
+}

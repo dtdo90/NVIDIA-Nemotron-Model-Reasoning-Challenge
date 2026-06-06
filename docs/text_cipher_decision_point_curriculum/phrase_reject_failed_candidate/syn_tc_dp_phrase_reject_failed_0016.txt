@@ -134,7 +134,14 @@ book, dark
 
 Check scan candidates against summary mappings
 
-dark
+mbbe -> book
+m -> b new
+b -> o new
+b -> o new
+e -> k agrees
+PASS
+
+mbbe -> dark
 m -> d conflicts
 n -> d already exists
 b -> a conflicts
@@ -143,13 +150,6 @@ b -> r conflicts
 o -> r already exists
 e -> k agrees
 FAIL
-
-book
-m -> b new
-b -> o new
-b -> o new
-e -> k agrees
-PASS
 add m -> b
 add b -> o
 

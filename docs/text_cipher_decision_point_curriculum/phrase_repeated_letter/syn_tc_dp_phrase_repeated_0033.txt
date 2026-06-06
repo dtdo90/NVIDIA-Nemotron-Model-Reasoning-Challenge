@@ -139,7 +139,7 @@ puzzle
 
 Check scan candidates against summary mappings
 
-puzzle
+fbllzx -> puzzle
 f -> p agrees
 b -> u agrees
 l -> z new

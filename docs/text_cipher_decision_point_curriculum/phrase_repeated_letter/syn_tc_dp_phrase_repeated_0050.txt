@@ -142,7 +142,7 @@ wonderland
 
 Check scan candidates against summary mappings
 
-wonderland
+kcyzpjndyz -> wonderland
 k -> w new
 c -> o agrees
 y -> n agrees
@@ -286,7 +286,7 @@ found
 
 Check scan candidates against summary mappings
 
-found
+xceyz -> found
 x -> f new
 c -> o agrees
 e -> u agrees

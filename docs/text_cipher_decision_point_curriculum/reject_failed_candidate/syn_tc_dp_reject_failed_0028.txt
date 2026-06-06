@@ -131,7 +131,7 @@ found, mouse
 
 Check scan candidates against summary mappings
 
-found
+ygkpi -> found
 y -> f conflicts
 f -> f already exists
 g -> o agrees
@@ -142,7 +142,7 @@ i -> d conflicts
 h -> d already exists
 FAIL
 
-mouse
+ygkpi -> mouse
 y -> m new
 g -> o agrees
 k -> u agrees

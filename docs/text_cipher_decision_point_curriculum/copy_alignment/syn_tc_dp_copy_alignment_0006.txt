@@ -1,12 +1,12 @@
 Problem syn_tc_dp_copy_alignment_0006
 Bucket: copy_alignment
-Gold answer: mountain
-Note: copy_exact_example_cipher_word
+Gold answer: curious
+Note: copy_fully_mapped_nontrivial_target
 
 Training prompt:
 In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
-pnxtjlut -> mountain
-Now, decrypt the following text: pnxtjlut
+nyzhxqfaz mwffj -> discovers queen
+Now, decrypt the following text: hwayxwz
 
 Solution:
 <think>
@@ -14,49 +14,61 @@ We need to decode the target strictly from left to right using the character map
 
 Process examples
 
-pnxtjlut -> mountain
+nyzhxqfaz mwffj -> discovers queen
 
 Training target:
-p -> m new
-n -> o new
-x -> u new
-t -> n new
-j -> t new
-l -> a new
-u -> i new
-t -> n agrees
+nyzhxqfaz -> discovers
+n -> d new
+y -> i new
+z -> s new
+h -> c new
+x -> o new
+q -> v new
+f -> e new
+a -> r new
+z -> s agrees
+
+mwffj -> queen
+m -> q new
+w -> u new
+f -> e agrees
+f -> e agrees
+j -> n new
 
 Summary character mappings
-j -> t
-l -> a
-n -> o
-p -> m
-t -> n
-u -> i
-x -> u
+a -> r
+f -> e
+h -> c
+j -> n
+m -> q
+n -> d
+q -> v
+w -> u
+x -> o
+y -> i
+z -> s
 
 Target text
-pnxtjlut
+hwayxwz
 
 Decode target words from character mappings
 
-pnxtjlut
-p -> m
-n -> o
-x -> u
-t -> n
-j -> t
-l -> a
-u -> i
-t -> n
-pnxtjlut -> mountain
+hwayxwz
+h -> c
+w -> u
+a -> r
+y -> i
+x -> o
+w -> u
+z -> s
+hwayxwz -> curious
 fully mapped
 
-choose mountain
+choose curious
 
 Decoded phrase
-mountain
+curious
 
-Answer: \boxed{mountain}
+Answer: \boxed{curious}
 </think>
-\boxed{mountain}
+\boxed{curious}

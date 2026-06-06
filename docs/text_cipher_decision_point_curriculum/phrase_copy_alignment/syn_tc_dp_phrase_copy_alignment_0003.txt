@@ -1,99 +1,112 @@
 Problem syn_tc_dp_phrase_copy_alignment_0003
 Bucket: phrase_copy_alignment
-Gold answer: potion silver wise
-Note: phrase_copy_exact_example_cipher_phrase
+Gold answer: valley forest magical
+Note: phrase_copy_fully_mapped_nontrivial_target
 
 Training prompt:
 In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
-mjxtjd atbghz rtah -> potion silver wise
-Now, decrypt the following text: mjxtjd atbghz rtah
+dpgjclqnkg aqttxrc -> mysterious village
+untnlokt -> colorful
+Now, decrypt the following text: axttcp onlcgj dxrquxt
 
-Solution:
-<think>
+Training target:
 We need to decode the target strictly from left to right using the character mappings.
 
 Process examples
 
-mjxtjd atbghz rtah -> potion silver wise
+dpgjclqnkg aqttxrc -> mysterious village
+dpgjclqnkg -> mysterious
+d -> m new
+p -> y new
+g -> s new
+j -> t new
+c -> e new
+l -> r new
+q -> i new
+n -> o new
+k -> u new
+g -> s agrees
 
-Training target:
-mjxtjd -> potion
-m -> p new
-j -> o new
-x -> t new
-t -> i new
-j -> o agrees
-d -> n new
+aqttxrc -> village
+a -> v new
+q -> i agrees
+t -> l new
+t -> l agrees
+x -> a new
+r -> g new
+c -> e agrees
 
-atbghz -> silver
-a -> s new
-t -> i agrees
-b -> l new
-g -> v new
-h -> e new
-z -> r new
-
-rtah -> wise
-r -> w new
-t -> i agrees
-a -> s agrees
-h -> e agrees
+untnlokt -> colorful
+untnlokt -> colorful
+u -> c new
+n -> o agrees
+t -> l agrees
+n -> o agrees
+l -> r agrees
+o -> f new
+k -> u agrees
+t -> l agrees
 
 Summary character mappings
-a -> s
-b -> l
-d -> n
-g -> v
-h -> e
-j -> o
-m -> p
-r -> w
-t -> i
-x -> t
-z -> r
+a -> v
+c -> e
+d -> m
+g -> s
+j -> t
+k -> u
+l -> r
+n -> o
+o -> f
+p -> y
+q -> i
+r -> g
+t -> l
+u -> c
+x -> a
 
 Target text
-mjxtjd atbghz rtah
+axttcp onlcgj dxrquxt
 
 Decode target words from character mappings
 
-mjxtjd
-m -> p
-j -> o
-x -> t
-t -> i
-j -> o
-d -> n
-mjxtjd -> potion
+axttcp
+a -> v
+x -> a
+t -> l
+t -> l
+c -> e
+p -> y
+axttcp -> valley
 fully mapped
 
-choose potion
+choose valley
 
-atbghz
-a -> s
-t -> i
-b -> l
-g -> v
-h -> e
-z -> r
-atbghz -> silver
+onlcgj
+o -> f
+n -> o
+l -> r
+c -> e
+g -> s
+j -> t
+onlcgj -> forest
 fully mapped
 
-choose silver
+choose forest
 
-rtah
-r -> w
-t -> i
-a -> s
-h -> e
-rtah -> wise
+dxrquxt
+d -> m
+x -> a
+r -> g
+q -> i
+u -> c
+x -> a
+t -> l
+dxrquxt -> magical
 fully mapped
 
-choose wise
+choose magical
 
 Decoded phrase
-potion silver wise
+valley forest magical
 
-Answer: \boxed{potion silver wise}
-</think>
-\boxed{potion silver wise}
+Answer: \boxed{valley forest magical}

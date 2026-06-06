@@ -131,7 +131,7 @@ magical
 
 Check scan candidates against summary mappings
 
-magical
+lhyzdhp -> magical
 l -> m new
 h -> a agrees
 y -> g agrees

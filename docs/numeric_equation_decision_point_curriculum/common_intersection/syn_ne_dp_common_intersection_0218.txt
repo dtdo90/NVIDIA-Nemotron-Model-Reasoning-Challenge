@@ -200,7 +200,7 @@ Training target:
 plain
 rev
 
-Apply AB_CD|x-y|common to the query
+Apply format AB_CD|x-y|common to the query
 
 Query
 78~67

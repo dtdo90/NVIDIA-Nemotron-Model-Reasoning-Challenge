@@ -125,18 +125,33 @@ cat, key, map, the
 
 Check scan candidates against summary mappings
 
-the
+tlw -> cat
+t -> c new
+l -> a new
+w -> t new
+PASS
+
+tlw -> key
+t -> k conflicts
+z -> k already exists
+l -> e conflicts
+s -> e already exists
+w -> y conflicts
+d -> y already exists
+FAIL
+
+tlw -> map
+t -> m new
+l -> a new
+w -> p new
+PASS
+
+tlw -> the
 t -> t new
 l -> h new
 w -> e conflicts
 s -> e already exists
 FAIL
-
-cat
-t -> c new
-l -> a new
-w -> t new
-PASS
 add t -> c
 add l -> a
 add w -> t

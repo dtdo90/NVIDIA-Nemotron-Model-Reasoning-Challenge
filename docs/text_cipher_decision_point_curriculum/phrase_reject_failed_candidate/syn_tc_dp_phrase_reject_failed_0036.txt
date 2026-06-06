@@ -131,7 +131,14 @@ bird, king, wise
 
 Check scan candidates against summary mappings
 
-king
+garh -> bird
+g -> b new
+a -> i agrees
+r -> r new
+h -> d new
+PASS
+
+garh -> king
 g -> k conflicts
 e -> k already exists
 a -> i agrees
@@ -141,20 +148,13 @@ h -> g conflicts
 o -> g already exists
 FAIL
 
-wise
+garh -> wise
 g -> w new
 a -> i agrees
 r -> s new
 h -> e conflicts
 p -> e already exists
 FAIL
-
-bird
-g -> b new
-a -> i agrees
-r -> r new
-h -> d new
-PASS
 add g -> b
 add r -> r
 add h -> d
@@ -256,7 +256,7 @@ bright
 
 Check scan candidates against summary mappings
 
-bright
+graokm -> bright
 g -> b agrees
 r -> r agrees
 a -> i agrees

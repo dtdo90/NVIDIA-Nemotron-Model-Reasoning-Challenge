@@ -136,7 +136,7 @@ rabbit
 
 Check scan candidates against summary mappings
 
-rabbit
+anoobx -> rabbit
 a -> r agrees
 n -> a agrees
 o -> b new
@@ -244,7 +244,7 @@ village
 
 Check scan candidates against summary mappings
 
-village
+ebyyntu -> village
 e -> v new
 b -> i agrees
 y -> l agrees

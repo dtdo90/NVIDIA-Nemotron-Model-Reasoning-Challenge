@@ -134,7 +134,7 @@ student
 
 Check scan candidates against summary mappings
 
-student
+mwelaqw -> student
 m -> s agrees
 w -> t new
 e -> u new
@@ -245,7 +245,7 @@ creates
 
 Check scan candidates against summary mappings
 
-creates
+vpajwam -> creates
 v -> c agrees
 p -> r new
 a -> e agrees
@@ -353,7 +353,7 @@ mirror
 
 Check scan candidates against summary mappings
 
-mirror
+ofppyp -> mirror
 o -> m agrees
 f -> i agrees
 p -> r agrees

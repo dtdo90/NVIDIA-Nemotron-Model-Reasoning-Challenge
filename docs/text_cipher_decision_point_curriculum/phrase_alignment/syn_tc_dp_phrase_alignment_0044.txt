@@ -133,7 +133,7 @@ dreams
 
 Check scan candidates against summary mappings
 
-dreams
+jgbywh -> dreams
 j -> d new
 g -> r agrees
 b -> e agrees
@@ -240,7 +240,7 @@ hidden
 
 Check scan candidates against summary mappings
 
-hidden
+zxjjbs -> hidden
 z -> h new
 x -> i agrees
 j -> d agrees
@@ -357,7 +357,7 @@ dark
 
 Check scan candidates against summary mappings
 
-dark
+jygn -> dark
 j -> d agrees
 y -> a agrees
 g -> r agrees

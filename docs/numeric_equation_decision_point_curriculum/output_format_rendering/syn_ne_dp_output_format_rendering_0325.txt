@@ -118,7 +118,7 @@ rev_or_op_prefix_rev_if_neg
 rev_or_op_suffix_rev_if_neg
 abs_rev
 
-Apply BA_DC|x-y|common to the query
+Apply format BA_DC|x-y|common to the query
 
 Query
 10$23

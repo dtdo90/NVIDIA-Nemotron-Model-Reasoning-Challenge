@@ -1,77 +1,84 @@
 Problem syn_tc_dp_phrase_copy_alignment_0000
 Bucket: phrase_copy_alignment
-Gold answer: watches map
-Note: phrase_copy_exact_example_cipher_phrase
+Gold answer: through mirror
+Note: phrase_copy_fully_mapped_nontrivial_target
 
 Training prompt:
 In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
-rqdbmfo lqs -> watches map
-Now, decrypt the following text: rqdbmfo lqs
+oibjumzhrb lmzaxj -> mysterious bright
+Now, decrypt the following text: jxmhrax ozmmhm
 
-Solution:
-<think>
+Training target:
 We need to decode the target strictly from left to right using the character mappings.
 
 Process examples
 
-rqdbmfo lqs -> watches map
+oibjumzhrb lmzaxj -> mysterious bright
+oibjumzhrb -> mysterious
+o -> m new
+i -> y new
+b -> s new
+j -> t new
+u -> e new
+m -> r new
+z -> i new
+h -> o new
+r -> u new
+b -> s agrees
 
-Training target:
-rqdbmfo -> watches
-r -> w new
-q -> a new
-d -> t new
-b -> c new
-m -> h new
-f -> e new
-o -> s new
-
-lqs -> map
-l -> m new
-q -> a agrees
-s -> p new
+lmzaxj -> bright
+l -> b new
+m -> r agrees
+z -> i agrees
+a -> g new
+x -> h new
+j -> t agrees
 
 Summary character mappings
-b -> c
-d -> t
-f -> e
-l -> m
-m -> h
-o -> s
-q -> a
-r -> w
-s -> p
+a -> g
+b -> s
+h -> o
+i -> y
+j -> t
+l -> b
+m -> r
+o -> m
+r -> u
+u -> e
+x -> h
+z -> i
 
 Target text
-rqdbmfo lqs
+jxmhrax ozmmhm
 
 Decode target words from character mappings
 
-rqdbmfo
-r -> w
-q -> a
-d -> t
-b -> c
-m -> h
-f -> e
-o -> s
-rqdbmfo -> watches
+jxmhrax
+j -> t
+x -> h
+m -> r
+h -> o
+r -> u
+a -> g
+x -> h
+jxmhrax -> through
 fully mapped
 
-choose watches
+choose through
 
-lqs
-l -> m
-q -> a
-s -> p
-lqs -> map
+ozmmhm
+o -> m
+z -> i
+m -> r
+m -> r
+h -> o
+m -> r
+ozmmhm -> mirror
 fully mapped
 
-choose map
+choose mirror
 
 Decoded phrase
-watches map
+through mirror
 
-Answer: \boxed{watches map}
-</think>
-\boxed{watches map}
+Answer: \boxed{through mirror}

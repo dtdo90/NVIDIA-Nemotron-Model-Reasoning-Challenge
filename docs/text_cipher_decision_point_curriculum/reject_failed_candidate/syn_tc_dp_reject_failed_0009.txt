@@ -131,7 +131,7 @@ above, alice
 
 Check scan candidates against summary mappings
 
-above
+yozrw -> above
 y -> a agrees
 o -> b conflicts
 p -> b already exists
@@ -142,7 +142,7 @@ u -> v already exists
 w -> e agrees
 FAIL
 
-alice
+yozrw -> alice
 y -> a agrees
 o -> l new
 z -> i new

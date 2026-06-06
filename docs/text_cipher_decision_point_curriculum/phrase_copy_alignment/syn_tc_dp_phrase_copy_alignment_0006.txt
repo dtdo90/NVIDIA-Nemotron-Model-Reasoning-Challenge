@@ -1,97 +1,103 @@
 Problem syn_tc_dp_phrase_copy_alignment_0006
 Bucket: phrase_copy_alignment
-Gold answer: tower alice reads
-Note: phrase_copy_exact_example_cipher_phrase
+Gold answer: mouse rabbit around
+Note: phrase_copy_fully_mapped_nontrivial_target
 
 Training prompt:
 In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
-ctbne kairn enkmx -> tower alice reads
-Now, decrypt the following text: ctbne kairn enkmx
+ftsqjzygxs djtgke -> mysterious beyond
+fnv -> map
+Now, decrypt the following text: fgxsj znddyq nzgxke
 
-Solution:
-<think>
+Training target:
 We need to decode the target strictly from left to right using the character mappings.
 
 Process examples
 
-ctbne kairn enkmx -> tower alice reads
+ftsqjzygxs djtgke -> mysterious beyond
+ftsqjzygxs -> mysterious
+f -> m new
+t -> y new
+s -> s new
+q -> t new
+j -> e new
+z -> r new
+y -> i new
+g -> o new
+x -> u new
+s -> s agrees
 
-Training target:
-ctbne -> tower
-c -> t new
-t -> o new
-b -> w new
-n -> e new
-e -> r new
+djtgke -> beyond
+d -> b new
+j -> e agrees
+t -> y agrees
+g -> o agrees
+k -> n new
+e -> d new
 
-kairn -> alice
-k -> a new
-a -> l new
-i -> i new
-r -> c new
-n -> e agrees
-
-enkmx -> reads
-e -> r agrees
-n -> e agrees
-k -> a agrees
-m -> d new
-x -> s new
+fnv -> map
+fnv -> map
+f -> m agrees
+n -> a new
+v -> p new
 
 Summary character mappings
-a -> l
-b -> w
-c -> t
-e -> r
-i -> i
-k -> a
-m -> d
-n -> e
-r -> c
-t -> o
-x -> s
+d -> b
+e -> d
+f -> m
+g -> o
+j -> e
+k -> n
+n -> a
+q -> t
+s -> s
+t -> y
+v -> p
+x -> u
+y -> i
+z -> r
 
 Target text
-ctbne kairn enkmx
+fgxsj znddyq nzgxke
 
 Decode target words from character mappings
 
-ctbne
-c -> t
-t -> o
-b -> w
-n -> e
-e -> r
-ctbne -> tower
+fgxsj
+f -> m
+g -> o
+x -> u
+s -> s
+j -> e
+fgxsj -> mouse
 fully mapped
 
-choose tower
+choose mouse
 
-kairn
-k -> a
-a -> l
-i -> i
-r -> c
-n -> e
-kairn -> alice
+znddyq
+z -> r
+n -> a
+d -> b
+d -> b
+y -> i
+q -> t
+znddyq -> rabbit
 fully mapped
 
-choose alice
+choose rabbit
 
-enkmx
-e -> r
-n -> e
-k -> a
-m -> d
-x -> s
-enkmx -> reads
+nzgxke
+n -> a
+z -> r
+g -> o
+x -> u
+k -> n
+e -> d
+nzgxke -> around
 fully mapped
 
-choose reads
+choose around
 
 Decoded phrase
-tower alice reads
+mouse rabbit around
 
-Answer: \boxed{tower alice reads}
-</think>
-\boxed{tower alice reads}
+Answer: \boxed{mouse rabbit around}

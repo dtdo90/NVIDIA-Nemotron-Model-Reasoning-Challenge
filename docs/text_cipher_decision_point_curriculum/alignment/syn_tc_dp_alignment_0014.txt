@@ -127,7 +127,7 @@ story
 
 Check scan candidates against summary mappings
 
-story
+ezbwl -> story
 e -> s new
 z -> t agrees
 b -> o agrees

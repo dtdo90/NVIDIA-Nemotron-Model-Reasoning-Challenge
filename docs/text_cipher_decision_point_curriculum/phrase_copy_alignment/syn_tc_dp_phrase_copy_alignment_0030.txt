@@ -1,97 +1,109 @@
 Problem syn_tc_dp_phrase_copy_alignment_0030
 Bucket: phrase_copy_alignment
-Gold answer: under draws alice
-Note: phrase_copy_exact_example_cipher_phrase
+Gold answer: tower hatter treasure mouse
+Note: phrase_copy_fully_mapped_nontrivial_target
 
 Training prompt:
 In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
-xfwuo wojrs jaypu -> under draws alice
-Now, decrypt the following text: xfwuo wojrs jaypu
+rhlwaqtoyl dpwgbal -> mysterious watches
+Now, decrypt the following text: wodaq bpwwaq wqaplyqa royla
 
-Solution:
-<think>
+Training target:
 We need to decode the target strictly from left to right using the character mappings.
 
 Process examples
 
-xfwuo wojrs jaypu -> under draws alice
+rhlwaqtoyl dpwgbal -> mysterious watches
+rhlwaqtoyl -> mysterious
+r -> m new
+h -> y new
+l -> s new
+w -> t new
+a -> e new
+q -> r new
+t -> i new
+o -> o new
+y -> u new
+l -> s agrees
 
-Training target:
-xfwuo -> under
-x -> u new
-f -> n new
-w -> d new
-u -> e new
-o -> r new
-
-wojrs -> draws
-w -> d agrees
-o -> r agrees
-j -> a new
-r -> w new
-s -> s new
-
-jaypu -> alice
-j -> a agrees
-a -> l new
-y -> i new
-p -> c new
-u -> e agrees
+dpwgbal -> watches
+d -> w new
+p -> a new
+w -> t agrees
+g -> c new
+b -> h new
+a -> e agrees
+l -> s agrees
 
 Summary character mappings
-a -> l
-f -> n
-j -> a
-o -> r
-p -> c
-r -> w
-s -> s
-u -> e
-w -> d
-x -> u
-y -> i
+a -> e
+b -> h
+d -> w
+g -> c
+h -> y
+l -> s
+o -> o
+p -> a
+q -> r
+r -> m
+t -> i
+w -> t
+y -> u
 
 Target text
-xfwuo wojrs jaypu
+wodaq bpwwaq wqaplyqa royla
 
 Decode target words from character mappings
 
-xfwuo
-x -> u
-f -> n
-w -> d
-u -> e
-o -> r
-xfwuo -> under
+wodaq
+w -> t
+o -> o
+d -> w
+a -> e
+q -> r
+wodaq -> tower
 fully mapped
 
-choose under
+choose tower
 
-wojrs
-w -> d
-o -> r
-j -> a
-r -> w
-s -> s
-wojrs -> draws
+bpwwaq
+b -> h
+p -> a
+w -> t
+w -> t
+a -> e
+q -> r
+bpwwaq -> hatter
 fully mapped
 
-choose draws
+choose hatter
 
-jaypu
-j -> a
-a -> l
-y -> i
-p -> c
-u -> e
-jaypu -> alice
+wqaplyqa
+w -> t
+q -> r
+a -> e
+p -> a
+l -> s
+y -> u
+q -> r
+a -> e
+wqaplyqa -> treasure
 fully mapped
 
-choose alice
+choose treasure
+
+royla
+r -> m
+o -> o
+y -> u
+l -> s
+a -> e
+royla -> mouse
+fully mapped
+
+choose mouse
 
 Decoded phrase
-under draws alice
+tower hatter treasure mouse
 
-Answer: \boxed{under draws alice}
-</think>
-\boxed{under draws alice}
+Answer: \boxed{tower hatter treasure mouse}

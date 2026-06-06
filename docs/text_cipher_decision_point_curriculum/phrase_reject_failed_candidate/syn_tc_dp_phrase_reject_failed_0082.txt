@@ -131,7 +131,14 @@ cave, wise
 
 Check scan candidates against summary mappings
 
-wise
+ngjh -> cave
+n -> c new
+g -> a new
+j -> v new
+h -> e agrees
+PASS
+
+ngjh -> wise
 n -> w conflicts
 f -> w already exists
 g -> i conflicts
@@ -140,13 +147,6 @@ j -> s conflicts
 u -> s already exists
 h -> e agrees
 FAIL
-
-cave
-n -> c new
-g -> a new
-j -> v new
-h -> e agrees
-PASS
 add n -> c
 add g -> a
 add j -> v

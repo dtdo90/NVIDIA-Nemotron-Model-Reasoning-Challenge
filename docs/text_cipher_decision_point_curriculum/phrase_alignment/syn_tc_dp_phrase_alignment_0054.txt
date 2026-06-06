@@ -1,0 +1,190 @@
+Problem syn_tc_dp_phrase_alignment_0054
+Bucket: phrase_alignment
+Gold answer: discovers silver
+Note: phrase_strict_left_to_right_alignment_extra_short
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+sbarq scfdq -> alice above
+lfogn -> found
+Now, decrypt the following text: nawrfdqkw wabdqk
+
+Training target:
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+sbarq scfdq -> alice above
+sbarq -> alice
+s -> a new
+b -> l new
+a -> i new
+r -> c new
+q -> e new
+scfdq -> above
+s -> a agrees
+c -> b new
+f -> o new
+d -> v new
+q -> e agrees
+
+lfogn -> found
+lfogn -> found
+l -> f new
+f -> o agrees
+o -> u new
+g -> n new
+n -> d new
+
+Summary character mappings
+s -> a
+b -> l
+a -> i
+r -> c
+q -> e
+c -> b
+f -> o
+d -> v
+l -> f
+o -> u
+g -> n
+n -> d
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+nawrfdqkw wabdqk
+
+Decode target words from character mappings
+
+nawrfdqkw
+n -> d
+a -> i
+w -> ? unknown
+r -> c
+f -> o
+d -> v
+q -> e
+k -> ? unknown
+w -> ? unknown
+nawrfdqkw -> di?cove??
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match di?cove??
+above -> di?cove?? no match
+alice -> di?cove?? no match
+ancient -> di?cove?? no match
+around -> di?cove?? no match
+beyond -> di?cove?? no match
+bird -> di?cove?? no match
+book -> di?cove?? no match
+bright -> di?cove?? no match
+castle -> di?cove?? no match
+cat -> di?cove?? no match
+cave -> di?cove?? no match
+chases -> di?cove?? no match
+clever -> di?cove?? no match
+colorful -> di?cove?? no match
+creates -> di?cove?? no match
+crystal -> di?cove?? no match
+curious -> di?cove?? no match
+dark -> di?cove?? no match
+discovers -> di?cove?? match
+door -> di?cove?? no match
+dragon -> di?cove?? no match
+draws -> di?cove?? no match
+dreams -> di?cove?? no match
+explores -> di?cove?? no match
+follows -> di?cove?? no match
+forest -> di?cove?? no match
+found -> di?cove?? no match
+garden -> di?cove?? no match
+golden -> di?cove?? no match
+hatter -> di?cove?? no match
+hidden -> di?cove?? no match
+imagines -> di?cove?? no match
+in -> di?cove?? no match
+inside -> di?cove?? no match
+island -> di?cove?? no match
+key -> di?cove?? no match
+king -> di?cove?? no match
+knight -> di?cove?? no match
+library -> di?cove?? no match
+magical -> di?cove?? no match
+map -> di?cove?? no match
+message -> di?cove?? no match
+mirror -> di?cove?? no match
+mountain -> di?cove?? no match
+mouse -> di?cove?? no match
+mysterious -> di?cove?? no match
+near -> di?cove?? no match
+ocean -> di?cove?? no match
+palace -> di?cove?? no match
+potion -> di?cove?? no match
+princess -> di?cove?? no match
+puzzle -> di?cove?? no match
+queen -> di?cove?? no match
+rabbit -> di?cove?? no match
+reads -> di?cove?? no match
+school -> di?cove?? no match
+secret -> di?cove?? no match
+sees -> di?cove?? no match
+silver -> di?cove?? no match
+story -> di?cove?? no match
+strange -> di?cove?? no match
+student -> di?cove?? no match
+studies -> di?cove?? no match
+teacher -> di?cove?? no match
+the -> di?cove?? no match
+through -> di?cove?? no match
+tower -> di?cove?? no match
+treasure -> di?cove?? no match
+turtle -> di?cove?? no match
+under -> di?cove?? no match
+valley -> di?cove?? no match
+village -> di?cove?? no match
+watches -> di?cove?? no match
+wise -> di?cove?? no match
+wizard -> di?cove?? no match
+wonderland -> di?cove?? no match
+writes -> di?cove?? no match
+
+Scan candidates for di?cove??
+discovers
+
+Check scan candidates against summary mappings
+
+nawrfdqkw -> discovers
+n -> d agrees
+a -> i agrees
+w -> s new
+r -> c agrees
+f -> o agrees
+d -> v agrees
+q -> e agrees
+k -> r new
+w -> s new
+PASS
+add w -> s
+add k -> r
+
+choose discovers
+
+wabdqk
+w -> s
+a -> i
+b -> l
+d -> v
+q -> e
+k -> r
+wabdqk -> silver
+fully mapped
+
+choose silver
+
+Decoded phrase
+discovers silver
+
+Answer: \boxed{discovers silver}

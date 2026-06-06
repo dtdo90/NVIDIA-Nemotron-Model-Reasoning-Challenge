@@ -1,12 +1,12 @@
 Problem syn_tc_dp_copy_alignment_0001
 Bucket: copy_alignment
-Gold answer: curious
-Note: copy_exact_example_cipher_word
+Gold answer: creates
+Note: copy_fully_mapped_nontrivial_target
 
 Training prompt:
 In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
-hqduiql -> curious
-Now, decrypt the following text: hqduiql
+veyseq yjq -> secret cat
+Now, decrypt the following text: ysejqev
 
 Solution:
 <think>
@@ -14,46 +14,51 @@ We need to decode the target strictly from left to right using the character map
 
 Process examples
 
-hqduiql -> curious
+veyseq yjq -> secret cat
 
 Training target:
-h -> c new
-q -> u new
-d -> r new
-u -> i new
-i -> o new
-q -> u agrees
-l -> s new
+veyseq -> secret
+v -> s new
+e -> e new
+y -> c new
+s -> r new
+e -> e agrees
+q -> t new
+
+yjq -> cat
+y -> c agrees
+j -> a new
+q -> t agrees
 
 Summary character mappings
-d -> r
-h -> c
-i -> o
-l -> s
-q -> u
-u -> i
+e -> e
+j -> a
+q -> t
+s -> r
+v -> s
+y -> c
 
 Target text
-hqduiql
+ysejqev
 
 Decode target words from character mappings
 
-hqduiql
-h -> c
-q -> u
-d -> r
-u -> i
-i -> o
-q -> u
-l -> s
-hqduiql -> curious
+ysejqev
+y -> c
+s -> r
+e -> e
+j -> a
+q -> t
+e -> e
+v -> s
+ysejqev -> creates
 fully mapped
 
-choose curious
+choose creates
 
 Decoded phrase
-curious
+creates
 
-Answer: \boxed{curious}
+Answer: \boxed{creates}
 </think>
-\boxed{curious}
+\boxed{creates}

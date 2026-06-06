@@ -138,7 +138,7 @@ curious
 
 Check scan candidates against summary mappings
 
-curious
+vkwfzkl -> curious
 v -> c agrees
 k -> u new
 w -> r agrees
@@ -247,7 +247,7 @@ village
 
 Check scan candidates against summary mappings
 
-village
+efnngxy -> village
 e -> v agrees
 f -> i agrees
 n -> l agrees

@@ -134,7 +134,14 @@ book, door
 
 Check scan candidates against summary mappings
 
-door
+jeev -> book
+j -> b new
+e -> o agrees
+e -> o agrees
+v -> k new
+PASS
+
+jeev -> door
 j -> d conflicts
 c -> d already exists
 e -> o agrees
@@ -142,13 +149,6 @@ e -> o agrees
 v -> r conflicts
 z -> r already exists
 FAIL
-
-book
-j -> b new
-e -> o agrees
-e -> o agrees
-v -> k new
-PASS
 add j -> b
 add v -> k
 
@@ -248,7 +248,7 @@ mouse
 
 Check scan candidates against summary mappings
 
-mouse
+lesnh -> mouse
 l -> m new
 e -> o agrees
 s -> u agrees
@@ -378,7 +378,7 @@ ancient
 
 Check scan candidates against summary mappings
 
-ancient
+wymqhyb -> ancient
 w -> a agrees
 y -> n agrees
 m -> c new

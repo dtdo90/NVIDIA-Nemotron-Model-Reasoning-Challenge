@@ -135,7 +135,7 @@ imagines
 
 Check scan candidates against summary mappings
 
-imagines
+tuqgtmcj -> imagines
 t -> i agrees
 u -> m agrees
 q -> a agrees
@@ -243,7 +243,7 @@ tower
 
 Check scan candidates against summary mappings
 
-tower
+wnhcv -> tower
 w -> t agrees
 n -> o agrees
 h -> w new

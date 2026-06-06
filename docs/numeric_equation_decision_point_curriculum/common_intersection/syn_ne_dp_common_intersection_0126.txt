@@ -334,7 +334,7 @@ Common
 Training target:
 op_prefix
 
-Apply AB_CD|abs(x-y)|common to the query
+Apply format AB_CD|abs(x-y)|common to the query
 
 Query
 56/34

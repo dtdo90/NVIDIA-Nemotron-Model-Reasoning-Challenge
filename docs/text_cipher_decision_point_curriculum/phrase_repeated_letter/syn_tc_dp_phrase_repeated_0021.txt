@@ -134,7 +134,7 @@ valley
 
 Check scan candidates against summary mappings
 
-valley
+fqeeld -> valley
 f -> v new
 q -> a agrees
 e -> l new
@@ -243,7 +243,7 @@ message
 
 Check scan candidates against summary mappings
 
-message
+zlxxqil -> message
 z -> m new
 l -> e agrees
 x -> s agrees
@@ -352,7 +352,7 @@ chases
 
 Check scan candidates against summary mappings
 
-chases
+vrqxlx -> chases
 v -> c new
 r -> h new
 q -> a agrees

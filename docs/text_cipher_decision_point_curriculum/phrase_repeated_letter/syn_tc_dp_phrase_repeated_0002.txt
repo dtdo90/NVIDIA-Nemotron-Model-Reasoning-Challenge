@@ -135,7 +135,7 @@ inside
 
 Check scan candidates against summary mappings
 
-inside
+cuwcag -> inside
 c -> i new
 u -> n agrees
 w -> s agrees
@@ -242,7 +242,7 @@ beyond
 
 Check scan candidates against summary mappings
 
-beyond
+kglmua -> beyond
 k -> b new
 g -> e agrees
 l -> y agrees
@@ -349,7 +349,7 @@ puzzle, turtle
 
 Check scan candidates against summary mappings
 
-puzzle
+rehhog -> puzzle
 r -> p new
 e -> u agrees
 h -> z new
@@ -357,6 +357,18 @@ h -> z new
 o -> l new
 g -> e agrees
 PASS
+
+rehhog -> turtle
+r -> t conflicts
+q -> t already exists
+e -> u agrees
+h -> r conflicts
+z -> r already exists
+h -> t conflicts
+q -> t already exists
+o -> l new
+g -> e agrees
+FAIL
 add r -> p
 add h -> z
 add o -> l

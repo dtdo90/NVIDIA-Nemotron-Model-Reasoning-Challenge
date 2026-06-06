@@ -133,7 +133,7 @@ forest
 
 Check scan candidates against summary mappings
 
-forest
+spudbv -> forest
 s -> f new
 p -> o agrees
 u -> r agrees

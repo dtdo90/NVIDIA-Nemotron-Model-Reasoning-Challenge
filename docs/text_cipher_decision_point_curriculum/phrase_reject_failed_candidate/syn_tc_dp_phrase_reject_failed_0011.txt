@@ -133,7 +133,7 @@ cat, map
 
 Check scan candidates against summary mappings
 
-cat
+vzs -> cat
 v -> c conflicts
 o -> c already exists
 z -> a agrees
@@ -141,7 +141,7 @@ s -> t conflicts
 j -> t already exists
 FAIL
 
-map
+vzs -> map
 v -> m new
 z -> a agrees
 s -> p new
@@ -245,7 +245,7 @@ mouse
 
 Check scan candidates against summary mappings
 
-mouse
+vlghr -> mouse
 v -> m agrees
 l -> o new
 g -> u agrees

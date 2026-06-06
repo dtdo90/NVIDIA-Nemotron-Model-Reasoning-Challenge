@@ -130,7 +130,7 @@ ancient
 
 Check scan candidates against summary mappings
 
-ancient
+jokcvol -> ancient
 j -> a new
 o -> n agrees
 k -> c agrees

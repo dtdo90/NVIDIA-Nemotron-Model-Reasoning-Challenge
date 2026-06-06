@@ -134,7 +134,14 @@ book, door
 
 Check scan candidates against summary mappings
 
-door
+fyyh -> book
+f -> b new
+y -> o agrees
+y -> o agrees
+h -> k new
+PASS
+
+fyyh -> door
 f -> d conflicts
 x -> d already exists
 y -> o agrees
@@ -142,13 +149,6 @@ y -> o agrees
 h -> r conflicts
 q -> r already exists
 FAIL
-
-book
-f -> b new
-y -> o agrees
-y -> o agrees
-h -> k new
-PASS
 add f -> b
 add h -> k
 
@@ -249,7 +249,7 @@ valley
 
 Check scan candidates against summary mappings
 
-valley
+iweemp -> valley
 i -> v agrees
 w -> a agrees
 e -> l new

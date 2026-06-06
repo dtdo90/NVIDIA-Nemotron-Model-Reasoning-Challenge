@@ -134,7 +134,7 @@ dragon
 
 Check scan candidates against summary mappings
 
-dragon
+fjmpec -> dragon
 f -> d new
 j -> r agrees
 m -> a agrees

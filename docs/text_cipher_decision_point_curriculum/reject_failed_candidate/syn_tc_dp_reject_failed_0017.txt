@@ -130,7 +130,7 @@ bird, dark
 
 Check scan candidates against summary mappings
 
-bird
+wlaf -> bird
 w -> b conflicts
 b -> b already exists
 l -> i conflicts
@@ -139,7 +139,7 @@ a -> r agrees
 f -> d new
 FAIL
 
-dark
+wlaf -> dark
 w -> d new
 l -> a new
 a -> r agrees

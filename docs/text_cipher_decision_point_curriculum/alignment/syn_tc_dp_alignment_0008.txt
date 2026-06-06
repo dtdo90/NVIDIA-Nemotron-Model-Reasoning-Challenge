@@ -131,7 +131,7 @@ tower
 
 Check scan candidates against summary mappings
 
-tower
+nijdm -> tower
 n -> t new
 i -> o agrees
 j -> w agrees

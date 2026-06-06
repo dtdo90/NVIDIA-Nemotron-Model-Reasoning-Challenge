@@ -135,7 +135,7 @@ mysterious
 
 Check scan candidates against summary mappings
 
-mysterious
+rmpnhkuicp -> mysterious
 r -> m new
 m -> y agrees
 p -> s agrees

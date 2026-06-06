@@ -132,7 +132,7 @@ library
 
 Check scan candidates against summary mappings
 
-library
+omuwiwt -> library
 o -> l new
 m -> i agrees
 u -> b agrees

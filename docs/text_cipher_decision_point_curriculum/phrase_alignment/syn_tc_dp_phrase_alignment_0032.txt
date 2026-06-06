@@ -138,7 +138,7 @@ school
 
 Check scan candidates against summary mappings
 
-school
+ywjxxz -> school
 y -> s agrees
 w -> c agrees
 j -> h new
@@ -245,7 +245,7 @@ golden
 
 Check scan candidates against summary mappings
 
-golden
+rxzvph -> golden
 r -> g new
 x -> o agrees
 z -> l agrees
@@ -367,7 +367,7 @@ imagines
 
 Check scan candidates against summary mappings
 
-imagines
+iusrihpy -> imagines
 i -> i agrees
 u -> m new
 s -> a agrees

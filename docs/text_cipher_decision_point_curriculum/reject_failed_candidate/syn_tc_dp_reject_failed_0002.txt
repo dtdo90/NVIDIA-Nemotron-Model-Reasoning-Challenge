@@ -124,19 +124,19 @@ cat, map
 
 Check scan candidates against summary mappings
 
-map
+vdn -> cat
+v -> c new
+d -> a agrees
+n -> t new
+PASS
+
+vdn -> map
 v -> m conflicts
 o -> m already exists
 d -> a agrees
 n -> p conflicts
 s -> p already exists
 FAIL
-
-cat
-v -> c new
-d -> a agrees
-n -> t new
-PASS
 add v -> c
 add n -> t
 

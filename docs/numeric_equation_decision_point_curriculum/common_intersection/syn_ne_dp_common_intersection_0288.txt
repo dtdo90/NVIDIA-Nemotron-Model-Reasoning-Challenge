@@ -148,7 +148,7 @@ rev_or_op_prefix_rev_if_neg
 rev_or_op_suffix_rev_if_neg
 abs_rev
 
-Apply AB_CD|x+y-1|common to the query
+Apply format AB_CD|x+y-1|common to the query
 
 Query
 61'47

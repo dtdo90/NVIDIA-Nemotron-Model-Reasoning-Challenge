@@ -1,12 +1,12 @@
 Problem syn_tc_dp_copy_alignment_0011
 Bucket: copy_alignment
-Gold answer: mirror
-Note: copy_exact_example_cipher_word
+Gold answer: garden
+Note: copy_fully_mapped_nontrivial_target
 
 Training prompt:
 In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
-ijuueu -> mirror
-Now, decrypt the following text: ijuueu
+cgasrn fjjf -> dragon sees
+Now, decrypt the following text: sagcjn
 
 Solution:
 <think>
@@ -14,42 +14,53 @@ We need to decode the target strictly from left to right using the character map
 
 Process examples
 
-ijuueu -> mirror
+cgasrn fjjf -> dragon sees
 
 Training target:
-i -> m new
-j -> i new
-u -> r new
-u -> r agrees
-e -> o new
-u -> r agrees
+cgasrn -> dragon
+c -> d new
+g -> r new
+a -> a new
+s -> g new
+r -> o new
+n -> n new
+
+fjjf -> sees
+f -> s new
+j -> e new
+j -> e agrees
+f -> s agrees
 
 Summary character mappings
-e -> o
-i -> m
-j -> i
-u -> r
+a -> a
+c -> d
+f -> s
+g -> r
+j -> e
+n -> n
+r -> o
+s -> g
 
 Target text
-ijuueu
+sagcjn
 
 Decode target words from character mappings
 
-ijuueu
-i -> m
-j -> i
-u -> r
-u -> r
-e -> o
-u -> r
-ijuueu -> mirror
+sagcjn
+s -> g
+a -> a
+g -> r
+c -> d
+j -> e
+n -> n
+sagcjn -> garden
 fully mapped
 
-choose mirror
+choose garden
 
 Decoded phrase
-mirror
+garden
 
-Answer: \boxed{mirror}
+Answer: \boxed{garden}
 </think>
-\boxed{mirror}
+\boxed{garden}

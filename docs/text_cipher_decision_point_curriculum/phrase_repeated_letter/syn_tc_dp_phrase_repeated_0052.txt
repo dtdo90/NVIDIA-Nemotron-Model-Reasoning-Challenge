@@ -141,7 +141,7 @@ curious
 
 Check scan candidates against summary mappings
 
-curious
+wkynhkr -> curious
 w -> c agrees
 k -> u new
 y -> r agrees

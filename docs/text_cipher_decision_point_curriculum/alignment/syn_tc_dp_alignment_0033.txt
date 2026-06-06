@@ -134,7 +134,7 @@ colorful
 
 Check scan candidates against summary mappings
 
-colorful
+kzxzspex -> colorful
 k -> c new
 z -> o agrees
 x -> l agrees

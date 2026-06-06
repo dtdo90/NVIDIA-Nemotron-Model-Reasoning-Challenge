@@ -132,7 +132,7 @@ queen
 
 Check scan candidates against summary mappings
 
-queen
+rthhn -> queen
 r -> q new
 t -> u agrees
 h -> e agrees

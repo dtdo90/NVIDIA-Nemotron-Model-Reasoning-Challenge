@@ -138,7 +138,7 @@ forest
 
 Check scan candidates against summary mappings
 
-forest
+esypbj -> forest
 e -> f new
 s -> o agrees
 y -> r agrees
@@ -270,7 +270,7 @@ chases
 
 Check scan candidates against summary mappings
 
-chases
+fdrbpb -> chases
 f -> c agrees
 d -> h new
 r -> a agrees

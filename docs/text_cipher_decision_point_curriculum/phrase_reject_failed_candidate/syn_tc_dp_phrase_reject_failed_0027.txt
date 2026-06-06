@@ -131,7 +131,7 @@ cat, map
 
 Check scan candidates against summary mappings
 
-cat
+dsz -> cat
 d -> c conflicts
 o -> c already exists
 s -> a agrees
@@ -139,7 +139,7 @@ z -> t conflicts
 l -> t already exists
 FAIL
 
-map
+dsz -> map
 d -> m new
 s -> a agrees
 z -> p new
@@ -244,7 +244,7 @@ potion
 
 Check scan candidates against summary mappings
 
-potion
+zklpky -> potion
 z -> p agrees
 k -> o new
 l -> t agrees

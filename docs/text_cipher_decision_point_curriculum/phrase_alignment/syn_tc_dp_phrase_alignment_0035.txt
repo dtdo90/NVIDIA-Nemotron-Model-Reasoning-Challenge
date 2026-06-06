@@ -138,7 +138,7 @@ watches
 
 Check scan candidates against summary mappings
 
-watches
+zbnikjp -> watches
 z -> w agrees
 b -> a agrees
 n -> t agrees
@@ -248,7 +248,7 @@ imagines
 
 Check scan candidates against summary mappings
 
-imagines
+uwbyuvjp -> imagines
 u -> i agrees
 w -> m new
 b -> a agrees

@@ -135,7 +135,7 @@ treasure
 
 Check scan candidates against summary mappings
 
-treasure
+mvqljkvq -> treasure
 m -> t new
 v -> r agrees
 q -> e agrees
@@ -246,7 +246,7 @@ valley
 
 Check scan candidates against summary mappings
 
-valley
+blyyqg -> valley
 b -> v new
 l -> a agrees
 y -> l agrees

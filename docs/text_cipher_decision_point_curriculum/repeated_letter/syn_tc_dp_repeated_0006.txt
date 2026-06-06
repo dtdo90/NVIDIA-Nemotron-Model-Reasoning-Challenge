@@ -130,7 +130,7 @@ studies
 
 Check scan candidates against summary mappings
 
-studies
+bqzkudb -> studies
 b -> s agrees
 q -> t new
 z -> u agrees

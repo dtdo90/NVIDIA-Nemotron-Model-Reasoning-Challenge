@@ -133,7 +133,7 @@ student
 
 Check scan candidates against summary mappings
 
-student
+pwsglnw -> student
 p -> s new
 w -> t agrees
 s -> u agrees

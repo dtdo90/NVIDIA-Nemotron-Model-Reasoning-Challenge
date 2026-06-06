@@ -1,0 +1,183 @@
+Problem syn_tc_dp_phrase_repeated_0057
+Bucket: phrase_repeated_letter
+Gold answer: potion in
+Note: phrase_preserve_repeated_letter_pattern_extra_short
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+nqbhtogh rqqf -> mountain door
+mtfohcz -> strange
+Now, decrypt the following text: vqtgqh gh
+
+Training target:
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+nqbhtogh rqqf -> mountain door
+nqbhtogh -> mountain
+n -> m new
+q -> o new
+b -> u new
+h -> n new
+t -> t new
+o -> a new
+g -> i new
+h -> n agrees
+rqqf -> door
+r -> d new
+q -> o agrees
+q -> o agrees
+f -> r new
+
+mtfohcz -> strange
+mtfohcz -> strange
+m -> s new
+t -> t agrees
+f -> r agrees
+o -> a agrees
+h -> n agrees
+c -> g new
+z -> e new
+
+Summary character mappings
+n -> m
+q -> o
+b -> u
+h -> n
+t -> t
+o -> a
+g -> i
+r -> d
+f -> r
+m -> s
+c -> g
+z -> e
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+vqtgqh gh
+
+Decode target words from character mappings
+
+vqtgqh
+v -> ? unknown
+q -> o
+t -> t
+g -> i
+q -> o
+h -> n
+vqtgqh -> ?otion
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?otion
+above -> ?otion no match
+alice -> ?otion no match
+ancient -> ?otion no match
+around -> ?otion no match
+beyond -> ?otion no match
+bird -> ?otion no match
+book -> ?otion no match
+bright -> ?otion no match
+castle -> ?otion no match
+cat -> ?otion no match
+cave -> ?otion no match
+chases -> ?otion no match
+clever -> ?otion no match
+colorful -> ?otion no match
+creates -> ?otion no match
+crystal -> ?otion no match
+curious -> ?otion no match
+dark -> ?otion no match
+discovers -> ?otion no match
+door -> ?otion no match
+dragon -> ?otion no match
+draws -> ?otion no match
+dreams -> ?otion no match
+explores -> ?otion no match
+follows -> ?otion no match
+forest -> ?otion no match
+found -> ?otion no match
+garden -> ?otion no match
+golden -> ?otion no match
+hatter -> ?otion no match
+hidden -> ?otion no match
+imagines -> ?otion no match
+in -> ?otion no match
+inside -> ?otion no match
+island -> ?otion no match
+key -> ?otion no match
+king -> ?otion no match
+knight -> ?otion no match
+library -> ?otion no match
+magical -> ?otion no match
+map -> ?otion no match
+message -> ?otion no match
+mirror -> ?otion no match
+mountain -> ?otion no match
+mouse -> ?otion no match
+mysterious -> ?otion no match
+near -> ?otion no match
+ocean -> ?otion no match
+palace -> ?otion no match
+potion -> ?otion match
+princess -> ?otion no match
+puzzle -> ?otion no match
+queen -> ?otion no match
+rabbit -> ?otion no match
+reads -> ?otion no match
+school -> ?otion no match
+secret -> ?otion no match
+sees -> ?otion no match
+silver -> ?otion no match
+story -> ?otion no match
+strange -> ?otion no match
+student -> ?otion no match
+studies -> ?otion no match
+teacher -> ?otion no match
+the -> ?otion no match
+through -> ?otion no match
+tower -> ?otion no match
+treasure -> ?otion no match
+turtle -> ?otion no match
+under -> ?otion no match
+valley -> ?otion no match
+village -> ?otion no match
+watches -> ?otion no match
+wise -> ?otion no match
+wizard -> ?otion no match
+wonderland -> ?otion no match
+writes -> ?otion no match
+
+Scan candidates for ?otion
+potion
+
+Check scan candidates against summary mappings
+
+vqtgqh -> potion
+v -> p new
+q -> o agrees
+t -> t agrees
+g -> i agrees
+q -> o agrees
+h -> n agrees
+PASS
+add v -> p
+
+choose potion
+
+gh
+g -> i
+h -> n
+gh -> in
+fully mapped
+
+choose in
+
+Decoded phrase
+potion in
+
+Answer: \boxed{potion in}

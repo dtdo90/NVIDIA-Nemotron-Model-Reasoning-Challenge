@@ -136,7 +136,7 @@ hidden
 
 Check scan candidates against summary mappings
 
-hidden
+rdqqom -> hidden
 r -> h agrees
 d -> i agrees
 q -> d new
@@ -244,7 +244,7 @@ teacher
 
 Check scan candidates against summary mappings
 
-teacher
+wojnrob -> teacher
 w -> t agrees
 o -> e agrees
 j -> a agrees
@@ -352,7 +352,7 @@ castle
 
 Check scan candidates against summary mappings
 
-castle
+njvweo -> castle
 n -> c agrees
 j -> a agrees
 v -> s agrees

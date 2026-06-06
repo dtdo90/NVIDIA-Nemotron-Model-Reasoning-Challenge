@@ -136,7 +136,7 @@ bird, book, cave, dark, door, king, near, sees, wise
 
 Check scan candidates against summary mappings
 
-bird
+gbbc -> bird
 g -> b new
 b -> i conflicts
 y -> i already exists
@@ -146,7 +146,14 @@ c -> d conflicts
 w -> d already exists
 FAIL
 
-cave
+gbbc -> book
+g -> b new
+b -> o new
+b -> o new
+c -> k new
+PASS
+
+gbbc -> cave
 g -> c conflicts
 s -> c already exists
 b -> a conflicts
@@ -157,7 +164,7 @@ c -> e conflicts
 t -> e already exists
 FAIL
 
-dark
+gbbc -> dark
 g -> d conflicts
 w -> d already exists
 b -> a conflicts
@@ -167,7 +174,7 @@ r -> r already exists
 c -> k new
 FAIL
 
-door
+gbbc -> door
 g -> d conflicts
 w -> d already exists
 b -> o new
@@ -176,7 +183,7 @@ c -> r conflicts
 r -> r already exists
 FAIL
 
-king
+gbbc -> king
 g -> k new
 b -> i conflicts
 y -> i already exists
@@ -186,7 +193,7 @@ c -> g conflicts
 x -> g already exists
 FAIL
 
-near
+gbbc -> near
 g -> n conflicts
 l -> n already exists
 b -> e conflicts
@@ -197,7 +204,7 @@ c -> r conflicts
 r -> r already exists
 FAIL
 
-sees
+gbbc -> sees
 g -> s conflicts
 i -> s already exists
 b -> e conflicts
@@ -208,7 +215,7 @@ c -> s conflicts
 i -> s already exists
 FAIL
 
-wise
+gbbc -> wise
 g -> w new
 b -> i conflicts
 y -> i already exists
@@ -217,13 +224,6 @@ i -> s already exists
 c -> e conflicts
 t -> e already exists
 FAIL
-
-book
-g -> b new
-b -> o new
-b -> o new
-c -> k new
-PASS
 add g -> b
 add b -> o
 add c -> k
@@ -324,7 +324,7 @@ mouse
 
 Check scan candidates against summary mappings
 
-mouse
+nbeit -> mouse
 n -> m new
 b -> o agrees
 e -> u agrees
@@ -444,7 +444,7 @@ mysterious
 
 Check scan candidates against summary mappings
 
-mysterious
+nhiqtrybei -> mysterious
 n -> m agrees
 h -> y new
 i -> s agrees

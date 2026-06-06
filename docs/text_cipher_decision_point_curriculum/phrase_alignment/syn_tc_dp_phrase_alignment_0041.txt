@@ -142,7 +142,7 @@ explores
 
 Check scan candidates against summary mappings
 
-explores
+ifkrdtiy -> explores
 i -> e agrees
 f -> x new
 k -> p new

@@ -134,7 +134,7 @@ mirror
 
 Check scan candidates against summary mappings
 
-mirror
+yaccrc -> mirror
 y -> m new
 a -> i agrees
 c -> r agrees

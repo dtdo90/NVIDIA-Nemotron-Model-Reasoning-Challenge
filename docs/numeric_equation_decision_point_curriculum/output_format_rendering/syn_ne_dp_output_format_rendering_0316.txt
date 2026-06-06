@@ -172,7 +172,7 @@ op_prefix_rev
 Common
 op_prefix_rev
 
-Apply AB_CD|x+y|common to the query
+Apply format AB_CD|x+y|common to the query
 
 Query
 21*61

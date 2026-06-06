@@ -129,7 +129,7 @@ reads
 
 Check scan candidates against summary mappings
 
-reads
+bxozl -> reads
 b -> r new
 x -> e agrees
 o -> a agrees

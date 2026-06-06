@@ -132,7 +132,7 @@ mountain
 
 Check scan candidates against summary mappings
 
-mountain
+pchvgnjv -> mountain
 p -> m new
 c -> o agrees
 h -> u agrees

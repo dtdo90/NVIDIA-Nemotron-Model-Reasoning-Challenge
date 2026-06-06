@@ -1,101 +1,109 @@
 Problem syn_tc_dp_phrase_copy_alignment_0040
 Bucket: phrase_copy_alignment
-Gold answer: mirror wise strange
-Note: phrase_copy_exact_example_cipher_phrase
+Gold answer: draws above around
+Note: phrase_copy_fully_mapped_nontrivial_target
 
 Training prompt:
 In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
-bgzziz ygsp suzlvkp -> mirror wise strange
-Now, decrypt the following text: bgzziz ygsp suzlvkp
+gqxvuycmxv pqdwu -> wonderland mouse
+kqqt zmju -> book cave
+Now, decrypt the following text: vymgw mkqju myqdxv
 
-Solution:
-<think>
+Training target:
 We need to decode the target strictly from left to right using the character mappings.
 
 Process examples
 
-bgzziz ygsp suzlvkp -> mirror wise strange
+gqxvuycmxv pqdwu -> wonderland mouse
+gqxvuycmxv -> wonderland
+g -> w new
+q -> o new
+x -> n new
+v -> d new
+u -> e new
+y -> r new
+c -> l new
+m -> a new
+x -> n agrees
+v -> d agrees
 
-Training target:
-bgzziz -> mirror
-b -> m new
-g -> i new
-z -> r new
-z -> r agrees
-i -> o new
-z -> r agrees
+pqdwu -> mouse
+p -> m new
+q -> o agrees
+d -> u new
+w -> s new
+u -> e agrees
 
-ygsp -> wise
-y -> w new
-g -> i agrees
-s -> s new
-p -> e new
+kqqt zmju -> book cave
+kqqt -> book
+k -> b new
+q -> o agrees
+q -> o agrees
+t -> k new
 
-suzlvkp -> strange
-s -> s agrees
-u -> t new
-z -> r agrees
-l -> a new
-v -> n new
-k -> g new
-p -> e agrees
+zmju -> cave
+z -> c new
+m -> a agrees
+j -> v new
+u -> e agrees
 
 Summary character mappings
-b -> m
-g -> i
-i -> o
-k -> g
-l -> a
-p -> e
-s -> s
-u -> t
-v -> n
-y -> w
-z -> r
+c -> l
+d -> u
+g -> w
+j -> v
+k -> b
+m -> a
+p -> m
+q -> o
+t -> k
+u -> e
+v -> d
+w -> s
+x -> n
+y -> r
+z -> c
 
 Target text
-bgzziz ygsp suzlvkp
+vymgw mkqju myqdxv
 
 Decode target words from character mappings
 
-bgzziz
-b -> m
-g -> i
-z -> r
-z -> r
-i -> o
-z -> r
-bgzziz -> mirror
+vymgw
+v -> d
+y -> r
+m -> a
+g -> w
+w -> s
+vymgw -> draws
 fully mapped
 
-choose mirror
+choose draws
 
-ygsp
-y -> w
-g -> i
-s -> s
-p -> e
-ygsp -> wise
+mkqju
+m -> a
+k -> b
+q -> o
+j -> v
+u -> e
+mkqju -> above
 fully mapped
 
-choose wise
+choose above
 
-suzlvkp
-s -> s
-u -> t
-z -> r
-l -> a
-v -> n
-k -> g
-p -> e
-suzlvkp -> strange
+myqdxv
+m -> a
+y -> r
+q -> o
+d -> u
+x -> n
+v -> d
+myqdxv -> around
 fully mapped
 
-choose strange
+choose around
 
 Decoded phrase
-mirror wise strange
+draws above around
 
-Answer: \boxed{mirror wise strange}
-</think>
-\boxed{mirror wise strange}
+Answer: \boxed{draws above around}

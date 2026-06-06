@@ -137,7 +137,7 @@ bright, knight
 
 Check scan candidates against summary mappings
 
-bright
+lfvgqz -> bright
 l -> b conflicts
 u -> b already exists
 f -> r conflicts
@@ -148,7 +148,7 @@ q -> h agrees
 z -> t agrees
 FAIL
 
-knight
+lfvgqz -> knight
 l -> k new
 f -> n new
 v -> i agrees

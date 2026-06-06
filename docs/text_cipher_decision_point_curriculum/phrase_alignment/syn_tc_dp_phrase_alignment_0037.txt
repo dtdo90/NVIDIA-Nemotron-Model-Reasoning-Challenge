@@ -135,7 +135,7 @@ bird
 
 Check scan candidates against summary mappings
 
-bird
+ctod -> bird
 c -> b agrees
 t -> i new
 o -> r agrees
@@ -240,7 +240,7 @@ castle
 
 Check scan candidates against summary mappings
 
-castle
+uqejsk -> castle
 u -> c new
 q -> a agrees
 e -> s agrees

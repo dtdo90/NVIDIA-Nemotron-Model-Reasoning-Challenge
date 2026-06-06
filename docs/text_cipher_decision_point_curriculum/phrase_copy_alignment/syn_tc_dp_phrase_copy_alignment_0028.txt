@@ -1,79 +1,97 @@
 Problem syn_tc_dp_phrase_copy_alignment_0028
 Bucket: phrase_copy_alignment
-Gold answer: castle palace
-Note: phrase_copy_exact_example_cipher_phrase
+Gold answer: strange above
+Note: phrase_copy_fully_mapped_nontrivial_target
 
 Training prompt:
 In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
-arflmt ermrat -> castle palace
-Now, decrypt the following text: arflmt ermrat
+ulcrmxlc hlrsob -> treasure dragon
+pooy qrkc -> book cave
+Now, decrypt the following text: mulrbsc rpokc
 
-Solution:
-<think>
+Training target:
 We need to decode the target strictly from left to right using the character mappings.
 
 Process examples
 
-arflmt ermrat -> castle palace
-
-Training target:
-arflmt -> castle
-a -> c new
+ulcrmxlc hlrsob -> treasure dragon
+ulcrmxlc -> treasure
+u -> t new
+l -> r new
+c -> e new
 r -> a new
-f -> s new
-l -> t new
-m -> l new
-t -> e new
+m -> s new
+x -> u new
+l -> r agrees
+c -> e agrees
 
-ermrat -> palace
-e -> p new
+hlrsob -> dragon
+h -> d new
+l -> r agrees
 r -> a agrees
-m -> l agrees
+s -> g new
+o -> o new
+b -> n new
+
+pooy qrkc -> book cave
+pooy -> book
+p -> b new
+o -> o agrees
+o -> o agrees
+y -> k new
+
+qrkc -> cave
+q -> c new
 r -> a agrees
-a -> c agrees
-t -> e agrees
+k -> v new
+c -> e agrees
 
 Summary character mappings
-a -> c
-e -> p
-f -> s
-l -> t
-m -> l
+b -> n
+c -> e
+h -> d
+k -> v
+l -> r
+m -> s
+o -> o
+p -> b
+q -> c
 r -> a
-t -> e
+s -> g
+u -> t
+x -> u
+y -> k
 
 Target text
-arflmt ermrat
+mulrbsc rpokc
 
 Decode target words from character mappings
 
-arflmt
-a -> c
+mulrbsc
+m -> s
+u -> t
+l -> r
 r -> a
-f -> s
-l -> t
-m -> l
-t -> e
-arflmt -> castle
+b -> n
+s -> g
+c -> e
+mulrbsc -> strange
 fully mapped
 
-choose castle
+choose strange
 
-ermrat
-e -> p
+rpokc
 r -> a
-m -> l
-r -> a
-a -> c
-t -> e
-ermrat -> palace
+p -> b
+o -> o
+k -> v
+c -> e
+rpokc -> above
 fully mapped
 
-choose palace
+choose above
 
 Decoded phrase
-castle palace
+strange above
 
-Answer: \boxed{castle palace}
-</think>
-\boxed{castle palace}
+Answer: \boxed{strange above}

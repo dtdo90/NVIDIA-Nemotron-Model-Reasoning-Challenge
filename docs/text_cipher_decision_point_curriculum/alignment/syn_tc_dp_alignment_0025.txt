@@ -134,7 +134,7 @@ curious
 
 Check scan candidates against summary mappings
 
-curious
+pjswcje -> curious
 p -> c new
 j -> u agrees
 s -> r agrees

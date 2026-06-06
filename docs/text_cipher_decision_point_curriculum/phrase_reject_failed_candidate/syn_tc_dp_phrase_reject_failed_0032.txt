@@ -129,7 +129,7 @@ bird, king, wise
 
 Check scan candidates against summary mappings
 
-bird
+ykrq -> bird
 y -> b new
 k -> i agrees
 r -> r conflicts
@@ -137,7 +137,14 @@ d -> r already exists
 q -> d new
 FAIL
 
-wise
+ykrq -> king
+y -> k new
+k -> i agrees
+r -> n new
+q -> g new
+PASS
+
+ykrq -> wise
 y -> w new
 k -> i agrees
 r -> s conflicts
@@ -145,13 +152,6 @@ v -> s already exists
 q -> e conflicts
 x -> e already exists
 FAIL
-
-king
-y -> k new
-k -> i agrees
-r -> n new
-q -> g new
-PASS
 add y -> k
 add r -> n
 add q -> g
@@ -253,7 +253,7 @@ silver
 
 Check scan candidates against summary mappings
 
-silver
+vkeaxd -> silver
 v -> s agrees
 k -> i agrees
 e -> l agrees

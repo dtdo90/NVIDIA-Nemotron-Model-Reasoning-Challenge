@@ -128,7 +128,14 @@ bird, king, wise
 
 Check scan candidates against summary mappings
 
-king
+eiyf -> bird
+e -> b new
+i -> i agrees
+y -> r new
+f -> d new
+PASS
+
+eiyf -> king
 e -> k conflicts
 z -> k already exists
 i -> i agrees
@@ -138,12 +145,13 @@ f -> g conflicts
 l -> g already exists
 FAIL
 
-bird
-e -> b new
+eiyf -> wise
+e -> w new
 i -> i agrees
-y -> r new
-f -> d new
-PASS
+y -> s new
+f -> e conflicts
+j -> e already exists
+FAIL
 add e -> b
 add y -> r
 add f -> d

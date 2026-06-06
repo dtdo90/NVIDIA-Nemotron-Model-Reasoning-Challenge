@@ -208,7 +208,7 @@ rev_or_op_suffix_rev_if_neg
 abs_rev
 abs
 
-Apply AB_CD|x-y|common to the query
+Apply format AB_CD|x-y|common to the query
 
 Query
 10&25

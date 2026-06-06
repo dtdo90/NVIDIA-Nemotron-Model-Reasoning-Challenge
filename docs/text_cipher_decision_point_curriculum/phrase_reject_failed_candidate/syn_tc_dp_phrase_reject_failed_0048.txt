@@ -132,7 +132,14 @@ book, door
 
 Check scan candidates against summary mappings
 
-door
+sppx -> book
+s -> b new
+p -> o agrees
+p -> o agrees
+x -> k new
+PASS
+
+sppx -> door
 s -> d conflicts
 g -> d already exists
 p -> o agrees
@@ -140,13 +147,6 @@ p -> o agrees
 x -> r conflicts
 n -> r already exists
 FAIL
-
-book
-s -> b new
-p -> o agrees
-p -> o agrees
-x -> k new
-PASS
 add s -> b
 add x -> k
 

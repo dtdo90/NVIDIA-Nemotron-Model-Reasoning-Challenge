@@ -128,7 +128,21 @@ bird, king, wise
 
 Check scan candidates against summary mappings
 
-wise
+flro -> bird
+f -> b new
+l -> i agrees
+r -> r new
+o -> d new
+PASS
+
+flro -> king
+f -> k new
+l -> i agrees
+r -> n new
+o -> g new
+PASS
+
+flro -> wise
 f -> w conflicts
 g -> w already exists
 l -> i agrees
@@ -137,13 +151,6 @@ e -> s already exists
 o -> e conflicts
 k -> e already exists
 FAIL
-
-bird
-f -> b new
-l -> i agrees
-r -> r new
-o -> d new
-PASS
 add f -> b
 add r -> r
 add o -> d

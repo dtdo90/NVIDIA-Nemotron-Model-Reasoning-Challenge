@@ -138,7 +138,7 @@ chases
 
 Check scan candidates against summary mappings
 
-chases
+ugyewe -> chases
 u -> c agrees
 g -> h new
 y -> a agrees
@@ -246,7 +246,7 @@ village
 
 Check scan candidates against summary mappings
 
-village
+xhssyfw -> village
 x -> v agrees
 h -> i new
 s -> l agrees
@@ -356,7 +356,7 @@ watches
 
 Check scan candidates against summary mappings
 
-watches
+nypugwe -> watches
 n -> w new
 y -> a agrees
 p -> t agrees

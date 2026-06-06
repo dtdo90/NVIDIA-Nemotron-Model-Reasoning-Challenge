@@ -1,77 +1,121 @@
 Problem syn_tc_dp_phrase_copy_alignment_0012
 Bucket: phrase_copy_alignment
-Gold answer: chases bird
-Note: phrase_copy_exact_example_cipher_phrase
+Gold answer: mysterious alice palace reads
+Note: phrase_copy_fully_mapped_nontrivial_target
 
 Training prompt:
 In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
-bvtkpk qlzx -> chases bird
-Now, decrypt the following text: bvtkpk qlzx
+zfnrwbt cxvrj -> crystal mouse
+syfd cbg -> bird map
+Now, decrypt the following text: cnrwjfyxvr btyzj gbtbzj fjbdr
 
-Solution:
-<think>
+Training target:
 We need to decode the target strictly from left to right using the character mappings.
 
 Process examples
 
-bvtkpk qlzx -> chases bird
+zfnrwbt cxvrj -> crystal mouse
+zfnrwbt -> crystal
+z -> c new
+f -> r new
+n -> y new
+r -> s new
+w -> t new
+b -> a new
+t -> l new
 
-Training target:
-bvtkpk -> chases
-b -> c new
-v -> h new
-t -> a new
-k -> s new
-p -> e new
-k -> s agrees
+cxvrj -> mouse
+c -> m new
+x -> o new
+v -> u new
+r -> s agrees
+j -> e new
 
-qlzx -> bird
-q -> b new
-l -> i new
-z -> r new
-x -> d new
+syfd cbg -> bird map
+syfd -> bird
+s -> b new
+y -> i new
+f -> r agrees
+d -> d new
+
+cbg -> map
+c -> m agrees
+b -> a agrees
+g -> p new
 
 Summary character mappings
-b -> c
-k -> s
-l -> i
-p -> e
-q -> b
-t -> a
-v -> h
-x -> d
-z -> r
+b -> a
+c -> m
+d -> d
+f -> r
+g -> p
+j -> e
+n -> y
+r -> s
+s -> b
+t -> l
+v -> u
+w -> t
+x -> o
+y -> i
+z -> c
 
 Target text
-bvtkpk qlzx
+cnrwjfyxvr btyzj gbtbzj fjbdr
 
 Decode target words from character mappings
 
-bvtkpk
-b -> c
-v -> h
-t -> a
-k -> s
-p -> e
-k -> s
-bvtkpk -> chases
+cnrwjfyxvr
+c -> m
+n -> y
+r -> s
+w -> t
+j -> e
+f -> r
+y -> i
+x -> o
+v -> u
+r -> s
+cnrwjfyxvr -> mysterious
 fully mapped
 
-choose chases
+choose mysterious
 
-qlzx
-q -> b
-l -> i
-z -> r
-x -> d
-qlzx -> bird
+btyzj
+b -> a
+t -> l
+y -> i
+z -> c
+j -> e
+btyzj -> alice
 fully mapped
 
-choose bird
+choose alice
+
+gbtbzj
+g -> p
+b -> a
+t -> l
+b -> a
+z -> c
+j -> e
+gbtbzj -> palace
+fully mapped
+
+choose palace
+
+fjbdr
+f -> r
+j -> e
+b -> a
+d -> d
+r -> s
+fjbdr -> reads
+fully mapped
+
+choose reads
 
 Decoded phrase
-chases bird
+mysterious alice palace reads
 
-Answer: \boxed{chases bird}
-</think>
-\boxed{chases bird}
+Answer: \boxed{mysterious alice palace reads}

@@ -138,7 +138,7 @@ dragon
 
 Check scan candidates against summary mappings
 
-dragon
+ihrdmk -> dragon
 i -> d new
 h -> r agrees
 r -> a agrees

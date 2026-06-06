@@ -130,7 +130,7 @@ inside
 
 Check scan candidates against summary mappings
 
-inside
+upcuws -> inside
 u -> i agrees
 p -> n new
 c -> s agrees

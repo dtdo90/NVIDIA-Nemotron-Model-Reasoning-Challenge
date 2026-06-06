@@ -151,7 +151,7 @@ op_prefix
 Common
 op_prefix
 
-Apply AB_CD|x+y+1|common to the query
+Apply format AB_CD|x+y+1|common to the query
 
 Query
 89>55

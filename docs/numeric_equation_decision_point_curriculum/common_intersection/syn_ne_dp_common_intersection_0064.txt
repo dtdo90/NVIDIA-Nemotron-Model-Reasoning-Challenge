@@ -1,67 +1,200 @@
 Problem syn_ne_dp_common_intersection_0064
 Bucket: common_intersection
 Subbucket: single
-Source id: syn_ne_policy_literal_minus_opposite_sign_0021
+Source id: syn_ne_ba_dc_sub_yminusx_0047
 Source mode: synthetic
-Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/non_unanimous_policy/literal_minus_opposite_sign/syn_ne_policy_literal_minus_opposite_sign_0021.txt
-Gold answer: -01
+Source path: docs/train_ready/numeric_equation_transformation_rules/work_on/synthetic/ba_dc_subtraction/y_x/syn_ne_ba_dc_sub_yminusx_0047.txt
+Gold answer: ]-08
 Pairing: BA_DC
-Operator: -
+Operator: ]
 Note: common_single_BA_DC
 
 Training prompt:
 In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
-26-29 = -03
-Now, determine the result for: 24-23
+39]34 = ]-05
+24]95 = ]71
+92]14 = ]21
+19]42 = ]-76
+21@01 = 22
+58^23 = 711
+Now, determine the result for: 19]11
 
-Solution:
-<think>
+Training target:
 We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
 
-Query 24-23
-Query operator is -
+Query 19]11
+Query operator is ]
 
 Compare example operators
-26-29 = -03 operator -
+39]34 = ]-05 operator ]
 same
+24]95 = ]71 operator ]
+same
+92]14 = ]21 operator ]
+same
+19]42 = ]-76 operator ]
+same
+21@01 = 22 operator @
+different
+58^23 = 711 operator ^
+different
 
 Same operator examples
-26-29 = -03
+39]34 = ]-05
+24]95 = ]71
+92]14 = ]21
+19]42 = ]-76
 
-Same operator RHS values are -03
+Same operator RHS values are ]-05 and ]71 and ]21 and ]-76
 The RHS values have length 2, so use addition, subtraction, or modular
-Try x-y,y-x,abs(x-y),min(x,y)-max(x,y),max(x,y)%min(x,y),x%y,y%x
+Try x+y,x+y-1,x+y+1,x-y,y-x,abs(x-y),min(x,y)-max(x,y),max(x,y)%min(x,y),x%y,y%x
 
 Try BA_DC first
 
-Try BA_DC with x-y for operator -
+Try BA_DC with x+y for operator ]
+The current format is BA_DC|x+y
+
+Example 39]34 = ]-05
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+93 43 136 631 136 136 631 ]136 631 136] ]631 631 136
+Match
+none
+
+Example 24]95 = ]71
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+42 59 101 101 101 101 101 ]101 101 101] ]101 101 101
+Match
+none
+
+Example 92]14 = ]21
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+29 41 70 07 70 70 07 ]70 07 70] ]07 07 70
+Match
+none
+
+Example 19]42 = ]-76
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+91 24 115 511 115 115 511 ]115 511 115] ]511 511 115
+Match
+none
+
+Common
+none
+
+Try BA_DC with x+y-1 for operator ]
+The current format is BA_DC|x+y-1
+
+Example 39]34 = ]-05
+BA DC BA+DC-1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+93 43 135 531 135 135 531 ]135 531 135] ]531 531 135
+Match
+none
+
+Example 24]95 = ]71
+BA DC BA+DC-1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+42 59 100 001 100 100 001 ]100 001 100] ]001 001 100
+Match
+none
+
+Example 92]14 = ]21
+BA DC BA+DC-1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+29 41 69 96 69 69 96 ]69 96 69] ]96 96 69
+Match
+none
+
+Example 19]42 = ]-76
+BA DC BA+DC-1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+91 24 114 411 114 114 411 ]114 411 114] ]411 411 114
+Match
+none
+
+Common
+none
+
+Try BA_DC with x+y+1 for operator ]
+The current format is BA_DC|x+y+1
+
+Example 39]34 = ]-05
+BA DC BA+DC+1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+93 43 137 731 137 137 731 ]137 731 137] ]731 731 137
+Match
+none
+
+Example 24]95 = ]71
+BA DC BA+DC+1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+42 59 102 201 102 102 201 ]102 201 102] ]201 201 102
+Match
+none
+
+Example 92]14 = ]21
+BA DC BA+DC+1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+29 41 71 17 71 71 17 ]71 17 71] ]17 17 71
+Match
+none
+
+Example 19]42 = ]-76
+BA DC BA+DC+1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+91 24 116 611 116 116 611 ]116 611 116] ]611 611 116
+Match
+none
+
+Common
+none
+
+Try BA_DC with x-y for operator ]
 The current format is BA_DC|x-y
 
-Example 26-29 = -03
-BA DC BA-DC op_prefix_rev
-62 92 -30 -03
+Example 39]34 = ]-05
+BA DC BA-DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+93 43 50 05 50 50 05 ]50 05 50] ]05 05 50
+Match
+none
+
+Example 24]95 = ]71
+BA DC BA-DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+42 59 -17 -71 -17 ]17 ]71 ]-17 71] -17] ]-71 71 17
+Match
+rev_or_op_prefix_rev_if_neg
+
+Example 92]14 = ]21
+BA DC BA-DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+29 41 -12 -21 -12 ]12 ]21 ]-12 21] -12] ]-21 21 12
+Match
+rev_or_op_prefix_rev_if_neg
+
+Example 19]42 = ]-76
+BA DC BA-DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+91 24 67 76 67 67 76 ]67 76 67] ]76 76 67
+Match
+none
+
+Common
+none
+
+Try BA_DC with y-x for operator ]
+The current format is BA_DC|y-x
+
+Example 39]34 = ]-05
+BA DC DC-BA rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+93 43 -50 -05 -50 ]50 ]05 ]-50 05] -50] ]-05 05 50
 Match
 op_prefix_rev
 
-Common
-
-Training target:
+Example 24]95 = ]71
+BA DC DC-BA rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+42 59 17 71 17 17 71 ]17 71 17] ]71 71 17
+Match
 op_prefix_rev
 
-Apply format BA_DC|x-y|common to the query
+Example 92]14 = ]21
+BA DC DC-BA rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+29 41 12 21 12 12 21 ]12 21 12] ]21 21 12
+Match
+op_prefix_rev
 
-Query
-24-23
-BA DC BA-DC op_prefix_rev
-42 32 10 -01
-The common output formats agree on -01, but this query uses the opposite sign branch from all the examples, so continue scanning.
-
-Try BA_DC with y-x for operator -
-The current format is BA_DC|y-x
-
-Example 26-29 = -03
-BA DC DC-BA op_prefix_rev
-62 92 30 -03
+Example 19]42 = ]-76
+BA DC DC-BA rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+91 24 -67 -76 -67 ]67 ]76 ]-67 76] -67] ]-76 76 67
 Match
 op_prefix_rev
 
@@ -71,32 +204,9 @@ op_prefix_rev
 Apply format BA_DC|y-x|common to the query
 
 Query
-24-23
+19]11
 BA DC DC-BA op_prefix_rev
-42 32 -10 -01
-The common output formats agree on -01, but this query uses the opposite sign branch from all the examples, so continue scanning.
+91 11 -80 ]-08
+All common output formats agree on ]-08
 
-Try BA_DC with abs(x-y) for operator -
-The current format is BA_DC|abs(x-y)
-
-Example 26-29 = -03
-BA DC abs(BA-DC) op_prefix_rev
-62 92 30 -03
-Match
-op_prefix_rev
-
-Common
-op_prefix_rev
-
-Apply format BA_DC|abs(x-y)|common to the query
-
-Query
-24-23
-BA DC abs(BA-DC) op_prefix_rev
-42 32 10 -01
-All common output formats agree on -01
-The output format gives the same negative sign as the same-operator example
-
-Answer: \boxed{-01}
-</think>
-\boxed{-01}
+Answer: \boxed{]-08}

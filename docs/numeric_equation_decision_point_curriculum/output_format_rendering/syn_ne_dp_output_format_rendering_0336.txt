@@ -291,7 +291,7 @@ op_suffix
 Common
 op_suffix
 
-Apply AB_CD|abs(x-y)|common to the query
+Apply format AB_CD|abs(x-y)|common to the query
 
 Query
 43<30

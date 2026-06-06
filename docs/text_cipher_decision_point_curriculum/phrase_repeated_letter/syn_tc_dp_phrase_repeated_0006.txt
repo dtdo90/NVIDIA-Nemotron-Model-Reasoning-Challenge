@@ -136,7 +136,7 @@ hatter
 
 Check scan candidates against summary mappings
 
-hatter
+gqaafz -> hatter
 g -> h agrees
 q -> a agrees
 a -> t new
@@ -256,7 +256,7 @@ mirror
 
 Check scan candidates against summary mappings
 
-mirror
+hwzzcz -> mirror
 h -> m new
 w -> i agrees
 z -> r agrees
@@ -374,7 +374,7 @@ through
 
 Check scan candidates against summary mappings
 
-through
+agzckrg -> through
 a -> t agrees
 g -> h agrees
 z -> r agrees

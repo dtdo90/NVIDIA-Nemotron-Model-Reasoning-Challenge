@@ -130,7 +130,7 @@ garden, golden
 
 Check scan candidates against summary mappings
 
-garden
+xhfqdl -> garden
 x -> g agrees
 h -> a conflicts
 y -> a already exists
@@ -141,7 +141,7 @@ d -> e agrees
 l -> n agrees
 FAIL
 
-golden
+xhfqdl -> golden
 x -> g agrees
 h -> o new
 f -> l new

@@ -141,7 +141,7 @@ mountain
 
 Check scan candidates against summary mappings
 
-mountain
+bocnqipn -> mountain
 b -> m new
 o -> o agrees
 c -> u agrees

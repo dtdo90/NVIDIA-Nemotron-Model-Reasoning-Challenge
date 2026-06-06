@@ -139,7 +139,7 @@ village
 
 Check scan candidates against summary mappings
 
-village
+rfjjzpv -> village
 r -> v new
 f -> i agrees
 j -> l agrees
@@ -251,7 +251,7 @@ mysterious
 
 Check scan candidates against summary mappings
 
-mysterious
+ilktvcfdyk -> mysterious
 i -> m agrees
 l -> y new
 k -> s agrees

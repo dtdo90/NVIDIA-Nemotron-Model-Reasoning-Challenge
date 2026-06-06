@@ -137,7 +137,14 @@ book, door
 
 Check scan candidates against summary mappings
 
-door
+vuuc -> book
+v -> b new
+u -> o agrees
+u -> o agrees
+c -> k new
+PASS
+
+vuuc -> door
 v -> d conflicts
 r -> d already exists
 u -> o agrees
@@ -145,13 +152,6 @@ u -> o agrees
 c -> r conflicts
 d -> r already exists
 FAIL
-
-book
-v -> b new
-u -> o agrees
-u -> o agrees
-c -> k new
-PASS
 add v -> b
 add c -> k
 
@@ -253,7 +253,7 @@ follows
 
 Check scan candidates against summary mappings
 
-follows
+muffult -> follows
 m -> f new
 u -> o agrees
 f -> l agrees

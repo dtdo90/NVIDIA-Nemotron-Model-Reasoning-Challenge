@@ -132,7 +132,7 @@ valley
 
 Check scan candidates against summary mappings
 
-valley
+wzttbx -> valley
 w -> v new
 z -> a agrees
 t -> l agrees

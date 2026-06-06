@@ -135,7 +135,7 @@ writes
 
 Check scan candidates against summary mappings
 
-writes
+iangrk -> writes
 i -> w new
 a -> r agrees
 n -> i agrees
@@ -241,7 +241,7 @@ mouse
 
 Check scan candidates against summary mappings
 
-mouse
+dojkr -> mouse
 d -> m new
 o -> o agrees
 j -> u agrees
@@ -346,7 +346,7 @@ above
 
 Check scan candidates against summary mappings
 
-above
+fcowr -> above
 f -> a agrees
 c -> b new
 o -> o agrees

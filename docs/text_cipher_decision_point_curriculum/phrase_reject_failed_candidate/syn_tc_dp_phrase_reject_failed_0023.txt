@@ -136,7 +136,7 @@ bright, knight
 
 Check scan candidates against summary mappings
 
-bright
+zmcpbt -> bright
 z -> b new
 m -> r conflicts
 f -> r already exists
@@ -146,7 +146,7 @@ b -> h new
 t -> t agrees
 FAIL
 
-knight
+zmcpbt -> knight
 z -> k new
 m -> n new
 c -> i agrees
@@ -256,7 +256,7 @@ follows
 
 Check scan candidates against summary mappings
 
-follows
+uywwyea -> follows
 u -> f new
 y -> o agrees
 w -> l new
@@ -365,7 +365,7 @@ beyond
 
 Check scan candidates against summary mappings
 
-beyond
+njvymi -> beyond
 n -> b new
 j -> e agrees
 v -> y agrees
@@ -471,7 +471,7 @@ above
 
 Check scan candidates against summary mappings
 
-above
+snyrj -> above
 s -> a agrees
 n -> b agrees
 y -> o agrees
@@ -576,7 +576,7 @@ alice
 
 Check scan candidates against summary mappings
 
-alice
+swcoj -> alice
 s -> a agrees
 w -> l agrees
 c -> i agrees

@@ -1,80 +1,97 @@
 Problem syn_tc_dp_phrase_copy_alignment_0037
 Bucket: phrase_copy_alignment
-Gold answer: turtle forest
-Note: phrase_copy_exact_example_cipher_phrase
+Gold answer: wizard found
+Note: phrase_copy_fully_mapped_nontrivial_target
 
 Training prompt:
 In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
-qfnqib hvnbjq -> turtle forest
-Now, decrypt the following text: qfnqib hvnbjq
+ydwvxr eaki -> around wise
+swttwek mvllti -> follows puzzle
+Now, decrypt the following text: ealydr swvxr
 
-Solution:
-<think>
+Training target:
 We need to decode the target strictly from left to right using the character mappings.
 
 Process examples
 
-qfnqib hvnbjq -> turtle forest
+ydwvxr eaki -> around wise
+ydwvxr -> around
+y -> a new
+d -> r new
+w -> o new
+v -> u new
+x -> n new
+r -> d new
 
-Training target:
-qfnqib -> turtle
-q -> t new
-f -> u new
-n -> r new
-q -> t agrees
-i -> l new
-b -> e new
+eaki -> wise
+e -> w new
+a -> i new
+k -> s new
+i -> e new
 
-hvnbjq -> forest
-h -> f new
-v -> o new
-n -> r agrees
-b -> e agrees
-j -> s new
-q -> t agrees
+swttwek mvllti -> follows puzzle
+swttwek -> follows
+s -> f new
+w -> o agrees
+t -> l new
+t -> l agrees
+w -> o agrees
+e -> w agrees
+k -> s agrees
+
+mvllti -> puzzle
+m -> p new
+v -> u agrees
+l -> z new
+l -> z agrees
+t -> l agrees
+i -> e agrees
 
 Summary character mappings
-b -> e
-f -> u
-h -> f
-i -> l
-j -> s
-n -> r
-q -> t
-v -> o
+a -> i
+d -> r
+e -> w
+i -> e
+k -> s
+l -> z
+m -> p
+r -> d
+s -> f
+t -> l
+v -> u
+w -> o
+x -> n
+y -> a
 
 Target text
-qfnqib hvnbjq
+ealydr swvxr
 
 Decode target words from character mappings
 
-qfnqib
-q -> t
-f -> u
-n -> r
-q -> t
-i -> l
-b -> e
-qfnqib -> turtle
+ealydr
+e -> w
+a -> i
+l -> z
+y -> a
+d -> r
+r -> d
+ealydr -> wizard
 fully mapped
 
-choose turtle
+choose wizard
 
-hvnbjq
-h -> f
-v -> o
-n -> r
-b -> e
-j -> s
-q -> t
-hvnbjq -> forest
+swvxr
+s -> f
+w -> o
+v -> u
+x -> n
+r -> d
+swvxr -> found
 fully mapped
 
-choose forest
+choose found
 
 Decoded phrase
-turtle forest
+wizard found
 
-Answer: \boxed{turtle forest}
-</think>
-\boxed{turtle forest}
+Answer: \boxed{wizard found}

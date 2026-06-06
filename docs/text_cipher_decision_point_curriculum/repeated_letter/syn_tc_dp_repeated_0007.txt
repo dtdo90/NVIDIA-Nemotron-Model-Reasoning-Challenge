@@ -132,7 +132,7 @@ through
 
 Check scan candidates against summary mappings
 
-through
+pnerhon -> through
 p -> t new
 n -> h agrees
 e -> r agrees

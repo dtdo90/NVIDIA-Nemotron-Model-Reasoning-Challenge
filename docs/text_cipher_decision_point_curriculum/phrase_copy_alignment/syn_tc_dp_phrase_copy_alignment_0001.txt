@@ -1,100 +1,98 @@
 Problem syn_tc_dp_phrase_copy_alignment_0001
 Bucket: phrase_copy_alignment
-Gold answer: garden under island
-Note: phrase_copy_exact_example_cipher_phrase
+Gold answer: draws island bird
+Note: phrase_copy_fully_mapped_nontrivial_target
 
 Training prompt:
 In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
-usekjh chkje nrbshk -> garden under island
-Now, decrypt the following text: usekjh chkje nrbshk
+ijqdmbluqd inym -> wonderland wise
+pjjz -> book
+Now, decrypt the following text: dbuiy nyluqd pnbd
 
-Solution:
-<think>
+Training target:
 We need to decode the target strictly from left to right using the character mappings.
 
 Process examples
 
-usekjh chkje nrbshk -> garden under island
+ijqdmbluqd inym -> wonderland wise
+ijqdmbluqd -> wonderland
+i -> w new
+j -> o new
+q -> n new
+d -> d new
+m -> e new
+b -> r new
+l -> l new
+u -> a new
+q -> n agrees
+d -> d agrees
 
-Training target:
-usekjh -> garden
-u -> g new
-s -> a new
-e -> r new
-k -> d new
-j -> e new
-h -> n new
-
-chkje -> under
-c -> u new
-h -> n agrees
-k -> d agrees
-j -> e agrees
-e -> r agrees
-
-nrbshk -> island
+inym -> wise
+i -> w agrees
 n -> i new
-r -> s new
-b -> l new
-s -> a agrees
-h -> n agrees
-k -> d agrees
+y -> s new
+m -> e agrees
+
+pjjz -> book
+pjjz -> book
+p -> b new
+j -> o agrees
+j -> o agrees
+z -> k new
 
 Summary character mappings
-b -> l
-c -> u
-e -> r
-h -> n
-j -> e
-k -> d
+b -> r
+d -> d
+i -> w
+j -> o
+l -> l
+m -> e
 n -> i
-r -> s
-s -> a
-u -> g
+p -> b
+q -> n
+u -> a
+y -> s
+z -> k
 
 Target text
-usekjh chkje nrbshk
+dbuiy nyluqd pnbd
 
 Decode target words from character mappings
 
-usekjh
-u -> g
-s -> a
-e -> r
-k -> d
-j -> e
-h -> n
-usekjh -> garden
+dbuiy
+d -> d
+b -> r
+u -> a
+i -> w
+y -> s
+dbuiy -> draws
 fully mapped
 
-choose garden
+choose draws
 
-chkje
-c -> u
-h -> n
-k -> d
-j -> e
-e -> r
-chkje -> under
-fully mapped
-
-choose under
-
-nrbshk
+nyluqd
 n -> i
-r -> s
-b -> l
-s -> a
-h -> n
-k -> d
-nrbshk -> island
+y -> s
+l -> l
+u -> a
+q -> n
+d -> d
+nyluqd -> island
 fully mapped
 
 choose island
 
-Decoded phrase
-garden under island
+pnbd
+p -> b
+n -> i
+b -> r
+d -> d
+pnbd -> bird
+fully mapped
 
-Answer: \boxed{garden under island}
-</think>
-\boxed{garden under island}
+choose bird
+
+Decoded phrase
+draws island bird
+
+Answer: \boxed{draws island bird}

@@ -127,7 +127,7 @@ cat, map
 
 Check scan candidates against summary mappings
 
-cat
+toh -> cat
 t -> c conflicts
 z -> c already exists
 o -> a agrees
@@ -135,7 +135,7 @@ h -> t conflicts
 m -> t already exists
 FAIL
 
-map
+toh -> map
 t -> m new
 o -> a agrees
 h -> p new

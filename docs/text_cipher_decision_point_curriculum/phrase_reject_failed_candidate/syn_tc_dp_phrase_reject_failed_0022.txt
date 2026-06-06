@@ -128,7 +128,7 @@ cat, map
 
 Check scan candidates against summary mappings
 
-cat
+ftn -> cat
 f -> c conflicts
 g -> c already exists
 t -> a agrees
@@ -136,7 +136,7 @@ n -> t conflicts
 o -> t already exists
 FAIL
 
-map
+ftn -> map
 f -> m new
 t -> a agrees
 n -> p new
@@ -255,7 +255,7 @@ library
 
 Check scan candidates against summary mappings
 
-library
+jdsitia -> library
 j -> l agrees
 d -> i agrees
 s -> b new

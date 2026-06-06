@@ -137,7 +137,7 @@ wizard
 
 Check scan candidates against summary mappings
 
-wizard
+ysbenv -> wizard
 y -> w agrees
 s -> i agrees
 b -> z new
@@ -256,7 +256,7 @@ valley
 
 Check scan candidates against summary mappings
 
-valley
+tekkrp -> valley
 t -> v new
 e -> a agrees
 k -> l agrees

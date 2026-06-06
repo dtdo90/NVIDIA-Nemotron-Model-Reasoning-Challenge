@@ -1,121 +1,127 @@
 Problem syn_tc_dp_phrase_copy_alignment_0019
 Bucket: phrase_copy_alignment
-Gold answer: sees dark library student
-Note: phrase_copy_exact_example_cipher_phrase
+Gold answer: dark teacher crystal studies
+Note: phrase_copy_fully_mapped_nontrivial_target
 
 Training prompt:
 In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
-ummu dvbh gwzbvba ufkdmef -> sees dark library student
-Now, decrypt the following text: ummu dvbh gwzbvba ufkdmef
+ndapvwibga atfbbq -> mysterious school
+wvxka jbbm -> reads book
+Now, decrypt the following text: kxwm pvxtfvw twdapxq apgkiva
 
-Solution:
-<think>
+Training target:
 We need to decode the target strictly from left to right using the character mappings.
 
 Process examples
 
-ummu dvbh gwzbvba ufkdmef -> sees dark library student
+ndapvwibga atfbbq -> mysterious school
+ndapvwibga -> mysterious
+n -> m new
+d -> y new
+a -> s new
+p -> t new
+v -> e new
+w -> r new
+i -> i new
+b -> o new
+g -> u new
+a -> s agrees
 
-Training target:
-ummu -> sees
-u -> s new
-m -> e new
-m -> e agrees
-u -> s agrees
+atfbbq -> school
+a -> s agrees
+t -> c new
+f -> h new
+b -> o agrees
+b -> o agrees
+q -> l new
 
-dvbh -> dark
-d -> d new
-v -> a new
-b -> r new
-h -> k new
+wvxka jbbm -> reads book
+wvxka -> reads
+w -> r agrees
+v -> e agrees
+x -> a new
+k -> d new
+a -> s agrees
 
-gwzbvba -> library
-g -> l new
-w -> i new
-z -> b new
-b -> r agrees
-v -> a agrees
-b -> r agrees
-a -> y new
-
-ufkdmef -> student
-u -> s agrees
-f -> t new
-k -> u new
-d -> d agrees
-m -> e agrees
-e -> n new
-f -> t agrees
+jbbm -> book
+j -> b new
+b -> o agrees
+b -> o agrees
+m -> k new
 
 Summary character mappings
-a -> y
-b -> r
-d -> d
-e -> n
-f -> t
-g -> l
-h -> k
-k -> u
-m -> e
-u -> s
-v -> a
-w -> i
-z -> b
+a -> s
+b -> o
+d -> y
+f -> h
+g -> u
+i -> i
+j -> b
+k -> d
+m -> k
+n -> m
+p -> t
+q -> l
+t -> c
+v -> e
+w -> r
+x -> a
 
 Target text
-ummu dvbh gwzbvba ufkdmef
+kxwm pvxtfvw twdapxq apgkiva
 
 Decode target words from character mappings
 
-ummu
-u -> s
-m -> e
-m -> e
-u -> s
-ummu -> sees
-fully mapped
-
-choose sees
-
-dvbh
-d -> d
-v -> a
-b -> r
-h -> k
-dvbh -> dark
+kxwm
+k -> d
+x -> a
+w -> r
+m -> k
+kxwm -> dark
 fully mapped
 
 choose dark
 
-gwzbvba
-g -> l
-w -> i
-z -> b
-b -> r
-v -> a
-b -> r
-a -> y
-gwzbvba -> library
+pvxtfvw
+p -> t
+v -> e
+x -> a
+t -> c
+f -> h
+v -> e
+w -> r
+pvxtfvw -> teacher
 fully mapped
 
-choose library
+choose teacher
 
-ufkdmef
-u -> s
-f -> t
-k -> u
-d -> d
-m -> e
-e -> n
-f -> t
-ufkdmef -> student
+twdapxq
+t -> c
+w -> r
+d -> y
+a -> s
+p -> t
+x -> a
+q -> l
+twdapxq -> crystal
 fully mapped
 
-choose student
+choose crystal
+
+apgkiva
+a -> s
+p -> t
+g -> u
+k -> d
+i -> i
+v -> e
+a -> s
+apgkiva -> studies
+fully mapped
+
+choose studies
 
 Decoded phrase
-sees dark library student
+dark teacher crystal studies
 
-Answer: \boxed{sees dark library student}
-</think>
-\boxed{sees dark library student}
+Answer: \boxed{dark teacher crystal studies}

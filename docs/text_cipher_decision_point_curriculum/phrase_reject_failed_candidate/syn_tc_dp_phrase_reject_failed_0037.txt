@@ -132,20 +132,20 @@ book, door
 
 Check scan candidates against summary mappings
 
-door
+ciik -> book
+c -> b new
+i -> o agrees
+i -> o agrees
+k -> k new
+PASS
+
+ciik -> door
 c -> d new
 i -> o agrees
 i -> o agrees
 k -> r conflicts
 d -> r already exists
 FAIL
-
-book
-c -> b new
-i -> o agrees
-i -> o agrees
-k -> k new
-PASS
 add c -> b
 add k -> k
 
@@ -246,7 +246,7 @@ wizard
 
 Check scan candidates against summary mappings
 
-wizard
+lytadj -> wizard
 l -> w new
 y -> i agrees
 t -> z new

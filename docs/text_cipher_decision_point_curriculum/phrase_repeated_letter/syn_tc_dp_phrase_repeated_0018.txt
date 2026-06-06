@@ -135,7 +135,7 @@ curious
 
 Check scan candidates against summary mappings
 
-curious
+bgukygz -> curious
 b -> c agrees
 g -> u new
 u -> r agrees
@@ -244,7 +244,7 @@ mirror
 
 Check scan candidates against summary mappings
 
-mirror
+akuuyu -> mirror
 a -> m new
 k -> i agrees
 u -> r agrees
@@ -350,7 +350,7 @@ found
 
 Check scan candidates against summary mappings
 
-found
+oygwm -> found
 o -> f new
 y -> o agrees
 g -> u agrees

@@ -59,6 +59,7 @@ op_prefix_rev
 
 Common
 none
+
 x-y fails under BA_DC
 
 Try BA_DC with y-x for operator -
@@ -84,6 +85,7 @@ Common
 
 Training target:
 none
+
 y-x fails under BA_DC
 
 Try BA_DC with abs(x-y) for operator -

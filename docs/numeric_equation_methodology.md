@@ -205,21 +205,77 @@ Trace rule:
    row-level output style.
 3. Do not silently drop signs. Explain the rendering.
 
-When common output formats disagree because the query computation is negative,
-do not decide this by voting. Use the motif/base fallback policy:
+### 6.1 Disagreement Resolution Policy
 
-- `AB_CD|x-y`: use operator prefix on the magnitude, e.g. `10&32` gives
-  `10-32=-22`, so render `&22`.
-- `AB_CD|y-x`: use operator suffix on the magnitude, e.g. `32&10` gives
-  `10-32=-22`, so render `22&`.
-- `BA_DC|x-y`: reverse the magnitude and use operator prefix, e.g. `10$32`
-  gives `01-23=-22`, reverse `22 -> 22`, then render `$22`.
-- `BA_DC|y-x`: reverse the magnitude and use operator suffix, e.g. `32$10`
-  gives `01-23=-22`, reverse `22 -> 22`, then render `22$`.
+When the common output formats disagree on the query rendering, the trace must
+resolve the disagreement with the following policy. The policy has two layers:
+a small set of **deterministic operator-rendering rules** for the clean
+subtraction base with a negative value, and a **motif-specific tiebreaker** for
+every other case.
 
-For training traces, prefer a non-minus query operator in these fallback cases.
-If the query operator is `-`, operator-prefix rendering can collapse into a
-normal negative sign and becomes a weak teaching signal.
+**Layer 1 — deterministic operator rendering.** This applies only when the
+selected base is plain subtraction (`x-y` or `y-x`), the query value is
+negative, and the query operator is not the literal `-`. Take the magnitude
+(the positive part), reverse it only under `BA_DC`, and attach the operator on
+the side determined by the base:
+
+| Motif | Base | Value | Operator | Rule |
+|---|---|---|---|---|
+| `AB_CD` | `x-y` | negative | not `-` | magnitude as-is, operator **prefix** |
+| `BA_DC` | `x-y` | negative | not `-` | **reverse** magnitude, operator **prefix** |
+| `AB_CD` | `y-x` | negative | not `-` | magnitude as-is, operator **suffix** |
+| `BA_DC` | `y-x` | negative | not `-` | **reverse** magnitude, operator **suffix** |
+
+So `x-y` selects prefix, `y-x` selects suffix; `BA_DC` reverses the magnitude
+first, `AB_CD` does not. Worked examples:
+
+```text
+AB_CD|x-y  10&32 -> 10-32=-22 -> magnitude 22 -> prefix & -> &22
+BA_DC|x-y  10$32 -> 01-23=-22 -> magnitude 22, reverse 22 -> prefix $ -> $22
+AB_CD|y-x  32&10 -> 10-32=-22 -> magnitude 22 -> suffix & -> 22&
+BA_DC|y-x  32$10 -> 01-23=-22 -> magnitude 22, reverse 22 -> suffix $ -> 22$
+```
+
+**Layer 2 — motif tiebreaker.** Every case not covered by Layer 1 (positive
+value, non-subtraction base such as `abs`, modular, or min/max, or a literal
+`-` operator) is resolved by a fixed tiebreaker that depends only on the motif:
+
+| Motif | Tiebreaker |
+|---|---|
+| `AB_CD` | use the **first common format in priority order** |
+| `BA_DC` | use **voting** across the common formats; on a tie, fall back to the first common format in priority order |
+
+This is why the corpus uses voting at all: voting is `BA_DC`'s tiebreaker, not a
+contradiction of the deterministic rules. `AB_CD` never votes — it always falls
+back to the priority-ordered first common format.
+
+**The literal `-` carve-out.** When the query operator is the literal `-`,
+operator-prefix/suffix rendering collapses into an ordinary negative sign and
+becomes a weak teaching signal, so the deterministic Layer-1 rules are skipped
+and the case drops to the Layer-2 tiebreaker instead:
+
+- `AB_CD`, `x-y` negative, literal `-` -> first common format in priority order
+- `BA_DC`, `y-x` negative, literal `-` -> voting
+
+**Complete decision table** (motif, base/sign condition -> resolution):
+
+```text
+AB_CD | x-y negative, operator not -            -> operator prefix (magnitude as-is)
+AB_CD | x-y negative, literal -                 -> first common format in priority order
+AB_CD | x-y positive                            -> first common format in priority order
+AB_CD | base is not x-y (incl. y-x, abs, mod)   -> first common format in priority order
+BA_DC | x-y negative                            -> reverse magnitude, operator prefix
+BA_DC | x-y positive                            -> voting
+BA_DC | y-x negative, operator not -            -> reverse magnitude, operator suffix
+BA_DC | y-x negative, literal -                 -> voting
+BA_DC | base is neither x-y nor y-x (abs, mod)  -> voting
+```
+
+Note on `AB_CD|y-x`: the deterministic suffix rule in Layer 1 is the intended
+rendering, but in the current corpus `AB_CD|y-x` negative cases are reached
+through the generic `AB_CD` tiebreaker (first common format in priority order),
+which already yields the agreed answer, so no dedicated `AB_CD|y-x` policy
+samples are generated.
 
 Example:
 

@@ -134,7 +134,14 @@ book, door
 
 Check scan candidates against summary mappings
 
-door
+oqqk -> book
+o -> b new
+q -> o agrees
+q -> o agrees
+k -> k new
+PASS
+
+oqqk -> door
 o -> d conflicts
 v -> d already exists
 q -> o agrees
@@ -142,13 +149,6 @@ q -> o agrees
 k -> r conflicts
 g -> r already exists
 FAIL
-
-book
-o -> b new
-q -> o agrees
-q -> o agrees
-k -> k new
-PASS
 add o -> b
 add k -> k
 
@@ -250,7 +250,7 @@ studies
 
 Check scan candidates against summary mappings
 
-studies
+bcfvetb -> studies
 b -> s agrees
 c -> t agrees
 f -> u new

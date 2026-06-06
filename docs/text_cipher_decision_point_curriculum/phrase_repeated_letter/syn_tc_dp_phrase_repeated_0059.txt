@@ -1,0 +1,181 @@
+Problem syn_tc_dp_phrase_repeated_0059
+Bucket: phrase_repeated_letter
+Gold answer: book beyond
+Note: phrase_preserve_repeated_letter_pattern_extra_short
+
+Training prompt:
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+woqirt jrk -> golden key
+burzlrx -> creates
+Now, decrypt the following text: vooj vrkoti
+
+Training target:
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+woqirt jrk -> golden key
+woqirt -> golden
+w -> g new
+o -> o new
+q -> l new
+i -> d new
+r -> e new
+t -> n new
+jrk -> key
+j -> k new
+r -> e agrees
+k -> y new
+
+burzlrx -> creates
+burzlrx -> creates
+b -> c new
+u -> r new
+r -> e agrees
+z -> a new
+l -> t new
+r -> e agrees
+x -> s new
+
+Summary character mappings
+w -> g
+o -> o
+q -> l
+i -> d
+r -> e
+t -> n
+j -> k
+k -> y
+b -> c
+u -> r
+z -> a
+l -> t
+x -> s
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+vooj vrkoti
+
+Decode target words from character mappings
+
+vooj
+v -> ? unknown
+o -> o
+o -> o
+j -> k
+vooj -> ?ook
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?ook
+above -> ?ook no match
+alice -> ?ook no match
+ancient -> ?ook no match
+around -> ?ook no match
+beyond -> ?ook no match
+bird -> ?ook no match
+book -> ?ook match
+bright -> ?ook no match
+castle -> ?ook no match
+cat -> ?ook no match
+cave -> ?ook no match
+chases -> ?ook no match
+clever -> ?ook no match
+colorful -> ?ook no match
+creates -> ?ook no match
+crystal -> ?ook no match
+curious -> ?ook no match
+dark -> ?ook no match
+discovers -> ?ook no match
+door -> ?ook no match
+dragon -> ?ook no match
+draws -> ?ook no match
+dreams -> ?ook no match
+explores -> ?ook no match
+follows -> ?ook no match
+forest -> ?ook no match
+found -> ?ook no match
+garden -> ?ook no match
+golden -> ?ook no match
+hatter -> ?ook no match
+hidden -> ?ook no match
+imagines -> ?ook no match
+in -> ?ook no match
+inside -> ?ook no match
+island -> ?ook no match
+key -> ?ook no match
+king -> ?ook no match
+knight -> ?ook no match
+library -> ?ook no match
+magical -> ?ook no match
+map -> ?ook no match
+message -> ?ook no match
+mirror -> ?ook no match
+mountain -> ?ook no match
+mouse -> ?ook no match
+mysterious -> ?ook no match
+near -> ?ook no match
+ocean -> ?ook no match
+palace -> ?ook no match
+potion -> ?ook no match
+princess -> ?ook no match
+puzzle -> ?ook no match
+queen -> ?ook no match
+rabbit -> ?ook no match
+reads -> ?ook no match
+school -> ?ook no match
+secret -> ?ook no match
+sees -> ?ook no match
+silver -> ?ook no match
+story -> ?ook no match
+strange -> ?ook no match
+student -> ?ook no match
+studies -> ?ook no match
+teacher -> ?ook no match
+the -> ?ook no match
+through -> ?ook no match
+tower -> ?ook no match
+treasure -> ?ook no match
+turtle -> ?ook no match
+under -> ?ook no match
+valley -> ?ook no match
+village -> ?ook no match
+watches -> ?ook no match
+wise -> ?ook no match
+wizard -> ?ook no match
+wonderland -> ?ook no match
+writes -> ?ook no match
+
+Scan candidates for ?ook
+book
+
+Check scan candidates against summary mappings
+
+vooj -> book
+v -> b new
+o -> o agrees
+o -> o agrees
+j -> k agrees
+PASS
+add v -> b
+
+choose book
+
+vrkoti
+v -> b
+r -> e
+k -> y
+o -> o
+t -> n
+i -> d
+vrkoti -> beyond
+fully mapped
+
+choose beyond
+
+Decoded phrase
+book beyond
+
+Answer: \boxed{book beyond}

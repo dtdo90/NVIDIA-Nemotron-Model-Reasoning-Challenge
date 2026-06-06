@@ -129,7 +129,7 @@ ocean
 
 Check scan candidates against summary mappings
 
-ocean
+yncab -> ocean
 y -> o new
 n -> c agrees
 c -> e agrees

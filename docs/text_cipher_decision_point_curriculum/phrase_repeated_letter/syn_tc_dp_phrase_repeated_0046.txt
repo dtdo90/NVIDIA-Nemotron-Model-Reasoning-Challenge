@@ -137,7 +137,7 @@ wonderland
 
 Check scan candidates against summary mappings
 
-wonderland
+chovbzyeov -> wonderland
 c -> w new
 h -> o agrees
 o -> n agrees
@@ -248,7 +248,7 @@ found
 
 Check scan candidates against summary mappings
 
-found
+uhwov -> found
 u -> f new
 h -> o agrees
 w -> u agrees
@@ -354,7 +354,7 @@ palace
 
 Check scan candidates against summary mappings
 
-palace
+xeyepb -> palace
 x -> p new
 e -> a agrees
 y -> l agrees

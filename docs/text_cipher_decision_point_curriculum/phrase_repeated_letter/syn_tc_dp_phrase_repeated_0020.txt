@@ -133,7 +133,7 @@ rabbit
 
 Check scan candidates against summary mappings
 
-rabbit
+ahqqvz -> rabbit
 a -> r agrees
 h -> a new
 q -> b new
@@ -242,7 +242,7 @@ puzzle, turtle
 
 Check scan candidates against summary mappings
 
-puzzle
+snttcx -> puzzle
 s -> p new
 n -> u agrees
 t -> z new
@@ -250,6 +250,18 @@ t -> z new
 c -> l agrees
 x -> e agrees
 PASS
+
+snttcx -> turtle
+s -> t conflicts
+z -> t already exists
+n -> u agrees
+t -> r conflicts
+a -> r already exists
+t -> t conflicts
+z -> t already exists
+c -> l agrees
+x -> e agrees
+FAIL
 add s -> p
 add t -> z
 

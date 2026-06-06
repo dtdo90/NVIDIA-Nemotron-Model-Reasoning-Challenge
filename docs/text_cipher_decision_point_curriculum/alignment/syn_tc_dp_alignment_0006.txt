@@ -132,7 +132,7 @@ bright
 
 Check scan candidates against summary mappings
 
-bright
+jqfrwp -> bright
 j -> b new
 q -> r agrees
 f -> i agrees

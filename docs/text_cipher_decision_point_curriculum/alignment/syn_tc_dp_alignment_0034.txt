@@ -134,7 +134,7 @@ imagines
 
 Check scan candidates against summary mappings
 
-imagines
+odcaofuv -> imagines
 o -> i new
 d -> m agrees
 c -> a agrees

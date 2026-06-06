@@ -140,7 +140,7 @@ through
 
 Check scan candidates against summary mappings
 
-through
+lanwrma -> through
 l -> t agrees
 a -> h new
 n -> r agrees

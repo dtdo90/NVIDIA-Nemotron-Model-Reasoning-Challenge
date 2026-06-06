@@ -1,12 +1,12 @@
 Problem syn_tc_dp_copy_alignment_0012
 Bucket: copy_alignment
-Gold answer: garden
-Note: copy_exact_example_cipher_word
+Gold answer: ancient
+Note: copy_fully_mapped_nontrivial_target
 
 Training prompt:
 In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
-bcafuy -> garden
-Now, decrypt the following text: bcafuy
+ywzab darrvt -> ocean rabbit
+Now, decrypt the following text: abwvzbt
 
 Solution:
 <think>
@@ -14,44 +14,56 @@ We need to decode the target strictly from left to right using the character map
 
 Process examples
 
-bcafuy -> garden
+ywzab darrvt -> ocean rabbit
 
 Training target:
-b -> g new
-c -> a new
-a -> r new
-f -> d new
-u -> e new
-y -> n new
+ywzab -> ocean
+y -> o new
+w -> c new
+z -> e new
+a -> a new
+b -> n new
+
+darrvt -> rabbit
+d -> r new
+a -> a agrees
+r -> b new
+r -> b agrees
+v -> i new
+t -> t new
 
 Summary character mappings
-a -> r
-b -> g
-c -> a
-f -> d
-u -> e
-y -> n
+a -> a
+b -> n
+d -> r
+r -> b
+t -> t
+v -> i
+w -> c
+y -> o
+z -> e
 
 Target text
-bcafuy
+abwvzbt
 
 Decode target words from character mappings
 
-bcafuy
-b -> g
-c -> a
-a -> r
-f -> d
-u -> e
-y -> n
-bcafuy -> garden
+abwvzbt
+a -> a
+b -> n
+w -> c
+v -> i
+z -> e
+b -> n
+t -> t
+abwvzbt -> ancient
 fully mapped
 
-choose garden
+choose ancient
 
 Decoded phrase
-garden
+ancient
 
-Answer: \boxed{garden}
+Answer: \boxed{ancient}
 </think>
-\boxed{garden}
+\boxed{ancient}

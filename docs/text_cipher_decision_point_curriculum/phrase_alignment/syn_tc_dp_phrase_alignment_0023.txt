@@ -141,7 +141,7 @@ wonderland
 
 Check scan candidates against summary mappings
 
-wonderland
+wkzgtndszg -> wonderland
 w -> w new
 k -> o agrees
 z -> n agrees
@@ -251,7 +251,7 @@ above
 
 Check scan candidates against summary mappings
 
-above
+shkbt -> above
 s -> a agrees
 h -> b new
 k -> o agrees

@@ -130,7 +130,7 @@ message
 
 Check scan candidates against summary mappings
 
-message
+hyccnly -> message
 h -> m new
 y -> e agrees
 c -> s agrees

@@ -133,7 +133,7 @@ inside
 
 Check scan candidates against summary mappings
 
-inside
+sdosbz -> inside
 s -> i agrees
 d -> n agrees
 o -> s new
@@ -254,7 +254,7 @@ colorful
 
 Check scan candidates against summary mappings
 
-colorful
+turujgxr -> colorful
 t -> c agrees
 u -> o agrees
 r -> l new
@@ -365,7 +365,7 @@ beyond
 
 Check scan candidates against summary mappings
 
-beyond
+wzaudb -> beyond
 w -> b agrees
 z -> e agrees
 a -> y new

@@ -1,132 +1,116 @@
 Problem syn_tc_dp_phrase_copy_alignment_0043
 Bucket: phrase_copy_alignment
-Gold answer: cave discovers wonderland draws
-Note: phrase_copy_exact_example_cipher_phrase
+Gold answer: alice door mouse village
+Note: phrase_copy_fully_mapped_nontrivial_target
 
 Training prompt:
 In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
-gakm bdzgwkmcz pwtbmcvatb bcapz -> cave discovers wonderland draws
-Now, decrypt the following text: gakm bdzgwkmcz pwtbmcvatb bcapz
+qkbwexpgb clhkwla -> discovers magical
+mfppv -> queen
+Now, decrypt the following text: lakwp qeeg cefbp xkaalhp
 
-Solution:
-<think>
+Training target:
 We need to decode the target strictly from left to right using the character mappings.
 
 Process examples
 
-gakm bdzgwkmcz pwtbmcvatb bcapz -> cave discovers wonderland draws
+qkbwexpgb clhkwla -> discovers magical
+qkbwexpgb -> discovers
+q -> d new
+k -> i new
+b -> s new
+w -> c new
+e -> o new
+x -> v new
+p -> e new
+g -> r new
+b -> s agrees
 
-Training target:
-gakm -> cave
-g -> c new
-a -> a new
-k -> v new
-m -> e new
+clhkwla -> magical
+c -> m new
+l -> a new
+h -> g new
+k -> i agrees
+w -> c agrees
+l -> a agrees
+a -> l new
 
-bdzgwkmcz -> discovers
-b -> d new
-d -> i new
-z -> s new
-g -> c agrees
-w -> o new
-k -> v agrees
-m -> e agrees
-c -> r new
-z -> s agrees
-
-pwtbmcvatb -> wonderland
-p -> w new
-w -> o agrees
-t -> n new
-b -> d agrees
-m -> e agrees
-c -> r agrees
-v -> l new
-a -> a agrees
-t -> n agrees
-b -> d agrees
-
-bcapz -> draws
-b -> d agrees
-c -> r agrees
-a -> a agrees
-p -> w agrees
-z -> s agrees
+mfppv -> queen
+mfppv -> queen
+m -> q new
+f -> u new
+p -> e agrees
+p -> e agrees
+v -> n new
 
 Summary character mappings
-a -> a
-b -> d
-c -> r
-d -> i
-g -> c
-k -> v
-m -> e
-p -> w
-t -> n
-v -> l
-w -> o
-z -> s
+a -> l
+b -> s
+c -> m
+e -> o
+f -> u
+g -> r
+h -> g
+k -> i
+l -> a
+m -> q
+p -> e
+q -> d
+v -> n
+w -> c
+x -> v
 
 Target text
-gakm bdzgwkmcz pwtbmcvatb bcapz
+lakwp qeeg cefbp xkaalhp
 
 Decode target words from character mappings
 
-gakm
-g -> c
-a -> a
-k -> v
-m -> e
-gakm -> cave
+lakwp
+l -> a
+a -> l
+k -> i
+w -> c
+p -> e
+lakwp -> alice
 fully mapped
 
-choose cave
+choose alice
 
-bdzgwkmcz
-b -> d
-d -> i
-z -> s
-g -> c
-w -> o
-k -> v
-m -> e
-c -> r
-z -> s
-bdzgwkmcz -> discovers
+qeeg
+q -> d
+e -> o
+e -> o
+g -> r
+qeeg -> door
 fully mapped
 
-choose discovers
+choose door
 
-pwtbmcvatb
-p -> w
-w -> o
-t -> n
-b -> d
-m -> e
-c -> r
-v -> l
-a -> a
-t -> n
-b -> d
-pwtbmcvatb -> wonderland
+cefbp
+c -> m
+e -> o
+f -> u
+b -> s
+p -> e
+cefbp -> mouse
 fully mapped
 
-choose wonderland
+choose mouse
 
-bcapz
-b -> d
-c -> r
-a -> a
-p -> w
-z -> s
-bcapz -> draws
+xkaalhp
+x -> v
+k -> i
+a -> l
+a -> l
+l -> a
+h -> g
+p -> e
+xkaalhp -> village
 fully mapped
 
-choose draws
+choose village
 
 Decoded phrase
-cave discovers wonderland draws
+alice door mouse village
 
-Answer: \boxed{cave discovers wonderland draws}
-</think>
-\boxed{cave discovers wonderland draws}
+Answer: \boxed{alice door mouse village}

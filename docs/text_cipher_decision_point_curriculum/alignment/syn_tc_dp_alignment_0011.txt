@@ -130,7 +130,7 @@ princess
 
 Check scan candidates against summary mappings
 
-princess
+wegdzvll -> princess
 w -> p new
 e -> r agrees
 g -> i agrees

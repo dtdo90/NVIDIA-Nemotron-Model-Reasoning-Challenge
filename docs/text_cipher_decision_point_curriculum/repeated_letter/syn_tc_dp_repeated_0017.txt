@@ -133,7 +133,7 @@ village
 
 Check scan candidates against summary mappings
 
-village
+dvoocra -> village
 d -> v new
 v -> i agrees
 o -> l agrees

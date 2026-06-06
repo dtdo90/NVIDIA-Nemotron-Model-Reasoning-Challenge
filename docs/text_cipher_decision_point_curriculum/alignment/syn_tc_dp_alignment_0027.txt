@@ -128,7 +128,7 @@ queen
 
 Check scan candidates against summary mappings
 
-queen
+wsaae -> queen
 w -> q new
 s -> u agrees
 a -> e agrees

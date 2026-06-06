@@ -134,7 +134,7 @@ bird, book, cave, dark, door, king, near, sees, wise
 
 Check scan candidates against summary mappings
 
-bird
+ehhf -> bird
 e -> b new
 h -> i conflicts
 c -> i already exists
@@ -144,7 +144,14 @@ f -> d conflicts
 x -> d already exists
 FAIL
 
-cave
+ehhf -> book
+e -> b new
+h -> o new
+h -> o new
+f -> k new
+PASS
+
+ehhf -> cave
 e -> c conflicts
 i -> c already exists
 h -> a conflicts
@@ -155,7 +162,7 @@ f -> e conflicts
 o -> e already exists
 FAIL
 
-dark
+ehhf -> dark
 e -> d conflicts
 x -> d already exists
 h -> a conflicts
@@ -165,7 +172,7 @@ g -> r already exists
 f -> k new
 FAIL
 
-door
+ehhf -> door
 e -> d conflicts
 x -> d already exists
 h -> o new
@@ -174,7 +181,7 @@ f -> r conflicts
 g -> r already exists
 FAIL
 
-king
+ehhf -> king
 e -> k new
 h -> i conflicts
 c -> i already exists
@@ -184,7 +191,7 @@ f -> g conflicts
 y -> g already exists
 FAIL
 
-near
+ehhf -> near
 e -> n conflicts
 s -> n already exists
 h -> e conflicts
@@ -195,7 +202,7 @@ f -> r conflicts
 g -> r already exists
 FAIL
 
-sees
+ehhf -> sees
 e -> s conflicts
 u -> s already exists
 h -> e conflicts
@@ -206,7 +213,7 @@ f -> s conflicts
 u -> s already exists
 FAIL
 
-wise
+ehhf -> wise
 e -> w conflicts
 l -> w already exists
 h -> i conflicts
@@ -216,13 +223,6 @@ u -> s already exists
 f -> e conflicts
 o -> e already exists
 FAIL
-
-book
-e -> b new
-h -> o new
-h -> o new
-f -> k new
-PASS
 add e -> b
 add h -> o
 add f -> k

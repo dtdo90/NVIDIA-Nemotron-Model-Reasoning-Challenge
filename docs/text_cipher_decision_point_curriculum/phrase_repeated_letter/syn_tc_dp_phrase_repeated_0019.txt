@@ -136,7 +136,7 @@ castle, puzzle, turtle
 
 Check scan candidates against summary mappings
 
-castle
+fisswt -> castle
 f -> c conflicts
 x -> c already exists
 i -> a conflicts
@@ -149,7 +149,7 @@ w -> l agrees
 t -> e agrees
 FAIL
 
-puzzle
+fisswt -> puzzle
 f -> p new
 i -> u new
 s -> z new
@@ -157,6 +157,18 @@ s -> z new
 w -> l agrees
 t -> e agrees
 PASS
+
+fisswt -> turtle
+f -> t conflicts
+o -> t already exists
+i -> u new
+s -> r conflicts
+u -> r already exists
+s -> t conflicts
+o -> t already exists
+w -> l agrees
+t -> e agrees
+FAIL
 add f -> p
 add i -> u
 add s -> z
@@ -277,7 +289,7 @@ story
 
 Check scan candidates against summary mappings
 
-story
+qobuh -> story
 q -> s agrees
 o -> t agrees
 b -> o agrees

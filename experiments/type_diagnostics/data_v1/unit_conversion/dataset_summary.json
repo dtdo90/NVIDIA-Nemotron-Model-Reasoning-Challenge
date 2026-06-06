@@ -1,0 +1,37 @@
+{
+  "question_type": "unit_conversion",
+  "category": "Unit Conversion",
+  "source_csv": "data/single_phase_training_clean/single_phase_sft_v1.csv",
+  "train_csv": "experiments/type_diagnostics/data_v1/unit_conversion/unit_conversion.csv",
+  "split_csv": "experiments/type_diagnostics/data_v1/unit_conversion/splits_80_10_10.csv",
+  "seed": 42,
+  "total": 1594,
+  "by_subtype": {
+    "standard": 1594
+  },
+  "by_source_mode": {
+    "real": 1594
+  },
+  "by_eval_eligible": {
+    "true": 1594
+  },
+  "by_split_policy": {
+    "auto": 1594
+  },
+  "split_counts": {
+    "eval_holdout": 159,
+    "grpo_holdout": 159,
+    "sft_train": 1276
+  },
+  "by_split_subtype": {
+    "eval_holdout": {
+      "standard": 159
+    },
+    "grpo_holdout": {
+      "standard": 159
+    },
+    "sft_train": {
+      "standard": 1276
+    }
+  }
+}

@@ -131,7 +131,7 @@ golden
 
 Check scan candidates against summary mappings
 
-golden
+lipqjg -> golden
 l -> g new
 i -> o agrees
 p -> l agrees

@@ -132,7 +132,7 @@ imagines
 
 Check scan candidates against summary mappings
 
-imagines
+pkjupzef -> imagines
 p -> i agrees
 k -> m new
 j -> a agrees

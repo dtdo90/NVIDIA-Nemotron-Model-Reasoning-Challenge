@@ -134,7 +134,16 @@ bright, knight
 
 Check scan candidates against summary mappings
 
-knight
+vmxtqa -> bright
+v -> b new
+m -> r new
+x -> i agrees
+t -> g agrees
+q -> h new
+a -> t agrees
+PASS
+
+vmxtqa -> knight
 v -> k conflicts
 h -> k already exists
 m -> n conflicts
@@ -144,15 +153,6 @@ t -> g agrees
 q -> h new
 a -> t agrees
 FAIL
-
-bright
-v -> b new
-m -> r new
-x -> i agrees
-t -> g agrees
-q -> h new
-a -> t agrees
-PASS
 add v -> b
 add m -> r
 add q -> h
@@ -254,7 +254,7 @@ garden, hatter, valley
 
 Check scan candidates against summary mappings
 
-garden
+suddrn -> garden
 s -> g conflicts
 t -> g already exists
 u -> a agrees
@@ -267,7 +267,7 @@ n -> n conflicts
 l -> n already exists
 FAIL
 
-hatter
+suddrn -> hatter
 s -> h conflicts
 q -> h already exists
 u -> a agrees
@@ -280,7 +280,7 @@ n -> r conflicts
 m -> r already exists
 FAIL
 
-valley
+suddrn -> valley
 s -> v new
 u -> a agrees
 d -> l new
@@ -389,7 +389,7 @@ forest
 
 Check scan candidates against summary mappings
 
-forest
+wpmrca -> forest
 w -> f new
 p -> o agrees
 m -> r agrees

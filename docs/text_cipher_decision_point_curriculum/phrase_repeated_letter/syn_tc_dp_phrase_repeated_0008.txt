@@ -138,7 +138,7 @@ potion
 
 Check scan candidates against summary mappings
 
-potion
+vazeaw -> potion
 v -> p agrees
 a -> o new
 z -> t agrees
@@ -256,7 +256,7 @@ library
 
 Check scan candidates against summary mappings
 
-library
+recjgjm -> library
 r -> l agrees
 e -> i agrees
 c -> b agrees
@@ -378,7 +378,7 @@ explores
 
 Check scan candidates against summary mappings
 
-explores
+ktvrajku -> explores
 k -> e agrees
 t -> x new
 v -> p agrees

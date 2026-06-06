@@ -130,7 +130,7 @@ castle
 
 Check scan candidates against summary mappings
 
-castle
+wytxro -> castle
 w -> c new
 y -> a agrees
 t -> s agrees

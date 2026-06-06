@@ -132,7 +132,7 @@ turtle
 
 Check scan candidates against summary mappings
 
-turtle
+buibce -> turtle
 b -> t new
 u -> u agrees
 i -> r agrees
@@ -240,7 +240,7 @@ teacher
 
 Check scan candidates against summary mappings
 
-teacher
+beoyjei -> teacher
 b -> t agrees
 e -> e agrees
 o -> a new

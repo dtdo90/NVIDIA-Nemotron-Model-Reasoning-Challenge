@@ -138,7 +138,7 @@ puzzle, turtle
 
 Check scan candidates against summary mappings
 
-puzzle
+gmyyzn -> puzzle
 g -> p new
 m -> u agrees
 y -> z new
@@ -146,6 +146,18 @@ y -> z new
 z -> l agrees
 n -> e agrees
 PASS
+
+gmyyzn -> turtle
+g -> t conflicts
+e -> t already exists
+m -> u agrees
+y -> r conflicts
+f -> r already exists
+y -> t conflicts
+e -> t already exists
+z -> l agrees
+n -> e agrees
+FAIL
 add g -> p
 add y -> z
 
@@ -258,7 +270,7 @@ message
 
 Check scan candidates against summary mappings
 
-message
+kniiwrn -> message
 k -> m new
 n -> e agrees
 i -> s agrees
@@ -367,7 +379,7 @@ chases
 
 Check scan candidates against summary mappings
 
-chases
+jxwini -> chases
 j -> c agrees
 x -> h new
 w -> a agrees

@@ -129,18 +129,18 @@ cat, map
 
 Check scan candidates against summary mappings
 
-map
+mbe -> cat
+m -> c new
+b -> a agrees
+e -> t new
+PASS
+
+mbe -> map
 m -> m conflicts
 y -> m already exists
 b -> a agrees
 e -> p new
 FAIL
-
-cat
-m -> c new
-b -> a agrees
-e -> t new
-PASS
 add m -> c
 add e -> t
 
@@ -242,7 +242,7 @@ watches
 
 Check scan candidates against summary mappings
 
-watches
+abemowp -> watches
 a -> w agrees
 b -> a agrees
 e -> t agrees

@@ -134,7 +134,14 @@ book, dark
 
 Check scan candidates against summary mappings
 
-dark
+arrf -> book
+a -> b new
+r -> o new
+r -> o new
+f -> k agrees
+PASS
+
+arrf -> dark
 a -> d conflicts
 c -> d already exists
 r -> a conflicts
@@ -143,13 +150,6 @@ r -> r conflicts
 k -> r already exists
 f -> k agrees
 FAIL
-
-book
-a -> b new
-r -> o new
-r -> o new
-f -> k agrees
-PASS
 add a -> b
 add r -> o
 
@@ -248,7 +248,7 @@ cave
 
 Check scan candidates against summary mappings
 
-cave
+bztl -> cave
 b -> c agrees
 z -> a agrees
 t -> v new

@@ -132,7 +132,7 @@ treasure
 
 Check scan candidates against summary mappings
 
-treasure
+rtcbzxtc -> treasure
 r -> t new
 t -> r agrees
 c -> e agrees

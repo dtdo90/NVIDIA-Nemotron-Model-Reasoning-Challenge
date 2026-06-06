@@ -135,7 +135,7 @@ bird, king, wise
 
 Check scan candidates against summary mappings
 
-bird
+xvgk -> bird
 x -> b conflicts
 e -> b already exists
 v -> i agrees
@@ -144,7 +144,14 @@ t -> r already exists
 k -> d new
 FAIL
 
-wise
+xvgk -> king
+x -> k new
+v -> i agrees
+g -> n new
+k -> g new
+PASS
+
+xvgk -> wise
 x -> w conflicts
 s -> w already exists
 v -> i agrees
@@ -153,13 +160,6 @@ f -> s already exists
 k -> e conflicts
 w -> e already exists
 FAIL
-
-king
-x -> k new
-v -> i agrees
-g -> n new
-k -> g new
-PASS
 add x -> k
 add g -> n
 add k -> g
@@ -285,7 +285,7 @@ village
 
 Check scan candidates against summary mappings
 
-village
+yvnnbkw -> village
 y -> v new
 v -> i agrees
 n -> l agrees

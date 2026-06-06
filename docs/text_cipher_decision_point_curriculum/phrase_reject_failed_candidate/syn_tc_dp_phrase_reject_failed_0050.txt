@@ -133,7 +133,7 @@ bird, book
 
 Check scan candidates against summary mappings
 
-bird
+oiiz -> bird
 o -> b agrees
 i -> i conflicts
 x -> i already exists
@@ -143,7 +143,7 @@ z -> d conflicts
 v -> d already exists
 FAIL
 
-book
+oiiz -> book
 o -> b agrees
 i -> o new
 i -> o new
@@ -249,7 +249,7 @@ turtle
 
 Check scan candidates against summary mappings
 
-turtle
+nlcnqb -> turtle
 n -> t agrees
 l -> u new
 c -> r agrees
@@ -366,7 +366,7 @@ cave
 
 Check scan candidates against summary mappings
 
-cave
+skub -> cave
 s -> c new
 k -> a agrees
 u -> v new

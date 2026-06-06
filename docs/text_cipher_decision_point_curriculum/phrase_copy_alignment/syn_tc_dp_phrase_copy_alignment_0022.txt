@@ -1,117 +1,110 @@
 Problem syn_tc_dp_phrase_copy_alignment_0022
 Bucket: phrase_copy_alignment
-Gold answer: beyond above story reads
-Note: phrase_copy_exact_example_cipher_phrase
+Gold answer: crystal ancient watches
+Note: phrase_copy_fully_mapped_nontrivial_target
 
 Training prompt:
 In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
-wrimfy lwmjr pomai arlyp -> beyond above story reads
-Now, decrypt the following text: wrimfy lwmjr pomai arlyp
+wvmtyvz rxpmdb -> teacher island
+fvh krxv -> key wise
+Now, decrypt the following text: tzhxwmp mdtrvdw kmwtyvx
 
-Solution:
-<think>
+Training target:
 We need to decode the target strictly from left to right using the character mappings.
 
 Process examples
 
-wrimfy lwmjr pomai arlyp -> beyond above story reads
+wvmtyvz rxpmdb -> teacher island
+wvmtyvz -> teacher
+w -> t new
+v -> e new
+m -> a new
+t -> c new
+y -> h new
+v -> e agrees
+z -> r new
 
-Training target:
-wrimfy -> beyond
-w -> b new
-r -> e new
-i -> y new
-m -> o new
-f -> n new
-y -> d new
+rxpmdb -> island
+r -> i new
+x -> s new
+p -> l new
+m -> a agrees
+d -> n new
+b -> d new
 
-lwmjr -> above
-l -> a new
-w -> b agrees
-m -> o agrees
-j -> v new
-r -> e agrees
+fvh krxv -> key wise
+fvh -> key
+f -> k new
+v -> e agrees
+h -> y new
 
-pomai -> story
-p -> s new
-o -> t new
-m -> o agrees
-a -> r new
-i -> y agrees
-
-arlyp -> reads
-a -> r agrees
-r -> e agrees
-l -> a agrees
-y -> d agrees
-p -> s agrees
+krxv -> wise
+k -> w new
+r -> i agrees
+x -> s agrees
+v -> e agrees
 
 Summary character mappings
-a -> r
-f -> n
-i -> y
-j -> v
-l -> a
-m -> o
-o -> t
-p -> s
-r -> e
-w -> b
-y -> d
+b -> d
+d -> n
+f -> k
+h -> y
+k -> w
+m -> a
+p -> l
+r -> i
+t -> c
+v -> e
+w -> t
+x -> s
+y -> h
+z -> r
 
 Target text
-wrimfy lwmjr pomai arlyp
+tzhxwmp mdtrvdw kmwtyvx
 
 Decode target words from character mappings
 
-wrimfy
-w -> b
-r -> e
-i -> y
-m -> o
-f -> n
-y -> d
-wrimfy -> beyond
+tzhxwmp
+t -> c
+z -> r
+h -> y
+x -> s
+w -> t
+m -> a
+p -> l
+tzhxwmp -> crystal
 fully mapped
 
-choose beyond
+choose crystal
 
-lwmjr
-l -> a
-w -> b
-m -> o
-j -> v
-r -> e
-lwmjr -> above
+mdtrvdw
+m -> a
+d -> n
+t -> c
+r -> i
+v -> e
+d -> n
+w -> t
+mdtrvdw -> ancient
 fully mapped
 
-choose above
+choose ancient
 
-pomai
-p -> s
-o -> t
-m -> o
-a -> r
-i -> y
-pomai -> story
+kmwtyvx
+k -> w
+m -> a
+w -> t
+t -> c
+y -> h
+v -> e
+x -> s
+kmwtyvx -> watches
 fully mapped
 
-choose story
-
-arlyp
-a -> r
-r -> e
-l -> a
-y -> d
-p -> s
-arlyp -> reads
-fully mapped
-
-choose reads
+choose watches
 
 Decoded phrase
-beyond above story reads
+crystal ancient watches
 
-Answer: \boxed{beyond above story reads}
-</think>
-\boxed{beyond above story reads}
+Answer: \boxed{crystal ancient watches}

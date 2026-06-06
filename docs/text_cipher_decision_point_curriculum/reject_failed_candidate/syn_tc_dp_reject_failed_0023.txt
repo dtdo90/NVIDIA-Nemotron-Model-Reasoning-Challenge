@@ -128,19 +128,34 @@ cat, key, map, the
 
 Check scan candidates against summary mappings
 
-the
+zqn -> cat
+z -> c new
+q -> a conflicts
+u -> a already exists
+n -> t conflicts
+x -> t already exists
+FAIL
+
+zqn -> key
+z -> k new
+q -> e new
+n -> y new
+PASS
+
+zqn -> map
+z -> m new
+q -> a conflicts
+u -> a already exists
+n -> p new
+FAIL
+
+zqn -> the
 z -> t conflicts
 x -> t already exists
 q -> h conflicts
 y -> h already exists
 n -> e new
 FAIL
-
-key
-z -> k new
-q -> e new
-n -> y new
-PASS
 add z -> k
 add q -> e
 add n -> y

@@ -131,7 +131,7 @@ message
 
 Check scan candidates against summary mappings
 
-message
+rbvvgjb -> message
 r -> m new
 b -> e agrees
 v -> s agrees

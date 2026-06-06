@@ -137,7 +137,7 @@ rabbit
 
 Check scan candidates against summary mappings
 
-rabbit
+vellpn -> rabbit
 v -> r agrees
 e -> a agrees
 l -> b new
@@ -255,7 +255,7 @@ draws
 
 Check scan candidates against summary mappings
 
-draws
+wvert -> draws
 w -> d agrees
 v -> r agrees
 e -> a agrees

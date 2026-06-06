@@ -1,140 +1,111 @@
 Problem syn_tc_dp_phrase_copy_alignment_0032
 Bucket: phrase_copy_alignment
-Gold answer: curious king dreams key palace
-Note: phrase_copy_exact_example_cipher_phrase
+Gold answer: message imagines mirror garden
+Note: phrase_copy_fully_mapped_nontrivial_target
 
 Training prompt:
 In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
-vceqkcj xqfz pethsj xtg dhmhvt -> curious king dreams key palace
-Now, decrypt the following text: vceqkcj xqfz pethsj xtg dhmhvt
+acolhv bquf -> dreams king
+annc -> door
+Now, decrypt the following text: hovvlfo qhlfquov hqccnc flcaou
 
-Solution:
-<think>
+Training target:
 We need to decode the target strictly from left to right using the character mappings.
 
 Process examples
 
-vceqkcj xqfz pethsj xtg dhmhvt -> curious king dreams key palace
+acolhv bquf -> dreams king
+acolhv -> dreams
+a -> d new
+c -> r new
+o -> e new
+l -> a new
+h -> m new
+v -> s new
 
-Training target:
-vceqkcj -> curious
-v -> c new
-c -> u new
-e -> r new
+bquf -> king
+b -> k new
 q -> i new
-k -> o new
-c -> u agrees
-j -> s new
+u -> n new
+f -> g new
 
-xqfz -> king
-x -> k new
-q -> i agrees
-f -> n new
-z -> g new
-
-pethsj -> dreams
-p -> d new
-e -> r agrees
-t -> e new
-h -> a new
-s -> m new
-j -> s agrees
-
-xtg -> key
-x -> k agrees
-t -> e agrees
-g -> y new
-
-dhmhvt -> palace
-d -> p new
-h -> a agrees
-m -> l new
-h -> a agrees
-v -> c agrees
-t -> e agrees
+annc -> door
+annc -> door
+a -> d agrees
+n -> o new
+n -> o agrees
+c -> r agrees
 
 Summary character mappings
-c -> u
-d -> p
-e -> r
-f -> n
-g -> y
-h -> a
-j -> s
-k -> o
-m -> l
-p -> d
+a -> d
+b -> k
+c -> r
+f -> g
+h -> m
+l -> a
+n -> o
+o -> e
 q -> i
-s -> m
-t -> e
-v -> c
-x -> k
-z -> g
+u -> n
+v -> s
 
 Target text
-vceqkcj xqfz pethsj xtg dhmhvt
+hovvlfo qhlfquov hqccnc flcaou
 
 Decode target words from character mappings
 
-vceqkcj
-v -> c
-c -> u
-e -> r
+hovvlfo
+h -> m
+o -> e
+v -> s
+v -> s
+l -> a
+f -> g
+o -> e
+hovvlfo -> message
+fully mapped
+
+choose message
+
+qhlfquov
 q -> i
-k -> o
-c -> u
-j -> s
-vceqkcj -> curious
-fully mapped
-
-choose curious
-
-xqfz
-x -> k
+h -> m
+l -> a
+f -> g
 q -> i
-f -> n
-z -> g
-xqfz -> king
+u -> n
+o -> e
+v -> s
+qhlfquov -> imagines
 fully mapped
 
-choose king
+choose imagines
 
-pethsj
-p -> d
-e -> r
-t -> e
-h -> a
-s -> m
-j -> s
-pethsj -> dreams
+hqccnc
+h -> m
+q -> i
+c -> r
+c -> r
+n -> o
+c -> r
+hqccnc -> mirror
 fully mapped
 
-choose dreams
+choose mirror
 
-xtg
-x -> k
-t -> e
-g -> y
-xtg -> key
+flcaou
+f -> g
+l -> a
+c -> r
+a -> d
+o -> e
+u -> n
+flcaou -> garden
 fully mapped
 
-choose key
-
-dhmhvt
-d -> p
-h -> a
-m -> l
-h -> a
-v -> c
-t -> e
-dhmhvt -> palace
-fully mapped
-
-choose palace
+choose garden
 
 Decoded phrase
-curious king dreams key palace
+message imagines mirror garden
 
-Answer: \boxed{curious king dreams key palace}
-</think>
-\boxed{curious king dreams key palace}
+Answer: \boxed{message imagines mirror garden}
