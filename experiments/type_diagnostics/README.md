@@ -48,7 +48,12 @@ python3 experiments/type_diagnostics/scripts/train_numeric_equation_with_curricu
 python3 experiments/type_diagnostics/scripts/train_numeric_equation_without_curriculum.py
 python3 experiments/type_diagnostics/scripts/train_text_cipher_with_curriculum.py
 python3 experiments/type_diagnostics/scripts/train_text_cipher_without_curriculum.py
+python3 experiments/type_diagnostics/scripts/train_text_cipher_without_any_curriculum.py
 ```
+
+`train_text_cipher_without_any_curriculum.py` is the strict v2 ablation: it
+uses the v2 Text Cipher diagnostic data but excludes
+`text_cipher_decision_point_curriculum` from `sft_train`.
 
 Default adapters are saved to:
 
