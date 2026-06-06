@@ -114,7 +114,7 @@ def parse_args(
     parser.add_argument("--per-device-train-batch-size", type=int, default=1)
     parser.add_argument("--gradient-accumulation-steps", type=int, default=8)
     parser.add_argument("--learning-rate", type=float, default=2e-4)
-    parser.add_argument("--min-learning-rate", type=float, default=2e-6)
+    parser.add_argument("--min-learning-rate", type=float, default=1e-6)
     parser.add_argument("--max-seq-len", type=int, default=DEFAULT_MAX_SEQ_LEN)
     parser.add_argument("--gradient-checkpointing", action="store_true")
     parser.add_argument(

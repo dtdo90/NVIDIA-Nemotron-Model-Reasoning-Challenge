@@ -3,8 +3,8 @@
   "seed": 20260603,
   "train_csv": "/Users/taido/Desktop/Tai/NVIDIA Nemotron Model Reasoning/experiments/type_diagnostics/data/text_cipher/text_cipher.csv",
   "split_csv": "/Users/taido/Desktop/Tai/NVIDIA Nemotron Model Reasoning/experiments/type_diagnostics/data/text_cipher/splits_retest_80_20.csv",
-  "total_rows": 2136,
-  "train_only_rows": 560,
+  "total_rows": 2376,
+  "train_only_rows": 800,
   "eval_eligible_rows": 1576,
   "target_eval_fraction": 0.2,
   "forced_eval_ids": {
@@ -14,54 +14,47 @@
   },
   "split_counts": {
     "eval_holdout": 315,
-    "sft_train": 1821
+    "sft_train": 2061
   },
   "summary": {
-    "total": 2136,
+    "total": 2376,
     "by_subtype": {
-      "decision_point_alignment": 40,
-      "decision_point_copy_alignment": 15,
-      "decision_point_phrase_alignment": 50,
-      "decision_point_phrase_copy_alignment": 45,
-      "decision_point_phrase_reject_failed_candidate": 90,
-      "decision_point_phrase_repeated_letter": 55,
-      "decision_point_reject_failed_candidate": 30,
-      "decision_point_repeated_letter": 35,
+      "decision_point_phrase_alignment": 67,
+      "decision_point_phrase_copy_alignment": 10,
+      "decision_point_phrase_long_trace": 75,
+      "decision_point_phrase_reject_failed_candidate": 257,
+      "decision_point_phrase_repeated_letter": 191,
       "standard": 1776
     },
     "by_source_mode": {
       "real": 1576,
       "single_phase_synthetic_text_cipher_confusion": 200,
-      "text_cipher_decision_point_curriculum": 360
+      "text_cipher_decision_point_curriculum": 600
     },
     "by_eval_eligible": {
-      "false": 560,
+      "false": 800,
       "true": 1576
     },
     "by_split_policy": {
       "auto": 1576,
-      "train_only": 560
+      "train_only": 800
     },
     "split_counts": {
       "eval_holdout": 315,
-      "sft_train": 1821
+      "sft_train": 2061
     },
     "by_split_subtype": {
-      "sft_train": {
-        "decision_point_alignment": 40,
-        "decision_point_copy_alignment": 15,
-        "decision_point_phrase_alignment": 50,
-        "decision_point_phrase_copy_alignment": 45,
-        "decision_point_phrase_reject_failed_candidate": 90,
-        "decision_point_phrase_repeated_letter": 55,
-        "decision_point_reject_failed_candidate": 30,
-        "decision_point_repeated_letter": 35,
-        "standard": 1461
-      },
       "eval_holdout": {
         "standard": 315
       },
-      "grpo_holdout": {}
+      "sft_train": {
+        "decision_point_phrase_alignment": 67,
+        "decision_point_phrase_copy_alignment": 10,
+        "decision_point_phrase_long_trace": 75,
+        "decision_point_phrase_reject_failed_candidate": 257,
+        "decision_point_phrase_repeated_letter": 191,
+        "standard": 1461
+      }
     }
   }
 }

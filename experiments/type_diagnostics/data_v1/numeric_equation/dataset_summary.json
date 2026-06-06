@@ -5,7 +5,7 @@
   "train_csv": "experiments/type_diagnostics/data_v1/numeric_equation/numeric_equation.csv",
   "split_csv": "experiments/type_diagnostics/data_v1/numeric_equation/splits_80_10_10.csv",
   "seed": 42,
-  "total": 4733,
+  "total": 4661,
   "by_subtype": {
     "ab_cd_addition_ab_cd_len2": 65,
     "ab_cd_addition_ab_cd_len3": 92,
@@ -40,12 +40,12 @@
     "ba_dc_subtraction_min_minus_max": 10,
     "ba_dc_subtraction_x_y": 181,
     "ba_dc_subtraction_y_x": 55,
-    "decision_point_common_intersection": 290,
+    "decision_point_common_intersection": 284,
     "decision_point_literal_minus_opposite_sign_continuation": 60,
-    "decision_point_literal_minus_rendering_policy": 120,
-    "decision_point_low_confidence_branch_discipline": 170,
-    "decision_point_operator_absence_fallback_choice": 41,
-    "decision_point_output_format_rendering": 219,
+    "decision_point_literal_minus_rendering_policy": 94,
+    "decision_point_low_confidence_branch_discipline": 160,
+    "decision_point_operator_absence_fallback_choice": 31,
+    "decision_point_output_format_rendering": 199,
     "direct_template_template0134": 228,
     "direct_template_template3401": 227,
     "low_confidence": 115,
@@ -66,24 +66,24 @@
     "untrained_eval_only": 22
   },
   "by_source_mode": {
-    "numeric_equation_decision_point_curriculum": 900,
+    "numeric_equation_decision_point_curriculum": 828,
     "numeric_equation_untrained_eval_only": 22,
     "real": 624,
     "synthetic": 3187
   },
   "by_eval_eligible": {
-    "false": 4087,
+    "false": 4015,
     "true": 646
   },
   "by_split_policy": {
     "auto": 624,
     "eval_only": 22,
-    "train_only": 4087
+    "train_only": 4015
   },
   "split_counts": {
     "eval_holdout": 72,
     "grpo_holdout": 67,
-    "sft_train": 4594
+    "sft_train": 4522
   },
   "by_split_subtype": {
     "eval_holdout": {
@@ -183,12 +183,12 @@
       "ba_dc_subtraction_min_minus_max": 10,
       "ba_dc_subtraction_x_y": 181,
       "ba_dc_subtraction_y_x": 55,
-      "decision_point_common_intersection": 290,
+      "decision_point_common_intersection": 284,
       "decision_point_literal_minus_opposite_sign_continuation": 60,
-      "decision_point_literal_minus_rendering_policy": 120,
-      "decision_point_low_confidence_branch_discipline": 170,
-      "decision_point_operator_absence_fallback_choice": 41,
-      "decision_point_output_format_rendering": 219,
+      "decision_point_literal_minus_rendering_policy": 94,
+      "decision_point_low_confidence_branch_discipline": 160,
+      "decision_point_operator_absence_fallback_choice": 31,
+      "decision_point_output_format_rendering": 199,
       "direct_template_template0134": 220,
       "direct_template_template3401": 219,
       "low_confidence": 115,

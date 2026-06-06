@@ -14,7 +14,7 @@
   "global_split_counts": {
     "eval_holdout": 901,
     "grpo_holdout": 896,
-    "sft_train": 16880
+    "sft_train": 17008
   },
   "synced_root_split_csv": null,
   "synced_root_split_counts": null,
@@ -47,13 +47,13 @@
       "subtype_count": 1
     },
     "text_cipher": {
-      "total": 2176,
+      "total": 2376,
       "split_counts": {
         "eval_holdout": 158,
         "grpo_holdout": 158,
-        "sft_train": 1860
+        "sft_train": 2060
       },
-      "subtype_count": 5
+      "subtype_count": 6
     },
     "numeral_system": {
       "total": 1576,
@@ -65,11 +65,11 @@
       "subtype_count": 1
     },
     "numeric_equation": {
-      "total": 4733,
+      "total": 4661,
       "split_counts": {
         "eval_holdout": 72,
         "grpo_holdout": 67,
-        "sft_train": 4594
+        "sft_train": 4522
       },
       "subtype_count": 57
     },

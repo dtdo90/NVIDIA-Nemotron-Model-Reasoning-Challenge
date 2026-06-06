@@ -10,6 +10,7 @@ from pathlib import Path
 from .common import (
     DATA_DIR,
     QUESTION_TYPES,
+    SOURCE_CSV,
     assert_type_dataset_fresh,
     classify_subtype,
     is_eval_eligible,
@@ -51,6 +52,14 @@ def parse_args(default_question_type: str | None = None) -> argparse.Namespace:
     else:
         parser.set_defaults(question_type=default_question_type)
     parser.add_argument("--data-dir", default=str(DATA_DIR))
+    parser.add_argument(
+        "--source-csv",
+        default=str(SOURCE_CSV),
+        help=(
+            "Single-phase source CSV used to freshness-check the prepared "
+            "type dataset."
+        ),
+    )
     parser.add_argument(
         "--split-csv",
         default=None,
@@ -95,8 +104,10 @@ def load_eval_examples(
     split_csv: Path,
     eval_splits: list[str],
     max_eval_samples: int | None,
+    *,
+    source_csv: Path,
 ) -> list[EvalExample]:
-    assert_type_dataset_fresh(paths.slug, type_csv=paths.train_csv)
+    assert_type_dataset_fresh(paths.slug, type_csv=paths.train_csv, source_csv=source_csv)
     rows, _ = read_csv_rows(paths.train_csv)
     assignments = load_split_assignments(split_csv)
     validate_split_assignments(rows, assignments, split_csv=split_csv)
@@ -255,7 +266,13 @@ def main(default_question_type: str | None = None) -> None:
         kagglehub = None
 
     model_path = resolve_model_path(args, kagglehub)
-    eval_examples = load_eval_examples(paths, split_csv, args.eval_splits, args.max_eval_samples)
+    eval_examples = load_eval_examples(
+        paths,
+        split_csv,
+        args.eval_splits,
+        args.max_eval_samples,
+        source_csv=Path(args.source_csv),
+    )
     if args.backend == "vllm":
         raw_predictions = generate_with_vllm(args, model_path, eval_examples)
     else:
@@ -295,6 +312,7 @@ def main(default_question_type: str | None = None) -> None:
         "backend": args.backend,
         "model_path": model_path,
         "adapter_dir": str(Path(args.adapter_dir).resolve()),
+        "source_csv": str(Path(args.source_csv).resolve()),
         "train_csv": str(paths.train_csv.resolve()),
         "split_csv": str(split_csv.resolve()),
         "eval_splits": args.eval_splits,
