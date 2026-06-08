@@ -196,7 +196,6 @@ id,split,diagnostic_type,diagnostic_subtype,source_mode,eval_eligible,split_poli
 4d8f8111,sft_train,numeric_equation,direct_template_template3401,real,true,auto
 4d92de08,sft_train,numeric_equation,ba_dc_multiplication_ba_dc_mul,real,true,auto
 4dbec546,eval_holdout,numeric_equation,ba_dc_addition_ba_dc_len2,real,true,auto
-4dcc1844,eval_holdout,numeric_equation,prefix_postfix_op_prefix_if_neg,real,true,auto
 4df01584,sft_train,numeric_equation,direct_template_template3401,real,true,auto
 4f06e1c0,sft_train,numeric_equation,operator_absence,real,true,auto
 4f0e0273,sft_train,numeric_equation,ba_dc_multiplication_ba_dc_mul,real,true,auto

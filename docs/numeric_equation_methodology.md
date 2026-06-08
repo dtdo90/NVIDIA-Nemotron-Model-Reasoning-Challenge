@@ -349,6 +349,65 @@ After same-operator verification:
    motif/output-mode evidence.
 4. If ambiguity remains, do not call the trace deterministic.
 
+Single-row motif-override work to resume:
+
+```text
+Rewrite the one-same-operator motif-conflict rows by listing the same-operator
+examples first, then giving the count after the list:
+
+same operator examples
+17*71 = 87
+one example
+
+After the BA_DC Common block, use:
+
+The format BA_DC|x+y-1|common supports the single same operator example
+Only one same operator row supports this candidate, so do not finalize yet
+Verify motif BA_DC using an additional helper operator group
+
+Then choose the helper operator group with the least number of examples, verify
+only motif BA_DC on that helper group. Do not repeat `Try BA_DC first` inside
+the helper verification because this branch is already verifying BA_DC.
+
+If the helper group supports motif BA_DC, write:
+
+The motif BA_DC is supported by the helper operator group
+So BA_DC is confirmed
+
+Apply format BA_DC|x+y-1|common to the query
+
+If the helper group does not support motif BA_DC, write:
+
+So BA_DC is rejected
+
+Try AB_CD
+
+For the normal multi-row case, keep the change minimal:
+
+The format BA_DC|x+y-1|common supports all 2 same operator examples
+More than one same operator rows support this candidate, so finalize
+Apply format BA_DC|x+y-1|common to the query
+
+Use the exact count in the sentence, for example 2 or 3.
+```
+
+Rows to revisit with this pattern:
+
+```text
+4dcc1844
+b9bf883d
+c5b058d6
+fc759a1a
+6cdc3a9f
+95afbb5f
+0c8a8a16
+16699d43
+b7b1d1a8
+d22f2d08
+da3f727d
+e8de8b47
+```
+
 ## 8. Helper Rows
 
 Helper rows should not override same-operator evidence. They are used to infer

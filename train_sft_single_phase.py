@@ -327,6 +327,29 @@ def load_examples(path: Path) -> list[Example]:
     return examples
 
 
+def has_trace_content(example: Example) -> bool:
+    return bool(example.generated_cot.strip() or example.assistant_content.strip())
+
+
+def filter_trainable_trace_examples(
+    examples: list[Example],
+    *,
+    selection_label: str,
+) -> list[Example]:
+    selected = [example for example in examples if has_trace_content(example)]
+    dropped = len(examples) - len(selected)
+    if dropped:
+        print(
+            f"Filtered {dropped} {selection_label} row(s) with empty generated_cot "
+            "and assistant_content; answer-only rows are not trainable SFT traces."
+        )
+    if not selected:
+        raise SystemExit(
+            f"No trainable trace rows remain after filtering empty trace content for {selection_label}."
+        )
+    return selected
+
+
 def load_split_assignments(path: str | Path) -> dict[str, str]:
     assignments: dict[str, str] = {}
     with Path(path).open(newline="", encoding="utf-8") as handle:
@@ -520,12 +543,17 @@ def single_phase_train_examples(
     if not examples:
         raise SystemExit("No single-phase rows were loaded")
     if train_all:
-        return examples, examples, None
+        selected = filter_trainable_trace_examples(examples, selection_label="--train-all")
+        return selected, examples, None
     if not split_csv:
         raise SystemExit("--split-csv is required unless --train-all is set")
     assignments = load_split_assignments(split_csv)
     validate_split_assignments(examples, assignments, split_csv)
     selected = select_examples_by_split(examples, assignments, train_splits or ["sft_train"])
+    selected = filter_trainable_trace_examples(
+        selected,
+        selection_label="+".join(train_splits or ["sft_train"]),
+    )
     return selected, examples, assignments
 
 
