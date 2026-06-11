@@ -26,7 +26,7 @@ id,split
 00a77d86,eval_holdout
 00c8ab45,sft_train
 00d1932c,eval_holdout
-00d8b3db,sft_train
+00d8b3db,grpo_holdout
 00d9f682,sft_train
 00ec1c63,sft_train
 00ed1836,eval_holdout
@@ -1205,7 +1205,7 @@ id,split
 21ca54bb,grpo_holdout
 21d4018f,sft_train
 21d9de4c,sft_train
-21dff465,eval_holdout
+21dff465,sft_train
 21e2511d,sft_train
 21e46a71,sft_train
 21ee162c,sft_train
@@ -1592,7 +1592,6 @@ id,split
 2dcfc1a3,sft_train
 2dd1bc5e,sft_train
 2dd26fa7,grpo_holdout
-2dd48cac,sft_train
 2deaeae1,sft_train
 2def3dad,grpo_holdout
 2df6dc21,sft_train
@@ -2411,7 +2410,7 @@ id,split
 44f7359a,grpo_holdout
 44fb2f96,sft_train
 45009147,sft_train
-45076dc9,eval_holdout
+45076dc9,sft_train
 4510a429,sft_train
 4513f03e,grpo_holdout
 451a85d7,sft_train
@@ -2676,7 +2675,7 @@ id,split
 4c3c612c,sft_train
 4c47ddd8,sft_train
 4c51ee8a,sft_train
-4c57a53f,sft_train
+4c57a53f,grpo_holdout
 4c5922ab,sft_train
 4c63a372,sft_train
 4c6b2b37,sft_train
@@ -2828,7 +2827,7 @@ id,split
 50a6d9d8,sft_train
 50abdbeb,sft_train
 50adc396,eval_holdout
-50adfd54,eval_holdout
+50adfd54,sft_train
 50b5296a,grpo_holdout
 50c066b0,sft_train
 50c0b6f8,sft_train
@@ -2907,7 +2906,7 @@ id,split
 5281a6b3,sft_train
 52862572,eval_holdout
 528d915e,sft_train
-528ec0d8,eval_holdout
+528ec0d8,sft_train
 5290ad9b,sft_train
 52a052a0,eval_holdout
 52a8b3fe,sft_train
@@ -3096,9 +3095,9 @@ id,split
 577546cf,sft_train
 5776269d,sft_train
 5785a3bd,sft_train
-5787c3d0,grpo_holdout
+5787c3d0,sft_train
 5791e7c4,sft_train
-579b4607,sft_train
+579b4607,eval_holdout
 579f0cea,sft_train
 57b03b2b,sft_train
 57c93b90,sft_train
@@ -3807,7 +3806,7 @@ id,split
 6cc5dafb,sft_train
 6cc637ea,sft_train
 6cd73bdd,sft_train
-6cdc3a9f,sft_train
+6cdc3a9f,eval_holdout
 6cdcf6d9,grpo_holdout
 6cec0a97,sft_train
 6cec77c9,sft_train
@@ -4130,7 +4129,7 @@ id,split
 7669569d,eval_holdout
 767174e8,grpo_holdout
 7672adf0,sft_train
-7688e06e,sft_train
+7688e06e,eval_holdout
 76983293,sft_train
 769d2bde,sft_train
 76a0c79a,sft_train
@@ -4903,7 +4902,7 @@ id,split
 8c608fec,grpo_holdout
 8c633efd,sft_train
 8c636405,sft_train
-8c6a158e,sft_train
+8c6a158e,eval_holdout
 8c743940,sft_train
 8c8957b1,eval_holdout
 8c9c1e2f,sft_train
@@ -5143,7 +5142,7 @@ id,split
 935022fa,sft_train
 9350d51f,sft_train
 93626d26,sft_train
-936b3ae5,grpo_holdout
+936b3ae5,eval_holdout
 936c3c1e,sft_train
 9372da3d,sft_train
 937c06c5,sft_train
@@ -5404,7 +5403,7 @@ id,split
 9b2b3698,eval_holdout
 9b31fb20,sft_train
 9b39ddb0,sft_train
-9b458fbc,grpo_holdout
+9b458fbc,sft_train
 9b4ecc42,sft_train
 9b4f2f8b,sft_train
 9b559cd7,sft_train
@@ -6059,7 +6058,7 @@ ac73e0f3,sft_train
 ac7ed6cf,grpo_holdout
 ac87d01d,sft_train
 aca1d581,sft_train
-aca5c614,eval_holdout
+aca5c614,sft_train
 aca82280,eval_holdout
 acb5e028,sft_train
 acc0955e,sft_train
@@ -6159,7 +6158,7 @@ af936486,sft_train
 af9989c2,sft_train
 afac52d8,eval_holdout
 afc57a97,sft_train
-afcac7af,sft_train
+afcac7af,eval_holdout
 afcc2452,grpo_holdout
 afdd0e06,sft_train
 afe2bad5,sft_train
@@ -6263,7 +6262,7 @@ b2bc6dbb,sft_train
 b2bdef43,sft_train
 b2cbea0f,sft_train
 b2d46dec,grpo_holdout
-b2e5c467,sft_train
+b2e5c467,grpo_holdout
 b2e7ee08,sft_train
 b2ea0c09,sft_train
 b2ee2241,eval_holdout
@@ -6315,7 +6314,7 @@ b43c7665,sft_train
 b43d9cd5,sft_train
 b44f2254,sft_train
 b45003a6,sft_train
-b451be8a,grpo_holdout
+b451be8a,eval_holdout
 b4549ab9,sft_train
 b47e8621,sft_train
 b4865c39,sft_train
@@ -8044,7 +8043,7 @@ e641791f,sft_train
 e6491c2b,sft_train
 e651c3ee,sft_train
 e661b7dc,sft_train
-e667f2d7,sft_train
+e667f2d7,grpo_holdout
 e66b3d65,eval_holdout
 e6705765,sft_train
 e6737768,sft_train
@@ -8112,7 +8111,7 @@ e8abdc14,sft_train
 e8c4a0bf,sft_train
 e8cc1380,sft_train
 e8d85e13,sft_train
-e8de8b47,sft_train
+e8de8b47,grpo_holdout
 e8deeee0,sft_train
 e8e3924d,sft_train
 e8f13284,grpo_holdout
@@ -8360,7 +8359,7 @@ ef3c7703,grpo_holdout
 ef544a25,sft_train
 ef580378,sft_train
 ef6b6bc3,sft_train
-ef6bc241,eval_holdout
+ef6bc241,sft_train
 ef7dec9c,sft_train
 ef7fde0e,sft_train
 ef817ec9,sft_train
@@ -8461,7 +8460,7 @@ f2ec1685,sft_train
 f2f257ed,sft_train
 f2f3d224,grpo_holdout
 f2f586cb,sft_train
-f2fa334a,grpo_holdout
+f2fa334a,sft_train
 f2fb04d8,sft_train
 f2fe103b,sft_train
 f2ff37b2,eval_holdout
@@ -8585,7 +8584,7 @@ f63c1191,sft_train
 f63f77f8,sft_train
 f640b8aa,sft_train
 f640c781,sft_train
-f642e7b5,grpo_holdout
+f642e7b5,sft_train
 f6478b9f,sft_train
 f64796dc,grpo_holdout
 f64eb796,sft_train
@@ -8695,7 +8694,7 @@ f9799a68,sft_train
 f97bfcd3,sft_train
 f98554f8,sft_train
 f987326d,sft_train
-f9983eb7,sft_train
+f9983eb7,grpo_holdout
 f9a33aa1,sft_train
 f9a40426,eval_holdout
 f9a60673,sft_train
@@ -8765,7 +8764,7 @@ fb3f7b77,sft_train
 fb4bc935,sft_train
 fb5a7b9e,eval_holdout
 fb5b3034,sft_train
-fb623471,sft_train
+fb623471,eval_holdout
 fb6b038d,sft_train
 fb71eaed,grpo_holdout
 fb81a733,sft_train
@@ -8879,7 +8878,7 @@ fe97cd6f,sft_train
 fe998921,grpo_holdout
 fe9ca47a,grpo_holdout
 fea71e16,sft_train
-febd3442,eval_holdout
+febd3442,sft_train
 fec1ea92,sft_train
 fecad63c,sft_train
 fecfb467,grpo_holdout

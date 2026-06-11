@@ -32,6 +32,7 @@ from train_sft_single_phase import (  # type: ignore
     build_dataset,
     clear_memory,
     default_model_path,
+    filter_trainable_trace_examples,
     load_examples,
     make_balanced_trainer_cls,
     make_min_lr_callback,
@@ -60,6 +61,7 @@ def parse_args(
     default_source_csv: str | Path | None = None,
     default_exclude_source_modes: list[str] | None = None,
     default_output_suffix: str | None = None,
+    default_decision_weight: float = 1.0,
 ) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Train one diagnostic LoRA adapter for a single question type."
@@ -128,6 +130,16 @@ def parse_args(
     parser.add_argument("--lora-dropout", type=float, default=0.0)
     parser.add_argument("--optim", default="adamw_torch")
     parser.add_argument(
+        "--decision-weight",
+        type=float,
+        default=default_decision_weight,
+        help=(
+            "Per-token loss weight for decision/failure spans in supported "
+            "categories (Text Cipher, Symbol Transform, Numeric Equation). "
+            "1.0 disables weighting; 2.0 doubles those tokens' gradient."
+        ),
+    )
+    parser.add_argument(
         "--exclude-source-modes",
         nargs="*",
         default=list(default_exclude_source_modes or []),
@@ -163,6 +175,10 @@ def load_diagnostic_train_examples(
         if row.get("source_mode", "unknown") not in (exclude_source_modes or set())
     }
     examples = [example for example in load_examples(paths.train_csv) if example.id in train_ids]
+    examples = filter_trainable_trace_examples(
+        examples,
+        selection_label=f"{paths.slug} sft_train",
+    )
     if not examples:
         raise SystemExit(f"No sft_train examples found for {paths.slug}")
     return examples, rows, assignments
@@ -187,10 +203,11 @@ def diagnostic_balance_groups(
 
 def print_summary(args: argparse.Namespace, paths, train_examples, rows, assignments) -> None:
     excluded = set(args.exclude_source_modes or [])
+    train_example_ids = {example.id for example in train_examples}
     train_rows = [
         row
-        for row in select_rows_for_splits(rows, assignments, ["sft_train"])
-        if row.get("source_mode", "unknown") not in excluded
+        for row in rows
+        if row["id"] in train_example_ids
     ]
     output_dir = Path(args.output_dir)
     mirror_output_dir = Path(args.mirror_output_dir) if args.mirror_output_dir else None
@@ -271,6 +288,7 @@ def main(
     default_source_csv: str | Path | None = None,
     default_exclude_source_modes: list[str] | None = None,
     default_output_suffix: str | None = None,
+    default_decision_weight: float = 1.0,
 ) -> None:
     args = parse_args(
         default_question_type,
@@ -278,6 +296,7 @@ def main(
         default_source_csv=default_source_csv,
         default_exclude_source_modes=default_exclude_source_modes,
         default_output_suffix=default_output_suffix,
+        default_decision_weight=default_decision_weight,
     )
     paths = type_paths(args.question_type, data_dir=Path(args.data_dir))
     source_csv = Path(args.source_csv)
@@ -348,7 +367,13 @@ def main(
         tokenizer.pad_token = tokenizer.eos_token
     tokenizer.padding_side = "right"
 
-    dataset = build_dataset(Dataset, tokenizer, train_examples, max_seq_len=args.max_seq_len)
+    dataset = build_dataset(
+        Dataset,
+        tokenizer,
+        train_examples,
+        max_seq_len=args.max_seq_len,
+        decision_weight=args.decision_weight,
+    )
     model = AutoModelForCausalLM.from_pretrained(
         args.model_path,
         device_map="auto",
@@ -481,6 +506,7 @@ def main(
             "gradient_accumulation_steps": args.gradient_accumulation_steps,
             "effective_batch_size": args.per_device_train_batch_size * args.gradient_accumulation_steps,
             "loss_masking": "assistant_only",
+            "decision_weight": args.decision_weight,
             "prompt_format_counts": dict(
                 sorted(Counter(example.prompt_format for example in train_examples).items())
             ),

@@ -209,15 +209,14 @@ Trace rule:
 
 When the common output formats disagree on the query rendering, the trace must
 resolve the disagreement with the following policy. The policy has two layers:
-a small set of **deterministic operator-rendering rules** for the clean
-subtraction base with a negative value, and a **motif-specific tiebreaker** for
-every other case.
+a small set of **deterministic operator-rendering rules** for negative
+difference cases, and a **motif-specific tiebreaker** for every other case.
 
-**Layer 1 — deterministic operator rendering.** This applies only when the
-selected base is plain subtraction (`x-y` or `y-x`), the query value is
-negative, and the query operator is not the literal `-`. Take the magnitude
-(the positive part), reverse it only under `BA_DC`, and attach the operator on
-the side determined by the base:
+**Layer 1 — deterministic operator rendering.** This applies when the selected
+base is plain subtraction (`x-y` or `y-x`), or the selected base is
+`AB_CD|min(x,y)-max(x,y)`, the query value is negative, and the query operator
+is not the literal `-`. Take the magnitude (the positive part), reverse it only
+under `BA_DC`, and attach the operator on the side determined by the base:
 
 | Motif | Base | Value | Operator | Rule |
 |---|---|---|---|---|
@@ -225,6 +224,7 @@ the side determined by the base:
 | `BA_DC` | `x-y` | negative | not `-` | **reverse** magnitude, operator **prefix** |
 | `AB_CD` | `y-x` | negative | not `-` | magnitude as-is, operator **suffix** |
 | `BA_DC` | `y-x` | negative | not `-` | **reverse** magnitude, operator **suffix** |
+| `AB_CD` | `min(x,y)-max(x,y)` | negative | not `-` | magnitude as-is, operator **prefix** |
 
 So `x-y` selects prefix, `y-x` selects suffix; `BA_DC` reverses the magnitude
 first, `AB_CD` does not. Worked examples:
@@ -234,11 +234,13 @@ AB_CD|x-y  10&32 -> 10-32=-22 -> magnitude 22 -> prefix & -> &22
 BA_DC|x-y  10$32 -> 01-23=-22 -> magnitude 22, reverse 22 -> prefix $ -> $22
 AB_CD|y-x  32&10 -> 10-32=-22 -> magnitude 22 -> suffix & -> 22&
 BA_DC|y-x  32$10 -> 01-23=-22 -> magnitude 22, reverse 22 -> suffix $ -> 22$
+AB_CD|min(x,y)-max(x,y)  73@82 -> min(73,82)-max(73,82)=-9 -> magnitude 9 -> prefix @ -> @9
 ```
 
 **Layer 2 — motif tiebreaker.** Every case not covered by Layer 1 (positive
-value, non-subtraction base such as `abs`, modular, or min/max, or a literal
-`-` operator) is resolved by a fixed tiebreaker that depends only on the motif:
+value, non-subtraction base such as `abs`, modular, or min/max cases not
+covered above, or a literal `-` operator) is resolved by a fixed tiebreaker that
+depends only on the motif:
 
 | Motif | Tiebreaker |
 |---|---|
@@ -263,7 +265,8 @@ and the case drops to the Layer-2 tiebreaker instead:
 AB_CD | x-y negative, operator not -            -> operator prefix (magnitude as-is)
 AB_CD | x-y negative, literal -                 -> first common format in priority order
 AB_CD | x-y positive                            -> first common format in priority order
-AB_CD | base is not x-y (incl. y-x, abs, mod)   -> first common format in priority order
+AB_CD | min(x,y)-max(x,y) negative, operator not - -> operator prefix (magnitude as-is)
+AB_CD | base not covered above                  -> first common format in priority order
 BA_DC | x-y negative                            -> reverse magnitude, operator prefix
 BA_DC | x-y positive                            -> voting
 BA_DC | y-x negative, operator not -            -> reverse magnitude, operator suffix
@@ -365,14 +368,26 @@ The format BA_DC|x+y-1|common supports the single same operator example
 Only one same operator row supports this candidate, so do not finalize yet
 Verify motif BA_DC using an additional helper operator group
 
-Then choose the helper operator group with the least number of examples, verify
-only motif BA_DC on that helper group. Do not repeat `Try BA_DC first` inside
-the helper verification because this branch is already verifying BA_DC.
+Always choose the helper operator group with the least number of examples, then
+verify only motif BA_DC on that helper group. Do not repeat `Try BA_DC first`
+inside the helper verification because this branch is already verifying BA_DC.
+If the least-example helper group makes the trace non-gold, exclude that row
+from this motif-override batch instead of changing the helper-choice wording.
 
-If the helper group supports motif BA_DC, write:
+If the helper group supports motif BA_DC, return to the same BA_DC format that
+was already supported by the single same-operator example. Do not scan forward
+to a different BA_DC family just to reach the gold answer. If the supported
+same-operator format does not produce the gold answer, exclude the row from
+this motif-override batch for further study.
+
+Write:
 
 The motif BA_DC is supported by the helper operator group
 So BA_DC is confirmed
+
+Return to the supported same operator format BA_DC|x+y-1|common
+Common
+<common output formats from the supported same-operator candidate>
 
 Apply format BA_DC|x+y-1|common to the query
 
@@ -382,6 +397,11 @@ So BA_DC is rejected
 
 Try AB_CD
 
+Then continue with the normal AB_CD trace style from v1/v2. Do not add an
+extra approval sentence such as `The format AB_CD|... supports...` or
+`BA_DC is rejected, so finalize AB_CD`; after the AB_CD `Common` block, apply
+the format to the query.
+
 For the normal multi-row case, keep the change minimal:
 
 The format BA_DC|x+y-1|common supports all 2 same operator examples
@@ -390,6 +410,79 @@ Apply format BA_DC|x+y-1|common to the query
 
 Use the exact count in the sentence, for example 2 or 3.
 ```
+
+Operator-absence traces use a separate final-query policy.
+
+First infer the motif and surviving common output formats from all visible
+operator groups. For this operator-absence inference, use the normal
+motif-specific output-format order, but with the narrower inventory. In BA_DC
+order, the inventory is:
+
+```text
+rev
+plain
+op_prefix_if_neg
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+abs
+```
+
+Do not use the always-attach formats `op_prefix`, `op_suffix`, or
+`op_prefix_rev` in operator-absence visible-group inference.
+
+In the trace, state this narrowed inventory immediately after:
+
+```text
+For operator absence type, first infer the motif and output formats from all visible operator groups
+Candidate output formats
+rev
+plain
+op_prefix_if_neg
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+abs
+```
+
+Keep `min(x,y)-max(x,y)` as the negative difference family in
+operator-absence traces.
+
+After the motif and common formats are fixed, list the candidate families for
+the absent query operator, remove the families already used by visible operator
+groups, and search the remaining candidates by query output agreement:
+
+```text
+Search remaining candidate operator families for \
+Remaining candidate operator families
+x-y
+y-x
+
+Check remaining candidate operator families by common-output agreement
+
+Candidate x-y
+...
+Output votes
+-43 has 1 vote
+\43 has 1 vote
+43 has 1 vote
+Highest vote count
+1
+
+Candidate y-x
+...
+Output votes
+43 has 3 votes
+Highest vote count
+3
+
+Choose operator candidate with highest output agreement vote count, if tie choose the first candidate
+y-x
+```
+
+Tie-break by the candidate-list order for that query operator.
 
 Rows to revisit with this pattern:
 

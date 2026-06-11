@@ -137,6 +137,56 @@ Default trainer settings:
 
 ```
 
+## Text Cipher decision-weighted loss
+
+Token-level loss weighting for Text Cipher traces lives in
+`src/nemotron_baseline/text_cipher_loss_weights.py`. It assigns weight `2.0` to
+decision points and empirically failure-prone spans (per-character map binds,
+the assembled decode pattern, `fully`/`not fully mapped`, scan `match` verdicts,
+the candidate set, `conflicts`/`new` mapping checks, `PASS`/`FAIL`, `add`,
+`choose`, and the boxed answer) and leaves everything else at `1.0` (boilerplate,
+echoes, the 77-word vocab dump, `agrees` lines, and the routine `no` scan lines).
+
+Symbol Transform traces are weighted the same way by
+`src/nemotron_baseline/symbol_transform_loss_weights.py`: weight `2.0` lands on
+the routing/method decisions (operator-compare `same`/`different`, RHS-length
+family routing, template/format selection, `Match`/`No match`/`pass`/`fail`
+verdicts, the produced value after `gives`, the reversed/coefficient digit
+derivations, `mod 10` constraints, the `Ck`/`Tk` scan survivors, and the
+operator-absence default `None` / `use direct template matching`), and `1.0` on
+echoes, the `AB = ...`/`operator = ...` breakdowns, variable naming, and the `x`
+reject entries. `tokenize_masked_example` dispatches by `category` (Text Cipher,
+Symbol Transform, or Numeric Equation Transformation Rules); other categories
+get flat weights. Note: many Symbol
+Transform rows are operator-absence cases whose final answer intentionally does
+not match gold, so the weighting reinforces the cautious routing/method rather
+than gold-hitting.
+
+Numeric Equation traces are weighted by
+`src/nemotron_baseline/numeric_equation_loss_weights.py`: weight `2.0` lands on
+RHS-length routing, candidate-family lists, rendered output-format table rows,
+surviving common-format names, motif-confirm/reject policy, direct-template
+produced values, operator-absence candidate/vote decisions, final query output
+rows, and boxed answers. Repeated scaffold such as `Try BA_DC first`, `The
+current format is ...`, `Match`, and `Common` stays at `1.0`; when a policy line
+contains a concrete format such as `BA_DC|x-y|common`, only that format span is
+promoted.
+
+Wire it into `tokenize_masked_example` with
+`completion_label_weights(tokenizer, prompt_text, completion_text)`, store the
+result next to `labels` as `label_weights`, pad it in the collator with `0.0`,
+and apply a weighted cross-entropy.
+
+Inspect/verify the weighting on a trace before training (prints each weight-2
+token so you can confirm the high weight lands on decisions, not boilerplate):
+
+```bash
+PYTHONPATH=src python3 -m nemotron_baseline.text_cipher_loss_weights path/to/completion.txt
+```
+
+Run with no file argument to check a built-in sample, and pass `--tokenizer
+PATH` to point at a different `tokenizer.json`.
+
 ## Optional GRPO
 
 GRPO remains an optional second step for both regimes. In the active single-phase
@@ -216,6 +266,18 @@ python3 experiments/type_diagnostics/scripts/train_numeric_equation_with_curricu
 python3 experiments/type_diagnostics/scripts/train_numeric_equation_without_curriculum.py
 python3 experiments/type_diagnostics/scripts/train_text_cipher_with_curriculum.py
 python3 experiments/type_diagnostics/scripts/train_text_cipher_without_curriculum.py
+```
+
+`train_text_cipher_without_curriculum.py` (the active v2 text-cipher path), the
+Symbol Transform diagnostic, and the Numeric Equation diagnostics enable the
+decision-weighted loss by default (`--decision-weight 2.0`). The full
+`train_sft_single_phase.py` path still defaults to `1.0` (off), so opt in when
+training the full corpus. At `1.0` the loss is byte-identical to the standard
+mean loss. Disable or tune it per run:
+
+```bash
+python3 experiments/type_diagnostics/scripts/train_text_cipher_without_curriculum.py --decision-weight 1.0
+python3 train_sft_single_phase.py --decision-weight 2.0   # opt in for the full v2 corpus
 ```
 
 Before running a curriculum ablation, dry-run the exact tokenizer boundary and

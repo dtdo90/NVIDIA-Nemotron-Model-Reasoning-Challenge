@@ -779,7 +779,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -2459,7 +2459,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -4269,7 +4269,7 @@ Query
 68-08
 BA DC BA-DC rev rev_or_op_prefix_rev_if_neg
 86 80 6 6 6
-The common output formats agree on 6, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 6, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -4289,7 +4289,7 @@ Query
 68-08
 BA DC DC-BA op_prefix_rev
 86 80 -6 6
-The common output formats agree on 6, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 6, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -4310,7 +4310,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 86 80 6 -6
 All common output formats agree on -6
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-6}",,Numeric Equation Transformation Rules,Numeric Equation Transformation Rules,docs/train_ready/numeric_equation_transformation_rules/work_on/ba_dc_modular/ba_dc_len2/12d4a2df.txt,real,true,auto,true,-6,,competition_chat_template,numeric_equation,ba_dc_modular_ba_dc_len2
 1322241b,"In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
@@ -6894,7 +6893,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -10867,7 +10866,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -11029,7 +11028,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -12119,7 +12118,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -12375,95 +12374,6 @@ BA DC BA*DC+1 rev rev_or_op_prefix_rev_if_neg rev_or_op_suffix_rev_if_neg abs_re
 All common output formats agree on 9264
 
 Answer: \boxed{9264}",,Numeric Equation Transformation Rules,Numeric Equation Transformation Rules,docs/train_ready/numeric_equation_transformation_rules/work_on/ba_dc_multiplication/ba_dc_mul_pm1/2d3e809c.txt,real,true,auto,true,9264,,competition_chat_template,numeric_equation,ba_dc_multiplication_ba_dc_mul_pm1
-2dd48cac,"In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
-04*31 = 125
-53-01 = -52
-43*91 = 746
-66+11 = 77
-Now, determine the result for: 22-27",-05,"We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
-
-Query 22-27
-Query operator is -
-
-Compare example operators
-04*31 = 125 operator *
-different
-53-01 = -52 operator -
-same
-43*91 = 746 operator *
-different
-66+11 = 77 operator +
-different
-
-Same operator examples
-53-01 = -52
-
-Same operator RHS values are -52
-The RHS values have length 2, so use addition, subtraction, or modular
-Try x+y,x+y-1,x+y+1,x-y,y-x,abs(x-y),min(x,y)-max(x,y),max(x,y)%min(x,y),x%y,y%x
-
-Try BA_DC first
-
-Try BA_DC with x+y for operator -
-The current format is BA_DC|x+y
-
-Example 53-01 = -52
-BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
-35 10 45 54 45 45 54 -45 54 45- -54 54 45
-Match
-none
-
-Common
-none
-
-Try BA_DC with x+y-1 for operator -
-The current format is BA_DC|x+y-1
-
-Example 53-01 = -52
-BA DC BA+DC-1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
-35 10 44 44 44 44 44 -44 44 44- -44 44 44
-Match
-none
-
-Common
-none
-
-Try BA_DC with x+y+1 for operator -
-The current format is BA_DC|x+y+1
-
-Example 53-01 = -52
-BA DC BA+DC+1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
-35 10 46 64 46 46 64 -46 64 46- -64 64 46
-Match
-none
-
-Common
-none
-
-Try BA_DC with x-y for operator -
-The current format is BA_DC|x-y
-
-Example 53-01 = -52
-BA DC BA-DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
-35 10 25 52 25 25 52 -25 52 25- -52 52 25
-Match
-op_prefix_rev
-
-Common
-op_prefix_rev
-
-Apply format BA_DC|x-y|common to the query
-
-Query
-22-27
-BA DC BA-DC op_prefix_rev
-22 72 -50 05
-The common output format gives 05, but the query value is negative
-For BA_DC|x-y, reverse the magnitude and use operator prefix
-50 -> 05
--05
-
-Answer: \boxed{-05}",,Numeric Equation Transformation Rules,Numeric Equation Transformation Rules,docs/train_ready/numeric_equation_transformation_rules/work_on/ba_dc_low_confidence/subtraction/2dd48cac.txt,real,true,auto,true,-05,,competition_chat_template,numeric_equation,ba_dc_low_confidence_subtraction
 2e044d8e,"In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
 71@08 = 0631
 32@83 = 478
@@ -13001,7 +12911,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -15626,7 +15536,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -15680,7 +15590,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -16021,7 +15931,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -16163,7 +16073,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -16289,7 +16199,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -16363,7 +16273,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -18179,7 +18089,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -19205,7 +19115,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -19651,7 +19561,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -20140,7 +20050,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -21872,7 +21782,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -22692,7 +22602,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -24077,7 +23987,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -24284,7 +24194,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -26103,7 +26013,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -26416,7 +26326,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -26509,7 +26419,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -28026,7 +27936,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -30185,7 +30095,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -31951,7 +31861,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -32316,7 +32226,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -32993,7 +32903,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -33789,7 +33699,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -33843,7 +33753,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -33980,7 +33890,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -34508,7 +34418,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -34821,7 +34731,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -36364,7 +36274,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -36426,7 +36336,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -36668,7 +36578,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -37885,7 +37795,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -38782,7 +38692,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -39220,7 +39130,7 @@ Query
 09-19
 BA DC BA-DC op_prefix_rev
 90 91 -1 1
-The common output formats agree on 1, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 1, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -39242,7 +39152,7 @@ Query
 09-19
 BA DC DC-BA rev rev_or_op_prefix_rev_if_neg
 90 91 1 1 1
-The common output formats agree on 1, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 1, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -39263,7 +39173,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 90 91 1 -1
 All common output formats agree on -1
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-1}",,Numeric Equation Transformation Rules,Numeric Equation Transformation Rules,docs/train_ready/numeric_equation_transformation_rules/work_on/ba_dc_modular/ba_dc_len2/812c12cb.txt,real,true,auto,true,-1,,competition_chat_template,numeric_equation,ba_dc_modular_ba_dc_len2
 8158a14c,"In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
@@ -39835,7 +39744,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -40462,7 +40371,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -41224,7 +41133,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -43002,7 +42911,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -43171,7 +43080,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -43867,7 +43776,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -44286,7 +44195,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -45978,7 +45887,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -46180,7 +46089,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -46751,7 +46660,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -48631,7 +48540,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -49557,7 +49466,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -50847,7 +50756,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -50910,7 +50819,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -51619,7 +51528,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -51682,7 +51591,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -52029,7 +51938,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -52538,7 +52447,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -54633,7 +54542,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -56740,7 +56649,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -57712,7 +57621,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -59644,7 +59553,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -61771,7 +61680,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -65142,7 +65051,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -65336,7 +65245,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -66184,7 +66093,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -67888,7 +67797,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -67939,7 +67848,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -69845,7 +69754,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -70205,7 +70114,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -71074,7 +70983,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -72021,7 +71930,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -72357,7 +72266,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -369811,7 +369720,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -369895,7 +369804,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -369951,7 +369860,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -370021,7 +369930,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -370105,7 +370014,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -370161,7 +370070,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -370231,7 +370140,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -370315,7 +370224,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -370371,7 +370280,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -370441,7 +370350,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -370525,7 +370434,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -370581,7 +370490,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -370651,7 +370560,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -370735,7 +370644,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -370791,7 +370700,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -370861,7 +370770,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -370945,7 +370854,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -371001,7 +370910,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -371071,7 +370980,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -371155,7 +371064,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -371211,7 +371120,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -371281,7 +371190,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -371365,7 +371274,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -371421,7 +371330,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -371491,7 +371400,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -371575,7 +371484,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -371631,7 +371540,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -371701,7 +371610,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -371785,7 +371694,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -371841,7 +371750,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -371911,7 +371820,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -371995,7 +371904,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -372051,7 +371960,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -372121,7 +372030,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -372205,7 +372114,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -372261,7 +372170,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -372331,7 +372240,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -372415,7 +372324,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -372471,7 +372380,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -372541,7 +372450,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -372625,7 +372534,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -372681,7 +372590,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -372751,7 +372660,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -372835,7 +372744,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -372891,7 +372800,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -372961,7 +372870,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -373045,7 +372954,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -373101,7 +373010,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -373171,7 +373080,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -373255,7 +373164,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -373311,7 +373220,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -373381,7 +373290,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -373465,7 +373374,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -373521,7 +373430,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -373591,7 +373500,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -373675,7 +373584,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -373731,7 +373640,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -373801,7 +373710,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -373885,7 +373794,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -373941,7 +373850,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -374011,7 +373920,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -374095,7 +374004,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -374151,7 +374060,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -374221,7 +374130,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -374305,7 +374214,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -374361,7 +374270,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -374431,7 +374340,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -374515,7 +374424,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -374571,7 +374480,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -374641,7 +374550,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -374725,7 +374634,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -374781,7 +374690,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -374851,7 +374760,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -374935,7 +374844,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -374991,7 +374900,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -375061,7 +374970,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -375145,7 +375054,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -375201,7 +375110,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -375271,7 +375180,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -375355,7 +375264,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -375411,7 +375320,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -375481,7 +375390,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -375565,7 +375474,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -375621,7 +375530,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -375691,7 +375600,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -375775,7 +375684,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -375831,7 +375740,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -375901,7 +375810,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -375985,7 +375894,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -376041,7 +375950,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -376111,7 +376020,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -376195,7 +376104,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -376251,7 +376160,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -376321,7 +376230,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -376405,7 +376314,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -376461,7 +376370,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -376531,7 +376440,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -376615,7 +376524,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -376671,7 +376580,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -376741,7 +376650,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -376825,7 +376734,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -376881,7 +376790,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -376951,7 +376860,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -377035,7 +376944,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -377091,7 +377000,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -377161,7 +377070,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -377245,7 +377154,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -377301,7 +377210,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -377371,7 +377280,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -377455,7 +377364,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -377511,7 +377420,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -377581,7 +377490,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -377665,7 +377574,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -377721,7 +377630,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -377791,7 +377700,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -377875,7 +377784,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -377931,7 +377840,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -378001,7 +377910,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -378085,7 +377994,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -378141,7 +378050,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -378211,7 +378120,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -378295,7 +378204,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -378351,7 +378260,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -378421,7 +378330,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -378505,7 +378414,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -378561,7 +378470,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -378631,7 +378540,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -378715,7 +378624,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -378771,7 +378680,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -378841,7 +378750,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -378925,7 +378834,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -378981,7 +378890,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -379051,7 +378960,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -379135,7 +379044,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -379191,7 +379100,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -379261,7 +379170,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -379345,7 +379254,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -379401,7 +379310,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -379471,7 +379380,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -379555,7 +379464,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -379611,7 +379520,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -379681,7 +379590,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -379765,7 +379674,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -379821,7 +379730,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -379891,7 +379800,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -379975,7 +379884,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -380031,7 +379940,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -380101,7 +380010,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -380185,7 +380094,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -380241,7 +380150,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -380311,7 +380220,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -380395,7 +380304,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -380451,7 +380360,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -380521,7 +380430,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -380605,7 +380514,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -380661,7 +380570,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -380731,7 +380640,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -380815,7 +380724,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -380871,7 +380780,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -380941,7 +380850,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -381025,7 +380934,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -381081,7 +380990,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -381151,7 +381060,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -381235,7 +381144,7 @@ Match
 
 template0134 passes all examples
 
-Skip template3401 and arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template0134 to the query
 template0134 means AB followed by CD
@@ -381317,7 +381226,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -381413,7 +381322,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -381481,7 +381390,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -381563,7 +381472,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -381659,7 +381568,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -381727,7 +381636,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -381809,7 +381718,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -381905,7 +381814,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -381973,7 +381882,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -382055,7 +381964,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -382151,7 +382060,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -382219,7 +382128,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -382301,7 +382210,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -382397,7 +382306,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -382465,7 +382374,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -382547,7 +382456,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -382643,7 +382552,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -382711,7 +382620,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -382793,7 +382702,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -382889,7 +382798,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -382957,7 +382866,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -383039,7 +382948,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -383135,7 +383044,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -383203,7 +383112,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -383285,7 +383194,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -383381,7 +383290,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -383449,7 +383358,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -383531,7 +383440,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -383627,7 +383536,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -383695,7 +383604,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -383777,7 +383686,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -383873,7 +383782,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -383941,7 +383850,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -384023,7 +383932,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -384119,7 +384028,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -384187,7 +384096,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -384269,7 +384178,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -384365,7 +384274,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -384433,7 +384342,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -384515,7 +384424,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -384611,7 +384520,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -384679,7 +384588,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -384761,7 +384670,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -384857,7 +384766,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -384925,7 +384834,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -385007,7 +384916,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -385103,7 +385012,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -385171,7 +385080,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -385253,7 +385162,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -385349,7 +385258,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -385417,7 +385326,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -385499,7 +385408,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -385595,7 +385504,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -385663,7 +385572,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -385745,7 +385654,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -385841,7 +385750,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -385909,7 +385818,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -385991,7 +385900,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -386087,7 +385996,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -386155,7 +386064,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -386237,7 +386146,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -386333,7 +386242,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -386401,7 +386310,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -386483,7 +386392,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -386579,7 +386488,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -386647,7 +386556,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -386729,7 +386638,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -386825,7 +386734,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -386893,7 +386802,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -386975,7 +386884,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -387071,7 +386980,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -387139,7 +387048,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -387221,7 +387130,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -387317,7 +387226,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -387385,7 +387294,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -387467,7 +387376,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -387563,7 +387472,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -387631,7 +387540,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -387713,7 +387622,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -387809,7 +387718,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -387877,7 +387786,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -387959,7 +387868,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -388055,7 +387964,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -388123,7 +388032,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -388205,7 +388114,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -388301,7 +388210,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -388369,7 +388278,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -388451,7 +388360,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -388547,7 +388456,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -388615,7 +388524,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -388697,7 +388606,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -388793,7 +388702,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -388861,7 +388770,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -388943,7 +388852,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -389039,7 +388948,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -389107,7 +389016,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -389189,7 +389098,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -389285,7 +389194,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -389353,7 +389262,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -389435,7 +389344,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -389531,7 +389440,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -389599,7 +389508,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -389681,7 +389590,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -389777,7 +389686,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -389845,7 +389754,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -389927,7 +389836,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -390023,7 +389932,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -390091,7 +390000,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -390173,7 +390082,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -390269,7 +390178,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -390337,7 +390246,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -390419,7 +390328,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -390515,7 +390424,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -390583,7 +390492,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -390665,7 +390574,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -390761,7 +390670,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -390829,7 +390738,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -390911,7 +390820,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -391007,7 +390916,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -391075,7 +390984,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -391157,7 +391066,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -391253,7 +391162,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -391321,7 +391230,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -391403,7 +391312,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -391499,7 +391408,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -391567,7 +391476,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -391649,7 +391558,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -391745,7 +391654,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -391813,7 +391722,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -391895,7 +391804,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -391991,7 +391900,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -392059,7 +391968,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -392141,7 +392050,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -392237,7 +392146,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -392305,7 +392214,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -392387,7 +392296,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -392483,7 +392392,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -392551,7 +392460,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -392633,7 +392542,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -392729,7 +392638,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -392797,7 +392706,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -392879,7 +392788,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -392975,7 +392884,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -393043,7 +392952,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -393125,7 +393034,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -393221,7 +393130,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -393289,7 +393198,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -393371,7 +393280,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -393467,7 +393376,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -393535,7 +393444,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -393617,7 +393526,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -393713,7 +393622,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -393781,7 +393690,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -393863,7 +393772,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -393959,7 +393868,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -394027,7 +393936,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -394109,7 +394018,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -394205,7 +394114,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -394273,7 +394182,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -394355,7 +394264,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -394451,7 +394360,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -394519,7 +394428,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -394601,7 +394510,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -394697,7 +394606,7 @@ Match
 
 template3401 passes all examples
 
-Skip arithmetic search
+For direct templates, apply the passing template to get the answer
 
 Apply template3401 to the query
 template3401 means CD followed by AB
@@ -647348,7 +647257,7 @@ Query
 77-54
 BA DC BA-DC rev rev_or_op_prefix_rev_if_neg
 77 45 32 23 23
-The common output formats agree on 23, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 23, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -647368,7 +647277,7 @@ Query
 77-54
 BA DC DC-BA op_prefix_rev
 77 45 -32 23
-The common output formats agree on 23, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 23, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -647389,7 +647298,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 77 45 32 -23
 All common output formats agree on -23",-23,,"<think>
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-23}
 </think>
@@ -647470,7 +647378,7 @@ Query
 42-98
 BA DC BA-DC op_prefix_rev
 24 89 -65 56
-The common output formats agree on 56, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 56, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -647492,7 +647400,7 @@ Query
 42-98
 BA DC DC-BA rev rev_or_op_prefix_rev_if_neg
 24 89 65 56 56
-The common output formats agree on 56, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 56, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -647513,7 +647421,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 24 89 65 -56
 All common output formats agree on -56",-56,,"<think>
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-56}
 </think>
@@ -647596,7 +647503,7 @@ Query
 97-85
 BA DC BA-DC rev rev_or_op_prefix_rev_if_neg
 79 58 21 12 12
-The common output formats agree on 12, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 12, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -647616,7 +647523,7 @@ Query
 97-85
 BA DC DC-BA op_prefix_rev
 79 58 -21 12
-The common output formats agree on 12, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 12, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -647637,7 +647544,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 79 58 21 -12
 All common output formats agree on -12",-12,,"<think>
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-12}
 </think>
@@ -647718,7 +647624,7 @@ Query
 62-77
 BA DC BA-DC op_prefix_rev
 26 77 -51 15
-The common output formats agree on 15, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 15, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -647740,7 +647646,7 @@ Query
 62-77
 BA DC DC-BA rev rev_or_op_prefix_rev_if_neg
 26 77 51 15 15
-The common output formats agree on 15, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 15, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -647761,7 +647667,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 26 77 51 -15
 All common output formats agree on -15",-15,,"<think>
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-15}
 </think>
@@ -647844,7 +647749,7 @@ Query
 28-66
 BA DC BA-DC rev rev_or_op_prefix_rev_if_neg
 82 66 16 61 61
-The common output formats agree on 61, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 61, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -647864,7 +647769,7 @@ Query
 28-66
 BA DC DC-BA op_prefix_rev
 82 66 -16 61
-The common output formats agree on 61, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 61, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -647885,7 +647790,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 82 66 16 -61
 All common output formats agree on -61",-61,,"<think>
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-61}
 </think>
@@ -647966,7 +647870,7 @@ Query
 82-57
 BA DC BA-DC op_prefix_rev
 28 75 -47 74
-The common output formats agree on 74, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 74, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -647988,7 +647892,7 @@ Query
 82-57
 BA DC DC-BA rev rev_or_op_prefix_rev_if_neg
 28 75 47 74 74
-The common output formats agree on 74, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 74, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -648009,7 +647913,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 28 75 47 -74
 All common output formats agree on -74",-74,,"<think>
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-74}
 </think>
@@ -648092,7 +647995,7 @@ Query
 48-96
 BA DC BA-DC rev rev_or_op_prefix_rev_if_neg
 84 69 15 51 51
-The common output formats agree on 51, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 51, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -648112,7 +648015,7 @@ Query
 48-96
 BA DC DC-BA op_prefix_rev
 84 69 -15 51
-The common output formats agree on 51, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 51, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -648133,7 +648036,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 84 69 15 -51
 All common output formats agree on -51",-51,,"<think>
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-51}
 </think>
@@ -648214,7 +648116,7 @@ Query
 13-67
 BA DC BA-DC op_prefix_rev
 31 76 -45 54
-The common output formats agree on 54, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 54, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -648236,7 +648138,7 @@ Query
 13-67
 BA DC DC-BA rev rev_or_op_prefix_rev_if_neg
 31 76 45 54 54
-The common output formats agree on 54, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 54, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -648257,7 +648159,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 31 76 45 -54
 All common output formats agree on -54",-54,,"<think>
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-54}
 </think>
@@ -648340,7 +648241,7 @@ Query
 68-76
 BA DC BA-DC rev rev_or_op_prefix_rev_if_neg
 86 67 19 91 91
-The common output formats agree on 91, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 91, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -648360,7 +648261,7 @@ Query
 68-76
 BA DC DC-BA op_prefix_rev
 86 67 -19 91
-The common output formats agree on 91, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 91, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -648381,7 +648282,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 86 67 19 -91
 All common output formats agree on -91",-91,,"<think>
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-91}
 </think>
@@ -648462,7 +648362,7 @@ Query
 33-28
 BA DC BA-DC op_prefix_rev
 33 82 -49 94
-The common output formats agree on 94, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 94, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -648484,7 +648384,7 @@ Query
 33-28
 BA DC DC-BA rev rev_or_op_prefix_rev_if_neg
 33 82 49 94 94
-The common output formats agree on 94, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 94, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -648505,7 +648405,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 33 82 49 -94
 All common output formats agree on -94",-94,,"<think>
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-94}
 </think>
@@ -648588,7 +648487,7 @@ Query
 88-16
 BA DC BA-DC rev rev_or_op_prefix_rev_if_neg
 88 61 27 72 72
-The common output formats agree on 72, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 72, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -648608,7 +648507,7 @@ Query
 88-16
 BA DC DC-BA op_prefix_rev
 88 61 -27 72
-The common output formats agree on 72, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 72, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -648629,7 +648528,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 88 61 27 -72
 All common output formats agree on -72",-72,,"<think>
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-72}
 </think>
@@ -648710,7 +648608,7 @@ Query
 53-98
 BA DC BA-DC op_prefix_rev
 35 89 -54 45
-The common output formats agree on 45, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 45, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -648732,7 +648630,7 @@ Query
 53-98
 BA DC DC-BA rev rev_or_op_prefix_rev_if_neg
 35 89 54 45 45
-The common output formats agree on 45, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 45, but this query uses the opposite sign branch from all the examples, so continue scanning.
 ",-45,,"<think>
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -648753,7 +648651,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 35 89 54 -45
 All common output formats agree on -45
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-45}
 </think>
@@ -648836,7 +648733,7 @@ Query
 19-25
 BA DC BA-DC rev rev_or_op_prefix_rev_if_neg
 91 52 39 93 93
-The common output formats agree on 93, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 93, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -648856,7 +648753,7 @@ Query
 19-25
 BA DC DC-BA op_prefix_rev
 91 52 -39 93
-The common output formats agree on 93, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 93, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -648877,7 +648774,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 91 52 39 -93
 All common output formats agree on -93",-93,,"<think>
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-93}
 </think>
@@ -648958,7 +648854,7 @@ Query
 83-25
 BA DC BA-DC op_prefix_rev
 38 52 -14 41
-The common output formats agree on 41, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 41, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -648980,7 +648876,7 @@ Query
 83-25
 BA DC DC-BA rev rev_or_op_prefix_rev_if_neg
 38 52 14 41 41
-The common output formats agree on 41, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 41, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -649001,7 +648897,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 38 52 14 -41
 All common output formats agree on -41
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-41}
 </think>
@@ -649084,7 +648979,7 @@ Query
 39-63
 BA DC BA-DC rev rev_or_op_prefix_rev_if_neg
 93 36 57 75 75
-The common output formats agree on 75, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 75, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -649104,7 +648999,7 @@ Query
 39-63
 BA DC DC-BA op_prefix_rev
 93 36 -57 75
-The common output formats agree on 75, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 75, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -649125,7 +649020,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 93 36 57 -75
 All common output formats agree on -75",-75,,"<think>
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-75}
 </think>
@@ -649206,7 +649100,7 @@ Query
 14-86
 BA DC BA-DC op_prefix_rev
 41 68 -27 72
-The common output formats agree on 72, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 72, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -649228,7 +649122,7 @@ Query
 14-86
 BA DC DC-BA rev rev_or_op_prefix_rev_if_neg
 41 68 27 72 72
-The common output formats agree on 72, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 72, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -649249,7 +649143,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 41 68 27 -72
 All common output formats agree on -72
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-72}
 </think>
@@ -649332,7 +649225,7 @@ Query
 59-61
 BA DC BA-DC rev rev_or_op_prefix_rev_if_neg
 95 16 79 97 97
-The common output formats agree on 97, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 97, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -649352,7 +649245,7 @@ Query
 59-61
 BA DC DC-BA op_prefix_rev
 95 16 -79 97
-The common output formats agree on 97, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 97, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -649373,7 +649266,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 95 16 79 -97
 All common output formats agree on -97",-97,,"<think>
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-97}
 </think>
@@ -649454,7 +649346,7 @@ Query
 34-49
 BA DC BA-DC op_prefix_rev
 43 94 -51 15
-The common output formats agree on 15, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 15, but this query uses the opposite sign branch from all the examples, so continue scanning.
 ",-15,,"<think>
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -649476,7 +649368,7 @@ Query
 34-49
 BA DC DC-BA rev rev_or_op_prefix_rev_if_neg
 43 94 51 15 15
-The common output formats agree on 15, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 15, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -649497,7 +649389,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 43 94 51 -15
 All common output formats agree on -15
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-15}
 </think>
@@ -649580,7 +649471,7 @@ Query
 69-56
 BA DC BA-DC rev rev_or_op_prefix_rev_if_neg
 96 65 31 13 13
-The common output formats agree on 13, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 13, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -649600,7 +649491,7 @@ Query
 69-56
 BA DC DC-BA op_prefix_rev
 96 65 -31 13
-The common output formats agree on 13, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 13, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -649621,7 +649512,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 96 65 31 -13
 All common output formats agree on -13",-13,,"<think>
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-13}
 </think>
@@ -649702,7 +649592,7 @@ Query
 64-18
 BA DC BA-DC op_prefix_rev
 46 81 -35 53
-The common output formats agree on 53, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 53, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -649724,7 +649614,7 @@ Query
 64-18
 BA DC DC-BA rev rev_or_op_prefix_rev_if_neg
 46 81 35 53 53
-The common output formats agree on 53, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 53, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -649745,7 +649635,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 46 81 35 -53
 All common output formats agree on -53
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-53}
 </think>
@@ -649828,7 +649717,7 @@ Query
 89-73
 BA DC BA-DC rev rev_or_op_prefix_rev_if_neg
 98 37 61 16 16
-The common output formats agree on 16, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 16, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -649848,7 +649737,7 @@ Query
 89-73
 BA DC DC-BA op_prefix_rev
 98 37 -61 16
-The common output formats agree on 16, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 16, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -649869,7 +649758,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 98 37 61 -16
 All common output formats agree on -16",-16,,"<think>
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-16}
 </think>
@@ -649950,7 +649838,7 @@ Query
 94-37
 BA DC BA-DC op_prefix_rev
 49 73 -24 42
-The common output formats agree on 42, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 42, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -649972,7 +649860,7 @@ Query
 94-37
 BA DC DC-BA rev rev_or_op_prefix_rev_if_neg
 49 73 24 42 42
-The common output formats agree on 42, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 42, but this query uses the opposite sign branch from all the examples, so continue scanning.
 ",-42,,"<think>
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -649993,7 +649881,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 49 73 24 -42
 All common output formats agree on -42
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-42}
 </think>
@@ -650076,7 +649963,7 @@ Query
 53-81
 BA DC BA-DC rev rev_or_op_prefix_rev_if_neg
 35 18 17 71 71
-The common output formats agree on 71, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 71, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -650096,7 +649983,7 @@ Query
 53-81
 BA DC DC-BA op_prefix_rev
 35 18 -17 71
-The common output formats agree on 71, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 71, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -650117,7 +650004,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 35 18 17 -71
 All common output formats agree on -71",-71,,"<think>
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-71}
 </think>
@@ -650198,7 +650084,7 @@ Query
 35-87
 BA DC BA-DC op_prefix_rev
 53 78 -25 52
-The common output formats agree on 52, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 52, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -650220,7 +650106,7 @@ Query
 35-87
 BA DC DC-BA rev rev_or_op_prefix_rev_if_neg
 53 78 25 52 52
-The common output formats agree on 52, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 52, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -650241,7 +650127,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 53 78 25 -52
 All common output formats agree on -52
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-52}
 </think>
@@ -650324,7 +650209,7 @@ Query
 34-82
 BA DC BA-DC rev rev_or_op_prefix_rev_if_neg
 43 28 15 51 51
-The common output formats agree on 51, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 51, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -650344,7 +650229,7 @@ Query
 34-82
 BA DC DC-BA op_prefix_rev
 43 28 -15 51
-The common output formats agree on 51, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 51, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -650365,7 +650250,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 43 28 15 -51
 All common output formats agree on -51",-51,,"<think>
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-51}
 </think>
@@ -650446,7 +650330,7 @@ Query
 65-59
 BA DC BA-DC op_prefix_rev
 56 95 -39 93
-The common output formats agree on 93, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 93, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -650468,7 +650352,7 @@ Query
 65-59
 BA DC DC-BA rev rev_or_op_prefix_rev_if_neg
 56 95 39 93 93
-The common output formats agree on 93, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 93, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -650489,7 +650373,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 56 95 39 -93
 All common output formats agree on -93
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-93}
 </think>
@@ -650572,7 +650455,7 @@ Query
 94-51
 BA DC BA-DC rev rev_or_op_prefix_rev_if_neg
 49 15 34 43 43
-The common output formats agree on 43, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 43, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -650592,7 +650475,7 @@ Query
 94-51
 BA DC DC-BA op_prefix_rev
 49 15 -34 43
-The common output formats agree on 43, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 43, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -650613,7 +650496,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 49 15 34 -43
 All common output formats agree on -43",-43,,"<think>
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-43}
 </think>
@@ -650694,7 +650576,7 @@ Query
 16-98
 BA DC BA-DC op_prefix_rev
 61 89 -28 82
-The common output formats agree on 82, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 82, but this query uses the opposite sign branch from all the examples, so continue scanning.
 ",-82,,"<think>
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -650716,7 +650598,7 @@ Query
 16-98
 BA DC DC-BA rev rev_or_op_prefix_rev_if_neg
 61 89 28 82 82
-The common output formats agree on 82, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 82, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -650737,7 +650619,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 61 89 28 -82
 All common output formats agree on -82
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-82}
 </think>
@@ -650820,7 +650701,7 @@ Query
 45-22
 BA DC BA-DC rev rev_or_op_prefix_rev_if_neg
 54 22 32 23 23
-The common output formats agree on 23, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 23, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -650840,7 +650721,7 @@ Query
 45-22
 BA DC DC-BA op_prefix_rev
 54 22 -32 23
-The common output formats agree on 23, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 23, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -650861,7 +650742,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 54 22 32 -23
 All common output formats agree on -23",-23,,"<think>
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-23}
 </think>
@@ -650942,7 +650822,7 @@ Query
 66-58
 BA DC BA-DC op_prefix_rev
 66 85 -19 91
-The common output formats agree on 91, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 91, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -650964,7 +650844,7 @@ Query
 66-58
 BA DC DC-BA rev rev_or_op_prefix_rev_if_neg
 66 85 19 91 91
-The common output formats agree on 91, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 91, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -650985,7 +650865,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 66 85 19 -91
 All common output formats agree on -91
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-91}
 </think>
@@ -651068,7 +650947,7 @@ Query
 85-61
 BA DC BA-DC rev rev_or_op_prefix_rev_if_neg
 58 16 42 24 24
-The common output formats agree on 24, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 24, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -651088,7 +650967,7 @@ Query
 85-61
 BA DC DC-BA op_prefix_rev
 58 16 -42 24
-The common output formats agree on 24, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 24, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -651109,7 +650988,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 58 16 42 -24
 All common output formats agree on -24",-24,,"<think>
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-24}
 </think>
@@ -651190,7 +651068,7 @@ Query
 37-88
 BA DC BA-DC op_prefix_rev
 73 88 -15 51
-The common output formats agree on 51, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 51, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -651212,7 +651090,7 @@ Query
 37-88
 BA DC DC-BA rev rev_or_op_prefix_rev_if_neg
 73 88 15 51 51
-The common output formats agree on 51, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 51, but this query uses the opposite sign branch from all the examples, so continue scanning.
 ",-51,,"<think>
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -651233,7 +651111,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 73 88 15 -51
 All common output formats agree on -51
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-51}
 </think>
@@ -651316,7 +651193,7 @@ Query
 26-13
 BA DC BA-DC rev rev_or_op_prefix_rev_if_neg
 62 31 31 13 13
-The common output formats agree on 13, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 13, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -651336,7 +651213,7 @@ Query
 26-13
 BA DC DC-BA op_prefix_rev
 62 31 -31 13
-The common output formats agree on 13, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 13, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -651357,7 +651234,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 62 31 31 -13
 All common output formats agree on -13",-13,,"<think>
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-13}
 </think>
@@ -651438,7 +651314,7 @@ Query
 21-82
 BA DC BA-DC op_prefix_rev
 12 28 -16 61
-The common output formats agree on 61, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 61, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -651460,7 +651336,7 @@ Query
 21-82
 BA DC DC-BA rev rev_or_op_prefix_rev_if_neg
 12 28 16 61 61
-The common output formats agree on 61, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 61, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -651481,7 +651357,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 12 28 16 -61
 All common output formats agree on -61
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-61}
 </think>
@@ -651564,7 +651439,7 @@ Query
 56-82
 BA DC BA-DC rev rev_or_op_prefix_rev_if_neg
 65 28 37 73 73
-The common output formats agree on 73, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 73, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -651584,7 +651459,7 @@ Query
 56-82
 BA DC DC-BA op_prefix_rev
 65 28 -37 73
-The common output formats agree on 73, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 73, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -651605,7 +651480,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 65 28 37 -73
 All common output formats agree on -73",-73,,"<think>
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-73}
 </think>
@@ -651686,7 +651560,7 @@ Query
 31-57
 BA DC BA-DC op_prefix_rev
 13 75 -62 26
-The common output formats agree on 26, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 26, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -651708,7 +651582,7 @@ Query
 31-57
 BA DC DC-BA rev rev_or_op_prefix_rev_if_neg
 13 75 62 26 26
-The common output formats agree on 26, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 26, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -651729,7 +651603,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 13 75 62 -26
 All common output formats agree on -26
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-26}
 </think>
@@ -651812,7 +651685,7 @@ Query
 86-32
 BA DC BA-DC rev rev_or_op_prefix_rev_if_neg
 68 23 45 54 54
-The common output formats agree on 54, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 54, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -651832,7 +651705,7 @@ Query
 86-32
 BA DC DC-BA op_prefix_rev
 68 23 -45 54
-The common output formats agree on 54, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 54, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -651853,7 +651726,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 68 23 45 -54
 All common output formats agree on -54",-54,,"<think>
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-54}
 </think>
@@ -651934,7 +651806,7 @@ Query
 51-94
 BA DC BA-DC op_prefix_rev
 15 49 -34 43
-The common output formats agree on 43, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 43, but this query uses the opposite sign branch from all the examples, so continue scanning.
 ",-43,,"<think>
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -651956,7 +651828,7 @@ Query
 51-94
 BA DC DC-BA rev rev_or_op_prefix_rev_if_neg
 15 49 34 43 43
-The common output formats agree on 43, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 43, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -651977,7 +651849,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 15 49 34 -43
 All common output formats agree on -43
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-43}
 </think>
@@ -652060,7 +651931,7 @@ Query
 17-65
 BA DC BA-DC rev rev_or_op_prefix_rev_if_neg
 71 56 15 51 51
-The common output formats agree on 51, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 51, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -652080,7 +651951,7 @@ Query
 17-65
 BA DC DC-BA op_prefix_rev
 71 56 -15 51
-The common output formats agree on 51, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 51, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -652101,7 +651972,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 71 56 15 -51
 All common output formats agree on -51",-51,,"<think>
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-51}
 </think>
@@ -652182,7 +652052,7 @@ Query
 61-19
 BA DC BA-DC op_prefix_rev
 16 91 -75 57
-The common output formats agree on 57, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 57, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -652204,7 +652074,7 @@ Query
 61-19
 BA DC DC-BA rev rev_or_op_prefix_rev_if_neg
 16 91 75 57 57
-The common output formats agree on 57, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 57, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -652225,7 +652095,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 16 91 75 -57
 All common output formats agree on -57
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-57}
 </think>
@@ -652308,7 +652177,7 @@ Query
 47-13
 BA DC BA-DC rev rev_or_op_prefix_rev_if_neg
 74 31 43 34 34
-The common output formats agree on 34, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 34, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -652328,7 +652197,7 @@ Query
 47-13
 BA DC DC-BA op_prefix_rev
 74 31 -43 34
-The common output formats agree on 34, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 34, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -652349,7 +652218,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 74 31 43 -34
 All common output formats agree on -34",-34,,"<think>
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-34}
 </think>
@@ -652430,7 +652298,7 @@ Query
 81-17
 BA DC BA-DC op_prefix_rev
 18 71 -53 35
-The common output formats agree on 35, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 35, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -652452,7 +652320,7 @@ Query
 81-17
 BA DC DC-BA rev rev_or_op_prefix_rev_if_neg
 18 71 53 35 35
-The common output formats agree on 35, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 35, but this query uses the opposite sign branch from all the examples, so continue scanning.
 ",-35,,"<think>
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -652473,7 +652341,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 18 71 53 -35
 All common output formats agree on -35
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-35}
 </think>
@@ -652556,7 +652423,7 @@ Query
 67-84
 BA DC BA-DC rev rev_or_op_prefix_rev_if_neg
 76 48 28 82 82
-The common output formats agree on 82, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 82, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -652576,7 +652443,7 @@ Query
 67-84
 BA DC DC-BA op_prefix_rev
 76 48 -28 82
-The common output formats agree on 82, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 82, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -652597,7 +652464,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 76 48 28 -82
 All common output formats agree on -82",-82,,"<think>
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-82}
 </think>
@@ -652678,7 +652544,7 @@ Query
 12-25
 BA DC BA-DC op_prefix_rev
 21 52 -31 13
-The common output formats agree on 13, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 13, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -652700,7 +652566,7 @@ Query
 12-25
 BA DC DC-BA rev rev_or_op_prefix_rev_if_neg
 21 52 31 13 13
-The common output formats agree on 13, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 13, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -652721,7 +652587,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 21 52 31 -13
 All common output formats agree on -13
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-13}
 </think>
@@ -652804,7 +652669,7 @@ Query
 87-46
 BA DC BA-DC rev rev_or_op_prefix_rev_if_neg
 78 64 14 41 41
-The common output formats agree on 41, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 41, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -652824,7 +652689,7 @@ Query
 87-46
 BA DC DC-BA op_prefix_rev
 78 64 -14 41
-The common output formats agree on 41, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 41, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -652845,7 +652710,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 78 64 14 -41
 All common output formats agree on -41",-41,,"<think>
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-41}
 </think>
@@ -652926,7 +652790,7 @@ Query
 32-14
 BA DC BA-DC op_prefix_rev
 23 41 -18 81
-The common output formats agree on 81, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 81, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -652948,7 +652812,7 @@ Query
 32-14
 BA DC DC-BA rev rev_or_op_prefix_rev_if_neg
 23 41 18 81 81
-The common output formats agree on 81, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 81, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -652969,7 +652833,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 23 41 18 -81
 All common output formats agree on -81
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-81}
 </think>
@@ -653052,7 +652915,7 @@ Query
 28-71
 BA DC BA-DC rev rev_or_op_prefix_rev_if_neg
 82 17 65 56 56
-The common output formats agree on 56, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 56, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -653072,7 +652935,7 @@ Query
 28-71
 BA DC DC-BA op_prefix_rev
 82 17 -65 56
-The common output formats agree on 56, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 56, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -653093,7 +652956,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 82 17 65 -56
 All common output formats agree on -56",-56,,"<think>
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-56}
 </think>
@@ -653174,7 +653036,7 @@ Query
 42-59
 BA DC BA-DC op_prefix_rev
 24 95 -71 17
-The common output formats agree on 17, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 17, but this query uses the opposite sign branch from all the examples, so continue scanning.
 ",-17,,"<think>
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -653196,7 +653058,7 @@ Query
 42-59
 BA DC DC-BA rev rev_or_op_prefix_rev_if_neg
 24 95 71 17 17
-The common output formats agree on 17, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 17, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -653217,7 +653079,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 24 95 71 -17
 All common output formats agree on -17
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-17}
 </think>
@@ -653300,7 +653161,7 @@ Query
 48-12
 BA DC BA-DC rev rev_or_op_prefix_rev_if_neg
 84 21 63 36 36
-The common output formats agree on 36, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 36, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -653320,7 +653181,7 @@ Query
 48-12
 BA DC DC-BA op_prefix_rev
 84 21 -63 36
-The common output formats agree on 36, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 36, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -653341,7 +653202,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 84 21 63 -36
 All common output formats agree on -36",-36,,"<think>
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-36}
 </think>
@@ -653422,7 +653282,7 @@ Query
 62-38
 BA DC BA-DC op_prefix_rev
 26 83 -57 75
-The common output formats agree on 75, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 75, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -653444,7 +653304,7 @@ Query
 62-38
 BA DC DC-BA rev rev_or_op_prefix_rev_if_neg
 26 83 57 75 75
-The common output formats agree on 75, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 75, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -653465,7 +653325,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 26 83 57 -75
 All common output formats agree on -75
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-75}
 </think>
@@ -653548,7 +653407,7 @@ Query
 68-71
 BA DC BA-DC rev rev_or_op_prefix_rev_if_neg
 86 17 69 96 96
-The common output formats agree on 96, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 96, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -653568,7 +653427,7 @@ Query
 68-71
 BA DC DC-BA op_prefix_rev
 86 17 -69 96
-The common output formats agree on 96, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 96, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -653589,7 +653448,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 86 17 69 -96
 All common output formats agree on -96",-96,,"<think>
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-96}
 </think>
@@ -653670,7 +653528,7 @@ Query
 82-18
 BA DC BA-DC op_prefix_rev
 28 81 -53 35
-The common output formats agree on 35, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 35, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -653692,7 +653550,7 @@ Query
 82-18
 BA DC DC-BA rev rev_or_op_prefix_rev_if_neg
 28 81 53 35 35
-The common output formats agree on 35, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 35, but this query uses the opposite sign branch from all the examples, so continue scanning.
 ",-35,,"<think>
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -653713,7 +653571,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 28 81 53 -35
 All common output formats agree on -35
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-35}
 </think>
@@ -653796,7 +653653,7 @@ Query
 78-57
 BA DC BA-DC rev rev_or_op_prefix_rev_if_neg
 87 75 12 21 21
-The common output formats agree on 21, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 21, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -653816,7 +653673,7 @@ Query
 78-57
 BA DC DC-BA op_prefix_rev
 87 75 -12 21
-The common output formats agree on 21, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 21, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -653837,7 +653694,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 87 75 12 -21
 All common output formats agree on -21",-21,,"<think>
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-21}
 </think>
@@ -653918,7 +653774,7 @@ Query
 13-28
 BA DC BA-DC op_prefix_rev
 31 82 -51 15
-The common output formats agree on 15, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 15, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -653940,7 +653796,7 @@ Query
 13-28
 BA DC DC-BA rev rev_or_op_prefix_rev_if_neg
 31 82 51 15 15
-The common output formats agree on 15, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 15, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -653961,7 +653817,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 31 82 51 -15
 All common output formats agree on -15
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-15}
 </think>
@@ -654044,7 +653899,7 @@ Query
 98-86
 BA DC BA-DC rev rev_or_op_prefix_rev_if_neg
 89 68 21 12 12
-The common output formats agree on 12, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 12, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -654064,7 +653919,7 @@ Query
 98-86
 BA DC DC-BA op_prefix_rev
 89 68 -21 12
-The common output formats agree on 12, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 12, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -654085,7 +653940,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 89 68 21 -12
 All common output formats agree on -12",-12,,"<think>
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-12}
 </think>
@@ -654166,7 +654020,7 @@ Query
 33-78
 BA DC BA-DC op_prefix_rev
 33 87 -54 45
-The common output formats agree on 45, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 45, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -654188,7 +654042,7 @@ Query
 33-78
 BA DC DC-BA rev rev_or_op_prefix_rev_if_neg
 33 87 54 45 45
-The common output formats agree on 45, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 45, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -654209,7 +654063,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 33 87 54 -45
 All common output formats agree on -45
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-45}
 </think>
@@ -654292,7 +654145,7 @@ Query
 29-65
 BA DC BA-DC rev rev_or_op_prefix_rev_if_neg
 92 56 36 63 63
-The common output formats agree on 63, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 63, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -654312,7 +654165,7 @@ Query
 29-65
 BA DC DC-BA op_prefix_rev
 92 56 -36 63
-The common output formats agree on 63, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 63, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -654333,7 +654186,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 92 56 36 -63
 All common output formats agree on -63",-63,,"<think>
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-63}
 </think>
@@ -654414,7 +654266,7 @@ Query
 53-49
 BA DC BA-DC op_prefix_rev
 35 94 -59 95
-The common output formats agree on 95, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 95, but this query uses the opposite sign branch from all the examples, so continue scanning.
 ",-95,,"<think>
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -654436,7 +654288,7 @@ Query
 53-49
 BA DC DC-BA rev rev_or_op_prefix_rev_if_neg
 35 94 59 95 95
-The common output formats agree on 95, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 95, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -654457,7 +654309,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 35 94 59 -95
 All common output formats agree on -95
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-95}
 </think>
@@ -654540,7 +654391,7 @@ Query
 49-83
 BA DC BA-DC rev rev_or_op_prefix_rev_if_neg
 94 38 56 65 65
-The common output formats agree on 65, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 65, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -654560,7 +654411,7 @@ Query
 49-83
 BA DC DC-BA op_prefix_rev
 94 38 -56 65
-The common output formats agree on 65, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 65, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -654581,7 +654432,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 94 38 56 -65
 All common output formats agree on -65",-65,,"<think>
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-65}
 </think>
@@ -654662,7 +654512,7 @@ Query
 83-65
 BA DC BA-DC op_prefix_rev
 38 56 -18 81
-The common output formats agree on 81, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 81, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with y-x for operator -
 The current format is BA_DC|y-x
@@ -654684,7 +654534,7 @@ Query
 83-65
 BA DC DC-BA rev rev_or_op_prefix_rev_if_neg
 38 56 18 81 81
-The common output formats agree on 81, but this query uses the opposite sign branch from all the examples, so continue scanning.
+All common output formats agree on 81, but this query uses the opposite sign branch from all the examples, so continue scanning.
 
 Try BA_DC with abs(x-y) for operator -
 The current format is BA_DC|abs(x-y)
@@ -654705,7 +654555,6 @@ Query
 BA DC abs(BA-DC) op_prefix_rev
 38 56 18 -81
 All common output formats agree on -81
-The output format gives the same negative sign as the same-operator example
 
 Answer: \boxed{-81}
 </think>

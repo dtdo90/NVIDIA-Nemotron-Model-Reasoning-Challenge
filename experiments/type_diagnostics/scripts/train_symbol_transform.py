@@ -10,4 +10,4 @@ from lib.train import main
 
 
 if __name__ == "__main__":
-    main("symbol_transform")
+    main("symbol_transform", default_decision_weight=2.0)

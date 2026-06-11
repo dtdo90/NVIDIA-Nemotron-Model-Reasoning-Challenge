@@ -119,12 +119,23 @@ def parse_args() -> argparse.Namespace:
         "--train-splits",
         nargs="+",
         default=["sft_train"],
-        help="Split names to use for SFT. Defaults to the 80% sft_train bucket.",
+        help="Split names to use for SFT. Defaults to the 80%% sft_train bucket.",
     )
     parser.add_argument(
         "--train-all",
         action="store_true",
         help="Ignore --split-csv and train on every row in --train-csv.",
+    )
+    parser.add_argument(
+        "--decision-weight",
+        type=float,
+        default=1.0,
+        help=(
+            "Per-token loss weight for decision/failure spans in supported "
+            "categories (Text Cipher, Symbol Transform, Numeric Equation). "
+            "1.0 disables weighting and reproduces standard mean loss; 2.0 doubles "
+            "those tokens' gradient."
+        ),
     )
     parser.add_argument("--validate-only", action="store_true")
     parser.add_argument(
@@ -491,6 +502,48 @@ def make_balanced_trainer_cls(trainer_cls):
             self._min_learning_rate = min_learning_rate
             super().__init__(*args, **kwargs)
 
+        def compute_loss(self, model, inputs, return_outputs=False, **kwargs):
+            # Standard path when no per-token weights are present (decision
+            # weighting disabled) -> identical to the base Trainer loss.
+            if "label_weights" not in inputs:
+                return super().compute_loss(
+                    model, inputs, return_outputs=return_outputs, **kwargs
+                )
+            import torch  # type: ignore
+            import torch.nn.functional as F  # type: ignore
+
+            label_weights = inputs.pop("label_weights")
+            labels = inputs["labels"]
+            model_inputs = {key: value for key, value in inputs.items() if key != "labels"}
+            outputs = model(**model_inputs)
+            logits = outputs.logits
+            shift_logits = logits[:, :-1, :]
+            shift_labels = labels[:, 1:]
+            shift_weights = label_weights[:, 1:]
+            vocab = shift_logits.size(-1)
+            per_token = F.cross_entropy(
+                shift_logits.reshape(-1, vocab).float(),
+                shift_labels.reshape(-1),
+                ignore_index=-100,
+                reduction="none",
+            )
+            weights = shift_weights.reshape(-1).to(per_token.dtype)
+            keep = shift_labels.reshape(-1) != -100
+            numerator = (per_token * weights)[keep].sum()
+            # Normalize like the base Trainer loss so gradient-accumulation scaling
+            # stays correct: by the window token count when transformers supplies
+            # it (loss-kwargs path, no extra /grad_accum), else microbatch mean.
+            num_items_in_batch = kwargs.get("num_items_in_batch")
+            if num_items_in_batch is not None:
+                denom = num_items_in_batch
+                if not torch.is_tensor(denom):
+                    denom = torch.tensor(float(denom), device=numerator.device)
+                denom = denom.to(numerator.dtype)
+            else:
+                denom = keep.sum().to(numerator.dtype)
+            loss = numerator / denom.clamp_min(1.0)
+            return (loss, outputs) if return_outputs else loss
+
         def _get_train_sampler(self, *args, **kwargs):
             if self._balanced_accumulation_groups:
                 if len(self._balanced_accumulation_groups) != len(self.train_dataset):
@@ -613,6 +666,7 @@ def tokenize_masked_example(
     example: Example,
     *,
     max_seq_len: int,
+    decision_weight: float = 1.0,
 ) -> dict:
     end_token = assistant_end_token(tokenizer)
 
@@ -660,7 +714,7 @@ def tokenize_masked_example(
     if len(prompt_ids) >= len(input_ids):
         raise SystemExit(f"id={example.id} has no assistant tokens to score")
     labels = [-100] * len(prompt_ids) + input_ids[len(prompt_ids) :]
-    return {
+    record = {
         "id": example.id,
         "input_ids": input_ids,
         "attention_mask": attention_mask,
@@ -669,12 +723,50 @@ def tokenize_masked_example(
         "completion_tokens": len(input_ids) - len(prompt_ids),
         "total_tokens": len(input_ids),
     }
+    if decision_weight > 1.0:
+        # Keep a uniform dataset schema: every row carries label_weights when
+        # weighting is enabled. Categories without a dedicated weighter (and
+        # offset edge cases) use flat completion weights, which reduce the
+        # weighted loss back to the standard mean for those rows.
+        flat = [0.0] * len(prompt_ids) + [1.0] * (len(input_ids) - len(prompt_ids))
+        weighter = None
+        if example.category == "Text Cipher":
+            from nemotron_baseline.text_cipher_loss_weights import (
+                completion_label_weights as weighter,
+            )
+        elif example.category == "Symbol Transform":
+            from nemotron_baseline.symbol_transform_loss_weights import (
+                completion_label_weights as weighter,
+            )
+        elif example.category == "Numeric Equation Transformation Rules":
+            from nemotron_baseline.numeric_equation_loss_weights import (
+                completion_label_weights as weighter,
+            )
+        if weighter is not None:
+            weights = weighter(
+                tokenizer, prompt_text, completion_text, high=decision_weight, base=1.0
+            )
+            record["label_weights"] = weights if len(weights) == len(input_ids) else flat
+        else:
+            record["label_weights"] = flat
+    return record
 
 
-def build_dataset(dataset_cls, tokenizer, examples: list[Example], *, max_seq_len: int):
+def build_dataset(
+    dataset_cls,
+    tokenizer,
+    examples: list[Example],
+    *,
+    max_seq_len: int,
+    decision_weight: float = 1.0,
+):
     rows = []
     for example in examples:
-        rows.append(tokenize_masked_example(tokenizer, example, max_seq_len=max_seq_len))
+        rows.append(
+            tokenize_masked_example(
+                tokenizer, example, max_seq_len=max_seq_len, decision_weight=decision_weight
+            )
+        )
     return dataset_cls.from_list(rows)
 
 
@@ -744,11 +836,24 @@ class MaskedCausalLMDataCollator:
             input_ids.append(feature["input_ids"] + [pad_token_id] * pad_length)
             attention_mask.append(feature["attention_mask"] + [0] * pad_length)
             labels.append(feature["labels"] + [-100] * pad_length)
-        return {
+        batch = {
             "input_ids": torch.tensor(input_ids, dtype=torch.long),
             "attention_mask": torch.tensor(attention_mask, dtype=torch.long),
             "labels": torch.tensor(labels, dtype=torch.long),
         }
+        # Per-token loss weights: only present when decision weighting is enabled.
+        # Rows without explicit weights default to 1.0 on completion tokens, 0.0 on
+        # masked prompt tokens, so the weighted loss matches the standard mean loss.
+        if any("label_weights" in feature for feature in features):
+            label_weights = []
+            for feature in features:
+                pad_length = max_length - len(feature["input_ids"])
+                weights = feature.get("label_weights")
+                if weights is None:
+                    weights = [0.0 if label == -100 else 1.0 for label in feature["labels"]]
+                label_weights.append(weights + [0.0] * pad_length)
+            batch["label_weights"] = torch.tensor(label_weights, dtype=torch.float)
+        return batch
 
 
 def make_sft_config(sft_config_cls, **kwargs):
@@ -960,7 +1065,13 @@ def main() -> None:
         tokenizer.pad_token = tokenizer.eos_token
     tokenizer.padding_side = "right"
 
-    dataset = build_dataset(Dataset, tokenizer, train_examples, max_seq_len=args.max_seq_len)
+    dataset = build_dataset(
+        Dataset,
+        tokenizer,
+        train_examples,
+        max_seq_len=args.max_seq_len,
+        decision_weight=args.decision_weight,
+    )
     model = AutoModelForCausalLM.from_pretrained(
         args.model_path,
         device_map="auto",

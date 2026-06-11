@@ -10,4 +10,4 @@ from lib.train import main
 
 
 if __name__ == "__main__":
-    main("numeric_equation")
+    main("numeric_equation", default_decision_weight=2.0)

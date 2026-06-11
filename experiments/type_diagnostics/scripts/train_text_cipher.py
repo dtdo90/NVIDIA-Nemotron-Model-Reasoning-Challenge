@@ -10,4 +10,4 @@ from lib.train import main
 
 
 if __name__ == "__main__":
-    main("text_cipher")
+    main("text_cipher", default_decision_weight=2.0)
