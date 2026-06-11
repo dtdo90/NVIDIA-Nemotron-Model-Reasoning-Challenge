@@ -20,10 +20,12 @@ if str(SRC) not in sys.path:
 
 SOURCE_CSV_V1 = ROOT / "data/single_phase_training_clean/single_phase_sft_v1.csv"
 SOURCE_CSV_V2 = ROOT / "data/single_phase_training_clean/single_phase_sft_v2.csv"
-SOURCE_CSV = SOURCE_CSV_V2
+SOURCE_CSV_V3 = ROOT / "data/single_phase_training_clean/single_phase_sft_v3.csv"
+SOURCE_CSV = SOURCE_CSV_V3
 DATA_DIR_V1 = WORKSPACE / "data_v1"
 DATA_DIR_V2 = WORKSPACE / "data"
-DATA_DIR = DATA_DIR_V2
+DATA_DIR_V3 = WORKSPACE / "data"
+DATA_DIR = DATA_DIR_V3
 OUTPUT_DIR = WORKSPACE / "outputs"
 REPORT_DIR = WORKSPACE / "reports"
 SPLIT_NAMES = ("sft_train", "eval_holdout", "grpo_holdout")

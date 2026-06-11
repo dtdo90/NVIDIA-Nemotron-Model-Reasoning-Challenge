@@ -12,21 +12,20 @@ Core files:
 
 1. `data/train.csv`: original competition train set
 2. `data/test.csv`: original competition test set
-3. `data/single_phase_training_clean/single_phase_sft_v2.csv`: active SFT corpus
+3. `data/single_phase_training_clean/single_phase_sft_v3.csv`: active SFT corpus
 4. `data/single_phase_training_clean/single_phase_splits_80_10_10.csv`: canonical SFT/GRPO/eval split
 5. `data/single_phase_training_clean/manifest.json`: source counts and split metadata
 6. `experiments/type_diagnostics/data/global_splits_80_10_10.csv`: same split assignment, generated from the per-type diagnostics
 
-`single_phase_sft_v1.csv` is retained as the previous raw-curriculum snapshot.
-In `single_phase_sft_v2.csv`, decision-point curriculum rows use the Nemotron
-chat template to open `<think>` and mask the partial trace on the prompt side.
+`single_phase_sft_v1.csv` and `single_phase_sft_v2.csv` are retained as legacy
+snapshots. The active training and type-diagnostic defaults use v3.
 
 Current validated single-phase counts:
 
-1. Full SFT corpus: `18427` rows
-2. SFT training bucket, named `sft_train`: `16581` rows
-3. Optional GRPO train bucket, named `eval_holdout`: `997` rows
-4. Final local eval bucket, named `grpo_holdout`: `849` rows
+1. Full SFT corpus: `18565` rows
+2. SFT training bucket, named `sft_train`: `16929` rows
+3. Optional GRPO train bucket, named `eval_holdout`: `818` rows
+4. Final local eval bucket, named `grpo_holdout`: `818` rows
 
 The single-phase corpus contains real traces plus selected synthetic curriculum
 rows. Synthetic curriculum rows are also train-only. The two holdout buckets are drawn
@@ -211,7 +210,7 @@ Evaluate the eval_holdout bucket (10% data):
 
 ```bash
 python3 infer_eval.py \
-  --train-csv data/single_phase_training_clean/single_phase_sft_v2.csv \
+  --train-csv data/single_phase_training_clean/single_phase_sft_v3.csv \
   --adapter-dir outputs/sft_single_phase/adapter \
   --split-csv data/single_phase_training_clean/single_phase_splits_80_10_10.csv \
   --eval-splits eval_holdout
@@ -221,7 +220,7 @@ Evaluate both held-out buckets (20% data):
 
 ```bash
 python3 infer_eval.py \
-  --train-csv data/single_phase_training_clean/single_phase_sft_v2.csv \
+  --train-csv data/single_phase_training_clean/single_phase_sft_v3.csv \
   --adapter-dir outputs/sft_single_phase/adapter \
   --split-csv data/single_phase_training_clean/single_phase_splits_80_10_10.csv \
   --eval-splits grpo_holdout eval_holdout
@@ -259,33 +258,27 @@ python3 experiments/type_diagnostics/scripts/train_numeric_equation.py \
   --balanced-accumulation
 ```
 
-Numeric equation and text-cipher curriculum ablations:
+The plain type-diagnostic wrappers use the active v3 single-phase corpus. The
+old curriculum ablation wrappers are retained only for legacy/manual comparison
+and are no longer the default training path.
 
-```bash
-python3 experiments/type_diagnostics/scripts/train_numeric_equation_with_curriculum.py
-python3 experiments/type_diagnostics/scripts/train_numeric_equation_without_curriculum.py
-python3 experiments/type_diagnostics/scripts/train_text_cipher_with_curriculum.py
-python3 experiments/type_diagnostics/scripts/train_text_cipher_without_curriculum.py
-```
-
-`train_text_cipher_without_curriculum.py` (the active v2 text-cipher path), the
-Symbol Transform diagnostic, and the Numeric Equation diagnostics enable the
+Text Cipher, Symbol Transform, and Numeric Equation diagnostics enable the
 decision-weighted loss by default (`--decision-weight 2.0`). The full
 `train_sft_single_phase.py` path still defaults to `1.0` (off), so opt in when
 training the full corpus. At `1.0` the loss is byte-identical to the standard
 mean loss. Disable or tune it per run:
 
 ```bash
-python3 experiments/type_diagnostics/scripts/train_text_cipher_without_curriculum.py --decision-weight 1.0
-python3 train_sft_single_phase.py --decision-weight 2.0   # opt in for the full v2 corpus
+python3 experiments/type_diagnostics/scripts/train_text_cipher.py --decision-weight 1.0
+python3 train_sft_single_phase.py --decision-weight 2.0   # opt in for the full v3 corpus
 ```
 
-Before running a curriculum ablation, dry-run the exact tokenizer boundary and
+Before training a type diagnostic, dry-run the exact tokenizer boundary and
 token cap check:
 
 ```bash
-python3 experiments/type_diagnostics/scripts/train_numeric_equation_with_curriculum.py --validate-tokenization
-python3 experiments/type_diagnostics/scripts/train_text_cipher_with_curriculum.py --validate-tokenization
+python3 experiments/type_diagnostics/scripts/train_numeric_equation.py --validate-tokenization
+python3 experiments/type_diagnostics/scripts/train_text_cipher.py --validate-tokenization
 ```
 
 Evaluate one question type on its held-out `eval_holdout` split:

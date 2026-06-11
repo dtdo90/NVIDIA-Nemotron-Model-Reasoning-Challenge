@@ -168,8 +168,8 @@ def update_single_phase_manifest(
 
 def main(default_question_type: str | None = None) -> None:
     args = parse_args()
-    source_csv = Path(args.source_csv)
-    data_dir = Path(args.data_dir)
+    source_csv = Path(args.source_csv).resolve()
+    data_dir = Path(args.data_dir).resolve()
     if default_question_type:
         question_types = [default_question_type]
     elif args.question_type:
