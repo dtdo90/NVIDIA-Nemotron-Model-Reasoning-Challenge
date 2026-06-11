@@ -13,7 +13,7 @@ python3 experiments/type_diagnostics/prepare_type_datasets.py
 
 Each type is written under `experiments/type_diagnostics/data/{type}/`:
 
-- `{type}.csv`: rows copied from `data/single_phase_training_clean/single_phase_sft_v3.csv`
+- `{type}.csv`: rows copied from `data/single_phase_training_clean/single_phase_sft_v4.csv`
 - `splits_80_10_10.csv`: `sft_train`, `eval_holdout`, and `grpo_holdout`
 - `dataset_summary.json`: subtype/source/split counts
 
@@ -41,7 +41,7 @@ python3 experiments/type_diagnostics/scripts/train_numeric_equation.py
 python3 experiments/type_diagnostics/scripts/train_symbol_transform.py
 ```
 
-The plain wrappers use the active v3 single-phase corpus. Legacy curriculum
+The plain wrappers use the active v4 single-phase corpus. Legacy curriculum
 ablation wrappers are still present for manual comparison, but they are not the
 default training path.
 

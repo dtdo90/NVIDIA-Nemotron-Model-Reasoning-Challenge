@@ -16,5 +16,5 @@ if __name__ == "__main__":
         default_data_dir=DATA_DIR_V1,
         default_source_csv=SOURCE_CSV_V1,
         default_output_suffix="with_curriculum",
-        default_decision_weight=2.0,
+        default_decision_weight=1.0,
     )

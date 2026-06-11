@@ -20,5 +20,5 @@ if __name__ == "__main__":
             "text_cipher_decision_point_curriculum",
         ],
         default_output_suffix="without_any_curriculum",
-        default_decision_weight=2.0,
+        default_decision_weight=1.0,
     )

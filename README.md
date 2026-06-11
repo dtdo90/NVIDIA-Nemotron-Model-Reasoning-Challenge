@@ -12,20 +12,21 @@ Core files:
 
 1. `data/train.csv`: original competition train set
 2. `data/test.csv`: original competition test set
-3. `data/single_phase_training_clean/single_phase_sft_v3.csv`: active SFT corpus
+3. `data/single_phase_training_clean/single_phase_sft_v4.csv`: active SFT corpus
 4. `data/single_phase_training_clean/single_phase_splits_80_10_10.csv`: canonical SFT/GRPO/eval split
 5. `data/single_phase_training_clean/manifest.json`: source counts and split metadata
 6. `experiments/type_diagnostics/data/global_splits_80_10_10.csv`: same split assignment, generated from the per-type diagnostics
 
-`single_phase_sft_v1.csv` and `single_phase_sft_v2.csv` are retained as legacy
-snapshots. The active training and type-diagnostic defaults use v3.
+`single_phase_sft_v1.csv`, `single_phase_sft_v2.csv`, and `single_phase_sft_v3.csv`
+are retained as legacy snapshots. The active training and type-diagnostic defaults
+use v4.
 
 Current validated single-phase counts:
 
-1. Full SFT corpus: `18565` rows
-2. SFT training bucket, named `sft_train`: `16929` rows
-3. Optional GRPO train bucket, named `eval_holdout`: `818` rows
-4. Final local eval bucket, named `grpo_holdout`: `818` rows
+1. Full SFT corpus: `19154` rows
+2. SFT training bucket, named `sft_train`: `17520` rows
+3. Optional GRPO train bucket, named `eval_holdout`: `817` rows
+4. Final local eval bucket, named `grpo_holdout`: `817` rows
 
 The single-phase corpus contains real traces plus selected synthetic curriculum
 rows. Synthetic curriculum rows are also train-only. The two holdout buckets are drawn
@@ -128,7 +129,7 @@ Default trainer settings:
 2. sequence length `8192`
 3. bf16 + TF32
 4. cosine LR schedule with warmup ratio `0.05`
-5. minimum learning rate floor `2e-6`
+5. minimum learning rate floor `1e-6`
 6. optimizer `adamw_torch`
 7. LoRA dropout `0.0`
 8. assistant-only loss masking
@@ -136,15 +137,10 @@ Default trainer settings:
 
 ```
 
-## Text Cipher decision-weighted loss
+## Decision-Weighted Loss
 
-Token-level loss weighting for Text Cipher traces lives in
-`src/nemotron_baseline/text_cipher_loss_weights.py`. It assigns weight `2.0` to
-decision points and empirically failure-prone spans (per-character map binds,
-the assembled decode pattern, `fully`/`not fully mapped`, scan `match` verdicts,
-the candidate set, `conflicts`/`new` mapping checks, `PASS`/`FAIL`, `add`,
-`choose`, and the boxed answer) and leaves everything else at `1.0` (boilerplate,
-echoes, the 77-word vocab dump, `agrees` lines, and the routine `no` scan lines).
+Text Cipher uses uniform token weight `1.0`. Its failure modes are handled in the
+data itself through source-letter anchors and re-read recovery traces.
 
 Symbol Transform traces are weighted the same way by
 `src/nemotron_baseline/symbol_transform_loss_weights.py`: weight `2.0` lands on
@@ -154,9 +150,9 @@ verdicts, the produced value after `gives`, the reversed/coefficient digit
 derivations, `mod 10` constraints, the `Ck`/`Tk` scan survivors, and the
 operator-absence default `None` / `use direct template matching`), and `1.0` on
 echoes, the `AB = ...`/`operator = ...` breakdowns, variable naming, and the `x`
-reject entries. `tokenize_masked_example` dispatches by `category` (Text Cipher,
-Symbol Transform, or Numeric Equation Transformation Rules); other categories
-get flat weights. Note: many Symbol
+reject entries. `tokenize_masked_example` dispatches dedicated weighters for
+Symbol Transform and Numeric Equation Transformation Rules; other categories,
+including Text Cipher, get flat weights. Note: many Symbol
 Transform rows are operator-absence cases whose final answer intentionally does
 not match gold, so the weighting reinforces the cautious routing/method rather
 than gold-hitting.
@@ -221,7 +217,7 @@ Evaluate the eval_holdout bucket (10% data):
 
 ```bash
 python3 infer_eval.py \
-  --train-csv data/single_phase_training_clean/single_phase_sft_v3.csv \
+  --train-csv data/single_phase_training_clean/single_phase_sft_v4.csv \
   --adapter-dir outputs/sft_single_phase/adapter \
   --split-csv data/single_phase_training_clean/single_phase_splits_80_10_10.csv \
   --eval-splits eval_holdout
@@ -231,7 +227,7 @@ Evaluate both held-out buckets (20% data):
 
 ```bash
 python3 infer_eval.py \
-  --train-csv data/single_phase_training_clean/single_phase_sft_v3.csv \
+  --train-csv data/single_phase_training_clean/single_phase_sft_v4.csv \
   --adapter-dir outputs/sft_single_phase/adapter \
   --split-csv data/single_phase_training_clean/single_phase_splits_80_10_10.csv \
   --eval-splits grpo_holdout eval_holdout
@@ -269,14 +265,14 @@ python3 experiments/type_diagnostics/scripts/train_numeric_equation.py \
   --balanced-accumulation
 ```
 
-The plain type-diagnostic wrappers use the active v3 single-phase corpus. The
+The plain type-diagnostic wrappers use the active v4 single-phase corpus. The
 old curriculum ablation wrappers are retained only for legacy/manual comparison
 and are no longer the default training path.
 
-Text Cipher, Symbol Transform, and Numeric Equation diagnostics enable the
-decision-weighted loss by default (`--decision-weight 2.0`). The full
-`train_sft_single_phase.py` path still defaults to `1.0` (off), so opt in when
-training the full corpus. At `1.0` the loss is byte-identical to the standard
+Symbol Transform and Numeric Equation diagnostics enable the decision-weighted
+loss by default (`--decision-weight 2.0`). Text Cipher diagnostics use uniform
+weight `1.0`. The full `train_sft_single_phase.py` path still defaults to `1.0`
+(off), so opt in when training the full corpus. At `1.0` the loss is byte-identical to the standard
 mean loss. Disable or tune it per run:
 
 ```bash

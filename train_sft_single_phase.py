@@ -24,7 +24,7 @@ SRC = ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-SINGLE_PHASE_CSV = ROOT / "data/single_phase_training_clean/single_phase_sft_v3.csv"
+SINGLE_PHASE_CSV = ROOT / "data/single_phase_training_clean/single_phase_sft_v4.csv"
 SINGLE_PHASE_SPLIT_CSV = ROOT / "data/single_phase_training_clean/single_phase_splits_80_10_10.csv"
 HF_MODEL_PATH = "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16"
 KAGGLE_MODEL_PATH = Path("/kaggle/input/models/metric/nemotron-3-nano-30b-a3b-bf16/transformers/default/1")
@@ -733,11 +733,11 @@ def tokenize_masked_example(
         # weighted loss back to the standard mean for those rows.
         flat = [0.0] * len(prompt_ids) + [1.0] * (len(input_ids) - len(prompt_ids))
         weighter = None
-        if example.category == "Text Cipher":
-            from nemotron_baseline.text_cipher_loss_weights import (
-                completion_label_weights as weighter,
-            )
-        elif example.category == "Symbol Transform":
+        # Text Cipher intentionally uses UNIFORM weight 1.0 (flat): its failures are
+        # character copy-fidelity slips, not decision errors, and are addressed by the
+        # data (letters anchors + re-read recovery), not loss weighting. Other
+        # categories keep their dedicated weighters.
+        if example.category == "Symbol Transform":
             from nemotron_baseline.symbol_transform_loss_weights import (
                 completion_label_weights as weighter,
             )
