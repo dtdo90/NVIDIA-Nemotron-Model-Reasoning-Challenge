@@ -11,10 +11,11 @@ import math
 import os
 import random
 import shutil
+import statistics
 import sys
 import tempfile
 import zipfile
-from collections import Counter
+from collections import Counter, defaultdict
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -65,6 +66,7 @@ class Example:
     generated_cot: str = ""
     assistant_content: str = ""
     source_mode: str = "unknown"
+    diagnostic_subtype: str = ""
     append_answer_instruction: bool = True
     prompt_format: str = "competition_chat_template"
 
@@ -323,6 +325,7 @@ def load_examples(path: Path) -> list[Example]:
                     generated_cot=((row.get("generated_cot") or "").strip() if has_cot else ""),
                     assistant_content=(row.get("assistant_content", "").strip() if has_assistant else ""),
                     source_mode=(row.get("source_mode") or "unknown").strip() or "unknown",
+                    diagnostic_subtype=(row.get("diagnostic_subtype") or "").strip(),
                     append_answer_instruction=parse_bool(
                         row.get("append_answer_instruction"),
                         default=True,
@@ -770,12 +773,24 @@ def build_dataset(
     return dataset_cls.from_list(rows)
 
 
-def validate_tokenization_examples(tokenizer, examples: list[Example], *, max_seq_len: int) -> None:
+def validate_tokenization_examples(
+    tokenizer,
+    examples: list[Example],
+    *,
+    max_seq_len: int,
+    decision_weight: float = 1.0,
+) -> None:
     rows: list[dict[str, object]] = []
     failures: list[dict[str, str]] = []
+    weight_rows: list[dict[str, object]] = []
     for example in examples:
         try:
-            tokenized = tokenize_masked_example(tokenizer, example, max_seq_len=max_seq_len)
+            tokenized = tokenize_masked_example(
+                tokenizer,
+                example,
+                max_seq_len=max_seq_len,
+                decision_weight=decision_weight,
+            )
         except SystemExit as exc:
             failures.append(
                 {
@@ -798,6 +813,31 @@ def validate_tokenization_examples(tokenizer, examples: list[Example], *, max_se
                 "total_tokens": tokenized["total_tokens"],
             }
         )
+        weights = tokenized.get("label_weights")
+        if weights is not None:
+            labels = tokenized["labels"]
+            label_positions = [index for index, label in enumerate(labels) if label != -100]
+            label_token_count = len(label_positions)
+            weighted_token_count = sum(1 for index in label_positions if weights[index] > 1.0)
+            critical_token_count = sum(
+                1 for index in label_positions if weights[index] > decision_weight
+            )
+            weight_sum = sum(float(weights[index]) for index in label_positions)
+            weight_rows.append(
+                {
+                    "id": example.id,
+                    "category": example.category,
+                    "source_mode": example.source_mode,
+                    "diagnostic_subtype": example.diagnostic_subtype,
+                    "label_tokens": label_token_count,
+                    "weighted_tokens": weighted_token_count,
+                    "critical_tokens": critical_token_count,
+                    "weight_sum": weight_sum,
+                    "weighted_fraction": (
+                        weighted_token_count / label_token_count if label_token_count else 0.0
+                    ),
+                }
+            )
 
     top_longest = sorted(rows, key=lambda row: int(row["total_tokens"]), reverse=True)[:20]
     summary = {
@@ -812,7 +852,133 @@ def validate_tokenization_examples(tokenizer, examples: list[Example], *, max_se
         "top_longest": top_longest,
         "failure_samples": failures[:20],
     }
+    if weight_rows:
+        numeric_equation_median_guardrail: dict[str, object] | None = None
+
+        def summarize_weight_rows(items: list[dict[str, object]]) -> dict[str, object]:
+            label_tokens = sum(int(item["label_tokens"]) for item in items)
+            weighted_tokens = sum(int(item["weighted_tokens"]) for item in items)
+            critical_tokens = sum(int(item["critical_tokens"]) for item in items)
+            weight_sum = sum(float(item["weight_sum"]) for item in items)
+            row_fractions = [float(item["weighted_fraction"]) for item in items]
+            return {
+                "rows": len(items),
+                "label_tokens": label_tokens,
+                "weighted_tokens": weighted_tokens,
+                "critical_tokens": critical_tokens,
+                "weighted_token_fraction": (
+                    round(weighted_tokens / label_tokens, 4) if label_tokens else 0.0
+                ),
+                "critical_token_fraction": (
+                    round(critical_tokens / label_tokens, 4) if label_tokens else 0.0
+                ),
+                "mean_label_weight": (
+                    round(weight_sum / label_tokens, 4) if label_tokens else 0.0
+                ),
+                "median_row_weighted_fraction": (
+                    round(statistics.median(row_fractions), 4) if row_fractions else 0.0
+                ),
+                "rows_over_18pct": sum(1 for value in row_fractions if value > 0.18),
+            }
+
+        by_category: dict[str, list[dict[str, object]]] = defaultdict(list)
+        by_ne_source: dict[str, list[dict[str, object]]] = defaultdict(list)
+        by_ne_subtype: dict[str, list[dict[str, object]]] = defaultdict(list)
+        by_ne_report_group: dict[str, list[dict[str, object]]] = defaultdict(list)
+
+        def numeric_equation_report_group(item: dict[str, object]) -> str:
+            row_id = str(item["id"])
+            subtype = str(item.get("diagnostic_subtype") or "")
+            source_mode = str(item.get("source_mode") or "unknown")
+            if subtype.startswith("direct_template_"):
+                return subtype
+            if source_mode == "real":
+                return "real"
+            if row_id.startswith("syn_opabs_"):
+                return "operator_absence_synthetic"
+            if row_id.startswith("syn_ne_appmotif_"):
+                return "applicable_motif_synthetic"
+            if row_id.startswith("syn_ne_direct_template_extra_0134_"):
+                return "direct_template_template0134"
+            if row_id.startswith("syn_ne_direct_template_extra_3401_"):
+                return "direct_template_template3401"
+            if row_id.startswith("syn_ne_normal_"):
+                return "normal_policy_synthetic"
+            if row_id.startswith("syn_ne_policy_"):
+                return "policy_topup_synthetic"
+            if row_id.startswith("syn_ne_v3_"):
+                return "v3_numeric_synthetic"
+            if row_id.startswith("syn_ne_"):
+                return "legacy_numeric_synthetic"
+            return source_mode
+
+        for item in weight_rows:
+            category = str(item["category"])
+            by_category[category].append(item)
+            if category == "Numeric Equation Transformation Rules":
+                by_ne_source[str(item["source_mode"])].append(item)
+                by_ne_report_group[numeric_equation_report_group(item)].append(item)
+                subtype = str(item.get("diagnostic_subtype") or "")
+                if subtype:
+                    by_ne_subtype[subtype].append(item)
+
+        ne_category_stats = None
+        if "Numeric Equation Transformation Rules" in by_category:
+            ne_category_stats = summarize_weight_rows(
+                by_category["Numeric Equation Transformation Rules"]
+            )
+            ne_median_threshold = 0.22
+            ne_median = float(ne_category_stats["median_row_weighted_fraction"])
+            numeric_equation_median_guardrail = {
+                "median_row_weighted_fraction_threshold": ne_median_threshold,
+                "median_row_weighted_fraction": ne_median,
+                "passed": ne_median <= ne_median_threshold,
+            }
+
+        ne_subtype_rows = [
+            (subtype, summarize_weight_rows(items))
+            for subtype, items in by_ne_subtype.items()
+            if len(items) >= 5
+        ]
+        ne_subtype_rows.sort(
+            key=lambda pair: (
+                float(pair[1]["median_row_weighted_fraction"]),
+                int(pair[1]["rows"]),
+            ),
+            reverse=True,
+        )
+        summary["decision_weight_summary"] = {
+            "decision_weight": decision_weight,
+            "critical_weight_threshold": f"> {decision_weight}",
+            "overall": summarize_weight_rows(weight_rows),
+            "by_category": {
+                category: summarize_weight_rows(items)
+                for category, items in sorted(by_category.items())
+            },
+            "numeric_equation_median_guardrail": numeric_equation_median_guardrail,
+            "numeric_equation_by_source_mode": {
+                source_mode: summarize_weight_rows(items)
+                for source_mode, items in sorted(by_ne_source.items())
+            },
+            "numeric_equation_by_report_group": {
+                group: summarize_weight_rows(items)
+                for group, items in sorted(by_ne_report_group.items())
+            },
+            "numeric_equation_top_subtypes_by_median_weighted_fraction": [
+                {"diagnostic_subtype": subtype, **stats}
+                for subtype, stats in ne_subtype_rows[:20]
+            ],
+        }
     print(json.dumps(summary, indent=2, ensure_ascii=False))
+    guardrail = summary.get("decision_weight_summary", {}).get(
+        "numeric_equation_median_guardrail"
+    )
+    if guardrail and not guardrail["passed"]:
+        raise SystemExit(
+            "Numeric Equation decision weighting exceeded median-row guardrail: "
+            f"{guardrail['median_row_weighted_fraction']} > "
+            f"{guardrail['median_row_weighted_fraction_threshold']}"
+        )
     if failures:
         raise SystemExit(f"Tokenization validation failed for {len(failures)} rows")
 
@@ -1031,7 +1197,12 @@ def main() -> None:
         if tokenizer.pad_token is None:
             tokenizer.pad_token = tokenizer.eos_token
         tokenizer.padding_side = "right"
-        validate_tokenization_examples(tokenizer, train_examples, max_seq_len=args.max_seq_len)
+        validate_tokenization_examples(
+            tokenizer,
+            train_examples,
+            max_seq_len=args.max_seq_len,
+            decision_weight=args.decision_weight,
+        )
         return
 
     disable_transformers_vision_imports()

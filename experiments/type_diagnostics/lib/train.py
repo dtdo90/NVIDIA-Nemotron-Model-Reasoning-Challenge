@@ -336,7 +336,12 @@ def main(
         if tokenizer.pad_token is None:
             tokenizer.pad_token = tokenizer.eos_token
         tokenizer.padding_side = "right"
-        validate_tokenization_examples(tokenizer, train_examples, max_seq_len=args.max_seq_len)
+        validate_tokenization_examples(
+            tokenizer,
+            train_examples,
+            max_seq_len=args.max_seq_len,
+            decision_weight=args.decision_weight,
+        )
         return
 
     disable_transformers_vision_imports()

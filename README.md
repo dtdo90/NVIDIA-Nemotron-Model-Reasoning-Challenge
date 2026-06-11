@@ -163,13 +163,24 @@ than gold-hitting.
 
 Numeric Equation traces are weighted by
 `src/nemotron_baseline/numeric_equation_loss_weights.py`: weight `2.0` lands on
-RHS-length routing, candidate-family lists, rendered output-format table rows,
-surviving common-format names, motif-confirm/reject policy, direct-template
-produced values, operator-absence candidate/vote decisions, final query output
-rows, and boxed answers. Repeated scaffold such as `Try BA_DC first`, `The
-current format is ...`, `Match`, and `Common` stays at `1.0`; when a policy line
-contains a concrete format such as `BA_DC|x-y|common`, only that format span is
-promoted.
+concrete decision payloads such as supported/selected formats, surviving common
+formats, RHS-length routing payloads, motif-confirm/reject decisions, helper
+choices, direct-template produced values, operator-absence candidate/vote
+choices, and other rare turning points. Answer-critical spans such as query
+output rows, vote winners, and rare policy lines use the critical tier (`3.0`
+when `--decision-weight 2.0`). Deterministic scaffold such as family-list lines,
+failing-candidate rows, repeated table rows, `Try BA_DC first`, `The current
+format is ...`, `Match`, and `Common` stays at `1.0`; when a policy line
+contains a concrete format such as `BA_DC|x-y|common` or RHS-routing payload
+such as `mix length 1 and 2, so use subtraction or modular`, only that payload
+span is promoted.
+
+`--validate-tokenization` also reports decision-weight calibration, including
+weighted-token fraction, critical-token fraction, rows over 18%, and Numeric
+Equation breakdowns by source/report group. For Numeric Equation rows, validation
+fails if the median row weighted-token fraction exceeds 22%. The NE target is
+roughly 15-20% higher-weight tokens: enough to cover arithmetic decision rows
+and rare policy pivots, but still far below whole-table emphasis.
 
 Wire it into `tokenize_masked_example` with
 `completion_label_weights(tokenizer, prompt_text, completion_text)`, store the
