@@ -11,24 +11,28 @@ Symbol Transform traces use two solve paths that share a routing skeleton:
 
 Weight-2 spans:
   operator-compare verdicts        `same` / `different`
-  family routing                   `The RHS values have length ...`, `RHS length N means ...`,
-                                   `Try template0134,...` / `Try x*y,...`
-  template/format selection        `Try template0134`, `Try BA_DC|rev with x*y ...`,
-                                   `The current format is ...`, `Apply template... to the query`,
+  direct-template routing payload  query value/operator and compared operator symbols
+  direct-template computation      the right-hand side of `AB = ...` / `CD = ...`,
+                                   the operator symbol, and the concrete
+                                   `followed by ... gives ... vs ...` line
+  operator absence                 `None` and the fallback `template0134` token only
+  encrypted-digit routing          `Try BA_DC...` / `Try AB_CD...` / `Try x*y...`,
+                                   `The current format is ...`, `Apply format...`,
                                    `Use helper row ...`, `The helper operator ... so try ...`
-  template/query computation       the produced value after `gives` (before ` vs`)
+  arithmetic/query computation     the produced value after `gives` (before ` vs`)
   match verdicts                   `Match` / `No match` / `... passes all examples` / `... fails`
   digit derivations                `<sym> -> <reversed/coeff form>`, lines with `mod 10`,
                                    formula lines like `i=(19h+b)/9`
   scan survivors                   `C<k>` / `T<k>` candidate labels (not the `x` rejects)
   candidate reasoning              `First helper candidates ...`, `Only C4 can pass ...`,
                                    `For C4, b=8,h=1,i=3. ...`, `FAIL` / `PASS`
-  final map + answer               `<sym> = <letter> = <digit>`, `\\boxed{...}`
+  final map + answer               `<sym> = <letter> = <digit>`, the boxed
+                                   value on the in-think `Answer:` line
 
 Everything else (preamble, `Query ...`, `Compare example operators`, echoed
-example lines, `AB = ...`/`operator = ...`/`CD = ...` breakdowns, `Assign global
-variables`, `? = a` naming, section headers, and the `x` reject entries / numeric
-scan values) stays weight 1.0.
+example lines, template routing boilerplate such as `The RHS values have length`
+and `Try template0134`, `Assign global variables`, `? = a` naming, section
+headers, and the `x` reject entries / numeric scan values) stays weight 1.0.
 """
 from __future__ import annotations
 
@@ -38,11 +42,8 @@ from .text_cipher_loss_weights import token_weights_from_offsets, HIGH, BASE
 
 _WHOLE_LINE_RES = [
     re.compile(r"^(same|different|Match|No match|FAIL|PASS)$"),
-    re.compile(r"passes all examples$"),
-    re.compile(r"^The RHS values have length"),
-    re.compile(r"^RHS length \d"),
-    re.compile(r"^Try (template|BA_DC|AB_CD|x\*y|x\+y|x-y|y-x)"),
-    re.compile(r"^Apply (template|format)"),
+    re.compile(r"^Try (BA_DC|AB_CD|x\*y|x\+y|x-y|y-x)"),
+    re.compile(r"^Apply format"),
     re.compile(r"^The current format is"),
     re.compile(r"^Use helper row"),
     re.compile(r"^The helper operator .* so try"),
@@ -53,15 +54,23 @@ _WHOLE_LINE_RES = [
     re.compile(r"^[a-z]\w*\s*=\s*\(.*\)\s*/\s*\d+$"),  # formula lines i=(19h+b)/9
     # operator-absence routing (cautious default; intentionally may not hit gold)
     re.compile(r"^None$"),
-    re.compile(r"no same query operator example"),
-    re.compile(r"use direct template matching"),
 ]
 _SHORT_FAIL_RE = re.compile(r"\bfails?\b")
 _GIVES_RE = re.compile(r" gives (.+?)(?: vs .+)?$")
+_QUERY_RE = re.compile(r"^Query (.+)$")
+_QUERY_OPERATOR_RE = re.compile(r"^Query operator is (.+)$")
+_COMPARE_OPERATOR_RE = re.compile(r"^.+ = .+ operator (\S+)$")
+_DIRECT_TEMPLATE_ASSIGN_RE = re.compile(r"^(AB|CD) = (.+)$")
+_OPERATOR_ASSIGN_RE = re.compile(r"^operator = (.+)$")
+_FOLLOWED_GIVES_RE = re.compile(r" followed by .+ gives .+")
+_OP_ABSENCE_TEMPLATE_RE = re.compile(
+    r"^For symbol equation transformation rules with no same query operator example, "
+    r"use direct template matching with (template0134)$"
+)
 _ARROW_RE = re.compile(r"^\s*\S+ -> (.+?)\s*$")
 _MAP_RE = re.compile(r"^\s*\S+ = [a-z] = (\d+)\s*$")
 _CAND_RE = re.compile(r"(?<![A-Za-z0-9])[CT]\d+(?![A-Za-z0-9])")
-_BOXED = "\\boxed{"
+_ANSWER_BOXED_RE = re.compile(r"^Answer:\s*(\\boxed\{.*)$")
 
 
 def build_char_weights(text: str, *, high: float = HIGH, base: float = BASE) -> list[float]:
@@ -93,15 +102,56 @@ def build_char_weights(text: str, *, high: float = HIGH, base: float = BASE) -> 
             mark(body_start, body_end)
             continue
 
-        # boxed answer
-        if _BOXED in line:
-            mark(start + line.find(_BOXED), body_end)
+        # Box only the in-think answer line. The bare boxed echo appended after
+        # </think> stays base-weight.
+        answer_box = _ANSWER_BOXED_RE.match(stripped)
+        if answer_box:
+            mark(body_start + answer_box.start(1), body_start + answer_box.end(1))
+            continue
+        if "\\boxed{" in line:
             continue
 
         # final map line: weight the digit only
         m = _MAP_RE.match(line)
         if m:
             mark(start + m.start(1), start + m.end(1))
+            continue
+
+        # Direct-template routing payload: query value/operator and the
+        # operator symbols being compared. Keep the surrounding prose flat.
+        qo = _QUERY_OPERATOR_RE.match(stripped)
+        if qo:
+            mark(body_start + qo.start(1), body_start + qo.end(1))
+            continue
+        q = _QUERY_RE.match(stripped)
+        if q:
+            mark(body_start + q.start(1), body_start + q.end(1))
+            continue
+        co = _COMPARE_OPERATOR_RE.search(stripped)
+        if co:
+            mark(body_start + co.start(1), body_start + co.end(1))
+            continue
+
+        # Direct-template parse payload. Weight only the AB/CD values, and only
+        # the operator symbol on the operator line.
+        dt = _DIRECT_TEMPLATE_ASSIGN_RE.match(stripped)
+        if dt:
+            mark(body_start + dt.start(2), body_start + dt.end(2))
+            continue
+        op = _OPERATOR_ASSIGN_RE.match(stripped)
+        if op:
+            mark(body_start + op.start(1), body_start + op.end(1))
+            continue
+
+        # Direct-template computation line. This is the actual rule application,
+        # unlike the generic `Try template...` scaffolding above it.
+        if _FOLLOWED_GIVES_RE.search(stripped):
+            mark(body_start, body_end)
+            continue
+
+        op_abs = _OP_ABSENCE_TEMPLATE_RE.match(stripped)
+        if op_abs:
+            mark(body_start + op_abs.start(1), body_start + op_abs.end(1))
             continue
 
         # "... gives <produced>[ vs <target>]" -> weight the produced value

@@ -1,56 +1,56 @@
 {
   "question_type": "symbol_transform",
   "category": "Symbol Transform",
-  "source_csv": "/Users/taido/Desktop/Tai/NVIDIA Nemotron Model Reasoning/data/single_phase_training_clean/single_phase_sft_v3.csv",
+  "source_csv": "/Users/taido/Desktop/Tai/NVIDIA Nemotron Model Reasoning/data/single_phase_training_clean/single_phase_sft_v4.csv",
   "train_csv": "/Users/taido/Desktop/Tai/NVIDIA Nemotron Model Reasoning/experiments/type_diagnostics/data/symbol_transform/symbol_transform.csv",
   "split_csv": "/Users/taido/Desktop/Tai/NVIDIA Nemotron Model Reasoning/experiments/type_diagnostics/data/symbol_transform/splits_80_10_10.csv",
   "seed": 42,
-  "total": 775,
+  "total": 1364,
   "by_subtype": {
+    "data_train_csv": 600,
     "direct_template_template0134": 400,
     "direct_template_template3401": 200,
-    "operator_absence_template0134": 164,
-    "untrained_eval_only": 11
+    "operator_absence_template0134": 164
   },
   "by_source_mode": {
     "op_ab_guess_0134_correct": 13,
     "op_ab_guess_0134_wrong": 151,
     "phase1_synthetic_direct_template": 216,
-    "real": 70,
-    "single_phase_synthetic_direct_template": 325
+    "real": 59,
+    "single_phase_synthetic_direct_template": 325,
+    "symbol_transform_unreliable_pattern_guess": 600
   },
   "by_eval_eligible": {
     "false": 541,
-    "true": 234
+    "true": 823
   },
   "by_split_policy": {
-    "auto": 223,
-    "eval_only": 11,
+    "auto": 823,
     "train_only": 541
   },
   "split_counts": {
-    "eval_holdout": 23,
-    "grpo_holdout": 23,
-    "sft_train": 729
+    "eval_holdout": 82,
+    "grpo_holdout": 82,
+    "sft_train": 1200
   },
   "by_split_subtype": {
     "eval_holdout": {
+      "data_train_csv": 60,
       "direct_template_template0134": 5,
       "direct_template_template3401": 1,
-      "operator_absence_template0134": 16,
-      "untrained_eval_only": 1
+      "operator_absence_template0134": 16
     },
     "grpo_holdout": {
+      "data_train_csv": 60,
       "direct_template_template0134": 5,
       "direct_template_template3401": 1,
-      "operator_absence_template0134": 16,
-      "untrained_eval_only": 1
+      "operator_absence_template0134": 16
     },
     "sft_train": {
+      "data_train_csv": 480,
       "direct_template_template0134": 390,
       "direct_template_template3401": 198,
-      "operator_absence_template0134": 132,
-      "untrained_eval_only": 9
+      "operator_absence_template0134": 132
     }
   }
 }
