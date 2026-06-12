@@ -24,7 +24,7 @@ SRC = ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-SINGLE_PHASE_CSV = ROOT / "data/single_phase_training_clean/single_phase_sft_v4.csv"
+SINGLE_PHASE_CSV = ROOT / "data/single_phase_training_clean/single_phase_sft_v5.csv"
 SINGLE_PHASE_SPLIT_CSV = ROOT / "data/single_phase_training_clean/single_phase_splits_80_10_10.csv"
 HF_MODEL_PATH = "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16"
 KAGGLE_MODEL_PATH = Path("/kaggle/input/models/metric/nemotron-3-nano-30b-a3b-bf16/transformers/default/1")
