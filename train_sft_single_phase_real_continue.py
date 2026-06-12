@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Continue an existing single-phase LoRA adapter on real v5 rows for one epoch.
+"""Continue an existing single-phase LoRA adapter on train-origin v5 rows.
 
 This is intended as a low-LR polish pass after the main mixed-data run:
 load the saved adapter, train for exactly one epoch at a flat learning rate,
-and keep only real-source rows. By default it uses the normal sft_train split
-to avoid validation/eval leakage; pass --train-all-real intentionally to use
-every real-source row in the v5 CSV.
+and keep only rows derived from the original train.csv. By default it uses the
+normal sft_train split to avoid validation/eval leakage; pass --train-all-real
+intentionally to use every train-origin row in the v5 CSV.
 """
 from __future__ import annotations
 
@@ -48,14 +48,21 @@ from train_sft_single_phase import (
     SINGLE_PHASE_SPLIT_CSV,
 )
 
-REAL_SOURCE_MODES = {"real", "huikang_real_bit", "huikang_real_bit_extra_trace"}
+TRAIN_ORIGIN_SOURCE_MODES = {
+    "real",
+    "huikang_real_bit",
+    "huikang_real_bit_extra_trace",
+    "symbol_transform_unreliable_pattern_guess",
+    "op_ab_guess_0134_wrong",
+    "op_ab_guess_0134_correct",
+}
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description=(
             "Load a saved single-phase LoRA adapter and continue training for "
-            "exactly one flat-LR epoch on real-source v5 rows."
+            "exactly one flat-LR epoch on train-origin v5 rows."
         )
     )
     parser.add_argument("--model-path", default=default_model_path())
@@ -78,7 +85,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--train-all-real",
         action="store_true",
-        help="Ignore --split-csv and train on every real-source row in --train-csv.",
+        help="Ignore --split-csv and train on every train-origin row in --train-csv.",
     )
     parser.add_argument(
         "--decision-weight",
@@ -122,12 +129,14 @@ def real_train_examples(
         selected = select_examples_by_split(all_examples, assignments, train_splits)
         selection_label = "+".join(train_splits)
 
-    selected = [example for example in selected if example.source_mode in REAL_SOURCE_MODES]
+    selected = [
+        example for example in selected if example.source_mode in TRAIN_ORIGIN_SOURCE_MODES
+    ]
     if not selected:
-        raise SystemExit(f"No real-source rows matched {selection_label}")
+        raise SystemExit(f"No train-origin rows matched {selection_label}")
     selected = filter_trainable_trace_examples(
         selected,
-        selection_label=f"{selection_label} real-source rows",
+        selection_label=f"{selection_label} train-origin rows",
     )
     return selected, all_examples, assignments
 
@@ -145,7 +154,7 @@ def print_summary(
     summary = {
         "mode": "single_phase_real_continue",
         "continued_from_adapter": str(Path(args.adapter_dir).resolve()),
-        "real_source_modes": sorted(REAL_SOURCE_MODES),
+        "train_origin_source_modes": sorted(TRAIN_ORIGIN_SOURCE_MODES),
         "output_dir": str(output_dir.resolve()),
         "mirror_output_dir": None
         if mirror_output_dir is None
@@ -354,7 +363,7 @@ def main() -> None:
             "mode": "single_phase_real_continue",
             "model_path": args.model_path,
             "continued_from_adapter": str(Path(args.adapter_dir).resolve()),
-            "real_source_modes": sorted(REAL_SOURCE_MODES),
+            "train_origin_source_modes": sorted(TRAIN_ORIGIN_SOURCE_MODES),
             "adapter_dir": str(adapter_dir.resolve()),
             "expected_adapter_dir": str(expected_adapter_dir.resolve()),
             "mirror_output_dir": None
