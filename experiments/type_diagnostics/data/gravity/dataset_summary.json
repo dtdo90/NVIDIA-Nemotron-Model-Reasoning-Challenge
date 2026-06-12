@@ -1,7 +1,7 @@
 {
   "question_type": "gravity",
   "category": "Gravity",
-  "source_csv": "/Users/taido/Desktop/Tai/NVIDIA Nemotron Model Reasoning/data/single_phase_training_clean/single_phase_sft_v3.csv",
+  "source_csv": "/Users/taido/Desktop/Tai/NVIDIA Nemotron Model Reasoning/data/single_phase_training_clean/single_phase_sft_v5.csv",
   "train_csv": "/Users/taido/Desktop/Tai/NVIDIA Nemotron Model Reasoning/experiments/type_diagnostics/data/gravity/gravity.csv",
   "split_csv": "/Users/taido/Desktop/Tai/NVIDIA Nemotron Model Reasoning/experiments/type_diagnostics/data/gravity/splits_80_10_10.csv",
   "seed": 42,

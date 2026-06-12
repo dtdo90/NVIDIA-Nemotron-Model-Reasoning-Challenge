@@ -1,7 +1,7 @@
 {
   "question_type": "symbol_transform",
   "category": "Symbol Transform",
-  "source_csv": "/Users/taido/Desktop/Tai/NVIDIA Nemotron Model Reasoning/data/single_phase_training_clean/single_phase_sft_v4.csv",
+  "source_csv": "/Users/taido/Desktop/Tai/NVIDIA Nemotron Model Reasoning/data/single_phase_training_clean/single_phase_sft_v5.csv",
   "train_csv": "/Users/taido/Desktop/Tai/NVIDIA Nemotron Model Reasoning/experiments/type_diagnostics/data/symbol_transform/symbol_transform.csv",
   "split_csv": "/Users/taido/Desktop/Tai/NVIDIA Nemotron Model Reasoning/experiments/type_diagnostics/data/symbol_transform/splits_80_10_10.csv",
   "seed": 42,

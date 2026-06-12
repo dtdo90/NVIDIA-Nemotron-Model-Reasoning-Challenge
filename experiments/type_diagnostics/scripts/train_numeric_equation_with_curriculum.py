@@ -6,7 +6,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from lib.common import DATA_DIR_V1, SOURCE_CSV_V1
+from lib.common import DATA_DIR_V1, SOURCE_CSV_V5
 from lib.train import main
 
 
@@ -14,7 +14,7 @@ if __name__ == "__main__":
     main(
         "numeric_equation",
         default_data_dir=DATA_DIR_V1,
-        default_source_csv=SOURCE_CSV_V1,
+        default_source_csv=SOURCE_CSV_V5,
         default_output_suffix="with_curriculum",
         default_decision_weight=2.0,
     )

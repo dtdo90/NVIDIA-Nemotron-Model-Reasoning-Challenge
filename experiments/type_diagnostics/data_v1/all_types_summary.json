@@ -1,5 +1,5 @@
 {
-  "source_csv": "data/single_phase_training_clean/single_phase_sft_v1.csv",
+  "source_csv": "/Users/taido/Desktop/Tai/NVIDIA Nemotron Model Reasoning/data/single_phase_training_clean/single_phase_sft_v5.csv",
   "seed": 42,
   "prepared_types": [
     "bit_manipulation",
@@ -10,11 +10,11 @@
     "numeric_equation",
     "symbol_transform"
   ],
-  "global_split_csv": "experiments/type_diagnostics/data_v1/global_splits_80_10_10.csv",
+  "global_split_csv": "/Users/taido/Desktop/Tai/NVIDIA Nemotron Model Reasoning/experiments/type_diagnostics/data_v1/global_splits_80_10_10.csv",
   "global_split_counts": {
-    "eval_holdout": 901,
-    "grpo_holdout": 896,
-    "sft_train": 17008
+    "eval_holdout": 877,
+    "grpo_holdout": 877,
+    "sft_train": 17650
   },
   "synced_root_split_csv": null,
   "synced_root_split_counts": null,
@@ -47,11 +47,11 @@
       "subtype_count": 1
     },
     "text_cipher": {
-      "total": 2376,
+      "total": 2626,
       "split_counts": {
         "eval_holdout": 158,
         "grpo_holdout": 158,
-        "sft_train": 2060
+        "sft_train": 2310
       },
       "subtype_count": 6
     },
@@ -65,20 +65,18 @@
       "subtype_count": 1
     },
     "numeric_equation": {
-      "total": 4661,
+      "total": 4530,
       "split_counts": {
-        "eval_holdout": 72,
-        "grpo_holdout": 67,
-        "sft_train": 4522
+        "sft_train": 4530
       },
-      "subtype_count": 57
+      "subtype_count": 4132
     },
     "symbol_transform": {
-      "total": 884,
+      "total": 1364,
       "split_counts": {
-        "eval_holdout": 34,
-        "grpo_holdout": 34,
-        "sft_train": 816
+        "eval_holdout": 82,
+        "grpo_holdout": 82,
+        "sft_train": 1200
       },
       "subtype_count": 4
     }

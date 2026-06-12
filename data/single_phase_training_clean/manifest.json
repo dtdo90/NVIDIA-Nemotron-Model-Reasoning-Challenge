@@ -1,6 +1,6 @@
 {
-  "output_csv": "data/single_phase_training_clean/single_phase_sft_v3.csv",
-  "total_rows": 18565,
+  "output_csv": "data/single_phase_training_clean/single_phase_sft_v5.csv",
+  "total_rows": 19404,
   "phase2_rows": 11356,
   "phase2_rows_after_replacing_bit": 9992,
   "removed_phase2_bit_rows": 1364,
@@ -55,19 +55,25 @@
     "op_ab_guess_0134_correct": 13,
     "op_ab_guess_0134_wrong": 151,
     "phase1_synthetic_direct_template": 216,
-    "real": 7064,
+    "real": 7053,
     "single_phase_synthetic_direct_template": 325,
     "single_phase_synthetic_text_cipher_confusion": 200,
+    "symbol_transform_unreliable_pattern_guess": 600,
     "synthetic": 3879,
-    "text_cipher_decision_point_curriculum": 600
+    "text_cipher_decision_point_curriculum": 200,
+    "text_cipher_enhance_long": 100,
+    "text_cipher_enhance_twin": 100,
+    "text_cipher_no_candidate_recovery": 50,
+    "text_cipher_reread_fail_to_pass": 200,
+    "text_cipher_reread_pass_to_fail": 200
   },
   "category_counts": {
     "Bit Manipulation": 6117,
     "Gravity": 1597,
     "Numeral System": 1576,
     "Numeric Equation Transformation Rules": 4530,
-    "Symbol Transform": 775,
-    "Text Cipher": 2376,
+    "Symbol Transform": 1364,
+    "Text Cipher": 2626,
     "Unit Conversion": 1594
   },
   "prompt_rewrite": {
@@ -79,9 +85,9 @@
   "removed_huikang_duplicate_bit_alternate_trace_note": "Rows with source_mode=synthetic in Bit Manipulation are -p0 alternate traces for real HuiKang bit problems with identical prompts/answers, so they are excluded to avoid duplicate bias and split leakage.",
   "single_phase_split_csv": "data/single_phase_training_clean/single_phase_splits_80_10_10.csv",
   "single_phase_split_counts": {
-    "eval_holdout": 818,
-    "grpo_holdout": 818,
-    "sft_train": 16929
+    "eval_holdout": 877,
+    "grpo_holdout": 877,
+    "sft_train": 17650
   },
   "single_phase_split_strategy": "80/10/10 stratified per question type by diagnostic_subtype and source_mode; rows marked split_policy=train_only or eval_eligible=false stay in sft_train; eval_holdout is the optional GRPO training bucket and grpo_holdout is final local eval",
   "prompt_format_counts": {

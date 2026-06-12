@@ -6,7 +6,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from lib.common import DATA_DIR_V2, SOURCE_CSV_V2
+from lib.common import DATA_DIR_V2, SOURCE_CSV_V5
 from lib.train import main
 
 
@@ -14,7 +14,7 @@ if __name__ == "__main__":
     main(
         "text_cipher",
         default_data_dir=DATA_DIR_V2,
-        default_source_csv=SOURCE_CSV_V2,
+        default_source_csv=SOURCE_CSV_V5,
         default_output_suffix="without_curriculum",
         default_decision_weight=1.0,
     )
