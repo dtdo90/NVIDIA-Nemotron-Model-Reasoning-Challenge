@@ -1,28 +1,27 @@
 """Token-level loss weighting for Text Cipher SFT traces.
 
-Decision points and empirically failure-prone spans get weight 2.0; every other
-token (boilerplate, echoes, the 77-word vocab dump, the routine `no` scan lines,
-and `agrees` confirmations) stays at weight 1.0. No down-weighting.
+The v5 Text Cipher traces already encode most of the repair behavior in data
+itself, so weighting should be narrow: emphasize the tokens that decide the
+branch or protect against the observed failure modes, and leave routine copies,
+the vocabulary dump, and ordinary `no` scan lines flat.
 
-The weight is placed on the *predicted* right-hand-side / verdict tokens of each
-line, not on echoed left-hand sides, so the gradient lands on the actual
-decision rather than on copies of the cipher word.
+Weight-2 spans:
+  - process-example word alignments (`cipher -> plain`) and their `letters ...`
+    source-letter anchors
+  - all rows in `Summary character mappings`
+  - `letters ...` anchors after target/candidate/re-read source lines
+  - per-character decode outputs in target words
+  - assembled target pattern
+  - `match` scan verdicts and candidate-list lines
+  - candidate verification outputs that can flip a verdict: `new`, `conflicts`,
+    `already exists`, `already used`, `PASS`, `FAIL`, `PASS confirm`,
+    `FAIL confirm, continue scanning`, and `add ...`
+  - the chosen word and decoded phrase. `Answer: \\boxed{...}` is an echo for
+    Text Cipher and stays weight 1.0, including the appended boxed echo after
+    `</think>`.
 
-Weight-2 line patterns (see audit):
-  P1  `<c> -> <p> new`                  bind a mapping (alignment failures)
-  P2  `<c> -> <p>` under Summary ...     authoritative map
-  P5  `<c> -> <p>` / `<c> -> ? unknown`  per-char decode (slot drops)
-      `<word> -> <partial>` (before fully/not fully mapped)   the pattern
-      `fully mapped` / `not fully mapped`                     branch
-  P6  `<word> -> <partial> match`        survives pattern filter
-      line after `Scan candidates for ...`                    candidate set
-  P7  `<c> -> <p> conflicts` / `<c> -> <p> new` / `... already exists/used`
-      `PASS` / `FAIL`                                          verdict
-      `add <c> -> <p>`                                         commit mapping
-  P8  `choose <word>` / line after `Decoded phrase` / `\\boxed{...}`
-
-Everything else (including `<c> -> <p> agrees` and `<word> -> <partial> no`)
-stays weight 1.0.
+Routine process-example mappings, `agrees` confirmations, vocab `no` lines, and
+fixed prose scaffolding stay at weight 1.0.
 """
 from __future__ import annotations
 
@@ -31,11 +30,19 @@ import re
 HIGH = 2.0
 BASE = 1.0
 
-_VERDICT_LINES = {"fully mapped", "not fully mapped", "PASS", "FAIL"}
-_PROMOTE_NEXT_PREFIXES = ("Scan candidates for ",)
-_PROMOTE_NEXT_EXACT = {"Decoded phrase"}
+_VERDICT_LINES = {"PASS", "FAIL", "PASS confirm", "FAIL confirm, continue scanning"}
 _ARROW_RE = re.compile(r"^(\s*)(\S+) -> (.+?)\s*$")
 _SCAN_VERDICT_RE = re.compile(r"^(.+) (no|match)$")
+_CANDIDATE_COUNT_RE = re.compile(r"^(no|one|two|three|four|five|six|seven|eight|nine|ten|\d+) candidates?$")
+_MULTI_CANDIDATE_COUNT_RE = re.compile(
+    r"^(two|three|four|five|six|seven|eight|nine|ten|\d+) candidates$"
+)
+_CHECK_OPENERS = (
+    "for no candidate,",
+    "for one candidate,",
+    "for multiple candidates,",
+    "for more than one candidate,",
+)
 
 
 def build_char_weights(text: str, *, high: float = HIGH, base: float = BASE) -> list[float]:
@@ -58,8 +65,52 @@ def build_char_weights(text: str, *, high: float = HIGH, base: float = BASE) -> 
 
     n = len(lines)
     promote_next = False
+    in_process_examples = False
+    in_summary_mappings = False
+    in_target_decode = False
+    in_candidate_check = False
+    reread_skip_target = False
+    reread_mark_word = False
     for i, (start, line) in enumerate(lines):
         stripped = line.strip()
+
+        if stripped == "Process examples":
+            in_process_examples = True
+            in_target_decode = False
+            in_candidate_check = False
+            continue
+        if stripped == "Summary character mappings":
+            in_process_examples = False
+            in_summary_mappings = True
+            continue
+        if stripped == "Vocab library":
+            in_summary_mappings = False
+            continue
+        if stripped == "Decode target words from character mappings":
+            in_process_examples = False
+            in_target_decode = True
+            in_candidate_check = False
+            continue
+        if stripped == "Decoded phrase":
+            in_target_decode = False
+            in_candidate_check = False
+            promote_next = True
+            continue
+        if stripped == "Check scan candidates against summary mappings":
+            in_candidate_check = True
+            in_target_decode = False
+            continue
+        if stripped.startswith("Vocab pattern scan"):
+            in_candidate_check = False
+            continue
+        if stripped.startswith("Scan candidates for "):
+            in_candidate_check = False
+            promote_next = True
+            continue
+
+        if stripped == "re-read source word from input query":
+            reread_skip_target = True
+            continue
 
         if promote_next:
             if stripped:
@@ -71,13 +122,58 @@ def build_char_weights(text: str, *, high: float = HIGH, base: float = BASE) -> 
         if not stripped:
             continue
 
-        if stripped in _PROMOTE_NEXT_EXACT or stripped.startswith(_PROMOTE_NEXT_PREFIXES):
-            promote_next = True
+        if reread_skip_target:
+            reread_skip_target = False
+            reread_mark_word = True
+            continue
+
+        if reread_mark_word:
+            lead = lead_len(line)
+            mark(start + lead, start + len(line.rstrip()))
+            reread_mark_word = False
             continue
 
         if stripped in _VERDICT_LINES:
             lead = lead_len(line)
             mark(start + lead, start + lead + len(stripped))
+            continue
+
+        if _CANDIDATE_COUNT_RE.match(stripped):
+            if _MULTI_CANDIDATE_COUNT_RE.match(stripped):
+                lead = lead_len(line)
+                mark(start + lead, start + lead + len(stripped))
+            continue
+
+        if stripped.startswith(_CHECK_OPENERS):
+            if stripped.startswith("for no candidate,"):
+                in_target_decode = True
+                in_candidate_check = False
+            elif stripped.startswith(
+                (
+                    "for one candidate,",
+                    "for multiple candidates,",
+                    "for more than one candidate,",
+                )
+            ):
+                in_target_decode = False
+                in_candidate_check = True
+                if not stripped.startswith("for one candidate,"):
+                    lead = lead_len(line)
+                    mark(start + lead, start + lead + len(stripped))
+            continue
+
+        if stripped.startswith("same length and known letters match "):
+            idx = line.find("same length and known letters match ") + len(
+                "same length and known letters match "
+            )
+            mark(start + idx, start + len(line.rstrip()))
+            continue
+
+        if stripped.startswith("letters ") and (
+            in_process_examples or in_target_decode or in_candidate_check
+        ):
+            idx = line.find("letters ") + len("letters ")
+            mark(start + idx, start + len(line.rstrip()))
             continue
 
         if stripped.startswith("choose "):
@@ -91,8 +187,6 @@ def build_char_weights(text: str, *, high: float = HIGH, base: float = BASE) -> 
             continue
 
         if "\\boxed{" in line:
-            idx = line.find("\\boxed{")
-            mark(start + idx, start + len(line.rstrip()))
             continue
 
         m = _ARROW_RE.match(line)
@@ -102,13 +196,27 @@ def build_char_weights(text: str, *, high: float = HIGH, base: float = BASE) -> 
             rhs_start = start + lead + len(lhs) + len(" -> ")
             rhs_end = rhs_start + len(rhs)
 
+            if in_summary_mappings:
+                mark(start + lead, start + len(line.rstrip()))
+                continue
+
+            if in_process_examples and " " not in lhs and len(lhs) > 1:
+                mark(start + lead, start + len(line.rstrip()))
+                continue
+
             # single-letter LHS -> mapping / decode / check line
             if len(lhs) == 1 and lhs.isalpha():
-                if not rhs.endswith(" agrees"):  # 'agrees' stays weight 1
+                if in_target_decode:
+                    mark(rhs_start, rhs_end)
+                elif in_candidate_check and not rhs.endswith(" agrees"):
                     mark(rhs_start, rhs_end)
                 continue
 
             # word LHS -> scan verdict, partial, or echo
+            if in_candidate_check and " " not in lhs:
+                mark(start + lead, start + len(line.rstrip()))
+                continue
+
             verdict = _SCAN_VERDICT_RE.match(rhs)
             if verdict:
                 if verdict.group(2) == "match":
@@ -123,6 +231,8 @@ def build_char_weights(text: str, *, high: float = HIGH, base: float = BASE) -> 
                     break
             if nxt in ("fully mapped", "not fully mapped"):
                 mark(rhs_start, rhs_end)  # the assembled pattern
+            elif in_candidate_check:
+                mark(rhs_start, rhs_end)
             continue
 
     return weights
