@@ -1,0 +1,305 @@
+Problem syn_opabs_0114
+
+Question:
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+26\46 = 4626
+28)99 = 7118
+37)25 = 5973
+Now, determine the result for: 73^02
+
+Gold answer:
+71^
+
+Solution:
+
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 73^02
+Query operator is ^
+
+Compare example operators
+26\46 = 4626 operator \
+different
+28)99 = 7118 operator )
+different
+37)25 = 5973 operator )
+different
+
+same operator examples
+none
+
+For operator absence type, first infer the motif and output formats from all visible operator groups
+Candidate output formats
+rev
+plain
+op_prefix_if_neg
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+abs
+
+Visible operator groups
+Operator \
+26\46 = 4626
+Operator )
+28)99 = 7118
+37)25 = 5973
+
+First try visible operator \
+Examples with operator \
+26\46 = 4626
+
+Visible operator RHS values are 4626
+The RHS values have length 4, so use direct templates or multiplication
+Try template0134,template3401,x*y,x*y+1,x*y-1
+
+We try direct templates first. If they fail, we proceed to arithmetic search on motifs BA_DC and AB_CD
+
+Try BA_DC first
+
+Try BA_DC with template0134 for operator \
+The current format is BA_DC|template0134
+
+Example 26\46 = 4626
+BA DC template0134(BA,DC) rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg rev_or_op_suffix_if_neg rev_or_op_suffix_rev_if_neg abs_rev abs
+62 64 6264 4626 6264 6264 4626 4626 4626 4626 6264
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Common
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Try visible operator ) using the surviving motif and common formats
+Surviving motif
+BA_DC
+Surviving common formats
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Examples with operator )
+28)99 = 7118
+37)25 = 5973
+
+Visible operator RHS values are 7118 and 5973
+The RHS values have length 4, so use direct templates or multiplication
+Try template0134,template3401,x*y,x*y+1,x*y-1
+
+Try BA_DC with template0134 for operator )
+The current format is BA_DC|template0134|common
+
+Example 28)99 = 7118
+BA DC template0134(BA,DC) rev rev_or_op_prefix_rev_if_neg rev_or_op_suffix_if_neg rev_or_op_suffix_rev_if_neg abs_rev
+82 99 8299 9928 9928 9928 9928 9928
+Match
+none
+
+Example 37)25 = 5973
+BA DC template0134(BA,DC) rev rev_or_op_prefix_rev_if_neg rev_or_op_suffix_if_neg rev_or_op_suffix_rev_if_neg abs_rev
+73 52 7352 2537 2537 2537 2537 2537
+Match
+none
+
+Common
+none
+
+Updated surviving common formats
+none
+template0134 does not preserve the surviving common formats
+
+Try BA_DC with template3401 for operator )
+The current format is BA_DC|template3401|common
+
+Example 28)99 = 7118
+BA DC template3401(BA,DC) rev rev_or_op_prefix_rev_if_neg rev_or_op_suffix_if_neg rev_or_op_suffix_rev_if_neg abs_rev
+82 99 9982 2899 2899 2899 2899 2899
+Match
+none
+
+Example 37)25 = 5973
+BA DC template3401(BA,DC) rev rev_or_op_prefix_rev_if_neg rev_or_op_suffix_if_neg rev_or_op_suffix_rev_if_neg abs_rev
+73 52 5273 3725 3725 3725 3725 3725
+Match
+none
+
+Common
+none
+
+Updated surviving common formats
+none
+template3401 does not preserve the surviving common formats
+
+Try BA_DC with x*y for operator )
+The current format is BA_DC|x*y|common
+
+Example 28)99 = 7118
+BA DC BA*DC rev rev_or_op_prefix_rev_if_neg rev_or_op_suffix_if_neg rev_or_op_suffix_rev_if_neg abs_rev
+82 99 8118 8118 8118 8118 8118 8118
+Match
+none
+
+Example 37)25 = 5973
+BA DC BA*DC rev rev_or_op_prefix_rev_if_neg rev_or_op_suffix_if_neg rev_or_op_suffix_rev_if_neg abs_rev
+73 52 3796 6973 6973 6973 6973 6973
+Match
+none
+
+Common
+none
+
+Updated surviving common formats
+none
+x*y does not preserve the surviving common formats
+
+Try BA_DC with x*y+1 for operator )
+The current format is BA_DC|x*y+1|common
+
+Example 28)99 = 7118
+BA DC BA*DC+1 rev rev_or_op_prefix_rev_if_neg rev_or_op_suffix_if_neg rev_or_op_suffix_rev_if_neg abs_rev
+82 99 8119 9118 9118 9118 9118 9118
+Match
+none
+
+Example 37)25 = 5973
+BA DC BA*DC+1 rev rev_or_op_prefix_rev_if_neg rev_or_op_suffix_if_neg rev_or_op_suffix_rev_if_neg abs_rev
+73 52 3797 7973 7973 7973 7973 7973
+Match
+none
+
+Common
+none
+
+Updated surviving common formats
+none
+x*y+1 does not preserve the surviving common formats
+
+Try BA_DC with x*y-1 for operator )
+The current format is BA_DC|x*y-1|common
+
+Example 28)99 = 7118
+BA DC BA*DC-1 rev rev_or_op_prefix_rev_if_neg rev_or_op_suffix_if_neg rev_or_op_suffix_rev_if_neg abs_rev
+82 99 8117 7118 7118 7118 7118 7118
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Example 37)25 = 5973
+BA DC BA*DC-1 rev rev_or_op_prefix_rev_if_neg rev_or_op_suffix_if_neg rev_or_op_suffix_rev_if_neg abs_rev
+73 52 3795 5973 5973 5973 5973 5973
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Common
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Updated surviving common formats
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+All visible operator groups support the following motif and common formats
+Motif
+BA_DC
+Common
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Use symbol mapping for query operator ^
++ -> x+y, abs(x-y) no
+- -> x-y no
+* -> x*y, x+y+1 no
+/ -> x*y, template0134, min(x,y)-max(x,y) no
+: -> template0134, x-y no
+@ -> x+y, y-x no
+[ -> x+y, x*y no
+\ -> x-y, x+y, x*y-1, y-x no
+% -> x*y, x+y no
+` -> x+y no
+! -> x+y, x*y no
+) -> x+y, x-y no
+] -> x-y no
+^ -> template0134, x*y-1, y-x PASS
+| -> x+y-1 no
+} -> x-y, template0134 no
+# -> template0134, x+y no
+& -> x+y no
+' -> x+y no
+( -> x*y, max(x,y)%min(x,y) no
+? -> x-y, template0134 no
+{ -> x*y-1 no
+" -> x+y no
+$ -> x-y no
+< -> x*y no
+> -> x-y no
+
+Candidate operator families for ^
+template0134
+x*y-1
+y-x
+
+Operator families used by the visible examples
+template0134
+x*y-1
+
+Search remaining candidate operator families for ^
+Remaining candidate operator families
+y-x
+
+Check remaining candidate operator families by common-output agreement
+
+Candidate y-x
+Query
+73^02
+BA DC DC-BA rev rev_or_op_prefix_rev_if_neg rev_or_op_suffix_if_neg rev_or_op_suffix_rev_if_neg abs_rev
+37 20 -17 -71 ^71 17^ 71^ 71
+Output votes
+-71 has 1 vote
+^71 has 1 vote
+17^ has 1 vote
+71^ has 1 vote
+71 has 1 vote
+Highest vote count
+1
+
+Choose operator candidate with highest output agreement vote count, if tie choose the first candidate
+y-x
+Apply format BA_DC|y-x|common to the query
+
+Query
+73^02
+BA DC DC-BA rev rev_or_op_prefix_rev_if_neg rev_or_op_suffix_if_neg rev_or_op_suffix_rev_if_neg abs_rev
+37 20 -17 -71 ^71 17^ 71^ 71
+All common output formats do not agree
+The selected operator y-x gives negative value
+20-37=-17
+For motif BA_DC with y-x negative and nonliteral operator, reverse the magnitude and use operator suffix
+71^
+
+Answer: \boxed{71^}
