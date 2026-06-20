@@ -1,6 +1,8 @@
 .DS_Store
 __pycache__/
 *.py[cod]
+*.bak*
+/*.txt
 
 .venv/
 .venv-local/
@@ -27,6 +29,7 @@ legacy/two_phase/data/training_ready_clean/phase2_traces/
 legacy/two_phase/data/training_ready_clean/phase1_components/
 legacy/two_phase/data/training_ready_clean/phase3_grpo_real_splits_80_10_10.csv
 legacy/two_phase/data/training_ready_clean/trace_manifest.csv
+legacy/local_scratch_*/
 
 # Local scratch and old trace workspaces.
 docs/0e375364.md
@@ -41,6 +44,19 @@ docs/symbol_transform/
 docs/symbol_transform_ba_dc_rev_full_traces/
 docs/symbol_transform_ba_dc_rev_traces/
 docs/symbol_transform_phase1_direct_template_traces/
+docs/numeric_equation_direct_template_400/
+docs/numeric_equation_motif_override_traces/*
+docs/numeric_equation_motif_override_traces_applicable_cases/
+docs/numeric_equation_motif_override_traces_applicable_cases_targeted/
+docs/numeric_equation_motif_override_traces_v3_synthetic/
+docs/numeric_equation_operator_absence_800/*
+docs/numeric_equation_policy_topup_120/
+docs/numeric_equation_normal_policy_synthetic_1395/
+docs/symbol_transform_ab_cd_golden/
+sample_generated_traces/
+
+# Scratch scripts from late-stage reverse engineering and trace generation.
+experiments/operator_absence_sandbox/*
 
 # Experimental generation and analysis scripts are intentionally not tracked.
 scripts/

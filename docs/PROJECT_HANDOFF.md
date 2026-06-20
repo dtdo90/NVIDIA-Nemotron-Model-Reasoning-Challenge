@@ -6,78 +6,71 @@ and scripts instead of trying to duplicate every trace-design detail.
 
 ## Current Goal
 
-The active regime is single-phase SFT on a curated reasoning-trace corpus, with
-optional GRPO later. The old two-phase SFT pipeline is legacy and lives under
-`legacy/two_phase/`.
+The gold-medal regime is single-phase SFT on the v5 curated reasoning-trace
+corpus, followed by one real-data continuation epoch from the saved adapter.
+Optional GRPO is still wired, but it was not the final winning path. The old
+two-phase SFT pipeline is legacy and lives under `legacy/two_phase/`.
 
-Main working questions:
+Final training path:
 
-1. Keep the easy types at 100%: Gravity, Unit Conversion, Numeral System.
-2. Improve Text Cipher without hurting its current strong baseline.
-3. Improve Numeric Equation and Symbol Transform trace quality.
-4. Be very cautious with curriculum rows: recent evidence suggests some
-   curriculum-style rows may hurt if their format drifts from normal examples.
+1. `train_sft_single_phase.py` on `single_phase_sft_v5.csv` with `--train-all`,
+   `--decision-weight 2`, and `--balanced-accumulation`.
+2. `train_sft_single_phase_real_continue.py` from
+   `outputs/sft_single_phase/adapter`, using `--train-all-real`, flat
+   `1e-6` LR, and no weighted tokens by default.
 
 ## Active Files
 
 Use these as the active source of truth:
 
-- `data/single_phase_training_clean/single_phase_sft_v2.csv`
+- `data/single_phase_training_clean/single_phase_sft_v5.csv`
 - `data/single_phase_training_clean/single_phase_splits_80_10_10.csv`
 - `data/single_phase_training_clean/manifest.json`
 - `experiments/type_diagnostics/data/all_types_summary.json`
 - `train_sft_single_phase.py`
+- `train_sft_single_phase_real_continue.py`
 - `infer_eval.py`
 - `experiments/type_diagnostics/prepare_type_datasets.py`
 - `experiments/type_diagnostics/README.md`
 
-Important: `README.md` currently contains stale validated counts. The current
-counts below come from the live CSV/split files and `manifest.json`.
+`README.md` contains the public quick-start and final competition commands.
 
 ## Current Live Counts
 
-Computed from `single_phase_sft_v2.csv` joined with
+Computed from `single_phase_sft_v5.csv` joined with
 `single_phase_splits_80_10_10.csv`:
 
-- Total rows: `18477`
-- `sft_train`: `16680`
-- `eval_holdout`: `901`
-- `grpo_holdout`: `896`
+- Total rows: `19404`
+- `sft_train`: `17650`
+- `eval_holdout`: `877`
+- `grpo_holdout`: `877`
 
 Category totals:
 
 - Bit Manipulation: `6117`
-- Numeric Equation Transformation Rules: `4733`
-- Text Cipher: `1976`
+- Numeric Equation Transformation Rules: `4530`
+- Text Cipher: `2626`
 - Gravity: `1597`
 - Unit Conversion: `1594`
 - Numeral System: `1576`
-- Symbol Transform: `884`
+- Symbol Transform: `1364`
 
 Category split counts:
 
 - Bit Manipulation: `5797` train, `160` eval, `160` grpo
 - Gravity: `1277` train, `160` eval, `160` grpo
 - Numeral System: `1260` train, `158` eval, `158` grpo
-- Numeric Equation: `4594` train, `72` eval, `67` grpo
-- Symbol Transform: `816` train, `34` eval, `34` grpo
-- Text Cipher: `1660` train, `158` eval, `158` grpo
+- Numeric Equation: `4530` train, `0` eval, `0` grpo
+- Symbol Transform: `1200` train, `82` eval, `82` grpo
+- Text Cipher: `2310` train, `158` eval, `158` grpo
 - Unit Conversion: `1276` train, `159` eval, `159` grpo
 
 Prompt formats:
 
-- All `18477` active rows currently use `competition_chat_template`.
+- All `19404` active rows currently use `competition_chat_template`.
 - No active rows currently use `decision_point_chat_template`.
 - Earlier decision-point curriculum has been converted into normal full
   question + full CoT samples.
-
-Evaluation eligibility:
-
-- `eval_eligible=false`: `9543`
-- `eval_eligible=true`: `8934`
-- `split_policy=train_only`: `9543`
-- `split_policy=auto`: `8792`
-- `split_policy=eval_only`: `142`
 
 ## Data Creation and Documentation Map
 
@@ -209,15 +202,15 @@ Symbol Transform:
   - `direct_template_template3401`: `200`
   - `operator_absence_template0134`: `164`
   - `untrained_eval_only`: `120`
-- Warning: current split still has `96` `untrained_eval_only` symbol rows in
-  `sft_train` (`87` from `symbol_transform_untrained_eval_only` plus `9` real
-  untrained rows). This conflicts with the earlier intent to train only direct
-  templates plus operator-absence guesses. Verify this before another full run.
+- Historical note: earlier v2/v3 snapshots had `untrained_eval_only` leakage
+  concerns. In v5, the Symbol Transform fallback/guess rows are intentional
+  train-origin rows and are part of the final single-phase corpus.
 
 Numeric warning:
 
-- Current split has `18` `numeric_equation_untrained_eval_only` rows in
-  `sft_train`, with `2` in each holdout. Verify whether that is intentional.
+- Numeric Equation rows in v5 are train-only in the split file; the final
+  full-corpus run intentionally uses all v5 rows, and the polish pass uses only
+  train-origin rows.
 
 ## Training Script Design
 
@@ -225,7 +218,7 @@ Main script: `train_sft_single_phase.py`
 
 Defaults:
 
-- Train CSV: `data/single_phase_training_clean/single_phase_sft_v2.csv`
+- Train CSV: `data/single_phase_training_clean/single_phase_sft_v5.csv`
 - Split CSV: `data/single_phase_training_clean/single_phase_splits_80_10_10.csv`
 - Train split: `sft_train`
 - Output dir: `outputs/sft_single_phase`
@@ -387,8 +380,8 @@ Evaluate final holdout:
 
 ```bash
 python3 infer_eval.py \
-  --train-csv data/single_phase_training_clean/single_phase_sft_v2.csv \
-  --adapter-dir outputs/sft_single_phase/adapter \
+  --train-csv data/single_phase_training_clean/single_phase_sft_v5.csv \
+  --adapter-dir outputs/sft_single_phase_real_continue/adapter \
   --split-csv data/single_phase_training_clean/single_phase_splits_80_10_10.csv \
   --eval-splits eval_holdout
 ```
@@ -397,8 +390,8 @@ Evaluate both holdouts:
 
 ```bash
 python3 infer_eval.py \
-  --train-csv data/single_phase_training_clean/single_phase_sft_v2.csv \
-  --adapter-dir outputs/sft_single_phase/adapter \
+  --train-csv data/single_phase_training_clean/single_phase_sft_v5.csv \
+  --adapter-dir outputs/sft_single_phase_real_continue/adapter \
   --split-csv data/single_phase_training_clean/single_phase_splits_80_10_10.csv \
   --eval-splits grpo_holdout eval_holdout
 ```

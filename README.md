@@ -1,10 +1,10 @@
 # NVIDIA Nemotron Model Reasoning Challenge
 
-Clean LoRA fine-tuning project for the NVIDIA Nemotron reasoning challenge.
+This project was a great experience for me: my **first Kaggle gold medal**. It feels even more special because this was an LLM reasoning competition, where the work was not just about training a model, but about carefully shaping data, traces, and methodology until the system finally held together.
 
-The main training path is now single-phase SFT with optional GRPO. The old
-two-phase SFT curriculum is preserved under `legacy/two_phase/` only for
-reproducibility.
+LoRA fine-tuning project for the NVIDIA Nemotron reasoning challenge. The gold-medal run used the v5 single-phase corpus, followed by one real-data polish epoch from the saved adapter.
+
+The main training path is now single-phase SFT with optional GRPO. The old two-phase SFT curriculum is preserved under `legacy two_phase/` only for reproducibility.
 
 ## Data
 
@@ -12,21 +12,21 @@ Core files:
 
 1. `data/train.csv`: original competition train set
 2. `data/test.csv`: original competition test set
-3. `data/single_phase_training_clean/single_phase_sft_v4.csv`: active SFT corpus
+3. `data/single_phase_training_clean/single_phase_sft_v5.csv`: active SFT corpus
 4. `data/single_phase_training_clean/single_phase_splits_80_10_10.csv`: canonical SFT/GRPO/eval split
 5. `data/single_phase_training_clean/manifest.json`: source counts and split metadata
 6. `experiments/type_diagnostics/data/global_splits_80_10_10.csv`: same split assignment, generated from the per-type diagnostics
 
-`single_phase_sft_v1.csv`, `single_phase_sft_v2.csv`, and `single_phase_sft_v3.csv`
-are retained as legacy snapshots. The active training and type-diagnostic defaults
-use v4.
+`single_phase_sft_v1.csv`, `single_phase_sft_v2.csv`, `single_phase_sft_v3.csv`,
+and `single_phase_sft_v4.csv` are retained as legacy snapshots. The active
+training and type-diagnostic defaults use v5.
 
 Current validated single-phase counts:
 
-1. Full SFT corpus: `19154` rows
-2. SFT training bucket, named `sft_train`: `17520` rows
-3. Optional GRPO train bucket, named `eval_holdout`: `817` rows
-4. Final local eval bucket, named `grpo_holdout`: `817` rows
+1. Full SFT corpus: `19404` rows
+2. SFT training bucket, named `sft_train`: `17650` rows
+3. Optional GRPO train bucket, named `eval_holdout`: `877` rows
+4. Final local eval bucket, named `grpo_holdout`: `877` rows
 
 The single-phase corpus contains real traces plus selected synthetic curriculum
 rows. Synthetic curriculum rows are also train-only. The two holdout buckets are drawn
@@ -85,8 +85,44 @@ when that path exists. Otherwise they use
 
 ## Train SFT
 
-Recommended single-phase SFT:
-If your hardware supports, train with batch size 2, or skip gradient-checkpointing for faster speed.
+The competition-final path was:
+
+1. train fresh LoRA weights for one epoch on the full v5 single-phase corpus
+2. continue that adapter for one flat-LR epoch on train-origin rows only
+
+Full v5 single-phase run:
+
+```bash
+python3 train_sft_single_phase.py \
+  --train-csv data/single_phase_training_clean/single_phase_sft_v5.csv \
+  --train-all \
+  --decision-weight 2 \
+  --per-device-train-batch-size 1 \
+  --gradient-accumulation-steps 8 \
+  --gradient-checkpointing \
+  --balanced-accumulation
+```
+
+Real-data polish epoch from the saved adapter:
+
+```bash
+python3 train_sft_single_phase_real_continue.py \
+  --adapter-dir outputs/sft_single_phase/adapter \
+  --train-csv data/single_phase_training_clean/single_phase_sft_v5.csv \
+  --train-all-real \
+  --learning-rate 1e-6 \
+  --balanced-accumulation \
+  --gradient-checkpointing
+```
+
+The final adapter from the polish epoch is written to
+`outputs/sft_single_phase_real_continue/adapter`, with
+`outputs/sft_single_phase_real_continue/submission.zip` ready for submission.
+
+For holdout-preserving experiments, omit `--train-all` from the first command.
+If your hardware supports it, train with batch size 2 or skip gradient
+checkpointing for faster speed:
+
 ```bash
 python3 train_sft_single_phase.py \
   --per-device-train-batch-size 1 \
@@ -94,8 +130,8 @@ python3 train_sft_single_phase.py \
   --gradient-checkpointing \
   --balanced-accumulation
 ```
-This trains fresh LoRA weights for one epoch at learning rate `2e-4`. By
-default it uses only the `sft_train` rows from
+This trains fresh LoRA weights for one epoch at learning rate `2e-4`. Without
+`--train-all`, it uses only the `sft_train` rows from
 `data/single_phase_training_clean/single_phase_splits_80_10_10.csv`, which is
 the same split assignment used by the type-diagnostic experiments.
 `--balanced-accumulation` keeps one puzzle per sequence but spreads question
@@ -120,7 +156,7 @@ python3 train_sft_single_phase.py --validate-tokenization
 To intentionally train on every row, bypassing holdouts:
 
 ```bash
-python3 train_sft_single_phase.py --train-all
+python3 train_sft_single_phase.py --train-all --decision-weight 2
 ```
 
 Default trainer settings:
@@ -134,8 +170,6 @@ Default trainer settings:
 7. LoRA dropout `0.0`
 8. assistant-only loss masking
 9. competition chat-template prompt format
-
-```
 
 ## Decision-Weighted Loss
 
@@ -183,15 +217,15 @@ Wire it into `tokenize_masked_example` with
 result next to `labels` as `label_weights`, pad it in the collator with `0.0`,
 and apply a weighted cross-entropy.
 
-Inspect/verify the weighting on a trace before training (prints each weight-2
-token so you can confirm the high weight lands on decisions, not boilerplate):
+Inspect/verify Symbol Transform or Numeric Equation weighting on a trace before
+training:
 
 ```bash
-PYTHONPATH=src python3 -m nemotron_baseline.text_cipher_loss_weights path/to/completion.txt
+PYTHONPATH=src python3 -m nemotron_baseline.symbol_transform_loss_weights path/to/completion.txt --show-text
+PYTHONPATH=src python3 -m nemotron_baseline.numeric_equation_loss_weights path/to/completion.txt --show-text
 ```
 
-Run with no file argument to check a built-in sample, and pass `--tokenizer
-PATH` to point at a different `tokenizer.json`.
+Pass `--tokenizer PATH` to point at a different `tokenizer.json`.
 
 ## Optional GRPO
 
@@ -217,8 +251,8 @@ Evaluate the eval_holdout bucket (10% data):
 
 ```bash
 python3 infer_eval.py \
-  --train-csv data/single_phase_training_clean/single_phase_sft_v4.csv \
-  --adapter-dir outputs/sft_single_phase/adapter \
+  --train-csv data/single_phase_training_clean/single_phase_sft_v5.csv \
+  --adapter-dir outputs/sft_single_phase_real_continue/adapter \
   --split-csv data/single_phase_training_clean/single_phase_splits_80_10_10.csv \
   --eval-splits eval_holdout
 ```
@@ -227,8 +261,8 @@ Evaluate both held-out buckets (20% data):
 
 ```bash
 python3 infer_eval.py \
-  --train-csv data/single_phase_training_clean/single_phase_sft_v4.csv \
-  --adapter-dir outputs/sft_single_phase/adapter \
+  --train-csv data/single_phase_training_clean/single_phase_sft_v5.csv \
+  --adapter-dir outputs/sft_single_phase_real_continue/adapter \
   --split-csv data/single_phase_training_clean/single_phase_splits_80_10_10.csv \
   --eval-splits grpo_holdout eval_holdout
 ```
@@ -265,7 +299,7 @@ python3 experiments/type_diagnostics/scripts/train_numeric_equation.py \
   --balanced-accumulation
 ```
 
-The plain type-diagnostic wrappers use the active v4 single-phase corpus. The
+The plain type-diagnostic wrappers use the active v5 single-phase corpus. The
 old curriculum ablation wrappers are retained only for legacy/manual comparison
 and are no longer the default training path.
 
@@ -277,7 +311,7 @@ mean loss. Disable or tune it per run:
 
 ```bash
 python3 experiments/type_diagnostics/scripts/train_text_cipher.py --decision-weight 1.0
-python3 train_sft_single_phase.py --decision-weight 2.0   # opt in for the full v3 corpus
+python3 train_sft_single_phase.py --decision-weight 2.0   # opt in for the full v5 corpus
 ```
 
 Before training a type diagnostic, dry-run the exact tokenizer boundary and
