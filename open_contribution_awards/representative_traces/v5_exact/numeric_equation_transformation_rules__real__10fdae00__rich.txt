@@ -1,0 +1,218 @@
+ID: 10fdae00
+Problem type: Numeric Equation Transformation Rules
+Subtype/source_mode: real
+Source: docs/numeric_equation_motif_override_traces/10fdae00.txt
+CSV answer: -47
+Trace boxed answer: -47
+Prompt format: competition_chat_template
+Answer matched for selected row: True
+
+PROMPT
+======
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+64*81 = 928
+95+95 = 911
+97-03 = 94
+Now, determine the result for: 52-99
+
+ASSISTANT TRACE
+===============
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 52-99
+Query operator is -
+
+Compare example operators
+64*81 = 928 operator *
+different
+95+95 = 911 operator +
+different
+97-03 = 94 operator -
+same
+
+same operator examples
+97-03 = 94
+one example
+
+Same operator RHS values are 94
+The RHS values have length 2, so use addition, subtraction, or modular
+Try x+y,x+y-1,x+y+1,x-y,y-x,abs(x-y),min(x,y)-max(x,y),max(x,y)%min(x,y),x%y,y%x
+
+Try BA_DC first
+
+Try BA_DC with x+y for operator -
+The current format is BA_DC|x+y
+
+Example 97-03 = 94
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+79 30 109 901 109 109 901 -109 901 109- -901 901 109
+Match
+none
+
+Common
+none
+
+x+y fails under BA_DC
+
+Try BA_DC with x+y-1 for operator -
+The current format is BA_DC|x+y-1
+
+Example 97-03 = 94
+BA DC BA+DC-1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+79 30 108 801 108 108 801 -108 801 108- -801 801 108
+Match
+none
+
+Common
+none
+
+x+y-1 fails under BA_DC
+
+Try BA_DC with x+y+1 for operator -
+The current format is BA_DC|x+y+1
+
+Example 97-03 = 94
+BA DC BA+DC+1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+79 30 110 011 110 110 011 -110 011 110- -011 011 110
+Match
+none
+
+Common
+none
+
+x+y+1 fails under BA_DC
+
+Try BA_DC with x-y for operator -
+The current format is BA_DC|x-y
+
+Example 97-03 = 94
+BA DC BA-DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+79 30 49 94 49 49 94 -49 94 49- -94 94 49
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Common
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+The format BA_DC|x-y|common supports the single same operator example
+Only one same operator row supports this candidate, so do not finalize yet
+Verify motif BA_DC using an additional helper operator group
+
+Helper operator groups
+Operator *
+64*81 = 928
+Operator +
+95+95 = 911
+
+Choose the helper operator group with the least number of examples
+Tie on number of examples, choose a non-direct-template group
+64*81 = 928
+
+Same helper operator RHS values are 928
+The RHS values have length 3, so use addition or multiplication
+Try x+y,x+y-1,x+y+1,x*y,x*y+1,x*y-1
+
+Try BA_DC with x+y for operator *
+The current format is BA_DC|x+y
+
+Example 64*81 = 928
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+46 18 64 46 64 64 46 *64 46 64* *46 46 64
+Match
+none
+
+Common
+none
+
+x+y fails under BA_DC
+
+Try BA_DC with x+y-1 for operator *
+The current format is BA_DC|x+y-1
+
+Example 64*81 = 928
+BA DC BA+DC-1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+46 18 63 36 63 63 36 *63 36 63* *36 36 63
+Match
+none
+
+Common
+none
+
+x+y-1 fails under BA_DC
+
+Try BA_DC with x+y+1 for operator *
+The current format is BA_DC|x+y+1
+
+Example 64*81 = 928
+BA DC BA+DC+1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+46 18 65 56 65 65 56 *65 56 65* *56 56 65
+Match
+none
+
+Common
+none
+
+x+y+1 fails under BA_DC
+
+Try BA_DC with x*y for operator *
+The current format is BA_DC|x*y
+
+Example 64*81 = 928
+BA DC BA*DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+46 18 828 828 828 828 828 *828 828 828* *828 828 828
+Match
+none
+
+Common
+none
+
+x*y fails under BA_DC
+
+Try BA_DC with x*y+1 for operator *
+The current format is BA_DC|x*y+1
+
+Example 64*81 = 928
+BA DC BA*DC+1 rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+46 18 829 928 829 829 928 *829 928 829* *928 928 829
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Common
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+The format BA_DC|x*y+1|common supports the helper operator group
+The motif BA_DC is supported by the helper operator group
+So BA_DC is confirmed
+
+Return to the supported same operator format BA_DC|x-y|common
+Common
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Apply format BA_DC|x-y|common to the query
+
+Query
+52-99
+BA DC BA-DC rev rev_or_op_prefix_rev_if_neg rev_or_op_suffix_rev_if_neg abs_rev
+25 99 -74 -47 -47 47- 47
+All common output formats do not agree
+The selected operator x-y gives negative value
+25-99=-74
+For motif BA_DC with x-y negative, reverse the magnitude and use operator prefix
+-47
+
+Answer: \boxed{-47}

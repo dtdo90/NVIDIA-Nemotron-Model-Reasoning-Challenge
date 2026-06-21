@@ -1,0 +1,198 @@
+ID: syn_tc_enhance_long_0065
+Problem type: Text Cipher
+Subtype/source_mode: text_cipher_enhance_long
+Source: generated/v5_text_cipher_enhance/long/syn_tc_enhance_long_0065.txt
+CSV answer: village bird
+Trace boxed answer: village bird
+Prompt format: competition_chat_template
+Rows in subtype: 100
+Answer matched for selected row: True
+
+PROMPT
+======
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+jmms zpysqsh -> door library
+Now, decrypt the following text: apzzqro ypsj
+
+ASSISTANT TRACE
+===============
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+jmms zpysqsh -> door library
+jmms -> door
+letters j, m, m, s
+j -> d new
+m -> o new
+m -> o agrees
+s -> r new
+zpysqsh -> library
+letters z, p, y, s, q, s, h
+z -> l new
+p -> i new
+y -> b new
+s -> r agrees
+q -> a new
+s -> r agrees
+h -> y new
+
+Summary character mappings
+j -> d
+m -> o
+s -> r
+z -> l
+p -> i
+y -> b
+q -> a
+h -> y
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+apzzqro ypsj
+
+Decode target words from character mappings
+
+apzzqro
+letters a, p, z, z, q, r, o
+a -> ? unknown
+p -> i
+z -> l
+z -> l
+q -> a
+r -> ? unknown
+o -> ? unknown
+apzzqro -> ?illa??
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?illa??
+above -> ?illa?? no
+alice -> ?illa?? no
+ancient -> ?illa?? no
+around -> ?illa?? no
+beyond -> ?illa?? no
+bird -> ?illa?? no
+book -> ?illa?? no
+bright -> ?illa?? no
+castle -> ?illa?? no
+cat -> ?illa?? no
+cave -> ?illa?? no
+chases -> ?illa?? no
+clever -> ?illa?? no
+colorful -> ?illa?? no
+creates -> ?illa?? no
+crystal -> ?illa?? no
+curious -> ?illa?? no
+dark -> ?illa?? no
+discovers -> ?illa?? no
+door -> ?illa?? no
+dragon -> ?illa?? no
+draws -> ?illa?? no
+dreams -> ?illa?? no
+explores -> ?illa?? no
+follows -> ?illa?? no
+forest -> ?illa?? no
+found -> ?illa?? no
+garden -> ?illa?? no
+golden -> ?illa?? no
+hatter -> ?illa?? no
+hidden -> ?illa?? no
+imagines -> ?illa?? no
+in -> ?illa?? no
+inside -> ?illa?? no
+island -> ?illa?? no
+key -> ?illa?? no
+king -> ?illa?? no
+knight -> ?illa?? no
+library -> ?illa?? no
+magical -> ?illa?? no
+map -> ?illa?? no
+message -> ?illa?? no
+mirror -> ?illa?? no
+mountain -> ?illa?? no
+mouse -> ?illa?? no
+mysterious -> ?illa?? no
+near -> ?illa?? no
+ocean -> ?illa?? no
+palace -> ?illa?? no
+potion -> ?illa?? no
+princess -> ?illa?? no
+puzzle -> ?illa?? no
+queen -> ?illa?? no
+rabbit -> ?illa?? no
+reads -> ?illa?? no
+school -> ?illa?? no
+secret -> ?illa?? no
+sees -> ?illa?? no
+silver -> ?illa?? no
+story -> ?illa?? no
+strange -> ?illa?? no
+student -> ?illa?? no
+studies -> ?illa?? no
+teacher -> ?illa?? no
+the -> ?illa?? no
+through -> ?illa?? no
+tower -> ?illa?? no
+treasure -> ?illa?? no
+turtle -> ?illa?? no
+under -> ?illa?? no
+valley -> ?illa?? no
+village -> ?illa?? match
+watches -> ?illa?? no
+wise -> ?illa?? no
+wizard -> ?illa?? no
+wonderland -> ?illa?? no
+writes -> ?illa?? no
+
+Scan candidates for ?illa??
+village
+one candidate
+for one candidate, verify then choose
+
+apzzqro -> village
+letters a, p, z, z, q, r, o
+a -> v new
+p -> i agrees
+z -> l agrees
+z -> l agrees
+q -> a agrees
+r -> g new
+o -> e new
+PASS
+
+re-read source word from input query
+apzzqro ypsj
+apzzqro
+letters a, p, z, z, q, r, o
+a -> v new
+p -> i agrees
+z -> l agrees
+z -> l agrees
+q -> a agrees
+r -> g new
+o -> e new
+PASS confirm
+add a -> v
+add r -> g
+add o -> e
+
+choose village
+
+ypsj
+letters y, p, s, j
+y -> b
+p -> i
+s -> r
+j -> d
+ypsj -> bird
+fully mapped
+
+choose bird
+
+Decoded phrase
+village bird
+
+Answer: \boxed{village bird}

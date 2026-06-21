@@ -1,0 +1,67 @@
+ID: st_phase1_direct_real_remap_9fc69c17_00
+Problem type: Symbol Transform
+Subtype/source_mode: phase1_synthetic_direct_template
+Source: data/training_ready_clean/phase1_components/phase1_symbol_transform_direct_curriculum.csv#st_phase1_direct_real_remap_9fc69c17_00#real_anchored_synthetic_direct_template_0134
+CSV answer: #\$;
+Trace boxed answer: #\$;
+Prompt format: competition_chat_template
+Rows in subtype: 216
+Answer matched for selected row: True
+
+PROMPT
+======
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+:|+:^ = |
+_;`$) = _;$)
+;;+): = ]
+Now, determine the result for: #\`$;
+
+ASSISTANT TRACE
+===============
+For symbol equation transformation rules, we sequentially try direct templates, then encrypted digit formats BA_DC|rev and AB_CD|plain.
+
+Query #\`$;
+Query operator is `
+
+Compare example operators
+:|+:^ = | operator +
+different
+_;`$) = _;$) operator `
+same
+;;+): = ] operator +
+different
+
+Same operator examples
+_;`$) = _;$)
+
+Same operator RHS values are _;$)
+The RHS values have length 4, so use direct templates or multiplication
+Try template0134,template3401,x*y,x*y+1,x*y-1
+
+We try direct templates first. If they fail, we proceed to encrypted digit search with BA_DC|rev and AB_CD|plain
+
+Try template0134
+template0134 means AB followed by CD
+
+Example _;`$) = _;$)
+AB = _;
+operator = `
+CD = $)
+_; followed by $) gives _;$) vs _;$)
+Match
+
+template0134 passes all examples
+
+For direct templates, apply the passing template to get the answer
+
+Apply template0134 to the query
+template0134 means AB followed by CD
+
+Query
+#\`$;
+AB = #\
+operator = `
+CD = $;
+#\ followed by $; gives #\$;
+
+Answer: \boxed{#\$;}

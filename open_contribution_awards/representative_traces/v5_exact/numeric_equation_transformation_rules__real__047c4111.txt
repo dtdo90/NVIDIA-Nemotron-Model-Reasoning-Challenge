@@ -1,0 +1,64 @@
+ID: 047c4111
+Problem type: Numeric Equation Transformation Rules
+Subtype/source_mode: real
+Source: docs/numeric_equation_motif_override_traces/047c4111.txt
+CSV answer: 2596
+Trace boxed answer: 2596
+Prompt format: competition_chat_template
+Rows in subtype: 651
+Answer matched for selected row: True
+
+PROMPT
+======
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+19)37 = 18
+15$20 = 1520
+30)14 = 16
+Now, determine the result for: 25$96
+
+ASSISTANT TRACE
+===============
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 25$96
+Query operator is $
+
+Compare example operators
+19)37 = 18 operator )
+different
+15$20 = 1520 operator $
+same
+30)14 = 16 operator )
+different
+
+same operator examples
+15$20 = 1520
+one example
+
+Same operator RHS values are 1520
+The RHS values have length 4, so use direct templates or multiplication
+Try template0134,template3401,x*y,x*y+1,x*y-1
+
+We try direct templates first. If they fail, we proceed to arithmetic search on motifs BA_DC and AB_CD
+
+Try template0134 for operator $
+template0134 means AB followed by CD
+
+Example 15$20 = 1520
+AB = 15
+operator = $
+CD = 20
+15 followed by 20 gives 1520 vs 1520
+Match
+
+template0134 passes all examples
+For direct templates, apply the passing template to get the answer
+Apply template0134 to the query
+
+Query
+25$96
+25 -> 25
+96 -> 96
+2596
+
+Answer: \boxed{2596}

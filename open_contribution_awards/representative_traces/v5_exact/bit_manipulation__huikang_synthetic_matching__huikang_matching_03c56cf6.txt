@@ -1,0 +1,100 @@
+ID: huikang_matching_03c56cf6
+Problem type: Bit Manipulation
+Subtype/source_mode: huikang_synthetic_matching
+Source: reference/winner-solution/nemotron-master-huikang/augmentations/03c56cf6.txt
+CSV answer: 0 57 75 37 73
+1 50 05
+2 13 31 15 51
+3 12 21 23 32 24 42 25 52 26 62
+4 35 53
+5 34 43 45 54 14 41
+6 absent
+7 56 65
+
+Left
+57 60x
+75 06x
+37 40x
+73 04x
+Best: 57: 1
+
+Right
+56 45y
+65 54y
+Best: 56: 1
+Trace boxed answer: 
+Prompt format: competition_chat_template
+Rows in subtype: 4515
+Answer matched for selected row: False
+
+PROMPT
+======
+In Alice's Wonderland, secret processing rules are used on text.
+
+x: not matched anywhere
+y: matched but wrong position
+
+0 1110101 5
+1 1011011 5
+2 1100111 5
+3 0000110 2
+4 1110111 6
+5 0100111 4
+6 1111111 a
+7 1111110 6
+
+01 10 1000011 3
+12 21 0000110 2 match 3
+23 32 0000110 2 match 3
+34 43 0100111 4 match 5
+45 54 0100111 4 match 5
+56 65 1111110 6 match 7
+67 76 1110100 4
+70 07 1010001 3
+
+02 20 0000010 1
+13 31 1100111 5 match 2
+24 42 0000110 2 match 3
+35 53 1110111 6 match 4
+46 64 0100110 3
+57 75 1110101 5 match 0
+60 06 1011010 4
+71 17 1100101 4
+
+03 30 1010011 4
+14 41 0100111 4 match 5
+25 52 0000110 2 match 3
+36 63 1110110 5
+47 74 0100101 3
+50 05 1011011 5 match 1
+61 16 1100110 4
+72 27 0000100 1
+
+04 40 0000011 2
+15 51 1100111 5 match 2
+26 62 0000110 2 match 3
+37 73 1110101 5 match 0
+
+ASSISTANT TRACE
+===============
+0 57 75 37 73
+1 50 05
+2 13 31 15 51
+3 12 21 23 32 24 42 25 52 26 62
+4 35 53
+5 34 43 45 54 14 41
+6 absent
+7 56 65
+
+Left
+57 60x
+75 06x
+37 40x
+73 04x
+Best: 57: 1
+
+Right
+56 45y
+65 54y
+Best: 56: 1
+</think>

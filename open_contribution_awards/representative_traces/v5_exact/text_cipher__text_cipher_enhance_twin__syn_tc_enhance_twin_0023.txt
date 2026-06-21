@@ -1,0 +1,214 @@
+ID: syn_tc_enhance_twin_0023
+Problem type: Text Cipher
+Subtype/source_mode: text_cipher_enhance_twin
+Source: generated/v5_text_cipher_enhance/twin/syn_tc_enhance_twin_0023.txt
+CSV answer: cave map
+Trace boxed answer: cave map
+Prompt format: competition_chat_template
+Rows in subtype: 100
+Answer matched for selected row: True
+
+PROMPT
+======
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+wvvr ebpuph -> book clever
+xwvup -> above
+Now, decrypt the following text: exup kxo
+
+ASSISTANT TRACE
+===============
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+wvvr ebpuph -> book clever
+wvvr -> book
+letters w, v, v, r
+w -> b new
+v -> o new
+v -> o agrees
+r -> k new
+ebpuph -> clever
+letters e, b, p, u, p, h
+e -> c new
+b -> l new
+p -> e new
+u -> v new
+p -> e agrees
+h -> r new
+
+xwvup -> above
+xwvup -> above
+letters x, w, v, u, p
+x -> a new
+w -> b agrees
+v -> o agrees
+u -> v agrees
+p -> e agrees
+
+Summary character mappings
+w -> b
+v -> o
+r -> k
+e -> c
+b -> l
+p -> e
+u -> v
+h -> r
+x -> a
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+exup kxo
+
+Decode target words from character mappings
+
+exup
+letters e, x, u, p
+e -> c
+x -> a
+u -> v
+p -> e
+exup -> cave
+fully mapped
+
+choose cave
+
+kxo
+letters k, x, o
+k -> ? unknown
+x -> a
+o -> ? unknown
+kxo -> ?a?
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?a?
+above -> ?a? no
+alice -> ?a? no
+ancient -> ?a? no
+around -> ?a? no
+beyond -> ?a? no
+bird -> ?a? no
+book -> ?a? no
+bright -> ?a? no
+castle -> ?a? no
+cat -> ?a? match
+cave -> ?a? no
+chases -> ?a? no
+clever -> ?a? no
+colorful -> ?a? no
+creates -> ?a? no
+crystal -> ?a? no
+curious -> ?a? no
+dark -> ?a? no
+discovers -> ?a? no
+door -> ?a? no
+dragon -> ?a? no
+draws -> ?a? no
+dreams -> ?a? no
+explores -> ?a? no
+follows -> ?a? no
+forest -> ?a? no
+found -> ?a? no
+garden -> ?a? no
+golden -> ?a? no
+hatter -> ?a? no
+hidden -> ?a? no
+imagines -> ?a? no
+in -> ?a? no
+inside -> ?a? no
+island -> ?a? no
+key -> ?a? no
+king -> ?a? no
+knight -> ?a? no
+library -> ?a? no
+magical -> ?a? no
+map -> ?a? match
+message -> ?a? no
+mirror -> ?a? no
+mountain -> ?a? no
+mouse -> ?a? no
+mysterious -> ?a? no
+near -> ?a? no
+ocean -> ?a? no
+palace -> ?a? no
+potion -> ?a? no
+princess -> ?a? no
+puzzle -> ?a? no
+queen -> ?a? no
+rabbit -> ?a? no
+reads -> ?a? no
+school -> ?a? no
+secret -> ?a? no
+sees -> ?a? no
+silver -> ?a? no
+story -> ?a? no
+strange -> ?a? no
+student -> ?a? no
+studies -> ?a? no
+teacher -> ?a? no
+the -> ?a? no
+through -> ?a? no
+tower -> ?a? no
+treasure -> ?a? no
+turtle -> ?a? no
+under -> ?a? no
+valley -> ?a? no
+village -> ?a? no
+watches -> ?a? no
+wise -> ?a? no
+wizard -> ?a? no
+wonderland -> ?a? no
+writes -> ?a? no
+
+Scan candidates for ?a?
+cat, map
+two candidates
+for more than one candidate, scan sequentially
+
+kxo -> cat
+letters k, x, o
+k -> c conflicts
+e -> c already exists
+x -> a agrees
+o -> t new
+FAIL
+
+re-read source word from input query
+exup kxo
+kxo
+letters k, x, o
+k -> c conflicts
+e -> c already exists
+x -> a agrees
+o -> t new
+FAIL
+FAIL confirm, continue scanning
+
+kxo -> map
+letters k, x, o
+k -> m new
+x -> a agrees
+o -> p new
+PASS
+
+re-read source word from input query
+exup kxo
+kxo
+letters k, x, o
+k -> m new
+x -> a agrees
+o -> p new
+PASS confirm
+add k -> m
+add o -> p
+
+choose map
+
+Decoded phrase
+cave map
+
+Answer: \boxed{cave map}

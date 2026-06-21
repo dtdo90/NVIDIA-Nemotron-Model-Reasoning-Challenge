@@ -1,0 +1,52 @@
+ID: 778c5108
+Problem type: Unit Conversion
+Subtype/source_mode: real
+Source: data/artifacts/phase1/unit_conversion_cot_method_resolved.csv
+CSV answer: 6.17
+Trace boxed answer: 6.17
+Prompt format: competition_chat_template
+Rows in subtype: 1594
+Answer matched for selected row: True
+
+PROMPT
+======
+In Alice's Wonderland, a secret unit conversion is applied to measurements. For example:
+5.41 m becomes 5.29
+8.62 m becomes 8.44
+23.19 m becomes 22.69
+Now, convert the following measurement: 6.31 m
+
+ASSISTANT TRACE
+===============
+We find a conversion rule that maps the inputs to outputs by estimating the linear factor from the examples.
+Use factor = sum(outputs) / sum(inputs)
+
+Example pairs
+5.41 -> 5.29
+8.62 -> 8.44
+23.19 -> 22.69
+
+Compute sum(inputs)
+sum(inputs) = 5.41 + 8.62 + 23.19
+5.41 + 8.62 = 14.03
+14.03 + 23.19 = 37.22
+sum(inputs) = 37.22
+
+Compute sum(outputs)
+sum(outputs) = 5.29 + 8.44 + 22.69
+5.29 + 8.44 = 13.73
+13.73 + 22.69 = 36.42
+sum(outputs) = 36.42
+
+Compute factor
+factor = sum(outputs) / sum(inputs)
+factor = 36.42 / 37.22
+factor = 0.9785 to four decimal places
+
+Compute output
+Converting 6.31
+6.31 * 0.9785 = 6.1743 to four decimal places
+
+Rounding to two decimals gives 6.17
+
+Answer: \boxed{6.17}

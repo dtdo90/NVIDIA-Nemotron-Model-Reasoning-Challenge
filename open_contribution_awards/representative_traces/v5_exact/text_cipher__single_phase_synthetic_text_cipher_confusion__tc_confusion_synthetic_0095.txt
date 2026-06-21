@@ -1,0 +1,271 @@
+ID: tc_confusion_synthetic_0095
+Problem type: Text Cipher
+Subtype/source_mode: single_phase_synthetic_text_cipher_confusion
+Source: generated/text_cipher/confusion/tc_confusion_synthetic_0095
+CSV answer: follows near book
+Trace boxed answer: follows near book
+Prompt format: competition_chat_template
+Rows in subtype: 200
+Answer matched for selected row: True
+
+PROMPT
+======
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+zbgxo ybffbpx cgiifo -> mouse follows puzzle
+zbgxo ybffbpx ubbr -> mouse follows book
+zbgxo xlgsdox cgiifo -> mouse studies puzzle
+Now, decrypt the following text: ybffbpx noht ubbr
+
+ASSISTANT TRACE
+===============
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+zbgxo ybffbpx cgiifo -> mouse follows puzzle
+zbgxo -> mouse
+letters z, b, g, x, o
+z -> m new
+b -> o new
+g -> u new
+x -> s new
+o -> e new
+ybffbpx -> follows
+letters y, b, f, f, b, p, x
+y -> f new
+b -> o agrees
+f -> l new
+f -> l agrees
+b -> o agrees
+p -> w new
+x -> s agrees
+cgiifo -> puzzle
+letters c, g, i, i, f, o
+c -> p new
+g -> u agrees
+i -> z new
+i -> z agrees
+f -> l agrees
+o -> e agrees
+
+zbgxo ybffbpx ubbr -> mouse follows book
+zbgxo -> mouse
+letters z, b, g, x, o
+z -> m agrees
+b -> o agrees
+g -> u agrees
+x -> s agrees
+o -> e agrees
+ybffbpx -> follows
+letters y, b, f, f, b, p, x
+y -> f agrees
+b -> o agrees
+f -> l agrees
+f -> l agrees
+b -> o agrees
+p -> w agrees
+x -> s agrees
+ubbr -> book
+letters u, b, b, r
+u -> b new
+b -> o agrees
+b -> o agrees
+r -> k new
+
+zbgxo xlgsdox cgiifo -> mouse studies puzzle
+zbgxo -> mouse
+letters z, b, g, x, o
+z -> m agrees
+b -> o agrees
+g -> u agrees
+x -> s agrees
+o -> e agrees
+xlgsdox -> studies
+letters x, l, g, s, d, o, x
+x -> s agrees
+l -> t new
+g -> u agrees
+s -> d new
+d -> i new
+o -> e agrees
+x -> s agrees
+cgiifo -> puzzle
+letters c, g, i, i, f, o
+c -> p agrees
+g -> u agrees
+i -> z agrees
+i -> z agrees
+f -> l agrees
+o -> e agrees
+
+Summary character mappings
+z -> m
+b -> o
+g -> u
+x -> s
+o -> e
+y -> f
+f -> l
+p -> w
+c -> p
+i -> z
+u -> b
+r -> k
+l -> t
+s -> d
+d -> i
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+ybffbpx noht ubbr
+
+Decode target words from character mappings
+
+ybffbpx
+letters y, b, f, f, b, p, x
+y -> f
+b -> o
+f -> l
+f -> l
+b -> o
+p -> w
+x -> s
+ybffbpx -> follows
+fully mapped
+
+choose follows
+
+noht
+letters n, o, h, t
+n -> ? unknown
+o -> e
+h -> ? unknown
+t -> ? unknown
+noht -> ?e??
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?e??
+above -> ?e?? no
+alice -> ?e?? no
+ancient -> ?e?? no
+around -> ?e?? no
+beyond -> ?e?? no
+bird -> ?e?? no
+book -> ?e?? no
+bright -> ?e?? no
+castle -> ?e?? no
+cat -> ?e?? no
+cave -> ?e?? no
+chases -> ?e?? no
+clever -> ?e?? no
+colorful -> ?e?? no
+creates -> ?e?? no
+crystal -> ?e?? no
+curious -> ?e?? no
+dark -> ?e?? no
+discovers -> ?e?? no
+door -> ?e?? no
+dragon -> ?e?? no
+draws -> ?e?? no
+dreams -> ?e?? no
+explores -> ?e?? no
+follows -> ?e?? no
+forest -> ?e?? no
+found -> ?e?? no
+garden -> ?e?? no
+golden -> ?e?? no
+hatter -> ?e?? no
+hidden -> ?e?? no
+imagines -> ?e?? no
+in -> ?e?? no
+inside -> ?e?? no
+island -> ?e?? no
+key -> ?e?? no
+king -> ?e?? no
+knight -> ?e?? no
+library -> ?e?? no
+magical -> ?e?? no
+map -> ?e?? no
+message -> ?e?? no
+mirror -> ?e?? no
+mountain -> ?e?? no
+mouse -> ?e?? no
+mysterious -> ?e?? no
+near -> ?e?? match
+ocean -> ?e?? no
+palace -> ?e?? no
+potion -> ?e?? no
+princess -> ?e?? no
+puzzle -> ?e?? no
+queen -> ?e?? no
+rabbit -> ?e?? no
+reads -> ?e?? no
+school -> ?e?? no
+secret -> ?e?? no
+sees -> ?e?? match
+silver -> ?e?? no
+story -> ?e?? no
+strange -> ?e?? no
+student -> ?e?? no
+studies -> ?e?? no
+teacher -> ?e?? no
+the -> ?e?? no
+through -> ?e?? no
+tower -> ?e?? no
+treasure -> ?e?? no
+turtle -> ?e?? no
+under -> ?e?? no
+valley -> ?e?? no
+village -> ?e?? no
+watches -> ?e?? no
+wise -> ?e?? no
+wizard -> ?e?? no
+wonderland -> ?e?? no
+writes -> ?e?? no
+
+Scan candidates for ?e??
+near, sees
+two candidates
+for more than one candidate, scan sequentially
+
+noht -> near
+letters n, o, h, t
+n -> n new
+o -> e agrees
+h -> a new
+t -> r new
+PASS
+
+re-read source word from input query
+ybffbpx noht ubbr
+noht
+letters n, o, h, t
+n -> n new
+o -> e agrees
+h -> a new
+t -> r new
+PASS confirm
+add n -> n
+add h -> a
+add t -> r
+
+choose near
+
+ubbr
+letters u, b, b, r
+u -> b
+b -> o
+b -> o
+r -> k
+ubbr -> book
+fully mapped
+
+choose book
+
+Decoded phrase
+follows near book
+
+Answer: \boxed{follows near book}

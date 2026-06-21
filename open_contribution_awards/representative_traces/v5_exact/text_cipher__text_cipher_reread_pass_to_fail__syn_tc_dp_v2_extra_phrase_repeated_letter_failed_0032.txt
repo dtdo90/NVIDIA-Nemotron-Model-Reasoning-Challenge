@@ -1,0 +1,218 @@
+ID: syn_tc_dp_v2_extra_phrase_repeated_letter_failed_0032
+Problem type: Text Cipher
+Subtype/source_mode: text_cipher_reread_pass_to_fail
+Source: generated/v4_text_cipher_reread_rescue/pass_to_fail/syn_tc_dp_v2_extra_phrase_repeated_letter_failed_0032.txt
+CSV answer: map village
+Trace boxed answer: map village
+Prompt format: competition_chat_template
+Rows in subtype: 200
+Answer matched for selected row: True
+
+PROMPT
+======
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+rhye ukhvx -> king alice
+qhkaxc -> silver
+Now, decrypt the following text: gub ahkkuex
+
+ASSISTANT TRACE
+===============
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+rhye ukhvx -> king alice
+rhye -> king
+letters r, h, y, e
+r -> k new
+h -> i new
+y -> n new
+e -> g new
+ukhvx -> alice
+letters u, k, h, v, x
+u -> a new
+k -> l new
+h -> i agrees
+v -> c new
+x -> e new
+
+qhkaxc -> silver
+qhkaxc -> silver
+letters q, h, k, a, x, c
+q -> s new
+h -> i agrees
+k -> l agrees
+a -> v new
+x -> e agrees
+c -> r new
+
+Summary character mappings
+r -> k
+h -> i
+y -> n
+e -> g
+u -> a
+k -> l
+v -> c
+x -> e
+q -> s
+a -> v
+c -> r
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+gub ahkkuex
+
+Decode target words from character mappings
+
+gub
+letters g, u, b
+g -> ? unknown
+u -> a
+b -> ? unknown
+gub -> ?a?
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?a?
+above -> ?a? no
+alice -> ?a? no
+ancient -> ?a? no
+around -> ?a? no
+beyond -> ?a? no
+bird -> ?a? no
+book -> ?a? no
+bright -> ?a? no
+castle -> ?a? no
+cat -> ?a? match
+cave -> ?a? no
+chases -> ?a? no
+clever -> ?a? no
+colorful -> ?a? no
+creates -> ?a? no
+crystal -> ?a? no
+curious -> ?a? no
+dark -> ?a? no
+discovers -> ?a? no
+door -> ?a? no
+dragon -> ?a? no
+draws -> ?a? no
+dreams -> ?a? no
+explores -> ?a? no
+follows -> ?a? no
+forest -> ?a? no
+found -> ?a? no
+garden -> ?a? no
+golden -> ?a? no
+hatter -> ?a? no
+hidden -> ?a? no
+imagines -> ?a? no
+in -> ?a? no
+inside -> ?a? no
+island -> ?a? no
+key -> ?a? no
+king -> ?a? no
+knight -> ?a? no
+library -> ?a? no
+magical -> ?a? no
+map -> ?a? match
+message -> ?a? no
+mirror -> ?a? no
+mountain -> ?a? no
+mouse -> ?a? no
+mysterious -> ?a? no
+near -> ?a? no
+ocean -> ?a? no
+palace -> ?a? no
+potion -> ?a? no
+princess -> ?a? no
+puzzle -> ?a? no
+queen -> ?a? no
+rabbit -> ?a? no
+reads -> ?a? no
+school -> ?a? no
+secret -> ?a? no
+sees -> ?a? no
+silver -> ?a? no
+story -> ?a? no
+strange -> ?a? no
+student -> ?a? no
+studies -> ?a? no
+teacher -> ?a? no
+the -> ?a? no
+through -> ?a? no
+tower -> ?a? no
+treasure -> ?a? no
+turtle -> ?a? no
+under -> ?a? no
+valley -> ?a? no
+village -> ?a? no
+watches -> ?a? no
+wise -> ?a? no
+wizard -> ?a? no
+wonderland -> ?a? no
+writes -> ?a? no
+
+Scan candidates for ?a?
+cat, map
+two candidates
+for more than one candidate, scan sequentially
+
+gub -> cat
+letters g, u, b
+g -> c new
+u -> a agrees
+b -> t new
+PASS
+
+re-read source word from input query
+gub ahkkuex
+gub
+letters g, u, b
+g -> c conflicts
+v -> c already exists
+u -> a agrees
+b -> t new
+FAIL
+FAIL confirm, continue scanning
+
+gub -> map
+letters g, u, b
+g -> m new
+u -> a agrees
+b -> p new
+PASS
+
+re-read source word from input query
+gub ahkkuex
+gub
+letters g, u, b
+g -> m new
+u -> a agrees
+b -> p new
+PASS confirm
+add g -> m
+add b -> p
+
+choose map
+
+ahkkuex
+letters a, h, k, k, u, e, x
+a -> v
+h -> i
+k -> l
+k -> l
+u -> a
+e -> g
+x -> e
+ahkkuex -> village
+fully mapped
+
+choose village
+
+Decoded phrase
+map village
+
+Answer: \boxed{map village}

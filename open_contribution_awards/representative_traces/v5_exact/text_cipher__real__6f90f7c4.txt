@@ -1,0 +1,167 @@
+ID: 6f90f7c4
+Problem type: Text Cipher
+Subtype/source_mode: real
+Source: data/artifacts/phase1/text_cipher_compact_cot.csv
+CSV answer: alice draws key
+Trace boxed answer: alice draws key
+Prompt format: competition_chat_template
+Rows in subtype: 1576
+Answer matched for selected row: True
+
+PROMPT
+======
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+mehx fnaogwb mws -> king watches key
+agw baknhxw mhexga fkeawb -> the strange knight writes
+nyeow qknfb zwbbnxw -> alice draws message
+Now, decrypt the following text: nyeow qknfb mws
+
+ASSISTANT TRACE
+===============
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+mehx fnaogwb mws -> king watches key
+mehx -> king
+letters m, e, h, x
+m -> k new
+e -> i new
+h -> n new
+x -> g new
+fnaogwb -> watches
+letters f, n, a, o, g, w, b
+f -> w new
+n -> a new
+a -> t new
+o -> c new
+g -> h new
+w -> e new
+b -> s new
+mws -> key
+letters m, w, s
+m -> k agrees
+w -> e agrees
+s -> y new
+
+agw baknhxw mhexga fkeawb -> the strange knight writes
+agw -> the
+letters a, g, w
+a -> t agrees
+g -> h agrees
+w -> e agrees
+baknhxw -> strange
+letters b, a, k, n, h, x, w
+b -> s agrees
+a -> t agrees
+k -> r new
+n -> a agrees
+h -> n agrees
+x -> g agrees
+w -> e agrees
+mhexga -> knight
+letters m, h, e, x, g, a
+m -> k agrees
+h -> n agrees
+e -> i agrees
+x -> g agrees
+g -> h agrees
+a -> t agrees
+fkeawb -> writes
+letters f, k, e, a, w, b
+f -> w agrees
+k -> r agrees
+e -> i agrees
+a -> t agrees
+w -> e agrees
+b -> s agrees
+
+nyeow qknfb zwbbnxw -> alice draws message
+nyeow -> alice
+letters n, y, e, o, w
+n -> a agrees
+y -> l new
+e -> i agrees
+o -> c agrees
+w -> e agrees
+qknfb -> draws
+letters q, k, n, f, b
+q -> d new
+k -> r agrees
+n -> a agrees
+f -> w agrees
+b -> s agrees
+zwbbnxw -> message
+letters z, w, b, b, n, x, w
+z -> m new
+w -> e agrees
+b -> s agrees
+b -> s agrees
+n -> a agrees
+x -> g agrees
+w -> e agrees
+
+Summary character mappings
+m -> k
+e -> i
+h -> n
+x -> g
+f -> w
+n -> a
+a -> t
+o -> c
+g -> h
+w -> e
+b -> s
+s -> y
+k -> r
+y -> l
+q -> d
+z -> m
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+nyeow qknfb mws
+
+Decode target words from character mappings
+
+nyeow
+letters n, y, e, o, w
+n -> a
+y -> l
+e -> i
+o -> c
+w -> e
+nyeow -> alice
+fully mapped
+
+choose alice
+
+qknfb
+letters q, k, n, f, b
+q -> d
+k -> r
+n -> a
+f -> w
+b -> s
+qknfb -> draws
+fully mapped
+
+choose draws
+
+mws
+letters m, w, s
+m -> k
+w -> e
+s -> y
+mws -> key
+fully mapped
+
+choose key
+
+Decoded phrase
+alice draws key
+
+Answer: \boxed{alice draws key}

@@ -1,0 +1,58 @@
+ID: syn_ne_direct_template_extra_0134_0001
+Problem type: Numeric Equation Transformation Rules
+Subtype/source_mode: synthetic
+Source: docs/numeric_equation_motif_override_traces/syn_ne_direct_template_extra_0134_0001.txt
+CSV answer: 8623
+Trace boxed answer: 8623
+Prompt format: competition_chat_template
+Rows in subtype: 3879
+Answer matched for selected row: True
+
+PROMPT
+======
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+86-88 = 8688
+Now, determine the result for: 86-23
+
+ASSISTANT TRACE
+===============
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 86-23
+Query operator is -
+
+Compare example operators
+86-88 = 8688 operator -
+same
+
+same operator examples
+86-88 = 8688
+one example
+
+Same operator RHS values are 8688
+The RHS values have length 4, so use direct templates or multiplication
+Try template0134,template3401,x*y,x*y+1,x*y-1
+
+We try direct templates first. If they fail, we proceed to arithmetic search on motifs BA_DC and AB_CD
+
+Try template0134 for operator -
+template0134 means AB followed by CD
+
+Example 86-88 = 8688
+AB = 86
+operator = -
+CD = 88
+86 followed by 88 gives 8688 vs 8688
+Match
+
+template0134 passes all examples
+For direct templates, apply the passing template to get the answer
+Apply template0134 to the query
+
+Query
+86-23
+86 -> 86
+23 -> 23
+8623
+
+Answer: \boxed{8623}

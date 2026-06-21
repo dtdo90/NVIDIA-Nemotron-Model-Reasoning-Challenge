@@ -1,0 +1,293 @@
+ID: syn_tc_case0_no_candidate_0038
+Problem type: Text Cipher
+Subtype/source_mode: text_cipher_no_candidate_recovery
+Source: generated/v5_text_cipher_case0/no_candidate/syn_tc_case0_no_candidate_0038.txt
+CSV answer: clever cave
+Trace boxed answer: clever cave
+Prompt format: competition_chat_template
+Rows in subtype: 50
+Answer matched for selected row: True
+
+PROMPT
+======
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+wvuuvic oxclvdskc -> follows discovers
+Now, decrypt the following text: lusdsk ljds
+
+ASSISTANT TRACE
+===============
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+wvuuvic oxclvdskc -> follows discovers
+wvuuvic -> follows
+letters w, v, u, u, v, i, c
+w -> f new
+v -> o new
+u -> l new
+u -> l agrees
+v -> o agrees
+i -> w new
+c -> s new
+oxclvdskc -> discovers
+letters o, x, c, l, v, d, s, k, c
+o -> d new
+x -> i new
+c -> s agrees
+l -> c new
+v -> o agrees
+d -> v new
+s -> e new
+k -> r new
+c -> s agrees
+
+Summary character mappings
+w -> f
+v -> o
+u -> l
+i -> w
+c -> s
+o -> d
+x -> i
+l -> c
+d -> v
+s -> e
+k -> r
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+lusdsk ljds
+
+Decode target words from character mappings
+
+lusdsk
+letters l, u, s, d, s, k
+l -> c
+u -> l
+s -> e
+d -> v
+s -> e
+k -> r
+lusdsk -> clever
+fully mapped
+
+choose clever
+
+jlds
+letters j, l, d, s
+j -> ? unknown
+l -> c
+d -> v
+s -> e
+jlds -> ?cve
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ?cve
+above -> ?cve no
+alice -> ?cve no
+ancient -> ?cve no
+around -> ?cve no
+beyond -> ?cve no
+bird -> ?cve no
+book -> ?cve no
+bright -> ?cve no
+castle -> ?cve no
+cat -> ?cve no
+cave -> ?cve no
+chases -> ?cve no
+clever -> ?cve no
+colorful -> ?cve no
+creates -> ?cve no
+crystal -> ?cve no
+curious -> ?cve no
+dark -> ?cve no
+discovers -> ?cve no
+door -> ?cve no
+dragon -> ?cve no
+draws -> ?cve no
+dreams -> ?cve no
+explores -> ?cve no
+follows -> ?cve no
+forest -> ?cve no
+found -> ?cve no
+garden -> ?cve no
+golden -> ?cve no
+hatter -> ?cve no
+hidden -> ?cve no
+imagines -> ?cve no
+in -> ?cve no
+inside -> ?cve no
+island -> ?cve no
+key -> ?cve no
+king -> ?cve no
+knight -> ?cve no
+library -> ?cve no
+magical -> ?cve no
+map -> ?cve no
+message -> ?cve no
+mirror -> ?cve no
+mountain -> ?cve no
+mouse -> ?cve no
+mysterious -> ?cve no
+near -> ?cve no
+ocean -> ?cve no
+palace -> ?cve no
+potion -> ?cve no
+princess -> ?cve no
+puzzle -> ?cve no
+queen -> ?cve no
+rabbit -> ?cve no
+reads -> ?cve no
+school -> ?cve no
+secret -> ?cve no
+sees -> ?cve no
+silver -> ?cve no
+story -> ?cve no
+strange -> ?cve no
+student -> ?cve no
+studies -> ?cve no
+teacher -> ?cve no
+the -> ?cve no
+through -> ?cve no
+tower -> ?cve no
+treasure -> ?cve no
+turtle -> ?cve no
+under -> ?cve no
+valley -> ?cve no
+village -> ?cve no
+watches -> ?cve no
+wise -> ?cve no
+wizard -> ?cve no
+wonderland -> ?cve no
+writes -> ?cve no
+
+Scan candidates for ?cve
+(none)
+no candidate
+for no candidate, the source word was misread, re-read it
+
+re-read source word from input query
+lusdsk ljds
+ljds
+letters l, j, d, s
+l -> c
+j -> ? unknown
+d -> v
+s -> e
+ljds -> c?ve
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match c?ve
+above -> c?ve no
+alice -> c?ve no
+ancient -> c?ve no
+around -> c?ve no
+beyond -> c?ve no
+bird -> c?ve no
+book -> c?ve no
+bright -> c?ve no
+castle -> c?ve no
+cat -> c?ve no
+cave -> c?ve match
+chases -> c?ve no
+clever -> c?ve no
+colorful -> c?ve no
+creates -> c?ve no
+crystal -> c?ve no
+curious -> c?ve no
+dark -> c?ve no
+discovers -> c?ve no
+door -> c?ve no
+dragon -> c?ve no
+draws -> c?ve no
+dreams -> c?ve no
+explores -> c?ve no
+follows -> c?ve no
+forest -> c?ve no
+found -> c?ve no
+garden -> c?ve no
+golden -> c?ve no
+hatter -> c?ve no
+hidden -> c?ve no
+imagines -> c?ve no
+in -> c?ve no
+inside -> c?ve no
+island -> c?ve no
+key -> c?ve no
+king -> c?ve no
+knight -> c?ve no
+library -> c?ve no
+magical -> c?ve no
+map -> c?ve no
+message -> c?ve no
+mirror -> c?ve no
+mountain -> c?ve no
+mouse -> c?ve no
+mysterious -> c?ve no
+near -> c?ve no
+ocean -> c?ve no
+palace -> c?ve no
+potion -> c?ve no
+princess -> c?ve no
+puzzle -> c?ve no
+queen -> c?ve no
+rabbit -> c?ve no
+reads -> c?ve no
+school -> c?ve no
+secret -> c?ve no
+sees -> c?ve no
+silver -> c?ve no
+story -> c?ve no
+strange -> c?ve no
+student -> c?ve no
+studies -> c?ve no
+teacher -> c?ve no
+the -> c?ve no
+through -> c?ve no
+tower -> c?ve no
+treasure -> c?ve no
+turtle -> c?ve no
+under -> c?ve no
+valley -> c?ve no
+village -> c?ve no
+watches -> c?ve no
+wise -> c?ve no
+wizard -> c?ve no
+wonderland -> c?ve no
+writes -> c?ve no
+
+Scan candidates for c?ve
+cave
+one candidate
+for one candidate, verify then choose
+
+ljds -> cave
+letters l, j, d, s
+l -> c agrees
+j -> a new
+d -> v agrees
+s -> e agrees
+PASS
+
+re-read source word from input query
+lusdsk ljds
+ljds
+letters l, j, d, s
+l -> c agrees
+j -> a new
+d -> v agrees
+s -> e agrees
+PASS confirm
+add j -> a
+
+choose cave
+
+Decoded phrase
+clever cave
+
+Answer: \boxed{clever cave}

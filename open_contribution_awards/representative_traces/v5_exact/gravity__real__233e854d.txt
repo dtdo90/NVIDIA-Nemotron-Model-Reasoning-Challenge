@@ -1,0 +1,57 @@
+ID: 233e854d
+Problem type: Gravity
+Subtype/source_mode: real
+Source: data/artifacts/phase1/gravity_cot_method_resolved.csv
+CSV answer: 19.59
+Trace boxed answer: 19.59
+Prompt format: competition_chat_template
+Rows in subtype: 1597
+Answer matched for selected row: True
+
+PROMPT
+======
+In Alice's Wonderland, the gravitational constant has been secretly changed. Here are some example observations:
+For t = 1.2s, distance = 11.02 m
+For t = 1.4s, distance = 15.0 m
+For t = 2.12s, distance = 34.39 m
+Now, determine the falling distance for t = 1.6s given d = 0.5*g*t^2.
+
+ASSISTANT TRACE
+===============
+We need to determine the falling distance using d = k*t^2.
+Use k = sum(distance) / sum(t^2)
+
+Observations
+t=1.2s -> d=11.02m
+t=1.4s -> d=15.0m
+t=2.12s -> d=34.39m
+
+Compute sum(distance)
+sum(distance) = 11.02 + 15.0 + 34.39
+11.02 + 15.00 = 26.02 to two decimal places
+26.02 + 34.39 = 60.41 to two decimal places
+sum(distance) = 60.41
+
+Compute sum(t^2)
+1.2^2 = 1.4400 to four decimal places
+1.4^2 = 1.9600 to four decimal places
+2.12^2 = 4.4944 to four decimal places
+sum(t^2) = 1.4400 + 1.9600 + 4.4944
+1.4400 + 1.9600 = 3.4000 to four decimal places
+3.4000 + 4.4944 = 7.8944 to four decimal places
+sum(t^2) = 7.8944
+
+Compute k
+k = sum(distance) / sum(t^2)
+k = 60.41 / 7.8944
+k = 7.6523 to four decimal places
+
+Compute d = k*t^2
+For t = 1.6
+1.6^2 = 2.5600 to four decimal places
+d = 7.6523*2.5600
+d = 19.5899 to four decimal places
+
+Rounding to two decimals gives 19.59
+
+Answer: \boxed{19.59}

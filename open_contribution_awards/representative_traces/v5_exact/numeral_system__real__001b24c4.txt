@@ -1,0 +1,35 @@
+ID: 001b24c4
+Problem type: Numeral System
+Subtype/source_mode: real
+Source: data/artifacts/phase1/numeral_cot_method_resolved.csv
+CSV answer: XXXVIII
+Trace boxed answer: XXXVIII
+Prompt format: competition_chat_template
+Rows in subtype: 1576
+Answer matched for selected row: True
+
+PROMPT
+======
+In Alice's Wonderland, numbers are secretly converted into a different numeral system. Some examples are given below:
+11 -> XI
+15 -> XV
+94 -> XCIV
+19 -> XIX
+Now, write the number 38 in the Wonderland numeral system.
+
+ASSISTANT TRACE
+===============
+We convert the Arabic number to Roman numerals using the standard greedy table.
+
+Converting 38
+38 >= 10 -> X, remainder 28
+28 >= 10 -> X, remainder 18
+18 >= 10 -> X, remainder 8
+8 >= 5 -> V, remainder 3
+3 >= 1 -> I, remainder 2
+2 >= 1 -> I, remainder 1
+1 >= 1 -> I, remainder 0
+
+Putting all together, we get XXXVIII
+
+Answer: \boxed{XXXVIII}

@@ -1,0 +1,96 @@
+ID: syn_tc_dp_v1_extra_phrase_copy_alignment_0182
+Problem type: Text Cipher
+Subtype/source_mode: text_cipher_decision_point_curriculum
+Source: generated/v1_extra_text_cipher_curriculum/syn_tc_dp_v1_extra_phrase_copy_alignment_0182.txt
+CSV answer: secret garden
+Trace boxed answer: secret garden
+Prompt format: competition_chat_template
+Rows in subtype: 200
+Answer matched for selected row: True
+
+PROMPT
+======
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+rgvsnam uorzlkmvr -> strange discovers
+Now, decrypt the following text: rmzvmg asvumn
+
+ASSISTANT TRACE
+===============
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+rgvsnam uorzlkmvr -> strange discovers
+rgvsnam -> strange
+letters r, g, v, s, n, a, m
+r -> s new
+g -> t new
+v -> r new
+s -> a new
+n -> n new
+a -> g new
+m -> e new
+uorzlkmvr -> discovers
+letters u, o, r, z, l, k, m, v, r
+u -> d new
+o -> i new
+r -> s agrees
+z -> c new
+l -> o new
+k -> v new
+m -> e agrees
+v -> r agrees
+r -> s agrees
+
+Summary character mappings
+r -> s
+g -> t
+v -> r
+s -> a
+n -> n
+a -> g
+m -> e
+u -> d
+o -> i
+z -> c
+l -> o
+k -> v
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+rmzvmg asvumn
+
+Decode target words from character mappings
+
+rmzvmg
+letters r, m, z, v, m, g
+r -> s
+m -> e
+z -> c
+v -> r
+m -> e
+g -> t
+rmzvmg -> secret
+fully mapped
+
+choose secret
+
+asvumn
+letters a, s, v, u, m, n
+a -> g
+s -> a
+v -> r
+u -> d
+m -> e
+n -> n
+asvumn -> garden
+fully mapped
+
+choose garden
+
+Decoded phrase
+secret garden
+
+Answer: \boxed{secret garden}

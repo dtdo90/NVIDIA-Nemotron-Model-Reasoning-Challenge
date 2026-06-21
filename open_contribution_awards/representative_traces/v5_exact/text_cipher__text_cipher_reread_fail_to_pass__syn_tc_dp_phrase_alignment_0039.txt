@@ -1,0 +1,199 @@
+ID: syn_tc_dp_phrase_alignment_0039
+Problem type: Text Cipher
+Subtype/source_mode: text_cipher_reread_fail_to_pass
+Source: generated/v4_text_cipher_reread_rescue/fail_to_pass/syn_tc_dp_phrase_alignment_0039.txt
+CSV answer: under near
+Trace boxed answer: under near
+Prompt format: competition_chat_template
+Rows in subtype: 200
+Answer matched for selected row: True
+
+PROMPT
+======
+In Alice's Wonderland, secret encryption rules are used on text. Here are some examples:
+fnnf fadpnra -> sees student
+zxhp -> bird
+Now, decrypt the following text: drpnh rnuh
+
+ASSISTANT TRACE
+===============
+We need to decode the target strictly from left to right using the character mappings.
+
+Process examples
+
+fnnf fadpnra -> sees student
+fnnf -> sees
+letters f, n, n, f
+f -> s new
+n -> e new
+n -> e agrees
+f -> s agrees
+fadpnra -> student
+letters f, a, d, p, n, r, a
+f -> s agrees
+a -> t new
+d -> u new
+p -> d new
+n -> e agrees
+r -> n new
+a -> t agrees
+
+zxhp -> bird
+zxhp -> bird
+letters z, x, h, p
+z -> b new
+x -> i new
+h -> r new
+p -> d agrees
+
+Summary character mappings
+f -> s
+n -> e
+a -> t
+d -> u
+p -> d
+r -> n
+z -> b
+x -> i
+h -> r
+
+Vocab library
+above, alice, ancient, around, beyond, bird, book, bright, castle, cat, cave, chases, clever, colorful, creates, crystal, curious, dark, discovers, door, dragon, draws, dreams, explores, follows, forest, found, garden, golden, hatter, hidden, imagines, in, inside, island, key, king, knight, library, magical, map, message, mirror, mountain, mouse, mysterious, near, ocean, palace, potion, princess, puzzle, queen, rabbit, reads, school, secret, sees, silver, story, strange, student, studies, teacher, the, through, tower, treasure, turtle, under, valley, village, watches, wise, wizard, wonderland, writes
+
+Target text
+drpnh rnuh
+
+Decode target words from character mappings
+
+drpnh
+letters d, r, p, n, h
+d -> u
+r -> n
+p -> d
+n -> e
+h -> r
+drpnh -> under
+fully mapped
+
+choose under
+
+rnuh
+letters r, n, u, h
+r -> n
+n -> e
+u -> ? unknown
+h -> r
+rnuh -> ne?r
+not fully mapped
+
+Vocab pattern scan
+same length and known letters match ne?r
+above -> ne?r no
+alice -> ne?r no
+ancient -> ne?r no
+around -> ne?r no
+beyond -> ne?r no
+bird -> ne?r no
+book -> ne?r no
+bright -> ne?r no
+castle -> ne?r no
+cat -> ne?r no
+cave -> ne?r no
+chases -> ne?r no
+clever -> ne?r no
+colorful -> ne?r no
+creates -> ne?r no
+crystal -> ne?r no
+curious -> ne?r no
+dark -> ne?r no
+discovers -> ne?r no
+door -> ne?r no
+dragon -> ne?r no
+draws -> ne?r no
+dreams -> ne?r no
+explores -> ne?r no
+follows -> ne?r no
+forest -> ne?r no
+found -> ne?r no
+garden -> ne?r no
+golden -> ne?r no
+hatter -> ne?r no
+hidden -> ne?r no
+imagines -> ne?r no
+in -> ne?r no
+inside -> ne?r no
+island -> ne?r no
+key -> ne?r no
+king -> ne?r no
+knight -> ne?r no
+library -> ne?r no
+magical -> ne?r no
+map -> ne?r no
+message -> ne?r no
+mirror -> ne?r no
+mountain -> ne?r no
+mouse -> ne?r no
+mysterious -> ne?r no
+near -> ne?r match
+ocean -> ne?r no
+palace -> ne?r no
+potion -> ne?r no
+princess -> ne?r no
+puzzle -> ne?r no
+queen -> ne?r no
+rabbit -> ne?r no
+reads -> ne?r no
+school -> ne?r no
+secret -> ne?r no
+sees -> ne?r no
+silver -> ne?r no
+story -> ne?r no
+strange -> ne?r no
+student -> ne?r no
+studies -> ne?r no
+teacher -> ne?r no
+the -> ne?r no
+through -> ne?r no
+tower -> ne?r no
+treasure -> ne?r no
+turtle -> ne?r no
+under -> ne?r no
+valley -> ne?r no
+village -> ne?r no
+watches -> ne?r no
+wise -> ne?r no
+wizard -> ne?r no
+wonderland -> ne?r no
+writes -> ne?r no
+
+Scan candidates for ne?r
+near
+one candidate
+for one candidate, verify then choose
+
+rnuh -> near
+letters r, n, u, h
+r -> n agrees
+n -> e agrees
+u -> a conflicts
+u -> e already exists
+h -> r agrees
+FAIL
+
+re-read source word from input query
+drpnh rnuh
+rnuh
+letters r, n, u, h
+r -> n agrees
+n -> e agrees
+u -> a new
+h -> r agrees
+PASS confirm
+add u -> a
+
+choose near
+
+Decoded phrase
+under near
+
+Answer: \boxed{under near}

@@ -1,0 +1,73 @@
+ID: 6c7f24b7
+Problem type: Symbol Transform
+Subtype/source_mode: symbol_transform_unreliable_pattern_guess
+Source: data/train.csv
+CSV answer: ^
+Trace boxed answer: ^
+Prompt format: competition_chat_template
+Rows in subtype: 600
+Answer matched for selected row: True
+
+PROMPT
+======
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+$^+|) = ?'|
+&'*)/ = &??|
+&^-&^ = &
+Now, determine the result for: $'-^$
+
+ASSISTANT TRACE
+===============
+For symbol equation transformation rules, we sequentially try direct templates, then encrypted digit formats BA_DC|rev and AB_CD|plain.
+
+Query $'-^$
+Query operator is -
+
+Compare example operators
+$^+|) = ?'| operator +
+different
+&'*)/ = &??| operator *
+different
+&^-&^ = & operator -
+same
+
+Same operator examples
+&^-&^ = &
+
+Same operator RHS values are &
+
+We try direct templates first
+
+Try template0134
+template0134 means AB followed by CD
+
+Example &^-&^ = &
+AB = &^
+operator = -
+CD = &^
+&^ followed by &^ gives &^&^ vs &
+No match
+
+template0134 fails
+
+Try template3401
+template3401 means CD followed by AB
+
+Example &^-&^ = &
+AB = &^
+operator = -
+CD = &^
+&^ followed by &^ gives &^&^ vs &
+No match
+
+template3401 fails
+
+Direct templates fail
+The query operator appears in the examples, so this is not operator absence type
+No reliable rule is identified for this type
+We will make a guess
+
+Guess
+^
+
+Answer: \boxed{^}

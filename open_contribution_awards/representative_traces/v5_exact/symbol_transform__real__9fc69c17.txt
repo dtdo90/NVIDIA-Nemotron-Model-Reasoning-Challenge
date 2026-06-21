@@ -1,0 +1,67 @@
+ID: 9fc69c17
+Problem type: Symbol Transform
+Subtype/source_mode: real
+Source: docs/symbol_transform/direct_template/9fc69c17.txt
+CSV answer: #':@
+Trace boxed answer: #':@
+Prompt format: competition_chat_template
+Rows in subtype: 59
+Answer matched for selected row: True
+
+PROMPT
+======
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+/$-/[ = $
+|@*:] = |@:]
+@@-]/ = &
+Now, determine the result for: #'*:@
+
+ASSISTANT TRACE
+===============
+For symbol equation transformation rules, we sequentially try direct templates, then encrypted digit formats BA_DC|rev and AB_CD|plain.
+
+Query #'*:@
+Query operator is *
+
+Compare example operators
+/$-/[ = $ operator -
+different
+|@*:] = |@:] operator *
+same
+@@-]/ = & operator -
+different
+
+Same operator examples
+|@*:] = |@:]
+
+Same operator RHS values are |@:]
+The RHS values have length 4, so use direct templates or multiplication
+Try template0134,template3401,x*y,x*y+1,x*y-1
+
+We try direct templates first. If they fail, we proceed to encrypted digit search with BA_DC|rev and AB_CD|plain
+
+Try template0134
+template0134 means AB followed by CD
+
+Example |@*:] = |@:]
+AB = |@
+operator = *
+CD = :]
+|@ followed by :] gives |@:] vs |@:]
+Match
+
+template0134 passes all examples
+
+For direct templates, apply the passing template to get the answer
+
+Apply template0134 to the query
+template0134 means AB followed by CD
+
+Query
+#'*:@
+AB = #'
+operator = *
+CD = :@
+#' followed by :@ gives #':@
+
+Answer: \boxed{#':@}

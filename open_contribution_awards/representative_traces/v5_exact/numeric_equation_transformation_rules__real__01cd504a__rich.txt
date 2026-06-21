@@ -1,0 +1,153 @@
+ID: 01cd504a
+Problem type: Numeric Equation Transformation Rules
+Subtype/source_mode: real
+Source: docs/numeric_equation_motif_override_traces/01cd504a.txt
+CSV answer: 6644
+Trace boxed answer: 6644
+Prompt format: competition_chat_template
+Answer matched for selected row: True
+
+PROMPT
+======
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+64-65 = 201
+28-68 = 861
+82/15 = 8241
+Now, determine the result for: 85/77
+
+ASSISTANT TRACE
+===============
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 85/77
+Query operator is /
+
+Compare example operators
+64-65 = 201 operator -
+different
+28-68 = 861 operator -
+different
+82/15 = 8241 operator /
+same
+
+same operator examples
+82/15 = 8241
+one example
+
+Same operator RHS values are 8241
+The RHS values have length 4, so use direct templates or multiplication
+Try template0134,template3401,x*y,x*y+1,x*y-1
+
+We try direct templates first. If they fail, we proceed to arithmetic search on motifs BA_DC and AB_CD
+
+Try template0134 for operator /
+template0134 means AB followed by CD
+
+Example 82/15 = 8241
+AB = 82
+operator = /
+CD = 15
+82 followed by 15 gives 8215 vs 8241
+No match
+
+template0134 fails
+
+Try template3401 for operator /
+template3401 means CD followed by AB
+
+Example 82/15 = 8241
+AB = 82
+operator = /
+CD = 15
+15 followed by 82 gives 1582 vs 8241
+No match
+
+template3401 fails
+
+Direct templates fail
+Proceed to arithmetic search on motifs BA_DC and AB_CD
+
+Try BA_DC first
+
+Try BA_DC with x*y for operator /
+The current format is BA_DC|x*y
+
+Example 82/15 = 8241
+BA DC BA*DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+28 51 1428 8241 1428 1428 8241 /1428 8241 1428/ /8241 8241 1428
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Common
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+The format BA_DC|x*y|common supports the single same operator example
+Only one same operator row supports this candidate, so do not finalize yet
+Verify motif BA_DC using an additional helper operator group
+
+Helper operator groups
+Operator -
+64-65 = 201
+28-68 = 861
+
+Choose the helper operator group with the least number of examples
+64-65 = 201
+28-68 = 861
+
+Same helper operator RHS values are 201 and 861
+The RHS values have length 3, so use addition or multiplication
+Try x+y,x+y-1,x+y+1,x*y,x*y+1,x*y-1
+
+Try BA_DC with x+y for operator -
+The current format is BA_DC|x+y
+
+Example 64-65 = 201
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+46 56 102 201 102 102 201 -102 201 102- -201 201 102
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Example 28-68 = 861
+BA DC BA+DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+82 86 168 861 168 168 861 -168 861 168- -861 861 168
+Match
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Common
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+The format BA_DC|x+y|common supports the helper operator group
+The motif BA_DC is supported by the helper operator group
+So BA_DC is confirmed
+
+Return to the supported same operator format BA_DC|x*y|common
+Common
+rev
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+
+Apply format BA_DC|x*y|common to the query
+
+Query
+85/77
+BA DC BA*DC rev rev_or_op_prefix_rev_if_neg rev_or_op_suffix_rev_if_neg abs_rev
+58 77 4466 6644 6644 6644 6644
+All common output formats agree on 6644
+
+Answer: \boxed{6644}

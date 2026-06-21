@@ -1,0 +1,49 @@
+ID: 258b796b
+Problem type: Symbol Transform
+Subtype/source_mode: op_ab_guess_0134_correct
+Source: heuristic/symbol_transform/operator_absence_template0134/258b796b.txt
+CSV answer: `]|[
+Trace boxed answer: `]|[
+Prompt format: competition_chat_template
+Rows in subtype: 13
+Answer matched for selected row: True
+
+PROMPT
+======
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+&}-&& = "
+$|-$% = $
+}%-$` = }
+Now, determine the result for: `]*|[
+
+ASSISTANT TRACE
+===============
+For symbol equation transformation rules, we sequentially try direct templates, then encrypted digit formats BA_DC|rev and AB_CD|plain.
+
+Query `]*|[
+Query operator is *
+
+Compare example operators
+&}-&& = " operator -
+different
+$|-$% = $ operator -
+different
+}%-$` = } operator -
+different
+
+Same operator examples
+None
+
+For symbol equation transformation rules with no same query operator example, use direct template matching with template0134
+template0134 means AB followed by CD
+
+Apply template0134 to the query
+
+Query
+`]*|[
+AB = `]
+operator = *
+CD = |[
+`] followed by |[ gives `]|[
+
+Answer: \boxed{`]|[}

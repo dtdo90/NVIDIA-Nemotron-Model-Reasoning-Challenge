@@ -1,0 +1,105 @@
+ID: 04171e29
+Problem type: Numeric Equation Transformation Rules
+Subtype/source_mode: real
+Source: docs/numeric_equation_motif_override_traces/04171e29.txt
+CSV answer: 32
+Trace boxed answer: 32
+Prompt format: competition_chat_template
+Answer matched for selected row: True
+
+PROMPT
+======
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+34-73 = 6
+28*71 = 4931
+56-45 = 11
+13*39 = 3882
+57*67 = 0075
+Now, determine the result for: 97-65
+
+ASSISTANT TRACE
+===============
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 97-65
+Query operator is -
+
+Compare example operators
+34-73 = 6 operator -
+same
+28*71 = 4931 operator *
+different
+56-45 = 11 operator -
+same
+13*39 = 3882 operator *
+different
+57*67 = 0075 operator *
+different
+
+same operator examples
+34-73 = 6
+56-45 = 11
+two examples
+
+Same operator RHS values are 6 and 11
+The RHS values mix length 1 and 2, so use subtraction or modular
+Try x-y,y-x,abs(x-y),min(x,y)-max(x,y),max(x,y)%min(x,y),x%y,y%x
+
+Try BA_DC first
+
+Try BA_DC with x-y for operator -
+The current format is BA_DC|x-y
+
+Example 34-73 = 6
+BA DC BA-DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+43 37 6 6 6 6 6 -6 6 6- -6 6 6
+Match
+rev
+plain
+op_prefix_if_neg
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+abs
+
+Example 56-45 = 11
+BA DC BA-DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg op_prefix rev_or_op_suffix_rev_if_neg op_suffix op_prefix_rev abs_rev abs
+65 54 11 11 11 11 11 -11 11 11- -11 11 11
+Match
+rev
+plain
+op_prefix_if_neg
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+abs
+
+Common
+rev
+plain
+op_prefix_if_neg
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+abs
+
+The format BA_DC|x-y|common supports all two same operator examples
+More than one same operator row supports this candidate, so finalize
+Apply format BA_DC|x-y|common to the query
+
+Query
+97-65
+BA DC BA-DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg rev_or_op_suffix_rev_if_neg abs_rev abs
+79 56 23 32 23 23 32 32 32 23
+All common output formats do not agree
+The selected operator x-y gives positive value: 79-56=23
+For motif BA_DC with x-y positive, use voting. If voting ties, use the first common format in priority order
+
+Votes
+32 has 4 votes
+23 has 3 votes
+
+Vote winner
+32
+
+Answer: \boxed{32}

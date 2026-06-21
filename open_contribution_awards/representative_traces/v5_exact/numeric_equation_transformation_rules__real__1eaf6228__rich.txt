@@ -1,0 +1,233 @@
+ID: 1eaf6228
+Problem type: Numeric Equation Transformation Rules
+Subtype/source_mode: real
+Source: docs/numeric_equation_motif_override_traces/1eaf6228.txt
+CSV answer: 483
+Trace boxed answer: 483
+Prompt format: competition_chat_template
+Answer matched for selected row: True
+
+PROMPT
+======
+In Alice's Wonderland, a secret set of transformation rules is applied to equations. Below are a few examples:
+25-55 = 3
+94+41 = 26
+25+29 = 341
+35-35 = 0
+Now, determine the result for: 42*61
+
+ASSISTANT TRACE
+===============
+We sequentially try direct templates, then motifs BA_DC and AB_CD. For each step, we choose the rule family from same-operator RHS length.
+
+Query 42*61
+Query operator is *
+
+Compare example operators
+25-55 = 3 operator -
+different
+94+41 = 26 operator +
+different
+25+29 = 341 operator +
+different
+35-35 = 0 operator -
+different
+
+same operator examples
+none
+
+For operator absence type, first infer the motif and output formats from all visible operator groups
+Candidate output formats
+rev
+plain
+op_prefix_if_neg
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+abs
+
+Visible operator groups
+Operator -
+25-55 = 3
+35-35 = 0
+Operator +
+94+41 = 26
+25+29 = 341
+
+First try visible operator -
+Examples with operator -
+25-55 = 3
+35-35 = 0
+
+Visible operator RHS values are 3 and 0
+The RHS values have length 1, so use subtraction or modular
+Try x-y,y-x,abs(x-y),min(x,y)-max(x,y),max(x,y)%min(x,y),x%y,y%x
+
+Try BA_DC first
+
+Try BA_DC with x-y for operator -
+The current format is BA_DC|x-y
+
+Example 25-55 = 3
+BA DC BA-DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg rev_or_op_suffix_if_neg rev_or_op_suffix_rev_if_neg abs_rev abs
+52 55 -3 -3 -3 -3 -3 3- 3- 3 3
+Match
+abs_rev
+abs
+
+Example 35-35 = 0
+BA DC BA-DC rev plain op_prefix_if_neg rev_or_op_prefix_rev_if_neg rev_or_op_suffix_if_neg rev_or_op_suffix_rev_if_neg abs_rev abs
+53 53 0 0 0 0 0 0 0 0 0
+Match
+rev
+plain
+op_prefix_if_neg
+rev_or_op_prefix_rev_if_neg
+rev_or_op_suffix_if_neg
+rev_or_op_suffix_rev_if_neg
+abs_rev
+abs
+
+Common
+abs_rev
+abs
+
+Try visible operator + using the surviving motif and common formats
+Surviving motif
+BA_DC
+Surviving common formats
+abs_rev
+abs
+
+Examples with operator +
+94+41 = 26
+25+29 = 341
+
+Visible operator RHS values are 26 and 341
+The RHS values mix length 2 and 3, so use addition
+Try x+y,x+y-1,x+y+1
+
+Try BA_DC with x+y for operator +
+The current format is BA_DC|x+y|common
+
+Example 94+41 = 26
+BA DC BA+DC abs_rev abs
+49 14 63 36 63
+Match
+none
+
+Example 25+29 = 341
+BA DC BA+DC abs_rev abs
+52 92 144 441 144
+Match
+none
+
+Common
+none
+
+Updated surviving common formats
+none
+x+y does not preserve the surviving common formats
+
+Try BA_DC with x+y-1 for operator +
+The current format is BA_DC|x+y-1|common
+
+Example 94+41 = 26
+BA DC BA+DC-1 abs_rev abs
+49 14 62 26 62
+Match
+abs_rev
+
+Example 25+29 = 341
+BA DC BA+DC-1 abs_rev abs
+52 92 143 341 143
+Match
+abs_rev
+
+Common
+abs_rev
+
+Updated surviving common formats
+abs_rev
+
+All visible operator groups support the following motif and common formats
+Motif
+BA_DC
+Common
+abs_rev
+
+Use symbol mapping for query operator *
++ -> x+y, abs(x-y) no
+- -> x-y no
+* -> x*y, x+y+1 PASS
+/ -> x*y, template0134, min(x,y)-max(x,y) no
+: -> template0134, x-y no
+@ -> x+y, y-x no
+[ -> x+y, x*y no
+\ -> x-y, x+y, x*y-1, y-x no
+% -> x*y, x+y no
+` -> x+y no
+! -> x+y, x*y no
+) -> x+y, x-y no
+] -> x-y no
+^ -> template0134, x*y-1, y-x no
+| -> x+y-1 no
+} -> x-y, template0134 no
+# -> template0134, x+y no
+& -> x+y no
+' -> x+y no
+( -> x*y, max(x,y)%min(x,y) no
+? -> x-y, template0134 no
+{ -> x*y-1 no
+" -> x+y no
+$ -> x-y no
+< -> x*y no
+> -> x-y no
+
+Candidate operator families for *
+x*y
+x+y+1
+
+Operator families used by the visible examples
+x-y
+x+y-1
+
+Search remaining candidate operator families for *
+Remaining candidate operator families
+x*y
+x+y+1
+
+Check remaining candidate operator families by common-output agreement
+
+Candidate x*y
+Query
+42*61
+BA DC BA*DC abs_rev
+24 16 384 483
+Output votes
+483 has 1 vote
+Highest vote count
+1
+
+Candidate x+y+1
+Query
+42*61
+BA DC BA+DC+1 abs_rev
+24 16 41 14
+Output votes
+14 has 1 vote
+Highest vote count
+1
+
+Choose operator candidate with highest output agreement vote count, if tie choose the first candidate
+x*y
+Apply format BA_DC|x*y|common to the query
+
+Query
+42*61
+BA DC BA*DC abs_rev
+24 16 384 483
+All common output formats agree on 483
+
+Answer: \boxed{483}

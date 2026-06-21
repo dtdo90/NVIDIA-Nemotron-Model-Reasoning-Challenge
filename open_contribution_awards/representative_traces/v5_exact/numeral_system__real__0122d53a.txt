@@ -1,0 +1,30 @@
+ID: 0122d53a
+Problem type: Numeral System
+Subtype/source_mode: real
+Source: data/artifacts/phase1/numeral_cot_method_resolved.csv
+CSV answer: LI
+Trace boxed answer: LI
+Prompt format: competition_chat_template
+Rows in subtype: 1576
+Answer matched for selected row: True
+
+PROMPT
+======
+In Alice's Wonderland, numbers are secretly converted into a different numeral system. Some examples are given below:
+93 -> XCIII
+20 -> XX
+74 -> LXXIV
+20 -> XX
+Now, write the number 51 in the Wonderland numeral system.
+
+ASSISTANT TRACE
+===============
+We convert the Arabic number to Roman numerals using the standard greedy table.
+
+Converting 51
+51 >= 50 -> L, remainder 1
+1 >= 1 -> I, remainder 0
+
+Putting all together, we get LI
+
+Answer: \boxed{LI}
