@@ -2,6 +2,8 @@
 
 This project was a great experience for me: my **first Kaggle gold medal**. It feels even more special because this was an LLM reasoning competition, where the work was not just about training a model, but about carefully shaping data, traces, and methodology until the system finally held together.
 
+---
+
 LoRA fine-tuning project for the NVIDIA Nemotron reasoning challenge. The gold-medal run used the v5 single-phase corpus, followed by one real-data polish epoch from the saved adapter.
 
 The main training path is now single-phase SFT with optional GRPO. The old two-phase SFT curriculum is preserved under `legacy two_phase/` only for reproducibility.
